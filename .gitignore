@@ -1,19 +1,7 @@
-# Dependencies / build output (web/ also has its own .gitignore)
-node_modules/
-.next/
-out/
-build/
-*.tsbuildinfo
-
-# Environment & secrets
-.env
-.env.*
-!.env.example
-
-# Source archive — its extracted contents are tracked under source/
-anchor-silver-capital-project.zip
-
-# OS / editor
-.DS_Store
-Thumbs.db
-*.log
+# This repository tracks ONLY the Next.js app in web/.
+# Everything else in this directory is local reference material and is never
+# committed: source/ (the original prototype), the planning docs, the source
+# zip, editor/tooling config, etc.
+/*
+!/.gitignore
+!/web/
