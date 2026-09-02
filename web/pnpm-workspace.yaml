@@ -1,0 +1,6 @@
+allowBuilds:
+  unrs-resolver: true
+  "@tailwindcss/oxide": true
+  sharp: true
+  esbuild: true
+  "@parcel/watcher": true

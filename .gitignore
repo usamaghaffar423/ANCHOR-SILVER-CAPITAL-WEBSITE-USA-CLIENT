@@ -1,0 +1,19 @@
+# Dependencies / build output (web/ also has its own .gitignore)
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Source archive — its extracted contents are tracked under source/
+anchor-silver-capital-project.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
