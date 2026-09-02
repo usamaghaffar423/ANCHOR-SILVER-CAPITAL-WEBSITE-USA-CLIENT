@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { CallbackForm } from "@/components/site/CallbackForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
-import { pageMeta } from "@/lib/site";
+import { SITE, pageMeta } from "@/lib/site";
 
 const texSilver = "/assets/tex-silver.jpg";
 const texCurrency = "/assets/tex-currency.jpg";
@@ -385,20 +385,27 @@ export default function Home() {
       </Section>
 
       <section className="bg-accent px-5 py-16 md:py-24">
-        <div className="mx-auto w-full max-w-6xl">
-          <h2 className="max-w-3xl text-3xl text-background md:text-[2.6rem]">
-            The Anchor Is Set. The Tide Is Rising.
-          </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-silver">
-            The people who anchored early are in a very different position than those still waiting.
-          </p>
-          <div className="mt-8">
-            <InlineLeadForm
-              interest="just_learning"
-              sourcePage="/"
-              heading="Schedule a Free Consultation"
-              subheading="Leave your details and a silver specialist will call — no cost, no obligation."
-            />
+        <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
+          <div>
+            <h2 className="max-w-3xl text-3xl text-background md:text-[2.6rem]">
+              The Anchor Is Set. The Tide Is Rising.
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-silver">
+              The people who anchored early are in a very different position than those still
+              waiting.
+            </p>
+            <p className="mt-6 text-sm text-silver">
+              Prefer to talk now?{" "}
+              <a
+                href={SITE.phoneHref}
+                className="font-semibold text-secondary underline underline-offset-4"
+              >
+                Call {SITE.phone}
+              </a>
+            </p>
+          </div>
+          <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">
+            <CallbackForm />
           </div>
         </div>
       </section>
