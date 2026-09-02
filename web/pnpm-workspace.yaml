@@ -1,3 +1,9 @@
+onlyBuiltDependencies:
+  - "@tailwindcss/oxide"
+  - unrs-resolver
+  - sharp
+  - esbuild
+  - "@parcel/watcher"
 allowBuilds:
   unrs-resolver: true
   "@tailwindcss/oxide": true
