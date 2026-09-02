@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { Card, H2, Prose, Section, buttonStyles } from "@/components/site/ui";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
@@ -99,9 +99,12 @@ export default function About() {
           before making investment decisions.
         </p>
         <div className="mt-8">
-          <Link href="/get-started" className={buttonStyles.primary}>
-            Get a Free Consultation
-          </Link>
+          <InlineLeadForm
+            interest="just_learning"
+            sourcePage="/about"
+            heading="Get a Free Consultation"
+            subheading="Leave your details and a silver specialist will follow up — no cost, no obligation."
+          />
         </div>
       </Section>
     </>

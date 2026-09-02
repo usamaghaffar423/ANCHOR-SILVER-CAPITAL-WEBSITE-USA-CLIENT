@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
-import { CallbackForm } from "@/components/site/CallbackForm";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -158,9 +158,7 @@ export default function SilverIra() {
             </a>
             <p className="mt-3 text-sm text-primary-foreground/85">{SITE.hours}</p>
           </div>
-          <div className="rounded-md bg-card p-6 shadow-[var(--shadow-lift)]">
-            <CallbackForm />
-          </div>
+          <InlineLeadForm interest="silver_ira" sourcePage="/silver-ira" />
         </div>
       </Section>
     </>

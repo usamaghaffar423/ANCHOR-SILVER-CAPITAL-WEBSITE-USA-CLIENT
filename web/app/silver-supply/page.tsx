@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { Disclaimer, H2, Prose, Section, buttonStyles } from "@/components/site/ui";
-import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
+import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
   title: "Silver Supply Deficit — Six Straight Years | Anchor Silver",
@@ -66,13 +67,12 @@ export default function SupplyStory() {
           </Link>{" "}
           or a physical purchase — plainly, without a sales pitch.
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href="/get-started" className={buttonStyles.silver}>
-            Talk to a Silver Specialist
-          </Link>
-          <a href={SITE.phoneHref} className={buttonStyles.outlineLight}>
-            Call {SITE.phone}
-          </a>
+        <div className="mt-8">
+          <InlineLeadForm
+            interest="just_learning"
+            sourcePage="/silver-supply"
+            subheading="Leave your details and a silver specialist will call — plainly, without a sales pitch."
+          />
         </div>
       </Section>
     </>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion, type QA } from "@/components/site/Accordion";
 import { JsonLd } from "@/components/site/JsonLd";
-import { H2, Section, buttonStyles } from "@/components/site/ui";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { H2, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 const groups: { title: string; items: QA[] }[] = [
@@ -151,9 +151,11 @@ export default function Faq() {
       <Section tone="sage">
         <H2 className="text-primary-foreground">Still Have a Question?</H2>
         <div className="mt-8">
-          <Link href="/contact" className={buttonStyles.silver}>
-            Talk to a Silver Specialist
-          </Link>
+          <InlineLeadForm
+            interest="just_learning"
+            sourcePage="/faq"
+            subheading="Leave your details and a silver specialist will get back to you."
+          />
         </div>
       </Section>
     </>

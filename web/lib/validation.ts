@@ -31,7 +31,7 @@ export const PRODUCTS = [
   "Not sure yet",
 ] as const;
 
-export const SOURCE_FORMS = ["get_started", "quote", "simple"] as const;
+export const SOURCE_FORMS = ["get_started", "quote", "simple", "inline"] as const;
 export type SourceForm = (typeof SOURCE_FORMS)[number];
 
 /** Maps the `CallbackForm` visual variant to the persisted `sourceForm`. */

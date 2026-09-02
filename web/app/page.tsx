@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
-import { SITE, pageMeta } from "@/lib/site";
+import { pageMeta } from "@/lib/site";
 
 const texSilver = "/assets/tex-silver.jpg";
 const texCurrency = "/assets/tex-currency.jpg";
@@ -391,13 +392,13 @@ export default function Home() {
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-silver">
             The people who anchored early are in a very different position than those still waiting.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/get-started" className={buttonStyles.silver}>
-              Schedule a Free Consultation
-            </Link>
-            <a href={SITE.phoneHref} className={buttonStyles.outlineLight}>
-              Call {SITE.phone}
-            </a>
+          <div className="mt-8">
+            <InlineLeadForm
+              interest="just_learning"
+              sourcePage="/"
+              heading="Schedule a Free Consultation"
+              subheading="Leave your details and a silver specialist will call — no cost, no obligation."
+            />
           </div>
         </div>
       </section>

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { Disclaimer, H2, Prose, Section, buttonStyles } from "@/components/site/ui";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
@@ -87,9 +88,11 @@ export default function WhySilver() {
       <Section tone="sage">
         <H2 className="text-primary-foreground">Ready to Put Real Weight Behind Your Savings?</H2>
         <div className="mt-8">
-          <Link href="/get-started" className={buttonStyles.silver}>
-            Talk to a Silver Specialist
-          </Link>
+          <InlineLeadForm
+            interest="just_learning"
+            sourcePage="/why-silver"
+            subheading="Leave your details and a silver specialist will call — no cost, no obligation."
+          />
         </div>
       </Section>
     </>

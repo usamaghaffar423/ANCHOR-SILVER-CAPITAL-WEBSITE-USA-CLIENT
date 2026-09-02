@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { useMarket } from "@/components/site/market";
-import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
+import { Card, Disclaimer, H2, Section } from "@/components/site/ui";
 
 /**
  * Body of the /market-update route. Extracted from the source route file because
@@ -131,9 +131,12 @@ export function MarketUpdateContent() {
           ))}
         </div>
         <div className="mt-10">
-          <Link href="/get-started" className={buttonStyles.primary}>
-            Talk to a Specialist About What This Means For You
-          </Link>
+          <InlineLeadForm
+            interest="just_learning"
+            sourcePage="/market-update"
+            heading="Talk to a Specialist About What This Means For You"
+            subheading="Leave your details and a silver specialist will call — we report conditions, we don't forecast."
+          />
         </div>
       </Section>
     </>

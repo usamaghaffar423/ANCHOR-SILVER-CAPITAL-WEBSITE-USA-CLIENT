@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
-import { CallbackForm } from "@/components/site/CallbackForm";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -144,9 +144,7 @@ export default function PhysicalSilver() {
               metal, premium, and insured shipping — with no obligation.
             </p>
           </div>
-          <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">
-            <CallbackForm variant="quote" submitLabel="Get a Quote" />
-          </div>
+          <InlineLeadForm interest="physical_silver" sourcePage="/physical-silver" />
         </div>
       </Section>
     </>
