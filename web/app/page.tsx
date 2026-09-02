@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
-import { MarketBar } from "@/components/site/market";
+import { HeroMarketCard } from "@/components/site/HeroMarketCard";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
-import { Card, Disclaimer, Eyebrow, H2, Section, buttonStyles } from "@/components/site/ui";
+import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
 import { SITE, pageMeta } from "@/lib/site";
 
-const silverStack = "/assets/silver-stack.jpg";
-const silverStackMobile = "/assets/silver-stack-mobile.jpg";
 const texSilver = "/assets/tex-silver.jpg";
 const texCurrency = "/assets/tex-currency.jpg";
 const texVault = "/assets/tex-vault.jpg";
@@ -186,68 +184,49 @@ function Avatar({ name }: { name: string }) {
 export default function Home() {
   return (
     <>
-      <section className="chart-lines relative -mt-[112px] bg-ink px-5 pb-12 pt-[124px] md:pb-14 md:pt-[136px] lg:pb-10 lg:pt-[124px]">
-        <div className="mx-auto grid w-full max-w-6xl gap-0 md:gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-12">
-          <div className="flex min-w-0 flex-col pb-1 md:pb-0">
-            <Eyebrow className="text-secondary">An Anchor That Pulls Upward</Eyebrow>
-            <h1 className="mt-2 text-[1.75rem] leading-[1.03] text-background sm:text-4xl md:mt-3 md:text-[3.25rem] md:leading-[1.06]">
-              When Everything Else Feels Unmoored, Real Silver Holds Its Ground — and Gains.
+      <section className="hero-surface relative -mt-[112px] px-5 pb-14 pt-[124px] text-silver md:pb-20 md:pt-[140px]">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
+            <p className="eyebrow text-brass-light">The metal that&apos;s quietly climbing</p>
+            <h1 className="mt-3.5 font-fraunces text-[1.9rem] font-light leading-[1.1] tracking-[-0.01em] text-white sm:text-[2.4rem] lg:text-[3rem] lg:leading-[1.08]">
+              Silver has climbed over 75% in a year — and the supply deficit{" "}
+              <em className="not-italic text-brass-light">hasn&apos;t&nbsp;closed.</em>
             </h1>
-            <p className="mt-3 max-w-xl text-[0.95rem] leading-snug text-silver md:mt-4 md:text-lg">
-              Real metal behind your retirement — not paper promises.
+            <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-silver md:text-[1.08rem]">
+              Own real metal in your retirement, backed by a six-year supply shortfall — not a
+              promise. Start with the free investor guide.
             </p>
-            <ul className="mt-3 flex flex-wrap gap-1.5 md:mt-5 md:gap-2">
-              {["75%+ 12-month gain", "6-year supply deficit", "IRS-approved metals"].map((c) => (
-                <li
-                  key={c}
-                  className="rounded-full border border-secondary/40 px-2 py-1 font-mono text-[0.625rem] tracking-wide text-secondary sm:px-3 sm:text-[0.7rem]"
-                >
-                  {c}
+            <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+              <Link
+                href="/get-started"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light sm:w-auto"
+              >
+                Get the free Silver guide
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm text-silver underline decoration-1 underline-offset-4 transition-colors hover:text-white"
+              >
+                or talk to a specialist →
+              </Link>
+            </div>
+            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep">
+              {["BBB Accredited A+", "Equity Trust", "Delaware Depository"].map((b) => (
+                <li key={b} className="flex items-center gap-1.5">
+                  <span aria-hidden="true" className="text-brass">
+                    ✦
+                  </span>
+                  {b}
                 </li>
               ))}
             </ul>
-            <div className="mt-3 flex flex-col gap-2 sm:flex-row md:mt-4 md:gap-3">
-              <Link href="/silver-ira" className={buttonStyles.primary}>
-                Explore Silver IRA
-              </Link>
-              <Link href="/physical-silver" className={buttonStyles.outlineLight}>
-                Buy Physical Silver
-              </Link>
-            </div>
-            <ul className="mt-6 hidden flex-wrap items-center gap-x-5 gap-y-1.5 text-[0.7rem] text-silver-deep lg:flex">
-              <li className="flex items-center gap-2">
-                <Stars className="text-secondary" /> Equity Trust IRA
-              </li>
-
-              <li>Delaware Depository</li>
-              <li>BBB Accredited</li>
-            </ul>
-          </div>
-          <div className="relative mt-5 md:mt-6 lg:mt-2">
-            <AnchorGlyph className="pointer-events-none absolute -left-10 top-6 hidden h-48 w-48 text-secondary/10 lg:block" />
-            <picture className="block">
-              <source media="(max-width: 767px)" srcSet={silverStackMobile} />
-              <img
-                src={silverStack}
-                width={1024}
-                height={1280}
-                alt="Stacked silver bullion coins and poured silver bars"
-                className="relative block aspect-[12/5] w-full rounded-sm border border-silver/15 object-contain shadow-[var(--shadow-lift)] md:aspect-video lg:aspect-auto lg:h-[clamp(17rem,calc(100vh-21rem),30rem)] lg:max-h-none lg:object-cover"
-              />
-            </picture>
-            <ul className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[0.7rem] text-silver-deep lg:hidden">
-              <li className="flex items-center gap-2">
-                <Stars className="text-secondary" /> Equity Trust IRA
-              </li>
-              <li>Delaware Depository</li>
-              <li>BBB Accredited</li>
-            </ul>
           </div>
 
+          <div className="mx-auto w-full min-w-0 max-w-md lg:mx-0 lg:max-w-none lg:pl-2">
+            <HeroMarketCard />
+          </div>
         </div>
       </section>
-
-      <MarketBar />
 
       <Section className="md:py-24">
         <H2>Two Ways to Anchor Your Savings</H2>

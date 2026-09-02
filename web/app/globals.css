@@ -38,10 +38,18 @@
   --color-silver: var(--silver);
   --color-silver-deep: var(--silver-deep);
   --color-sage-soft: var(--sage-soft);
+  /* Home hero accents (Phase 4 hero redesign). */
+  --color-brass: var(--brass);
+  --color-brass-light: var(--brass-light);
+  --color-gain: var(--gain);
+  --color-hero-from: var(--hero-from);
+  --color-hero-to: var(--hero-to);
 
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-fraunces: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-plex: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
 
   --shadow-card: 0 2px 12px oklch(0 0 0 / 0.08);
   --shadow-lift: 0 10px 30px oklch(0.28 0.03 150 / 0.14);
@@ -88,6 +96,13 @@
   --silver: oklch(0.82 0.012 158);
   --silver-deep: oklch(0.68 0.012 158);
   --sage-soft: oklch(0.93 0.018 149);
+
+  /* Home hero (Phase 4). Brass on deep forest, mint for positive change. */
+  --brass: oklch(0.646 0.088 78); /* #b98a4b */
+  --brass-light: oklch(0.78 0.06 80); /* #d8b483 */
+  --gain: oklch(0.82 0.1 158); /* #8fd6ac */
+  --hero-from: oklch(0.19 0.02 160); /* #0f2019 */
+  --hero-to: oklch(0.27 0.03 160); /* #14312b */
 }
 
 @layer base {
@@ -120,6 +135,18 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+/* Home hero background — deep forest gradient with a soft brass glow. */
+@utility hero-surface {
+  background-color: var(--hero-to);
+  background-image:
+    radial-gradient(
+      120% 90% at 85% -10%,
+      color-mix(in oklab, var(--hero-to) 55%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--hero-from), var(--hero-to));
 }
 
 @utility chart-lines {
@@ -162,5 +189,62 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* Home hero market card — line draw-in + live pulse. */
+@keyframes hero-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes hero-live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.hero-live-dot {
+  animation: hero-live-pulse 2s ease-in-out infinite;
+}
+
+/* Hero market-card chart primitives. */
+.hero-chart-grid {
+  stroke: color-mix(in oklab, white 8%, transparent);
+}
+.hero-chart-line {
+  fill: none;
+  stroke: var(--silver);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hero-chart-dot {
+  fill: #fff;
+  stroke: var(--brass-light);
+  stroke-width: 2;
+}
+.hero-chart-axis {
+  fill: var(--silver-deep);
+  font-family: var(--font-plex);
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-line-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: hero-line-draw 1.6s ease forwards 0.15s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-live-dot {
+    animation: none;
   }
 }
