@@ -27,6 +27,24 @@ function pct(now: number, base: number) {
   return ((now - base) / base) * 100;
 }
 
+/**
+ * Round a trailing-12-month move down to the nearest 5% (min 5) so headline
+ * copy like "over 75%" is never an overstatement as the live price drifts.
+ */
+function yearStep(changePct: number) {
+  return Math.max(5, Math.floor(Math.abs(changePct) / 5) * 5);
+}
+
+/** Announcement-bar phrasing: "up over 75%" / "down about 10%". */
+export function yearMove(changePct: number): string {
+  return `${changePct < 0 ? "down about" : "up over"} ${yearStep(changePct)}%`;
+}
+
+/** Hero headline phrasing: "has climbed over 75%" / "has slipped about 10%". */
+export function yearHeadline(changePct: number): string {
+  return `has ${changePct < 0 ? "slipped about" : "climbed over"} ${yearStep(changePct)}%`;
+}
+
 export function useMetals(): Metals {
   const [data, setData] = useState<Metals>(FALLBACK);
 

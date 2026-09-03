@@ -58,6 +58,12 @@ export function HeroMarketCard() {
     return { line, area, last: pts[pts.length - 1], gridValues, y };
   }, [silver, changePct]);
 
+  // The real trailing-12-month reference price the change is measured from —
+  // the same anchor the trend line uses. Shown in the footnote so the % is
+  // grounded in a concrete "a year ago" figure rather than reading as static.
+  const anchorPrice =
+    changePct == null ? BASELINE.silver : silver / (1 + changePct / 100);
+
   // Trailing-12-month change: whole number, sign-aware arrow + colour, always
   // with the window label. Null (no reference resolved) → no badge at all;
   // never fall back to a stale or invented figure.
@@ -190,9 +196,9 @@ export function HeroMarketCard() {
       </div>
 
       <p className="mt-3 font-plex text-[0.62rem] leading-relaxed text-silver-deep/85">
-        Trend line is illustrative; endpoints reflect the trailing-12-month reference and the
-        current price. Prices update during market hours. Past performance does not guarantee
-        future results.
+        About ${anchorPrice.toFixed(2)}/oz a year ago, about ${silver.toFixed(2)} now; the trend
+        line between is illustrative. Prices update during market hours. Past performance does not
+        guarantee future results.
       </p>
     </div>
   );
