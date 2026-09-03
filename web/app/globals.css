@@ -42,6 +42,7 @@
   --color-brass: var(--brass);
   --color-brass-light: var(--brass-light);
   --color-gain: var(--gain);
+  --color-loss: var(--loss);
   --color-hero-from: var(--hero-from);
   --color-hero-to: var(--hero-to);
 
@@ -100,7 +101,8 @@
   /* Home hero (Phase 4). Brass on deep forest, mint for positive change. */
   --brass: oklch(0.646 0.088 78); /* #b98a4b */
   --brass-light: oklch(0.78 0.06 80); /* #d8b483 */
-  --gain: oklch(0.82 0.1 158); /* #8fd6ac */
+  --gain: oklch(0.82 0.1 158); /* #8fd6ac — positive change */
+  --loss: oklch(0.72 0.13 25); /* #e59a86 — negative change, muted terracotta */
   --hero-from: oklch(0.19 0.02 160); /* #0f2019 */
   --hero-to: oklch(0.27 0.03 160); /* #14312b */
 }

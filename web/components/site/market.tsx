@@ -5,29 +5,50 @@ import { useEffect, useState } from "react";
 export const BASELINE = { silver: 37.37, gold: 2480 };
 
 /** Conservative fallbacks rendered on the server so there is no layout shift. */
-const FALLBACK = { silver: 65.4, gold: 3320 };
+const FALLBACK: Metals = {
+  silver: 65.4,
+  gold: 3320,
+  live: false,
+  changePct: null,
+  asOf: null,
+};
 
-export type Metals = { silver: number; gold: number; live: boolean };
+export type Metals = {
+  silver: number;
+  gold: number;
+  live: boolean;
+  /** Server-computed trailing-12-month silver change (%), or null if unknown. */
+  changePct: number | null;
+  /** ISO timestamp the server snapshot was taken, or null on the fallback. */
+  asOf: string | null;
+};
 
 function pct(now: number, base: number) {
   return ((now - base) / base) * 100;
 }
 
 export function useMetals(): Metals {
-  const [data, setData] = useState<Metals>({ ...FALLBACK, live: false });
+  const [data, setData] = useState<Metals>(FALLBACK);
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
       try {
-        const res = await fetch("https://api.gold-api.com/price/XAG");
-        const res2 = await fetch("https://api.gold-api.com/price/XAU");
-        if (!res.ok || !res2.ok) return;
-        const silver = await res.json();
-        const gold = await res2.json();
-        const s = Number(silver?.price);
-        const g = Number(gold?.price);
-        if (!cancelled && s > 0 && g > 0) setData({ silver: s, gold: g, live: true });
+        // Cached, server-side snapshot: spot prices + trailing-12-month change.
+        const res = await fetch("/api/market");
+        if (!res.ok) return;
+        const j = await res.json();
+        const s = Number(j?.silver);
+        const g = Number(j?.gold);
+        if (!cancelled && s > 0 && g > 0) {
+          setData({
+            silver: s,
+            gold: g,
+            live: Boolean(j?.live),
+            changePct: j?.changePct == null ? null : Number(j.changePct),
+            asOf: typeof j?.asOf === "string" ? j.asOf : null,
+          });
+        }
       } catch {
         /* keep fallback figures */
       }
