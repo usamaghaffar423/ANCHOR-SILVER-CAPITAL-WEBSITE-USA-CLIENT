@@ -30,6 +30,10 @@ export async function GET() {
     gold: spot.gold,
     ratio: spot.gold / spot.silver,
     changePct,
+    // The real ~12-month-ago silver price the change is measured from (USD/oz),
+    // or null when it can't be resolved. Clients show this as the concrete
+    // "a year ago" figure and derive their own % from it.
+    refPrice: ref && ref.price > 0 ? ref.price : null,
     asOf: new Date().toISOString(),
     live: spot.live,
   });

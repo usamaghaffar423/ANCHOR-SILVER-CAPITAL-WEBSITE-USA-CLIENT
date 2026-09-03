@@ -8,7 +8,8 @@ import { tursoConfigured, tursoBatch } from "@/lib/db/turso";
  * Priority:
  *   a) historical metals API (METALS_API_KEY + METALS_PROVIDER), dated ~365d ago
  *   b) closest row within ±45 days of that date in `silver_price_history` (Turso)
- *   c) null  → /api/market returns changePct: null and the hero hides its badge
+ *   c) null  → /api/market returns changePct/refPrice: null and clients fall
+ *      back to the documented BASELINE reference (see components/site/market.tsx)
  *
  * Cached for 24h — it barely moves day to day, so it is never fetched per
  * request; the hourly /api/market revalidation reuses this cached value.
