@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
  * Documented ~12-month-ago reference prices (USD/oz). Used only as the fallback
  * when the server can't resolve a real historical price — see
  * `lib/silver-history.ts`, whose SEED matches `BASELINE.silver`.
+ * Silver verified 2026-09-03 against exchange-rates.org / cmi-gold-silver.com:
+ * spot on 2025-09-03 was ~$41.07 (early-Sep 2025 ranged $40.6-41.3).
  */
-export const BASELINE = { silver: 37.37, gold: 2480 };
+export const BASELINE = { silver: 41.07, gold: 2480 };
 
 /** Conservative fallbacks rendered on the server so there is no layout shift. */
 const FALLBACK: Metals = {
