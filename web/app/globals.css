@@ -249,6 +249,11 @@
   .hero-live-dot {
     animation: none;
   }
+  /* Reveal always renders its content in the HTML — with the animation off,
+     reduced-motion users just get the final state, no fade or slide. */
+  .reveal-in {
+    animation: none;
+  }
 }
 
 /*

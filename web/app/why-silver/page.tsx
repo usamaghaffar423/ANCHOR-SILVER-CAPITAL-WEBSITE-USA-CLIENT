@@ -4,6 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { Banner } from "@/components/site/Banner";
+import { FeatureRow } from "@/components/site/FeatureRow";
 import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -26,49 +27,65 @@ export default function WhySilver() {
       />
 
       <Section>
-        <H2>What Silver Actually Is</H2>
-        <Prose className="mt-5">
-          <p>
-            Silver is the most electrically conductive element on earth, the best thermal conductor
-            of any metal, and the most reflective. These aren't marketing claims — they're physical
-            properties that make silver irreplaceable in the modern economy, from solar panels to
-            electronics to medical devices. It has been money for longer than any currency alive
-            today, and it doesn't require anyone's promise to hold its value.
-          </p>
-        </Prose>
+        <FeatureRow
+          image="/images/silver-industrial-uses.jpg"
+          alt="A .999 fine silver bar beside a solar cell and a circuit board on dark green."
+        >
+          <H2>What Silver Actually Is</H2>
+          <Prose className="mt-5">
+            <p>
+              Silver is the most electrically conductive element on earth, the best thermal conductor
+              of any metal, and the most reflective. These aren't marketing claims — they're physical
+              properties that make silver irreplaceable in the modern economy, from solar panels to
+              electronics to medical devices. It has been money for longer than any currency alive
+              today, and it doesn't require anyone's promise to hold its value.
+            </p>
+          </Prose>
+        </FeatureRow>
       </Section>
 
       <Section tone="muted">
-        <H2>The Supply Deficit</H2>
-        <p className="mt-6 font-display text-3xl text-primary md:text-4xl">
-          Six consecutive years of global supply deficit
-        </p>
-        <Prose className="mt-5">
-          <p>
-            Global silver mines produce roughly 820–850 million ounces annually. Total demand has
-            consistently outpaced that. The difference comes from drawing down above-ground
-            stockpiles — stockpiles that are finite. When they run low, price is the only mechanism
-            left to ration supply.
+        <FeatureRow
+          image="/images/silver-supply-deficit.jpg"
+          alt="Dimly lit vault shelves of stacked silver bars, some shelves partly emptied."
+          reverse
+        >
+          <H2>The Supply Deficit</H2>
+          <p className="mt-6 font-display text-3xl text-primary md:text-4xl">
+            Six consecutive years of global supply deficit
           </p>
-          <p>
-            The full picture is on{" "}
-            <Link className="font-semibold text-primary underline" href="/silver-supply">
-              the silver supply deficit
-            </Link>{" "}
-            page.
-          </p>
-        </Prose>
+          <Prose className="mt-5">
+            <p>
+              Global silver mines produce roughly 820–850 million ounces annually. Total demand has
+              consistently outpaced that. The difference comes from drawing down above-ground
+              stockpiles — stockpiles that are finite. When they run low, price is the only mechanism
+              left to ration supply.
+            </p>
+            <p>
+              The full picture is on{" "}
+              <Link className="font-semibold text-primary underline" href="/silver-supply">
+                the silver supply deficit
+              </Link>{" "}
+              page.
+            </p>
+          </Prose>
+        </FeatureRow>
       </Section>
 
       <Section>
-        <H2>The Currency Problem</H2>
-        <Prose className="mt-5">
-          <p>
-            The dollar has lost the vast majority of its purchasing power since 1913. Every year, a
-            dollar buys a little less than it did the year before. Physical silver doesn't work that
-            way. An ounce is an ounce, regardless of what happens to the currency it's priced in.
-          </p>
-        </Prose>
+        <FeatureRow
+          image="/images/silver-vs-currency.jpg"
+          alt="A solid silver bar next to a stack of worn, faded old banknotes."
+        >
+          <H2>The Currency Problem</H2>
+          <Prose className="mt-5">
+            <p>
+              The dollar has lost the vast majority of its purchasing power since 1913. Every year, a
+              dollar buys a little less than it did the year before. Physical silver doesn't work that
+              way. An ounce is an ounce, regardless of what happens to the currency it's priced in.
+            </p>
+          </Prose>
+        </FeatureRow>
       </Section>
 
       <Section tone="muted">
