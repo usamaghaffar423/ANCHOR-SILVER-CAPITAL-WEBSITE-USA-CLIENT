@@ -19,11 +19,11 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLE} (date TEXT PRIMARY KEY
 
 /**
  * One real anchor so the DB path works before a year of daily logging exists.
- * This is the project's established trailing-12-month reference (see the hero
- * `BASELINE` and CLAUDE.md: "the market % must trace to a real reference").
- * Verify against a historical source (LBMA / Kitco) and adjust if needed.
+ * Silver spot on 2025-09-03 ≈ $41.07/oz (early-Sep 2025 range $40.6–41.3;
+ * corroborated by exchange-rates.org and cmi-gold-silver.com "started the month
+ * at $40.81"). Refresh this if the DB is set up on a materially different date.
  */
-const SEED = { date: "2025-09-03", price: 37.37 };
+const SEED = { date: "2025-09-03", price: 41.07 };
 
 /** Reject a "closest" row that is really months off the 365-day target. */
 const MATCH_WINDOW_DAYS = 45;
