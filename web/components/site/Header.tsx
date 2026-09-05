@@ -5,16 +5,19 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "../brand/AnchorMark";
 import { NAV, SITE } from "@/lib/site";
+import { useMarket, yearMove } from "@/components/site/market";
 import { buttonStyles } from "./ui";
 
 function TopBar() {
   const [open, setOpen] = useState(true);
+  const { silver, silverYear, goldYear } = useMarket();
   if (!open) return null;
   return (
     <div className="bg-ink px-5 text-silver">
       <div className="mx-auto flex h-auto min-h-9 w-full max-w-6xl items-center justify-between gap-3 py-1 text-[0.65rem] leading-tight tracking-wide sm:h-9 sm:text-[0.7rem] sm:leading-none">
         <p className="whitespace-normal sm:truncate">
-          Silver up over 75% in the past 12 months. Gold up over 30%.{" "}
+          Silver {yearMove(silverYear)} over 12 months (${silver.toFixed(0)}/oz). Gold{" "}
+          {yearMove(goldYear)}.{" "}
           <span className="hidden sm:inline">Call us: </span>
           <a href={SITE.phoneHref} className="font-mono underline underline-offset-2">
             {SITE.phone}

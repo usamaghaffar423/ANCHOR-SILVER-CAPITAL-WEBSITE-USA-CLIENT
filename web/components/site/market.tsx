@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+/**
+ * Documented ~12-month-ago reference prices (USD/oz). Used only as the fallback
+ * when the server can't resolve a real historical price — see
+ * `lib/silver-history.ts`, whose SEED matches `BASELINE.silver`.
+ */
 export const BASELINE = { silver: 37.37, gold: 2480 };
 
 /** Conservative fallbacks rendered on the server so there is no layout shift. */
@@ -10,6 +15,7 @@ const FALLBACK: Metals = {
   gold: 3320,
   live: false,
   changePct: null,
+  refPrice: null,
   asOf: null,
 };
 
@@ -19,12 +25,28 @@ export type Metals = {
   live: boolean;
   /** Server-computed trailing-12-month silver change (%), or null if unknown. */
   changePct: number | null;
+  /** The real silver price ~12 months ago the change is measured from, or null. */
+  refPrice: number | null;
   /** ISO timestamp the server snapshot was taken, or null on the fallback. */
   asOf: string | null;
 };
 
 function pct(now: number, base: number) {
   return ((now - base) / base) * 100;
+}
+
+/** Whole-number, sign-aware trailing-12-month move: "up 78%" / "down 4%" / "flat". */
+export function yearMove(changePct: number): string {
+  const r = Math.round(changePct);
+  if (r === 0) return "flat";
+  return `${r > 0 ? "up" : "down"} ${Math.abs(r)}%`;
+}
+
+/** Hero headline verb phrase: "has climbed 78%" / "has slipped 4%" / "has held flat". */
+export function yearHeadline(changePct: number): string {
+  const r = Math.round(changePct);
+  if (r === 0) return "has held roughly flat";
+  return `has ${r > 0 ? "climbed" : "slipped"} ${Math.abs(r)}%`;
 }
 
 export function useMetals(): Metals {
@@ -46,6 +68,7 @@ export function useMetals(): Metals {
             gold: g,
             live: Boolean(j?.live),
             changePct: j?.changePct == null ? null : Number(j.changePct),
+            refPrice: Number(j?.refPrice) > 0 ? Number(j.refPrice) : null,
             asOf: typeof j?.asOf === "string" ? j.asOf : null,
           });
         }
@@ -66,10 +89,16 @@ export function useMetals(): Metals {
 
 export function useMarket() {
   const m = useMetals();
+  // One source of truth for the trailing-12-month silver move: the real price
+  // ~12 months ago when the server resolved one, else the documented BASELINE.
+  // Every consumer (hero headline, hero card badge, announcement bar, market
+  // widgets) derives its % from this same reference so they never disagree.
+  const silverRef = m.refPrice && m.refPrice > 0 ? m.refPrice : BASELINE.silver;
   return {
     ...m,
     ratio: m.gold / m.silver,
-    silverYear: pct(m.silver, BASELINE.silver),
+    silverRef,
+    silverYear: pct(m.silver, silverRef),
     goldYear: pct(m.gold, BASELINE.gold),
   };
 }

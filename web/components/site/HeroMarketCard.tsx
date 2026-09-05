@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useMarket, BASELINE } from "@/components/site/market";
+import { useMarket } from "@/components/site/market";
 
 /**
  * Home hero market card. Live spot prices, the gold/silver ratio and the
@@ -32,14 +32,13 @@ const X_LABELS = ["12 mo ago", "6 mo ago", "Now"] as const;
 
 export function HeroMarketCard() {
   const m = useMarket();
-  const { silver, gold, ratio, live, changePct } = m;
+  const { silver, gold, ratio, live, silverYear, silverRef } = m;
 
   const chart = useMemo(() => {
     const current = silver;
-    // Anchor the trend to the real trailing-12-month price when we have it;
-    // otherwise fall back to the documented reference constant.
-    const anchor =
-      changePct == null ? BASELINE.silver : current / (1 + changePct / 100);
+    // Anchor the trend to the same ~12-month-ago reference every other figure
+    // on the page uses (real resolved price, else the documented BASELINE).
+    const anchor = silverRef;
     const prices = TREND_SHAPE.map((s) => anchor + s * (current - anchor));
     const { lo, hi } = niceBounds(Math.min(...prices), Math.max(...prices));
 
@@ -56,34 +55,25 @@ export function HeroMarketCard() {
     for (let v = lo; v <= hi; v += 10) gridValues.push(v);
 
     return { line, area, last: pts[pts.length - 1], gridValues, y };
-  }, [silver, changePct]);
+  }, [silver, silverRef]);
 
   // Trailing-12-month change: whole number, sign-aware arrow + colour, always
-  // with the window label. Null (no reference resolved) → no badge at all;
-  // never fall back to a stale or invented figure.
-  const pctRounded = changePct == null ? null : Math.round(changePct);
-  const dir: "up" | "down" | "flat" | null =
-    pctRounded == null
-      ? null
-      : pctRounded > 0
-        ? "up"
-        : pctRounded < 0
-          ? "down"
-          : "flat";
-  const badge =
-    pctRounded == null
-      ? null
-      : {
-          text: `${dir === "up" ? "▲" : dir === "down" ? "▼" : "—"} ${
-            pctRounded > 0 ? "+" : ""
-          }${pctRounded}% · past 12 months`,
-          cls:
-            dir === "up"
-              ? "text-gain bg-gain/15"
-              : dir === "down"
-                ? "text-loss bg-loss/15"
-                : "text-silver bg-white/10",
-        };
+  // with the window label. Derived from the shared reference so it matches the
+  // hero headline and the announcement bar exactly.
+  const pctRounded = Math.round(silverYear);
+  const dir: "up" | "down" | "flat" =
+    pctRounded > 0 ? "up" : pctRounded < 0 ? "down" : "flat";
+  const badge = {
+    text: `${dir === "up" ? "▲" : dir === "down" ? "▼" : "—"} ${
+      pctRounded > 0 ? "+" : ""
+    }${pctRounded}% · past 12 months`,
+    cls:
+      dir === "up"
+        ? "text-gain bg-gain/15"
+        : dir === "down"
+          ? "text-loss bg-loss/15"
+          : "text-silver bg-white/10",
+  };
 
   return (
     <div className="rounded-xl border border-white/15 bg-white/[0.04] p-5 backdrop-blur-sm sm:p-6">
@@ -104,11 +94,9 @@ export function HeroMarketCard() {
         <span className="font-fraunces text-4xl font-light leading-none text-white sm:text-[2.6rem]">
           ${silver.toFixed(2)}
         </span>
-        {badge && (
-          <span className="font-plex text-[0.8rem]">
-            <span className={`rounded px-1.5 py-0.5 ${badge.cls}`}>{badge.text}</span>
-          </span>
-        )}
+        <span className="font-plex text-[0.8rem]">
+          <span className={`rounded px-1.5 py-0.5 ${badge.cls}`}>{badge.text}</span>
+        </span>
       </div>
 
       <svg
@@ -118,13 +106,9 @@ export function HeroMarketCard() {
         viewBox={`0 0 ${VB.w} ${VB.h}`}
         preserveAspectRatio="xMidYMid meet"
         role="img"
-        aria-label={
-          pctRounded == null
-            ? "Silver spot price. Illustrative trend."
-            : `Silver spot price, ${
-                dir === "down" ? "down" : dir === "up" ? "up" : "little changed"
-              } about ${Math.abs(pctRounded)} percent over the last 12 months. Illustrative trend.`
-        }
+        aria-label={`Silver spot price, ${
+          dir === "down" ? "down" : dir === "up" ? "up" : "little changed"
+        } about ${Math.abs(pctRounded)} percent over the last 12 months. Illustrative trend.`}
       >
         <defs>
           <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
@@ -190,9 +174,9 @@ export function HeroMarketCard() {
       </div>
 
       <p className="mt-3 font-plex text-[0.62rem] leading-relaxed text-silver-deep/85">
-        Trend line is illustrative; endpoints reflect the trailing-12-month reference and the
-        current price. Prices update during market hours. Past performance does not guarantee
-        future results.
+        About ${silverRef.toFixed(2)}/oz a year ago, about ${silver.toFixed(2)} now; the trend
+        line between is illustrative. Prices update during market hours. Past performance does not
+        guarantee future results.
       </p>
     </div>
   );

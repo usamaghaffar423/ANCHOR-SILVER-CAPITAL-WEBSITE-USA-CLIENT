@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
+import { HeroHeadline } from "@/components/site/HeroHeadline";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
@@ -190,10 +191,7 @@ export default function Home() {
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0">
             <p className="eyebrow text-brass-light">The metal that&apos;s quietly climbing</p>
-            <h1 className="mt-3.5 font-fraunces text-[1.9rem] font-light leading-[1.1] tracking-[-0.01em] text-white sm:text-[2.4rem] lg:text-[3rem] lg:leading-[1.08]">
-              Silver has climbed over 75% in a year — and the supply deficit{" "}
-              <em className="not-italic text-brass-light">hasn&apos;t&nbsp;closed.</em>
-            </h1>
+            <HeroHeadline />
             <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-silver md:text-[1.08rem]">
               Own real metal in your retirement, backed by a six-year supply shortfall — not a
               promise. Start with the free investor guide.
