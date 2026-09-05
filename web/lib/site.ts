@@ -15,6 +15,15 @@ export const SITE = {
   hours: "Monday–Friday 8am–6pm Pacific",
 } as const;
 
+/**
+ * Gate for using Scottsdale Mint/Silver-branded imagery (lion crest, "Scottsdale"
+ * wordmark visible) as a prominent/centerpiece shot. While false, every branded
+ * image is treated as a background/texture ONLY — always behind a scrim, never a
+ * centerpiece product shot. Flip to true only once the client confirms they
+ * actually carry Scottsdale product; that promotes those placements.
+ */
+export const ALLOW_BRANDED_PROMINENT = false;
+
 export const NAV = [
   { to: "/why-silver", label: "Why Silver" },
   { to: "/silver-ira", label: "Silver IRA" },

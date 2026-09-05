@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Banner } from "@/components/site/Banner";
 import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -57,6 +58,34 @@ export default function SupplyStory() {
           )}
         </Section>
       ))}
+
+      <Section>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <Banner
+            image="/images/silver-cast-portrait.jpg"
+            alt="Freshly cast silver bars."
+            focal="center"
+            scrim="band"
+            tint
+            aspect="aspect-[3/4]"
+            contentAlign="left"
+            className="rounded-xl"
+          >
+            <p className="font-plex text-[0.7rem] uppercase tracking-[0.12em] text-brass-light">
+              Freshly Cast
+            </p>
+          </Banner>
+          <div>
+            <H2>What a Deficit Looks Like Up Close</H2>
+            <Prose className="mt-5">
+              <p>
+                Every bar here already has a buyer. Above-ground stockpiles — not new mine
+                supply — are what&apos;s closing the gap, and stockpiles run out.
+              </p>
+            </Prose>
+          </div>
+        </div>
+      </Section>
 
       <Section tone="sage">
         <H2 className="text-primary-foreground">What This Means for Your Savings</H2>

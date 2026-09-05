@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Banner } from "@/components/site/Banner";
 import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -84,6 +85,27 @@ export default function WhySilver() {
           All figures are historical. Past performance does not guarantee future results.
         </Disclaimer>
       </Section>
+
+      <Banner
+        image="/images/silver-cast-landscape.jpg"
+        alt="Cast silver bars stacked in a vault."
+        focal="right center"
+        scrim="side"
+        tint
+        aspect="aspect-[4/5] sm:aspect-[21/9]"
+        contentAlign="left"
+      >
+        <p className="eyebrow text-brass-light">The Supply Story</p>
+        <h2 className="mt-3 font-fraunces text-3xl font-light text-white sm:text-4xl">
+          Six Years of Deficit. Stockpiles Drawn Down.
+        </h2>
+        <Link
+          href="/silver-supply"
+          className="mt-5 inline-block text-sm font-semibold text-brass-light underline underline-offset-4"
+        >
+          See the full supply picture →
+        </Link>
+      </Banner>
 
       <Section tone="sage">
         <H2 className="text-primary-foreground">Ready to Put Real Weight Behind Your Savings?</H2>

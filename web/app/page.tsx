@@ -6,6 +6,7 @@ import { CallbackForm } from "@/components/site/CallbackForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
+import { Banner } from "@/components/site/Banner";
 import { SITE, pageMeta } from "@/lib/site";
 
 const texSilver = "/assets/tex-silver.jpg";
@@ -291,6 +292,31 @@ export default function Home() {
           </Reveal>
         </div>
       </Section>
+
+      <Banner
+        image="/images/silver-bars-duo-dark.jpg"
+        mobileImage="/images/silver-bars-stacked.jpg"
+        alt="Two .999 fine silver bars in dramatic light."
+        focal="center"
+        scrim="band"
+        tint
+        aspect="aspect-[4/5] sm:aspect-[16/6]"
+        contentAlign="center"
+      >
+        <p className="eyebrow text-brass-light">Own It Outright</p>
+        <h2 className="mt-3 font-fraunces text-3xl font-light text-white sm:text-4xl">
+          Real Metal. In Your Name. In Your Hands.
+        </h2>
+        <p className="mt-4 text-base leading-relaxed text-silver sm:text-lg">
+          No paper promises — silver you can hold, insured and delivered to your door.
+        </p>
+        <Link
+          href="/get-started"
+          className="mt-6 inline-flex items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
+        >
+          Get the Free Silver Guide
+        </Link>
+      </Banner>
 
       <Section tone="muted" className="md:py-24">
         <H2>The Case for Physical Silver</H2>

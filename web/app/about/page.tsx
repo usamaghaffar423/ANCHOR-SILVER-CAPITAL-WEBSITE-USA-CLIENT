@@ -2,8 +2,28 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { Gallery } from "@/components/site/Gallery";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
+
+const galleryImages = [
+  {
+    src: "/images/silver-coins-assorted.jpg",
+    alt: "Assortment of one-ounce silver bullion coins from mints around the world.",
+  },
+  {
+    src: "/images/silver-rounds-loose.jpg",
+    alt: "Stack of .999 fine silver rounds fanned on a light surface.",
+  },
+  {
+    src: "/images/silver-bars-duo-dark.jpg",
+    alt: "Two .999 fine silver bars in dramatic light.",
+  },
+  {
+    src: "/images/silver-cast-landscape.jpg",
+    alt: "Cast silver bars stacked in a vault.",
+  },
+];
 
 export const metadata: Metadata = pageMeta({
   title: "About Anchor Silver Capital — Santa Monica Silver Dealer",
@@ -87,6 +107,14 @@ export default function About() {
             </Card>
           ))}
         </ul>
+      </Section>
+
+      <Section tone="light">
+        <H2>A Closer Look</H2>
+        <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
+          A sample of the physical silver our clients hold — rounds, bars, and bullion coins.
+        </p>
+        <Gallery className="mt-10" images={galleryImages} />
       </Section>
 
       <Section tone="muted">

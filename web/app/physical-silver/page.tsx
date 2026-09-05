@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
+import { Banner } from "@/components/site/Banner";
+import { ImageFrame } from "@/components/site/ImageFrame";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
-import { breadcrumbSchema, pageMeta } from "@/lib/site";
+import { ALLOW_BRANDED_PROMINENT, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 const silverEagle = "/assets/silver-eagle.jpg";
 const morganDollar = "/assets/morgan-dollar.jpg";
@@ -83,6 +85,20 @@ export default function PhysicalSilver() {
         subtitle="Skip the paper derivatives and the promises. Own physical silver you can hold — insured, delivered, yours."
       />
 
+      <Banner
+        image="/images/silver-coins-assorted.jpg"
+        alt="Assortment of one-ounce silver bullion coins from mints around the world."
+        focal="center"
+        scrim="veil"
+        aspect="aspect-[3/4] sm:aspect-[16/9]"
+        contentAlign="left"
+      >
+        <p className="eyebrow text-brass-light">Held, Not Promised</p>
+        <h2 className="mt-3 font-fraunces text-3xl font-light text-white sm:text-4xl">
+          Government-Minted. Fully Insured. Yours.
+        </h2>
+      </Banner>
+
       <Section>
         <H2>Products We Offer</H2>
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -105,6 +121,28 @@ export default function PhysicalSilver() {
           Product availability and pricing change with the market. Your specialist confirms both
           before any order.
         </p>
+      </Section>
+
+      <Section>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <H2>Every Order, The Way You&apos;d Expect</H2>
+            <Prose className="mt-5">
+              <p>
+                Rounds and bars ship exactly as pictured — brilliant uncirculated, verified
+                weight and purity, protective packaging. What you order is what arrives.
+              </p>
+            </Prose>
+          </div>
+          <ImageFrame
+            image="/images/silver-rounds-loose.jpg"
+            alt="Stack of .999 fine silver rounds with a lion medallion design fanned on a light surface."
+            width={1600}
+            height={1067}
+            scrim={ALLOW_BRANDED_PROMINENT ? "none" : "veil"}
+            sizes="(min-width: 1024px) 480px, 90vw"
+          />
+        </div>
       </Section>
 
       <Section tone="muted">

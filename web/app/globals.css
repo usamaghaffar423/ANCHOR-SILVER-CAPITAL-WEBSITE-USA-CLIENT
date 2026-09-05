@@ -250,3 +250,35 @@
     animation: none;
   }
 }
+
+/*
+ * Secondary imagery — banners, section backgrounds, gallery (silver photo pass).
+ * Reuses the hero's own forest tokens so raw stock reads as one on-brand family.
+ * Never hardcode overlay colors in a component — use these utilities.
+ */
+@utility scrim-band {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--hero-from) 55%, transparent),
+    color-mix(in oklab, var(--hero-to) 90%, transparent)
+  );
+}
+
+@utility scrim-side {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--hero-from) 94%, transparent) 0%,
+    color-mix(in oklab, var(--hero-from) 45%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+@utility scrim-veil {
+  background-color: color-mix(in oklab, var(--hero-from) 45%, transparent);
+}
+
+/* Unifies color on TEXTURE/background image use only. Never apply to a product
+   shot where the visitor should see true metal color. */
+@utility brand-tint {
+  filter: saturate(0.82) contrast(1.03) brightness(0.9);
+}
