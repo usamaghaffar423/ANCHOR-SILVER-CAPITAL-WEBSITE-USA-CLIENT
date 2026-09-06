@@ -89,18 +89,24 @@ export default function WhySilver() {
       </Section>
 
       <Section tone="muted">
-        <H2>The Gold-Silver Ratio</H2>
-        <Prose className="mt-5">
-          <p>
-            The gold-to-silver ratio measures how many ounces of silver it takes to buy one ounce of
-            gold. The long-run historical average sits around 60:1. When the ratio runs meaningfully
-            above that, silver has historically been cheap relative to gold — and has closed that
-            gap dramatically when it corrects.
-          </p>
-        </Prose>
-        <Disclaimer>
-          All figures are historical. Past performance does not guarantee future results.
-        </Disclaimer>
+        <FeatureRow
+          image="/images/gold-silver-ratio.jpg"
+          alt="A gold bar and a silver bar resting side by side on dark green cloth."
+          reverse
+        >
+          <H2>The Gold-Silver Ratio</H2>
+          <Prose className="mt-5">
+            <p>
+              The gold-to-silver ratio measures how many ounces of silver it takes to buy one ounce of
+              gold. The long-run historical average sits around 60:1. When the ratio runs meaningfully
+              above that, silver has historically been cheap relative to gold — and has closed that
+              gap dramatically when it corrects.
+            </p>
+          </Prose>
+          <Disclaimer>
+            All figures are historical. Past performance does not guarantee future results.
+          </Disclaimer>
+        </FeatureRow>
       </Section>
 
       <Banner
