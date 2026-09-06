@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { Anchor, Lock, Shield, Star } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
-import { CallbackForm } from "@/components/site/CallbackForm";
+import { FeatureRow } from "@/components/site/FeatureRow";
+import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
-import { Banner } from "@/components/site/Banner";
 import { SITE, pageMeta } from "@/lib/site";
-
-const texSilver = "/assets/tex-silver.jpg";
-const texCurrency = "/assets/tex-currency.jpg";
-const texVault = "/assets/tex-vault.jpg";
 
 export const metadata: Metadata = pageMeta({
   title: "Silver IRA Rollovers & Physical Silver | Anchor Silver Capital",
@@ -71,46 +69,48 @@ function DocIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function ShieldIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...iconProps} className={className}>
-      <path d="M12 2.8 20 6v6.2c0 4.4-3.2 7.6-8 9-4.8-1.4-8-4.6-8-9V6Z" />
-      <path d="M9.2 12.2 11.3 14.3l3.6-3.9" />
-    </svg>
-  );
-}
-
-function ScaleIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...iconProps} className={className}>
-      <path d="M12 3v17M6 20h12M4 8h16" />
-      <path d="M4 8 1.8 13.4a3.6 3.6 0 0 0 4.4 0Z" />
-      <path d="M20 8l2.2 5.4a3.6 3.6 0 0 1-4.4 0Z" />
-    </svg>
-  );
-}
-
 /* ---------------------------------- data ---------------------------------- */
 
-const whyColumns = [
+const caseRows = [
   {
-    title: "It Holds Its Ground",
-    body: "No counterparty. No printing press. Silver is what it is, whatever the dollar does.",
-    texture: texSilver,
-    Icon: AnchorGlyph,
+    n: "01",
+    heading: "It Holds Its Ground",
+    body: "No counterparty. No printing press. Silver is what it is, whatever the dollar does. An ounce is an ounce — it doesn't need anyone's promise to hold its value.",
+    image: "/images/silver-vs-currency.jpg",
+    alt: "A solid silver bar beside worn old banknotes on a dark green surface.",
+    reverse: false,
   },
   {
-    title: "Supply Can't Keep Up",
-    body: "Six straight years of global mine deficit while industrial demand keeps climbing.",
-    texture: texCurrency,
-    Icon: ScaleIcon,
+    n: "02",
+    heading: "Supply Can't Keep Up",
+    body: "Six straight years of global mine deficit while industrial demand keeps climbing — solar panels, EVs, AI infrastructure. The shortfall is being covered by drawing down finite stockpiles.",
+    image: "/images/silver-supply-deficit.jpg",
+    alt: "Dimly lit vault shelves of silver bars, some shelves partly emptied.",
+    reverse: true,
   },
   {
-    title: "Outside the System",
-    body: "Held outside the banking system. No bail-in risk, no institution to stay solvent.",
-    texture: texVault,
-    Icon: ShieldIcon,
+    n: "03",
+    heading: "Outside the System",
+    body: "Held outside the banking system. No bail-in risk, no counterparty, no institution to stay solvent. Physical silver is nobody's liability.",
+    image: "/images/silver-industrial-uses.jpg",
+    alt: "A .999 fine silver bar beside a solar cell and circuit board on dark green.",
+    reverse: false,
   },
+];
+
+const trustCells = [
+  { Icon: Shield, name: "BBB Accredited A+", role: "Better Business Bureau" },
+  { Icon: Lock, name: "Equity Trust Company", role: "IRA Custodian Partner" },
+  { Icon: Anchor, name: "Delaware Depository", role: "Storage Partner" },
+  { Icon: Star, name: "Fox · Yahoo · Newsmax", role: "As seen on" },
+];
+
+const compareRows: [string, string, string][] = [
+  ["Total fees", "35%–65%", "8%–15%"],
+  ["Pricing", "Hidden premiums", "All-in quote upfront"],
+  ["Approach", "High-pressure", "Education first"],
+  ["Focus", "Gold-first", "Silver-first"],
+  ["Quote in writing", "Rarely", "Always"],
 ];
 
 const steps = [
@@ -149,13 +149,6 @@ const testimonials = [
     name: "David K.",
     meta: "Business owner, Seattle WA",
   },
-];
-
-const trustBadges = [
-  "BBB Accredited — A+",
-  "Equity Trust Company",
-  "Delaware Depository",
-  "Fox Business · Yahoo Finance · Newsmax",
 ];
 
 function Stars({ className = "text-primary" }: { className?: string }) {
@@ -232,7 +225,19 @@ export default function Home() {
         <H2>Two Ways to Anchor Your Savings</H2>
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Reveal>
-            <Card className="h-full">
+            <Card className="h-full overflow-hidden">
+              <div className="relative -mx-6 -mt-6 mb-6 h-[220px]">
+                <Image
+                  src="/images/silver-cast-landscape.jpg"
+                  alt="Silver bars cast in dramatic light."
+                  fill
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  quality={78}
+                  loading="lazy"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-hero-from/35" aria-hidden="true" />
+              </div>
               <span className="grid h-14 w-14 place-items-center rounded-sm bg-sage-soft">
                 <AnchorGlyph className="h-8 w-8 text-primary" />
               </span>
@@ -261,7 +266,19 @@ export default function Home() {
             </Card>
           </Reveal>
           <Reveal delay={100}>
-            <Card className="h-full">
+            <Card className="h-full overflow-hidden">
+              <div className="relative -mx-6 -mt-6 mb-6 h-[220px]">
+                <Image
+                  src="/images/silver-coins-assorted.jpg"
+                  alt="Assortment of one-ounce silver bullion coins."
+                  fill
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  quality={78}
+                  loading="lazy"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-hero-from/20" aria-hidden="true" />
+              </div>
               <span className="grid h-14 w-14 place-items-center rounded-sm bg-sage-soft">
                 <BoxIcon className="h-8 w-8 text-primary" />
               </span>
@@ -291,54 +308,68 @@ export default function Home() {
         </div>
       </Section>
 
-      <Banner
-        image="/images/silver-bars-duo-dark.jpg"
-        mobileImage="/images/silver-bars-stacked.jpg"
-        alt="Two .999 fine silver bars in dramatic light."
-        focal="center"
-        scrim="band"
-        tint
-        aspect="aspect-[4/5] sm:aspect-[16/6]"
-        contentAlign="center"
-      >
-        <p className="eyebrow text-brass-light">Own It Outright</p>
-        <h2 className="mt-3 font-fraunces text-3xl font-light text-white sm:text-4xl">
-          Real Metal. In Your Name. In Your Hands.
-        </h2>
-        <p className="mt-4 text-base leading-relaxed text-silver sm:text-lg">
-          No paper promises — silver you can hold, insured and delivered to your door.
-        </p>
-        <Link
-          href="/get-started"
-          className="mt-6 inline-flex items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
-        >
-          Get the Free Silver Guide
-        </Link>
-      </Banner>
+      {/* Full-bleed feature banner (replaces the former "Own It Outright" block). */}
+      <section className="relative isolate flex items-center overflow-hidden py-14 sm:h-[420px] sm:py-0">
+        <Image
+          src="/images/silver-bars-duo-dark.jpg"
+          alt="Two .999 fine silver bars in dramatic light."
+          fill
+          sizes="100vw"
+          quality={78}
+          loading="lazy"
+          className="object-cover object-center"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-10 hidden sm:block"
+          style={{
+            background:
+              "linear-gradient(90deg, color-mix(in oklab, var(--hero-from) 96%, transparent) 0%, color-mix(in oklab, var(--hero-from) 70%, transparent) 55%, transparent 85%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-10 sm:hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, color-mix(in oklab, var(--hero-from) 88%, transparent), color-mix(in oklab, var(--hero-from) 80%, transparent))",
+          }}
+        />
+        <div className="relative z-20 mx-auto w-full max-w-6xl px-5 sm:px-10">
+          <div className="max-w-[600px]">
+            <p className="eyebrow text-brass-light">Real metal. Real ownership.</p>
+            <h2 className="mt-3.5 font-fraunces text-3xl font-light leading-[1.08] text-white sm:text-[2.6rem] lg:text-[3rem]">
+              Held in your name.
+              <br />
+              Insured. Viewable online.
+            </h2>
+            <p className="mt-4 max-w-[42ch] text-base leading-relaxed text-silver sm:text-[1.08rem]">
+              Your silver is stored at Delaware Depository — allocated to you, not pooled. You can
+              verify your holdings any time.
+            </p>
+            <Link
+              href="/get-started"
+              className="mt-7 inline-flex items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
+            >
+              Get the Free Silver Guide
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <Section tone="muted" className="md:py-24">
-        <H2>The Case for Physical Silver</H2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {whyColumns.map((c, i) => (
-            <Reveal key={c.title} delay={i * 80}>
-              <div className="relative h-full overflow-hidden rounded-md border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-                <img
-                  src={c.texture}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  width={1024}
-                  height={768}
-                  className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/70 to-card/30" />
-                <div className="relative">
-                  <c.Icon className="h-8 w-8 text-primary" />
-                  <h3 className="mt-5 text-xl">{c.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
-                </div>
-              </div>
-            </Reveal>
+        <p className="eyebrow text-brass">The case for silver</p>
+        <H2 className="mt-3">Three reasons this metal holds when others don&apos;t</H2>
+        <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-muted-foreground">
+          Each argument is independent. All three point the same direction.
+        </p>
+        <div className="mt-14 space-y-14">
+          {caseRows.map((row) => (
+            <FeatureRow key={row.n} image={row.image} alt={row.alt} reverse={row.reverse}>
+              <p className="font-fraunces text-5xl leading-none text-brass/40">{row.n}</p>
+              <h3 className="mt-4 text-2xl">{row.heading}</h3>
+              <p className="mt-3 leading-relaxed text-muted-foreground">{row.body}</p>
+            </FeatureRow>
           ))}
         </div>
       </Section>
@@ -376,11 +407,14 @@ export default function Home() {
 
       <Section tone="muted" className="md:py-24">
         <H2>What Our Clients Say</H2>
+        <p className="mt-4 text-[0.82rem] text-muted-foreground">
+          Rated 5 stars by our clients · BBB · Google · Trustpilot
+        </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {testimonials.map((t) => (
             <Card key={t.name} className="flex h-full flex-col">
               <Stars />
-              <blockquote className="mt-4 text-sm leading-relaxed text-foreground">
+              <blockquote className="mt-4 font-fraunces text-base italic leading-relaxed text-foreground">
                 “{t.quote}”
               </blockquote>
               <div className="mt-auto flex items-center gap-3 pt-5">
@@ -398,14 +432,81 @@ export default function Home() {
         </Disclaimer>
       </Section>
 
-      <Section className="md:py-20">
-        <ul className="grid gap-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground sm:grid-cols-2 lg:grid-cols-4">
-          {trustBadges.map((b) => (
-            <li key={b} className="flex min-h-[4.5rem] items-center justify-center rounded-sm border border-border px-5 py-4">
-              {b}
-            </li>
-          ))}
-        </ul>
+      <section className="bg-hero-from px-5 py-11">
+        <div className="mx-auto w-full max-w-6xl">
+          <ul className="grid grid-cols-1 gap-px overflow-hidden bg-white/8 sm:grid-cols-2 lg:grid-cols-4">
+            {trustCells.map(({ Icon, name, role }) => (
+              <li
+                key={name}
+                className="flex flex-col items-center gap-2 bg-hero-from px-6 py-7 text-center"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-full border border-brass/30 bg-brass/15 text-brass-light">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <span className="text-sm font-semibold text-white">{name}</span>
+                <span className="text-xs tracking-wide text-silver-deep">{role}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <Section tone="muted" className="md:py-24">
+        <p className="eyebrow text-brass">A different kind of company</p>
+        <H2 className="mt-3">Most dealers take 35–65%. We don&apos;t.</H2>
+        <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-muted-foreground">
+          The industry charges a fortune in fees buried in the premium. We show you exactly what
+          you pay before you commit to anything.
+        </p>
+        <div className="mt-10 grid items-start gap-10 lg:grid-cols-2">
+          <div className="space-y-4 text-base leading-relaxed text-foreground">
+            <p>
+              If you invest $100,000 with most silver dealers, you&apos;ll receive $35,000–$65,000
+              worth of actual metal. The rest disappears in fees, commissions, and marked-up
+              premiums — often never disclosed upfront.
+            </p>
+            <p className="border-l-[3px] border-brass py-1 pl-[18px] font-fraunces text-[1.4rem] leading-snug text-primary">
+              Our fee is 8–15% — all in, upfront, in writing before you commit.
+            </p>
+            <p>
+              Your metal only needs to appreciate 10–15% for you to break even. That&apos;s the
+              difference between a company that serves clients and one that takes advantage of them.
+            </p>
+          </div>
+          <div className="-mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0">
+            <table className="w-full min-w-[420px] border-collapse text-sm">
+              <thead>
+                <tr>
+                  <th className="border-b-2 border-border px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    What you get
+                  </th>
+                  <th className="border-b-2 border-border px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    Industry standard
+                  </th>
+                  <th className="border-b-2 border-brass px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-brass">
+                    Anchor Silver
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {compareRows.map(([label, industry, anchor], i) => {
+                  const divider = i < compareRows.length - 1 ? "border-b border-border" : "";
+                  return (
+                    <tr key={label}>
+                      <td className={`px-3.5 py-3.5 align-top text-foreground ${divider}`}>{label}</td>
+                      <td className={`px-3.5 py-3.5 align-top text-muted-foreground ${divider}`}>
+                        {industry}
+                      </td>
+                      <td className={`bg-brass/6 px-3.5 py-3.5 align-top font-medium text-primary ${divider}`}>
+                        {anchor}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </Section>
 
       <section className="bg-accent px-5 py-16 md:py-24">
@@ -427,10 +528,9 @@ export default function Home() {
                 Call {SITE.phone}
               </a>
             </p>
+            <p className="mt-2 text-sm text-silver">{SITE.hours}</p>
           </div>
-          <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">
-            <CallbackForm />
-          </div>
+          <InlineLeadForm interest="just_learning" sourcePage="home" />
         </div>
       </section>
     </>
