@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
+import { FeatureRow } from "@/components/site/FeatureRow";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -105,23 +106,36 @@ export default function SilverIra() {
       </Section>
 
       <Section>
-        <H2>IRS-Approved Silver</H2>
-        <Prose className="mt-5">
-          <p>
-            IRS-approved silver must be .999 fine or better. Products that qualify include American
-            Silver Eagles, Canadian Silver Maple Leafs, Australian Silver Kangaroos, and .999 fine
-            silver bars from approved refiners.
-          </p>
-        </Prose>
+        <FeatureRow
+          image="/images/silver-ira-approved-products.jpg"
+          alt="Four .999 fine silver bullion items — eagle coin, maple leaf, kangaroo coin, and a silver bar — on a dark green surface."
+        >
+          <H2>IRS-Approved Silver</H2>
+          <Prose className="mt-5">
+            <p>
+              IRS-approved silver must be .999 fine or better. Products that qualify include American
+              Silver Eagles, Canadian Silver Maple Leafs, Australian Silver Kangaroos, and .999 fine
+              silver bars from approved refiners.
+            </p>
+          </Prose>
+        </FeatureRow>
 
-        <H2 className="mt-14">Storage at Delaware Depository</H2>
-        <Prose className="mt-5">
-          <p>
-            Your IRA-held silver is stored at Delaware Depository Service Company in Wilmington,
-            Delaware. You cannot store IRA-held metals at home. Delaware Depository provides fully
-            allocated or commingled storage, full insurance coverage, and online account access.
-          </p>
-        </Prose>
+        <div className="mt-14">
+          <FeatureRow
+            image="/images/silver-ira-vault-storage.jpg"
+            alt="Neat rows of silver bars on industrial steel vault shelving under a single overhead light."
+            reverse
+          >
+            <H2>Storage at Delaware Depository</H2>
+            <Prose className="mt-5">
+              <p>
+                Your IRA-held silver is stored at Delaware Depository Service Company in Wilmington,
+                Delaware. You cannot store IRA-held metals at home. Delaware Depository provides fully
+                allocated or commingled storage, full insurance coverage, and online account access.
+              </p>
+            </Prose>
+          </FeatureRow>
+        </div>
 
         <H2 className="mt-14">Fees, Stated Plainly</H2>
         <Prose className="mt-5">
