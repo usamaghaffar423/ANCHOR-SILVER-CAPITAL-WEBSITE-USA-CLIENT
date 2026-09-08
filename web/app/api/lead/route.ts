@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { eq } from "drizzle-orm";
-import { db } from "@/lib/db/client";
+import { getDb } from "@/lib/db/client";
 import { leads } from "@/lib/db/schema";
 import { leadSchema } from "@/lib/validation";
 import { sendBrochure, notifyOwner } from "@/lib/email";
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   const now = Date.now();
 
   try {
-    await db.insert(leads).values({
+    await getDb().insert(leads).values({
       id,
       createdAt: now,
       fullName: data.fullName,
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await db.update(leads).set({ emailStatus, notifyStatus }).where(eq(leads.id, id));
+    await getDb().update(leads).set({ emailStatus, notifyStatus }).where(eq(leads.id, id));
   } catch (err) {
     console.error("[lead] status update failed:", err);
     // Non-fatal — the lead is already saved

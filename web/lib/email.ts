@@ -15,10 +15,19 @@ import BrochureEmail from "@/emails/brochure-email";
  * domain for testing until `anchorsilvercapital.com` is verified.
  */
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.RESEND_FROM || "Anchor Silver Capital <info@anchorsilvercapital.com>";
 const PHONE = "(866) 818-7243";
+
+/** Lazy — `new Resend()` throws with no key, and we don't want that at build time. */
+let _resend: Resend | null = null;
+function resend(): Resend {
+  if (!_resend) {
+    const key = process.env.RESEND_API_KEY;
+    if (!key) throw new Error("RESEND_API_KEY is not set");
+    _resend = new Resend(key);
+  }
+  return _resend;
+}
 
 export async function sendBrochure(lead: {
   email: string;
@@ -30,7 +39,7 @@ export async function sendBrochure(lead: {
   const brochureTitle =
     lead.interest === "silver_ira" ? "The Silver IRA Handbook" : "The Silver Prospectus";
 
-  const { error } = await resend.emails.send({
+  const { error } = await resend().emails.send({
     from: FROM,
     to: lead.email,
     subject: `Your ${brochureTitle} from Anchor Silver Capital`,
@@ -59,7 +68,7 @@ export async function notifyOwner(lead: {
       <td style="padding:8px 0;font-weight:600">${escapeHtml(value)}</td>
     </tr>`;
 
-  const { error } = await resend.emails.send({
+  const { error } = await resend().emails.send({
     from: FROM,
     to,
     subject: `New lead: ${lead.fullName} (${lead.interest})`,
