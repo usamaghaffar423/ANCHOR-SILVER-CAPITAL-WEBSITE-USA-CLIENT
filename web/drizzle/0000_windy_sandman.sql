@@ -1,0 +1,23 @@
+CREATE TABLE `leads` (
+	`id` text PRIMARY KEY NOT NULL,
+	`created_at` integer NOT NULL,
+	`full_name` text NOT NULL,
+	`email` text NOT NULL,
+	`phone` text NOT NULL,
+	`best_time_to_call` text,
+	`amount_bracket` text,
+	`interest` text NOT NULL,
+	`message` text,
+	`how_heard` text,
+	`source_form` text NOT NULL,
+	`source_page` text,
+	`utm_source` text,
+	`utm_medium` text,
+	`utm_campaign` text,
+	`consent_tcpa` integer NOT NULL,
+	`brochure_variant` text,
+	`email_status` text DEFAULT 'pending',
+	`notify_status` text DEFAULT 'pending',
+	`ip` text,
+	`user_agent` text
+);

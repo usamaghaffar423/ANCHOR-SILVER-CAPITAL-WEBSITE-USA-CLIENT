@@ -1,12 +1,48 @@
 import { z } from "zod";
 
 /**
- * Shared lead schema — used by the client form (react-hook-form resolver) and
- * re-validated server-side in `app/api/lead/route.ts`. Never trust the client.
+ * Shared lead schema — the client form (react-hook-form resolver) and the
+ * `/api/lead` route both use it. Never trust the client; the route re-validates.
  */
 
-export const INTERESTS = ["silver_ira", "physical_silver", "just_learning"] as const;
-export type Interest = (typeof INTERESTS)[number];
+export const leadSchema = z.object({
+  fullName: z.string().min(2).max(120),
+  email: z.string().email(),
+  phone: z
+    .string()
+    .min(7)
+    .max(20)
+    .regex(/^[\d\s()\-+]+$/, "Invalid phone number"),
+  bestTimeToCall: z.string().optional(),
+  amountBracket: z.string().optional(),
+  interest: z.enum(["silver_ira", "physical_silver", "just_learning"]),
+  message: z.string().max(1000).optional(),
+  howHeard: z.string().optional(),
+  sourceForm: z.string(),
+  sourcePage: z.string().optional(),
+  utmSource: z.string().optional(),
+  utmMedium: z.string().optional(),
+  utmCampaign: z.string().optional(),
+  consentTcpa: z.literal(true, {
+    errorMap: () => ({ message: "You must agree to be contacted." }),
+  }),
+  // Must stay empty. Left un-constrained here so a filled honeypot passes
+  // validation and the route can reject it *silently* (see route step 3) — a
+  // 422 naming the field would just teach bots to leave it blank.
+  honeypot: z.string().optional(),
+});
+
+export type LeadInput = z.infer<typeof leadSchema>;
+
+/* ---- UI option lists (used by the form components) ---- */
+
+export type Interest = "silver_ira" | "physical_silver" | "just_learning";
+
+export const INTEREST_OPTIONS: { value: Interest; label: string }[] = [
+  { value: "silver_ira", label: "Silver IRA" },
+  { value: "physical_silver", label: "Physical Silver" },
+  { value: "just_learning", label: "Just Learning" },
+];
 
 export const BEST_TIMES = ["Morning", "Afternoon", "Evening"] as const;
 
@@ -18,90 +54,3 @@ export const AMOUNT_BRACKETS = [
   "$100,000 – $250,000",
   "$250,000+",
 ] as const;
-
-export const PRODUCTS = [
-  "American Silver Eagles",
-  "Morgan Silver Dollars",
-  "Peace Silver Dollars",
-  "Canadian Maple Leafs",
-  "10 oz Silver Bars",
-  "100 oz Silver Bars",
-  "Junk Silver (pre-1964 US coins)",
-  "Generic Silver Rounds",
-  "Not sure yet",
-] as const;
-
-export const SOURCE_FORMS = ["get_started", "quote", "simple", "inline"] as const;
-export type SourceForm = (typeof SOURCE_FORMS)[number];
-
-/** Maps the `CallbackForm` visual variant to the persisted `sourceForm`. */
-export const VARIANT_TO_SOURCE_FORM: Record<"full" | "quote" | "simple", SourceForm> = {
-  full: "get_started",
-  quote: "quote",
-  simple: "simple",
-};
-
-const optionalTrimmed = (max: number) =>
-  z
-    .string()
-    .trim()
-    .max(max)
-    .optional()
-    .transform((v) => (v ? v : undefined));
-
-export const leadSchema = z.object({
-  fullName: z.string().trim().min(2, "Please enter your full name.").max(120),
-  email: z.string().trim().toLowerCase().email("Please enter a valid email address."),
-  phone: z
-    .string()
-    .trim()
-    .min(7, "Please enter a valid phone number.")
-    .max(32)
-    .regex(/^[0-9+().\-\s]+$/, "Please enter a valid phone number."),
-
-  bestTimeToCall: z.enum(BEST_TIMES).optional(),
-  amountBracket: z.enum(AMOUNT_BRACKETS).optional(),
-  product: z.enum(PRODUCTS).optional(),
-  interest: z.array(z.enum(INTERESTS)).optional(),
-  howHeard: optionalTrimmed(200),
-  message: optionalTrimmed(2000),
-
-  // Required TCPA consent — every form here collects a phone number.
-  consentTcpa: z.boolean().refine((v) => v === true, {
-    message: "Please agree to be contacted so a specialist can reach you.",
-  }),
-
-  sourceForm: z.enum(SOURCE_FORMS),
-  sourcePage: optionalTrimmed(200),
-
-  // Spam controls — the honeypot must stay empty (checked in the route); the
-  // Turnstile token is verified server-side (optional here so the schema also
-  // passes when Turnstile is not configured yet).
-  company: z.string().optional(),
-  turnstileToken: z.string().optional(),
-
-  utmSource: optionalTrimmed(200),
-  utmMedium: optionalTrimmed(200),
-  utmCampaign: optionalTrimmed(200),
-  utmTerm: optionalTrimmed(200),
-  utmContent: optionalTrimmed(200),
-});
-
-export type LeadInput = z.input<typeof leadSchema>;
-export type Lead = z.output<typeof leadSchema>;
-
-/**
- * Normalises the parsed lead into a single `interest` string for storage and
- * downstream systems (the DB model and GHL expect one value / tag list).
- * Falls back per variant when the visitor selected nothing.
- */
-export function resolveInterest(lead: Lead): string {
-  if (lead.interest && lead.interest.length > 0) return lead.interest.join(",");
-  if (lead.sourceForm === "quote") return "physical_silver";
-  return "just_learning";
-}
-
-/** Brochure selection: Silver IRA interest → IRA Handbook, otherwise the Prospectus. */
-export function brochureForInterest(interest: string): "ira_handbook" | "prospectus" {
-  return interest.split(",").includes("silver_ira") ? "ira_handbook" : "prospectus";
-}

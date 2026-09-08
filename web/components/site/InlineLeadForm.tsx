@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,19 +14,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Turnstile } from "./Turnstile";
 import { SITE } from "@/lib/site";
+import { useUtm } from "@/lib/useUtm";
 import { leadSchema, type Interest, type LeadInput } from "@/lib/validation";
 
 /**
  * Short, end-of-page lead form. Posts to the same `/api/lead` handler the
- * `/get-started` form uses — no separate backend. Exactly three fields (name /
- * phone / email) plus the required TCPA consent, a honeypot and Turnstile. The
- * specialist collects amount / timing / product on the call.
+ * `/get-started` form uses. Exactly three fields (name / phone / email) plus the
+ * required TCPA consent and a honeypot. The specialist collects the rest on the
+ * call.
  */
 
 const LABEL = "text-xs font-semibold uppercase tracking-wider text-muted-foreground";
-const UTM_KEYS = ["utmSource", "utmMedium", "utmCampaign", "utmTerm", "utmContent"] as const;
+
+type FormValues = Omit<LeadInput, "consentTcpa"> & { consentTcpa: boolean };
 
 export function InlineLeadForm({
   interest,
@@ -39,65 +40,56 @@ export function InlineLeadForm({
   heading?: string;
   subheading?: string;
 }) {
-  const [done, setDone] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const utm = useUtm();
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [sentTo, setSentTo] = useState("");
 
-  const form = useForm<LeadInput>({
-    resolver: zodResolver(leadSchema),
+  const form = useForm<FormValues>({
+    resolver: zodResolver(leadSchema) as unknown as Resolver<FormValues>,
     defaultValues: {
       fullName: "",
       email: "",
       phone: "",
       consentTcpa: false,
-      company: "",
-      sourceForm: "inline",
-      sourcePage,
-      interest: [interest],
+      honeypot: "",
+      interest,
     },
   });
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    for (const key of UTM_KEYS) {
-      const value = params.get(key.replace("utm", "utm_").toLowerCase());
-      if (value) form.setValue(key, value);
-    }
-  }, [form]);
+  const submitting = status === "submitting";
 
-  async function onSubmit(values: LeadInput) {
-    setSubmitError(null);
+  async function onSubmit(values: FormValues) {
+    setStatus("submitting");
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          interest,
+          sourceForm: "inline",
+          sourcePage,
+          utmSource: utm.source || undefined,
+          utmMedium: utm.medium || undefined,
+          utmCampaign: utm.campaign || undefined,
+        }),
       });
-      const data = (await res.json()) as { ok: boolean; error?: string };
-      if (!res.ok || !data.ok) {
-        setSubmitError(
-          data.error === "turnstile"
-            ? "Spam check failed — please try again."
-            : "Something went wrong. Please try again or call (866) 818-7243.",
-        );
-        return;
-      }
-      setDone(true);
-    } catch {
-      setSubmitError("Network error. Please try again or call (866) 818-7243.");
+      const json = (await res.json()) as { ok: boolean; error?: string };
+      if (!json.ok) throw new Error(json.error ?? "Request failed");
+      setSentTo(values.email);
+      setStatus("success");
+    } catch (err) {
+      console.error("[InlineLeadForm] submit failed:", err);
+      setStatus("error");
     }
   }
 
-  if (done) {
+  if (status === "success") {
     return (
       <div className="mx-auto w-full max-w-lg rounded-md border border-primary bg-sage-soft p-6 text-left">
-        <h3 className="text-xl">Request received.</h3>
+        <h3 className="text-xl">Check your inbox</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          We&apos;ve emailed your guide — check your inbox. A specialist will follow up shortly. If
-          you&apos;d rather talk now, call{" "}
-          <a className="font-semibold text-primary underline" href={SITE.phoneHref}>
-            {SITE.phone}
-          </a>
-          .
+          Your guide is on its way to {sentTo}. A specialist will be in touch shortly.
         </p>
       </div>
     );
@@ -125,7 +117,7 @@ export function InlineLeadForm({
               id={`company-${sourcePage}`}
               tabIndex={-1}
               autoComplete="off"
-              {...form.register("company")}
+              {...form.register("honeypot")}
             />
           </div>
 
@@ -197,19 +189,21 @@ export function InlineLeadForm({
             )}
           />
 
-          <Turnstile onToken={(token) => form.setValue("turnstileToken", token ?? undefined)} />
-
-          {submitError && (
+          {status === "error" && (
             <p
               role="alert"
               className="rounded-sm border border-destructive/40 bg-destructive/5 px-3 py-2 text-sm text-destructive"
             >
-              {submitError}
+              Something went wrong. Please try again or call{" "}
+              <a href={SITE.phoneHref} className="font-semibold underline">
+                {SITE.phone}
+              </a>{" "}
+              directly.
             </p>
           )}
 
-          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Sending…" : "Request a Callback"}
+          <Button type="submit" className="w-full" disabled={submitting} aria-busy={submitting}>
+            {submitting ? "Sending…" : "Request a Callback"}
           </Button>
           <p className="text-xs text-muted-foreground">
             No cost, no obligation. Prefer to talk now?{" "}

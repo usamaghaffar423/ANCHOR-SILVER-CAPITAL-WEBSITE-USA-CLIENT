@@ -1,113 +1,118 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
+import { eq } from "drizzle-orm";
+import { db } from "@/lib/db/client";
+import { leads } from "@/lib/db/schema";
 import { leadSchema } from "@/lib/validation";
-import { verifyTurnstile } from "@/lib/turnstile";
-import {
-  buildLeadRecord,
-  persistLead,
-  updateLeadStatuses,
-  isDuplicate,
-} from "@/lib/leads";
-import { sendBrochureEmail, notifyOwner } from "@/lib/email";
+import { sendBrochure, notifyOwner } from "@/lib/email";
 
 export const runtime = "nodejs";
 
-const MAX_BODY_BYTES = 16 * 1024;
-
-// Very small per-IP rate limit (per lambda instance — good enough as a first
-// layer alongside Turnstile + honeypot).
-const hits = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 5;
-const RATE_WINDOW_MS = 60_000;
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = hits.get(ip);
-  if (!entry || now > entry.resetAt) {
-    hits.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return false;
-  }
-  entry.count += 1;
-  return entry.count > RATE_LIMIT;
-}
-
-export async function POST(req: Request) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "unknown";
-  const userAgent = req.headers.get("user-agent") ?? undefined;
-
-  if (rateLimited(ip)) {
-    return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
-  }
-
-  const raw = await req.text();
-  if (raw.length > MAX_BODY_BYTES) {
-    return NextResponse.json({ ok: false, error: "payload_too_large" }, { status: 413 });
-  }
-
-  let json: unknown;
+export async function POST(req: NextRequest) {
+  // 1. Parse
+  let body: unknown;
   try {
-    json = JSON.parse(raw);
+    body = await req.json();
   } catch {
-    return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
+    return NextResponse.json({ ok: false, error: "Invalid request body" }, { status: 400 });
   }
 
-  const parsed = leadSchema.safeParse(json);
+  // 2. Validate
+  const parsed = leadSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, error: "validation", issues: parsed.error.flatten().fieldErrors },
+      {
+        ok: false,
+        error: "Validation failed",
+        fieldErrors: parsed.error.flatten().fieldErrors,
+      },
       { status: 422 },
     );
   }
-  const lead = parsed.data;
 
-  // Honeypot — a filled `company` field means a bot. Accept silently.
-  if (lead.company) {
-    return NextResponse.json({ ok: true, id: "ignored" });
+  const data = parsed.data;
+
+  // 3. Honeypot — silent reject
+  if (data.honeypot) {
+    return NextResponse.json({ ok: true, id: "bot" });
   }
 
-  if (!(await verifyTurnstile(lead.turnstileToken, ip === "unknown" ? undefined : ip))) {
-    return NextResponse.json({ ok: false, error: "turnstile" }, { status: 403 });
-  }
+  // 4. Pick brochure variant
+  const brochureVariant = data.interest === "silver_ira" ? "ira_handbook" : "prospectus";
 
-  if (isDuplicate(lead.email)) {
-    // Idempotent: treat a rapid re-submit as success without re-sending.
-    return NextResponse.json({ ok: true, id: "duplicate" });
-  }
+  // 5. Write to DB FIRST — the lead is never lost
+  const id = randomUUID();
+  const now = Date.now();
 
-  // DB write precedes every external call (lead is never lost). Turso is
-  // deferred; `persistLead` currently writes the structured log.
-  const record = buildLeadRecord(lead, { ip, userAgent });
   try {
-    await persistLead(record);
+    await db.insert(leads).values({
+      id,
+      createdAt: now,
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      bestTimeToCall: data.bestTimeToCall ?? null,
+      amountBracket: data.amountBracket ?? null,
+      interest: data.interest,
+      message: data.message ?? null,
+      howHeard: data.howHeard ?? null,
+      sourceForm: data.sourceForm,
+      sourcePage: data.sourcePage ?? null,
+      utmSource: data.utmSource || null,
+      utmMedium: data.utmMedium || null,
+      utmCampaign: data.utmCampaign || null,
+      consentTcpa: data.consentTcpa,
+      brochureVariant,
+      emailStatus: "pending",
+      notifyStatus: "pending",
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null,
+      userAgent: req.headers.get("user-agent") ?? null,
+    });
   } catch (err) {
-    console.error(JSON.stringify({ tag: "lead.persist.error", id: record.id, err: String(err) }));
-    return NextResponse.json({ ok: false, error: "persist_failed" }, { status: 500 });
+    console.error("[lead] DB insert failed:", err);
+    return NextResponse.json(
+      { ok: false, error: "Failed to save. Please try again." },
+      { status: 500 },
+    );
   }
 
-  const [brochure, owner] = await Promise.allSettled([
-    sendBrochureEmail(record),
-    notifyOwner(record),
+  // 6. Fan out — independently retryable
+  const [brochureResult, notifyResult] = await Promise.allSettled([
+    sendBrochure({
+      email: data.email,
+      fullName: data.fullName,
+      interest: data.interest,
+    }),
+    notifyOwner({
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      interest: data.interest,
+      amountBracket: data.amountBracket ?? null,
+      bestTimeToCall: data.bestTimeToCall ?? null,
+      sourcePage: data.sourcePage ?? null,
+      message: data.message ?? null,
+    }),
   ]);
 
-  const legStatus = (r: PromiseSettledResult<{ status: string }>) =>
-    r.status === "fulfilled"
-      ? (r.value.status as "sent" | "skipped" | "failed")
-      : ("failed" as const);
+  // 7. Update status columns
+  const emailStatus = brochureResult.status === "fulfilled" ? "sent" : "failed";
+  const notifyStatus = notifyResult.status === "fulfilled" ? "sent" : "failed";
 
-  const emailStatus = legStatus(brochure);
-  const notifyStatus = legStatus(owner);
-  await updateLeadStatuses(record.id, { emailStatus, notifyStatus, ghlStatus: "skipped" });
-
-  if (brochure.status === "rejected") {
-    console.error(JSON.stringify({ tag: "lead.brochure.error", id: record.id, err: String(brochure.reason) }));
+  if (brochureResult.status === "rejected") {
+    console.error("[lead] brochure email failed, id:", id, brochureResult.reason);
   }
-  if (owner.status === "rejected") {
-    console.error(JSON.stringify({ tag: "lead.notify.error", id: record.id, err: String(owner.reason) }));
+  if (notifyResult.status === "rejected") {
+    console.error("[lead] owner notify failed, id:", id, notifyResult.reason);
   }
 
-  // Success as soon as the lead is captured — a failed/skipped email leg is a
-  // retryable follow-up, not an error for the visitor.
-  return NextResponse.json({ ok: true, id: record.id, emailStatus });
+  try {
+    await db.update(leads).set({ emailStatus, notifyStatus }).where(eq(leads.id, id));
+  } catch (err) {
+    console.error("[lead] status update failed:", err);
+    // Non-fatal — the lead is already saved
+  }
+
+  // 8. Always return ok if the lead was saved
+  return NextResponse.json({ ok: true, id });
 }
