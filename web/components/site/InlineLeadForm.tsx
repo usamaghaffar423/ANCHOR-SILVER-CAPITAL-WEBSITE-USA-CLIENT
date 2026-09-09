@@ -43,6 +43,7 @@ export function InlineLeadForm({
   const utm = useUtm();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [sentTo, setSentTo] = useState("");
+  const [invalid, setInvalid] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(leadSchema) as unknown as Resolver<FormValues>,
@@ -53,12 +54,16 @@ export function InlineLeadForm({
       consentTcpa: false,
       honeypot: "",
       interest,
+      // sourceForm is required by the schema — it must be in the form state.
+      sourceForm: "inline",
+      sourcePage,
     },
   });
 
   const submitting = status === "submitting";
 
   async function onSubmit(values: FormValues) {
+    setInvalid(false);
     setStatus("submitting");
     try {
       const res = await fetch("/api/lead", {
@@ -102,7 +107,7 @@ export function InlineLeadForm({
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmit, () => setInvalid(true))}
           className={heading || subheading ? "mt-5 space-y-4" : "space-y-4"}
           aria-label="Request a callback"
           noValidate
@@ -188,6 +193,12 @@ export function InlineLeadForm({
               </FormItem>
             )}
           />
+
+          {invalid && (
+            <p role="alert" className="text-sm text-destructive">
+              Please fix the highlighted fields before submitting (the consent box is required).
+            </p>
+          )}
 
           {status === "error" && (
             <p

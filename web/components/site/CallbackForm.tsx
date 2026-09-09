@@ -47,6 +47,7 @@ export function CallbackForm({
   const utm = useUtm();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [sentTo, setSentTo] = useState("");
+  const [invalid, setInvalid] = useState(false);
 
   const {
     register,
@@ -55,6 +56,10 @@ export function CallbackForm({
   } = useForm<FormValues>({
     resolver: zodResolver(leadSchema) as unknown as Resolver<FormValues>,
     defaultValues: {
+      // sourceForm is required by the schema — it must be in the form state, not
+      // just added at submit time, or client validation fails silently.
+      sourceForm: SOURCE_FORM[variant],
+      sourcePage: "",
       interest: DEFAULT_INTEREST[variant],
       bestTimeToCall: variant === "simple" ? undefined : "Morning",
       amountBracket: variant === "simple" ? undefined : "$25,000 – $50,000",
@@ -66,6 +71,7 @@ export function CallbackForm({
   const submitting = status === "submitting";
 
   async function onSubmit(values: FormValues) {
+    setInvalid(false);
     setStatus("submitting");
     try {
       const res = await fetch("/api/lead", {
@@ -73,7 +79,6 @@ export function CallbackForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
-          sourceForm: SOURCE_FORM[variant],
           sourcePage: window.location.pathname,
           utmSource: utm.source || undefined,
           utmMedium: utm.medium || undefined,
@@ -102,7 +107,12 @@ export function CallbackForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" aria-label="Request a callback" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit, () => setInvalid(true))}
+      className="space-y-4"
+      aria-label="Request a callback"
+      noValidate
+    >
       {/* Honeypot — hidden from people, tempting to bots. */}
       <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
         <label htmlFor="cb-company">Company</label>
@@ -190,6 +200,7 @@ export function CallbackForm({
                 </label>
               ))}
             </div>
+            {errors.interest && <p className={errorText}>{errors.interest.message}</p>}
           </fieldset>
           <div>
             <label className={labelCls} htmlFor="cb-howHeard">
@@ -207,6 +218,12 @@ export function CallbackForm({
         <textarea className={field} id="cb-message" rows={4} {...register("message")} />
         {errors.message && <p className={errorText}>{errors.message.message}</p>}
       </div>
+
+      {invalid && (
+        <p role="alert" className="text-sm text-destructive">
+          Please fix the highlighted fields before submitting (the consent box is required).
+        </p>
+      )}
 
       {status === "error" && (
         <p
