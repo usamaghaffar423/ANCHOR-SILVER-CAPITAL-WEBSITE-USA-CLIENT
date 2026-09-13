@@ -58,7 +58,7 @@ export function Header() {
       <TopBar />
       <div
         className={`px-5 transition-colors duration-300 ${
-          solid ? "bg-primary shadow-[var(--shadow-card)]" : "bg-ink/0"
+          solid ? "bg-primary shadow-[var(--shadow-card)]" : "bg-ink md:bg-ink/0"
         }`}
       >
         <div className="mx-auto flex h-[72px] w-full max-w-6xl items-center justify-between">
