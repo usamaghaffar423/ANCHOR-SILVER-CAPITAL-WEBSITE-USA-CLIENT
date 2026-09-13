@@ -108,15 +108,21 @@
 }
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     border-color: var(--color-border);
   }
 
   html {
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
   }
 
   body {
+    margin: 0;
+    padding: 0;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
