@@ -11,7 +11,7 @@ import { useMarket, yearHeadline } from "@/components/site/market";
 export function HeroHeadline() {
   const { silverYear } = useMarket();
   return (
-    <h1 className="mt-3.5 font-fraunces text-[1.9rem] font-light leading-[1.1] tracking-[-0.01em] text-white sm:text-[2.4rem] lg:text-[3rem] lg:leading-[1.08]">
+    <h1 className="mt-3 font-fraunces text-[1.4rem] font-light leading-[1.15] tracking-[-0.01em] text-white sm:mt-3.5 sm:text-[1.9rem] lg:text-[3rem] lg:leading-[1.08]">
       Silver {yearHeadline(silverYear)} in a year — and the supply deficit{" "}
       <em className="not-italic text-brass-light">hasn&apos;t&nbsp;closed.</em>
     </h1>

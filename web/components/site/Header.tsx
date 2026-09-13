@@ -13,8 +13,8 @@ function TopBar() {
   const { silver, silverYear, goldYear } = useMarket();
   if (!open) return null;
   return (
-    <div className="bg-ink px-5 text-silver">
-      <div className="mx-auto flex h-auto min-h-9 w-full max-w-6xl items-center justify-between gap-3 py-1 text-[0.65rem] leading-tight tracking-wide sm:h-9 sm:text-[0.7rem] sm:leading-none">
+    <div className="hidden bg-ink px-5 text-silver md:block">
+      <div className="mx-auto flex h-9 w-full max-w-6xl items-center justify-between gap-3 py-1 text-[0.7rem] leading-none tracking-wide">
         <p className="whitespace-normal sm:truncate">
           Silver {yearMove(silverYear)} over 12 months (${silver.toFixed(0)}/oz). Gold{" "}
           {yearMove(goldYear)}.{" "}

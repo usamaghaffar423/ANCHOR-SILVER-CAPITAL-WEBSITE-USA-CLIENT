@@ -76,14 +76,14 @@ export function HeroMarketCard() {
   };
 
   return (
-    <div className="rounded-xl border border-white/15 bg-white/[0.04] p-5 backdrop-blur-sm sm:p-6">
+    <div className="rounded-xl border border-white/15 bg-white/[0.04] p-4 backdrop-blur-sm sm:p-6">
       <div className="flex items-center justify-between">
-        <span className="font-plex text-[0.7rem] uppercase tracking-[0.12em] text-silver-deep">
+        <span className="font-plex text-[0.65rem] uppercase tracking-[0.12em] text-silver-deep sm:text-[0.7rem]">
           Silver · USD / oz
         </span>
-        <span className="flex items-center gap-1.5 font-plex text-[0.7rem] text-gain">
+        <span className="flex items-center gap-1.5 font-plex text-[0.65rem] text-gain sm:text-[0.7rem]">
           <span
-            className="hero-live-dot inline-block h-[7px] w-[7px] rounded-full bg-gain"
+            className="hero-live-dot inline-block h-[6px] w-[6px] rounded-full bg-gain sm:h-[7px] sm:w-[7px]"
             aria-hidden="true"
           />
           {live ? "Live" : "Indicative"}
@@ -91,16 +91,16 @@ export function HeroMarketCard() {
       </div>
 
       <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="font-fraunces text-4xl font-light leading-none text-white sm:text-[2.6rem]">
+        <span className="font-fraunces text-3xl font-light leading-none text-white sm:text-4xl lg:text-[2.6rem]">
           ${silver.toFixed(2)}
         </span>
-        <span className="font-plex text-[0.8rem]">
+        <span className="font-plex text-[0.75rem] sm:text-[0.8rem]">
           <span className={`rounded px-1.5 py-0.5 ${badge.cls}`}>{badge.text}</span>
         </span>
       </div>
 
       <svg
-        className="mt-4 block h-auto w-full max-w-full"
+        className="mt-4 hidden block h-auto w-full max-w-full sm:block"
         width={VB.w}
         height={VB.h}
         viewBox={`0 0 ${VB.w} ${VB.h}`}
@@ -155,7 +155,7 @@ export function HeroMarketCard() {
         </text>
       </svg>
 
-      <div className="mt-4 flex border-t border-white/15 pt-3.5">
+      <div className="mt-3 flex border-t border-white/15 pt-3 sm:mt-4 sm:pt-3.5">
         {[
           { v: `$${Math.round(gold).toLocaleString("en-US")}`, l: "Gold / oz" },
           { v: `${ratio.toFixed(1)}:1`, l: "G/S Ratio" },
@@ -165,15 +165,15 @@ export function HeroMarketCard() {
             key={s.l}
             className={`flex-1 text-center ${i ? "border-l border-white/15" : ""}`}
           >
-            <div className="font-fraunces text-[1.05rem] text-white">{s.v}</div>
-            <div className="mt-0.5 font-plex text-[0.6rem] uppercase tracking-[0.05em] text-silver-deep">
+            <div className="font-fraunces text-[0.9rem] text-white sm:text-[1.05rem]">{s.v}</div>
+            <div className="mt-0.5 font-plex text-[0.55rem] uppercase tracking-[0.05em] text-silver-deep sm:text-[0.6rem]">
               {s.l}
             </div>
           </div>
         ))}
       </div>
 
-      <p className="mt-3 font-plex text-[0.62rem] leading-relaxed text-silver-deep/85">
+      <p className="mt-2 font-plex text-[0.58rem] leading-relaxed text-silver-deep/85 sm:mt-3 sm:text-[0.62rem]">
         About ${silverRef.toFixed(2)}/oz a year ago, about ${silver.toFixed(2)} now; the trend
         line between is illustrative. Prices update during market hours. Past performance does not
         guarantee future results.
