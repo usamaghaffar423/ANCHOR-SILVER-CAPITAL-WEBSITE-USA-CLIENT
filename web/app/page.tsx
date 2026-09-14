@@ -180,7 +180,7 @@ function Avatar({ name }: { name: string }) {
 export default function Home() {
   return (
     <>
-      <section className="hero-surface relative -mt-[60px] px-5 pb-10 pt-[84px] text-silver md:-mt-[112px] md:pb-20 md:pt-[140px]">
+      <section className="hero-surface relative flex min-h-dvh -mt-[60px] flex-col justify-center px-5 pb-10 pt-[84px] text-silver md:min-h-0 md:-mt-[112px] md:block md:justify-normal md:pb-20 md:pt-[140px]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
           <div className="min-w-0 order-1">
             <p className="eyebrow text-xs text-brass-light sm:text-sm">The metal that&apos;s quietly climbing</p>
