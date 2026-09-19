@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Anchor, Lock, Shield, Star } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
+import { GuidePopup } from "@/components/site/GuidePopup";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { InlineLeadForm } from "@/components/site/InlineLeadForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
@@ -180,6 +181,7 @@ export default function Home() {
   return (
     <>
       <PremiumGuideHero />
+      <GuidePopup />
 
       <Section className="md:py-24">
         <H2>Two Ways to Anchor Your Savings</H2>
