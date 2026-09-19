@@ -6,6 +6,7 @@ const quickLinks = [
   { to: "/why-silver", label: "Why Silver" },
   { to: "/silver-ira", label: "Silver IRA" },
   { to: "/physical-silver", label: "Physical Silver" },
+  { to: "/buyinggoldandsilver", label: "Buying Gold & Silver" },
   { to: "/silver-supply", label: "The Supply Story" },
   { to: "/about", label: "About Us" },
   { to: "/faq", label: "FAQ" },

@@ -38,6 +38,7 @@ export const PAGES = [
   "/physical-silver",
   "/silver-supply",
   "/about",
+  "/buyinggoldandsilver",
   "/get-started",
   "/faq",
   "/market-update",
