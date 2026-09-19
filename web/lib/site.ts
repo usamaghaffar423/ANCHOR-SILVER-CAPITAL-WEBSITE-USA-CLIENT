@@ -45,6 +45,8 @@ export const PAGES = [
   "/privacy",
   "/terms",
   "/disclaimer",
+  "/riskdisclosure",
+  "/guide-success",
 ] as const;
 
 export function breadcrumbSchema(path: string, label: string) {

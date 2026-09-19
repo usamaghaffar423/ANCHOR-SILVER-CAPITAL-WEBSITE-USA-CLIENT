@@ -106,6 +106,10 @@ export function Footer() {
           |{" "}
           <Link href="/disclaimer" className="inline-block py-1.5 hover:text-background">
             Disclaimer
+          </Link>{" "}
+          |{" "}
+          <Link href="/riskdisclosure" className="inline-block py-1.5 hover:text-background">
+            Risk Disclosure
           </Link>
         </p>
         <p className="mt-4 max-w-4xl text-xs italic leading-relaxed text-silver-deep">

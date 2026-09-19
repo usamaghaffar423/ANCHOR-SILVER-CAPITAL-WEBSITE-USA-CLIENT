@@ -293,3 +293,17 @@
 @utility brand-tint {
   filter: saturate(0.82) contrast(1.03) brightness(0.9);
 }
+
+/* PremiumGuideHero — 3D book hover tilt */
+@keyframes book-tilt {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-5deg);
+  }
+}
+
+.group:hover .group-hover\:rotate-y-\[-5deg\] {
+  transform: rotateY(-5deg);
+}
