@@ -61,17 +61,17 @@ export function PremiumGuideHero() {
           <div className="mx-auto w-full min-w-0 max-w-md order-2 lg:mx-0 lg:max-w-none lg:pl-2">
             <div className="overflow-hidden rounded-xl border border-white/15 bg-[#F8FAFC] shadow-2xl">
               {/* Top section: book mockup area */}
-              <div className="relative flex items-center justify-center overflow-hidden bg-[#E2E8F0] px-6 py-10">
+              <div className="relative h-[280px] overflow-hidden sm:h-[340px]">
                 {/* FREE ribbon */}
                 <span className="absolute left-3 top-3 z-10 rounded bg-brass px-2.5 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#1b1408] shadow-md">
                   FREE
                 </span>
 
-                {/* 3D Book mockup — real image */}
+                {/* 3D Book mockup — real image, covers full area */}
                 <img
                   src="/images/hero-book-preview.jpeg"
                   alt="The Silver IRA Handbook — 2026 Edition"
-                  className="h-auto w-[180px] drop-shadow-2xl transition-transform duration-500 ease-out group-hover:scale-105 sm:w-[220px]"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
               </div>
 
