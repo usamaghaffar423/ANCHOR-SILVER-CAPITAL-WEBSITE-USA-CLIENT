@@ -67,44 +67,12 @@ export function PremiumGuideHero() {
                   FREE
                 </span>
 
-                {/* 3D Book mockup — CSS perspective */}
-                <div
-                  className="group relative"
-                  style={{ perspective: "800px" }}
-                >
-                  <div
-                    className="transition-transform duration-500 ease-out group-hover:scale-105"
-                    style={{ transformStyle: "preserve-3d" }}
-                  >
-                    {/* Book front face */}
-                    <div className="relative h-[200px] w-[150px] rounded-r-sm bg-gradient-to-br from-primary to-hero-from shadow-xl transition-transform duration-500 ease-out group-hover:rotate-y-[-5deg] sm:h-[260px] sm:w-[190px]">
-                      {/* Spine shadow */}
-                      <div
-                        aria-hidden="true"
-                        className="absolute left-0 top-0 h-full w-3 bg-gradient-to-r from-black/30 to-transparent"
-                      />
-                      {/* Book content */}
-                      <div className="flex h-full flex-col items-center justify-center p-4 text-center">
-                        <span className="text-3xl sm:text-4xl">🥈</span>
-                        <span className="mt-2 font-display text-[0.6rem] font-bold uppercase tracking-wider text-white sm:text-xs">
-                          Silver
-                        </span>
-                        <span className="mt-0.5 font-display text-[0.5rem] uppercase tracking-wider text-secondary sm:text-[0.6rem]">
-                          Investor Guide
-                        </span>
-                        <span className="mt-2 rounded border border-brass/40 px-2 py-0.5 font-mono text-[0.45rem] text-brass-light sm:text-[0.5rem]">
-                          2026 EDITION
-                        </span>
-                      </div>
-                    </div>
-                    {/* Book spine */}
-                    <div
-                      aria-hidden="true"
-                      className="absolute -left-2 top-1 h-[calc(100%-8px)] w-2 rounded-l-sm bg-primary/90"
-                      style={{ transform: "rotateY(90deg) translateZ(0px)" }}
-                    />
-                  </div>
-                </div>
+                {/* 3D Book mockup — real image */}
+                <img
+                  src="/images/hero-book-preview.jpeg"
+                  alt="The Silver IRA Handbook — 2026 Edition"
+                  className="h-auto w-[180px] drop-shadow-2xl transition-transform duration-500 ease-out group-hover:scale-105 sm:w-[220px]"
+                />
               </div>
 
               {/* Bottom section: CTA area */}
