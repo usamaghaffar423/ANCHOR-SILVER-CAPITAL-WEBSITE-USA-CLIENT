@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
+import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, H2, Card, buttonStyles } from "@/components/site/ui";
 import { SITE, pageMeta } from "@/lib/site";
@@ -187,6 +188,22 @@ export default function BuyingGoldAndSilver() {
               payment is received and your order is confirmed.
             </p>
           </div>
+        </div>
+      </Section>
+
+      {/* Critical Minerals Report */}
+      <Section tone="muted" className="md:py-24">
+        <H2>Critical Minerals Report</H2>
+        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+          Request our Critical Minerals Report for supply, demand, and pricing context on
+          the metals behind the market — no cost, no obligation.
+        </p>
+        <div className="mt-10 w-full max-w-3xl">
+          <GhlFormEmbed
+            formId="3SC4Eeds4Q91kqrFEijR"
+            formName="Critical Minerals Report Form"
+            height={822}
+          />
         </div>
       </Section>
 
