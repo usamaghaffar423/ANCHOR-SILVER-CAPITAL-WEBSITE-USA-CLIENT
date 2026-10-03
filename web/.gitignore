@@ -49,3 +49,7 @@ next-env.d.ts
 # local libsql dev db
 .turso-dev.db
 *.db
+
+# Private lead-magnet assets — private_docs/*.pdf is INTENTIONALLY COMMITTED
+# (Cloudflare builds clone the repo fresh; scripts/embed-handbook.mjs reads it
+# at build time and inlines it into the Worker bundle). Never move it to /public.

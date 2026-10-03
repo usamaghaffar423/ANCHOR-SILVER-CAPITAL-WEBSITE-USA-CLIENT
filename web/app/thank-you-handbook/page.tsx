@@ -11,7 +11,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { JsonLd } from "@/components/site/JsonLd";
+import { signHandbookToken } from "@/lib/handbook-token";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
+
+// Rendered per-request so the download link always carries a fresh signed
+// token when HANDBOOK_DOWNLOAD_SECRET is enabled (a prerendered token would
+// expire). Post-conversion page — no SEO/caching value lost.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = pageMeta({
   title: "Your Silver IRA Handbook is Ready | Anchor Silver Capital",
@@ -39,6 +45,12 @@ const chapters = [
 ];
 
 export default function ThankYouHandbookPage() {
+  // Signed link when token verification is enabled, plain endpoint otherwise.
+  const token = signHandbookToken();
+  const handbookHref = token
+    ? `/api/download-handbook?token=${encodeURIComponent(token)}`
+    : "/api/download-handbook";
+
   return (
     <div className="min-h-screen bg-slate-900 text-white antialiased">
       <JsonLd data={breadcrumbSchema("/thank-you-handbook", "Handbook Ready")} />
@@ -131,7 +143,7 @@ export default function ThankYouHandbookPage() {
               </ul>
 
               <a
-                href="/docs/Silver-IRA-Handbook.pdf"
+                href={handbookHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500 px-6 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/10 transition-colors duration-200 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 sm:w-auto"
