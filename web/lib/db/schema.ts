@@ -30,3 +30,25 @@ export const leads = sqliteTable("leads", {
 
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
+
+/**
+ * GHL OAuth tokens — one row per location, upserted on install/refresh.
+ * Access tokens live ~24 h; refresh tokens rotate on every use, so the
+ * stored refresh token must be overwritten each time (see lib/ghl/auth.ts).
+ */
+export const ghlTokens = sqliteTable("ghl_tokens", {
+  id: text("id").primaryKey(),
+  locationId: text("location_id"),
+  companyId: text("company_id"),
+  userId: text("user_id"),
+  accessToken: text("access_token").notNull(),
+  refreshToken: text("refresh_token").notNull(),
+  tokenType: text("token_type").notNull().default("Bearer"),
+  scope: text("scope"),
+  /** epoch ms */
+  expiresAt: integer("expires_at").notNull(),
+  /** epoch ms */
+  updatedAt: integer("updated_at").notNull(),
+});
+
+export type GhlTokenRow = typeof ghlTokens.$inferSelect;
