@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "anchorsilvercapital",
+  "name": "anchor-silver-capital-website-usa-client",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -11,7 +11,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "anchorsilvercapital"
+      "service": "anchor-silver-capital-website-usa-client"
     }
   ],
   "images": {
