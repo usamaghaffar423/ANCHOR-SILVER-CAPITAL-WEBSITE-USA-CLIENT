@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import { SiteHeader, SiteFooter } from "@/components/site/RouteChrome";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { SITE, localBusinessSchema } from "@/lib/site";
 
@@ -61,11 +62,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to content
         </a>
-        <SiteHeader />
+        <Header />
         <main id="main" className="overflow-x-clip">
           {children}
         </main>
-        <SiteFooter />
+        <Footer />
         <CookieBanner />
       </body>
     </html>

@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
@@ -148,9 +147,9 @@ export function GuidePopup() {
           <span className="mb-3 inline-block rounded bg-brass px-3 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#1b1408]">
             FREE
           </span>
-          <h2 className="font-display text-xl font-semibold sm:text-2xl">
+          <DialogTitle className="font-display text-xl font-semibold leading-normal sm:text-2xl">
             Get the 2026 Silver Investor Guide
-          </h2>
+          </DialogTitle>
           <p className="mt-2 text-sm text-silver">
             What to know before you move retirement money into silver.
           </p>

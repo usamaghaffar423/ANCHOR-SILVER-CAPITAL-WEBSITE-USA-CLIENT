@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, H2, Card, buttonStyles } from "@/components/site/ui";
