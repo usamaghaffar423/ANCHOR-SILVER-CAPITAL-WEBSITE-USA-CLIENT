@@ -5,6 +5,7 @@ import { getDb } from "@/lib/db/client";
 import { leads } from "@/lib/db/schema";
 import { leadSchema } from "@/lib/validation";
 import { sendBrochure, notifyOwner } from "@/lib/email";
+import { pushLeadToGhl } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 
@@ -77,7 +78,7 @@ export async function POST(req: NextRequest) {
   }
 
   // 6. Fan out — independently retryable
-  const [brochureResult, notifyResult] = await Promise.allSettled([
+  const [brochureResult, notifyResult, ghlResult] = await Promise.allSettled([
     sendBrochure({
       email: data.email,
       fullName: data.fullName,
@@ -93,6 +94,7 @@ export async function POST(req: NextRequest) {
       sourcePage: data.sourcePage ?? null,
       message: data.message ?? null,
     }),
+    pushLeadToGhl(data),
   ]);
 
   // 7. Update status columns
@@ -104,6 +106,9 @@ export async function POST(req: NextRequest) {
   }
   if (notifyResult.status === "rejected") {
     console.error("[lead] owner notify failed, id:", id, notifyResult.reason);
+  }
+  if (ghlResult.status === "rejected") {
+    console.error("[lead] GHL push failed, id:", id, ghlResult.reason);
   }
 
   try {
