@@ -6,7 +6,7 @@ import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
 import { GuidePopup } from "@/components/site/GuidePopup";
 import { FeatureRow } from "@/components/site/FeatureRow";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
@@ -492,7 +492,7 @@ export default function Home() {
             </p>
             <p className="mt-2 text-sm text-silver">{SITE.hours}</p>
           </div>
-          <InlineLeadForm interest="just_learning" sourcePage="home" />
+          <InlineGhlForm />
         </div>
       </section>
     </>

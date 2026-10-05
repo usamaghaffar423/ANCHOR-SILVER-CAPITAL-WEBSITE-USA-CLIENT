@@ -1,7 +1,7 @@
 "use client";
 
 import { PageHero } from "@/components/site/PageHero";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { useMarket } from "@/components/site/market";
 import { Card, Disclaimer, H2, Section } from "@/components/site/ui";
 
@@ -131,9 +131,7 @@ export function MarketUpdateContent() {
           ))}
         </div>
         <div className="mt-10">
-          <InlineLeadForm
-            interest="just_learning"
-            sourcePage="/market-update"
+          <InlineGhlForm
             heading="Talk to a Specialist About What This Means For You"
             subheading="Leave your details and a silver specialist will call — we report conditions, we don't forecast."
           />

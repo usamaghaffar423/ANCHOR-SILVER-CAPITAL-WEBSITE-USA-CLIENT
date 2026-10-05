@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { Banner } from "@/components/site/Banner";
 import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -97,9 +97,7 @@ export default function SupplyStory() {
           or a physical purchase — plainly, without a sales pitch.
         </p>
         <div className="mt-8">
-          <InlineLeadForm
-            interest="just_learning"
-            sourcePage="/silver-supply"
+          <InlineGhlForm
             subheading="Leave your details and a silver specialist will call — plainly, without a sales pitch."
           />
         </div>

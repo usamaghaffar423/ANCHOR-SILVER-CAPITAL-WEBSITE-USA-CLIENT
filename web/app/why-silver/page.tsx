@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { Banner } from "@/components/site/Banner";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
@@ -133,9 +133,7 @@ export default function WhySilver() {
       <Section tone="sage">
         <H2 className="text-primary-foreground">Ready to Put Real Weight Behind Your Savings?</H2>
         <div className="mt-8">
-          <InlineLeadForm
-            interest="just_learning"
-            sourcePage="/why-silver"
+          <InlineGhlForm
             subheading="Leave your details and a silver specialist will call — no cost, no obligation."
           />
         </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion, type QA } from "@/components/site/Accordion";
 import { JsonLd } from "@/components/site/JsonLd";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { H2, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -151,9 +151,7 @@ export default function Faq() {
       <Section tone="sage">
         <H2 className="text-primary-foreground">Still Have a Question?</H2>
         <div className="mt-8">
-          <InlineLeadForm
-            interest="just_learning"
-            sourcePage="/faq"
+          <InlineGhlForm
             subheading="Leave your details and a silver specialist will get back to you."
           />
         </div>

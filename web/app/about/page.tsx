@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { Gallery } from "@/components/site/Gallery";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -127,9 +127,7 @@ export default function About() {
           before making investment decisions.
         </p>
         <div className="mt-8">
-          <InlineLeadForm
-            interest="just_learning"
-            sourcePage="/about"
+          <InlineGhlForm
             heading="Get a Free Consultation"
             subheading="Leave your details and a silver specialist will follow up — no cost, no obligation."
           />

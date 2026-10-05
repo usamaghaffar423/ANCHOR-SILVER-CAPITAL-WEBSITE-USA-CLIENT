@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Banner } from "@/components/site/Banner";
 import { ImageFrame } from "@/components/site/ImageFrame";
@@ -182,7 +182,7 @@ export default function PhysicalSilver() {
               metal, premium, and insured shipping — with no obligation.
             </p>
           </div>
-          <InlineLeadForm interest="physical_silver" sourcePage="/physical-silver" />
+          <InlineGhlForm />
         </div>
       </Section>
     </>
