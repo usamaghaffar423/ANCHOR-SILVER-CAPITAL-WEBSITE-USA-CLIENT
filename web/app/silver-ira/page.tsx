@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
-import { InlineLeadForm } from "@/components/site/InlineLeadForm";
+import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
 import { JsonLd } from "@/components/site/JsonLd";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
@@ -155,7 +155,7 @@ export default function SilverIra() {
       </Section>
 
       <Section tone="sage">
-        <div className="grid gap-10 lg:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <div>
             <H2 className="text-primary-foreground">
               Ready to Anchor Your Retirement in Real Silver?
@@ -172,7 +172,16 @@ export default function SilverIra() {
             </a>
             <p className="mt-3 text-sm text-primary-foreground/85">{SITE.hours}</p>
           </div>
-          <InlineLeadForm interest="silver_ira" sourcePage="/silver-ira" />
+
+          {/* GHL-hosted onboarding form — white card matches the old inline form */}
+          <div className="w-full rounded-md border border-border bg-card p-6 shadow-[var(--shadow-card)]">
+            <GhlFormEmbed
+              formId="Mdko5iPIZ5nyZmvORTsp"
+              formName="Silver IRA Onboarding Form"
+              height={824}
+              title="Silver IRA Onboarding Form"
+            />
+          </div>
         </div>
       </Section>
     </>
