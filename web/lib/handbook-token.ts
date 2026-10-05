@@ -1,51 +1,24 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { downloadSecret, isDownloadTokenValid, signDownloadToken } from "./download-token";
 
 /**
- * Optional signed/expiring download links for /api/download-handbook.
+ * Scope-bound wrappers for the Silver IRA Handbook download link.
+ * The shared implementation (secret handling, TTL, HMAC) lives in
+ * `lib/download-token.ts`; this module keeps the original public API used by
+ * `/api/download-handbook` and the thank-you-handbook page.
  *
- * Enabled by setting HANDBOOK_DOWNLOAD_SECRET (32+ random chars). When unset,
- * verification is disabled and the endpoint serves the PDF without a token.
- * When set, a valid, unexpired `?token=<exp>.<sig>` is required (403 otherwise),
- * and the thank-you page signs its links automatically.
- *
- * Token format: `<unix-expiry>.<base64url HMAC-SHA256 of "handbook:<exp>">`
+ * Token format and signing message are unchanged (`handbook:<exp>`), so links
+ * issued before the refactor still verify.
  */
 
-const TOKEN_TTL_SECONDS = 60 * 60 * 24; // 24 hours
-
 export function handbookDownloadSecret(): string | null {
-  const secret = process.env.HANDBOOK_DOWNLOAD_SECRET;
-  if (!secret || secret.trim().length < 16) return null;
-  return secret;
-}
-
-function signature(secret: string, exp: number): string {
-  return createHmac("sha256", secret).update(`handbook:${exp}`).digest("base64url");
+  return downloadSecret();
 }
 
 /** Returns a `token` query value, or null when verification is disabled. */
-export function signHandbookToken(ttlSeconds: number = TOKEN_TTL_SECONDS): string | null {
-  const secret = handbookDownloadSecret();
-  if (!secret) return null;
-  const exp = Math.floor(Date.now() / 1000) + ttlSeconds;
-  return `${exp}.${signature(secret, exp)}`;
+export function signHandbookToken(ttlSeconds?: number): string | null {
+  return signDownloadToken("handbook", ttlSeconds);
 }
 
-/**
- * True when verification is disabled, or the token is present, correctly
- * signed, and unexpired. Missing/malformed/forged/expired tokens → false.
- */
 export function isHandbookTokenValid(token: string | null): boolean {
-  const secret = handbookDownloadSecret();
-  if (!secret) return true;
-  if (!token) return false;
-
-  const [expRaw, provided] = token.split(".");
-  const exp = Number(expRaw);
-  if (!Number.isSafeInteger(exp) || exp <= 0 || !provided) return false;
-  if (exp * 1000 < Date.now()) return false;
-
-  const expected = Buffer.from(signature(secret, exp), "utf8");
-  const actual = Buffer.from(provided, "utf8");
-  return expected.length === actual.length && timingSafeEqual(expected, actual);
+  return isDownloadTokenValid("handbook", token);
 }

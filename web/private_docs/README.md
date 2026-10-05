@@ -1,18 +1,28 @@
 # private_docs/ — private lead-magnet assets
 
-`Silver-IRA-Handbook.pdf` lives here, **outside `/public`**, so no static URL
-(`https://anchorsilvercapital.com/docs/...`) can ever serve it.
+Lead-magnet PDFs live here, **outside `/public`**, so no static URL
+(`https://anchorsilvercapital.com/docs/...`) can ever serve them.
+
+| PDF (drop it here)                   | Generated module                        | Public endpoint                                |
+| ------------------------------------ | --------------------------------------- | ---------------------------------------------- |
+| `Silver-IRA-Handbook.pdf`            | `lib/generated/handbook-pdf.ts`          | `GET /api/download-handbook`                    |
+| `Critical-Minerals-Report.pdf`       | `lib/generated/critical-minerals-pdf.ts` | `GET /api/download-critical-minerals-report`    |
 
 Delivery path:
 
-1. `pnpm build` runs `scripts/embed-handbook.mjs`, which inlines the PDF into
-   `lib/generated/handbook-pdf.ts` so it ships inside the Cloudflare Worker
+1. `pnpm build` runs `scripts/embed-handbook.mjs`, which inlines each PDF into
+   its `lib/generated/*.ts` module so it ships inside the Cloudflare Worker
    bundle (Workers cannot read project files from disk at runtime).
-2. The only public endpoint is `GET /api/download-handbook`, which serves it
-   with `no-store` / `nosniff` / `X-Frame-Options: DENY` headers and optional
-   signed, expiring `?token=` verification (`HANDBOOK_DOWNLOAD_SECRET`).
+2. Each endpoint serves its file with `no-store` / `nosniff` /
+   `X-Frame-Options: DENY` headers and optional signed, expiring `?token=`
+   verification (`HANDBOOK_DOWNLOAD_SECRET`, one secret for all lead magnets,
+   scope-bound per endpoint).
 
-Policy: this PDF is intentionally committed to git — Cloudflare builds clone
-the repo fresh and need it at build time. Replace the file here (never add a
+A PDF that is missing is a warning at build time, not a failure: the generated
+module exports `null` and the endpoint returns 404 until the file is added.
+
+Policy: these PDFs are intentionally committed to git — Cloudflare builds clone
+the repo fresh and need them at build time. Replace a file here (never add a
 copy under `public/`), then run `pnpm handbook:embed` if you want the
-generated module refreshed locally (CI regenerates it on every build anyway).
+generated modules refreshed locally (CI regenerates them on every build
+anyway).
