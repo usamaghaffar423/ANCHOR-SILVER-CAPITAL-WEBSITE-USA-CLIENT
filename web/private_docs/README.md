@@ -6,7 +6,10 @@ Lead-magnet PDFs live here, **outside `/public`**, so no static URL
 | PDF (drop it here)                   | Generated module                        | Public endpoint                                |
 | ------------------------------------ | --------------------------------------- | ---------------------------------------------- |
 | `Silver-IRA-Handbook.pdf`            | `lib/generated/handbook-pdf.ts`          | `GET /api/download-handbook`                    |
-| `Critical-Minerals-Report.pdf`       | `lib/generated/critical-minerals-pdf.ts` | `GET /api/download-critical-minerals-report`    |
+
+This is the only lead magnet: every thank-you page (including
+`/thank-you-critical-minerals`, which the Critical Minerals Report form
+redirects to) delivers it.
 
 Delivery path:
 

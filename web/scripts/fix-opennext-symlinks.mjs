@@ -1,7 +1,8 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const NM = path.join(ROOT, "node_modules");
 const TARGETS = [path.join(ROOT, ".next", "standalone"), path.join(ROOT, ".open-next")];
 
@@ -33,11 +34,11 @@ function relink(linkPath, target, targetIsDir) {
   }
   try {
     fs.symlinkSync(target, linkPath, targetIsDir ? "dir" : "file");
-  } catch (e) {
+  } catch {
     try {
       fs.symlinkSync(target, linkPath, targetIsDir ? "file" : "dir");
-    } catch (e2) {
-      return e2.code;
+    } catch (e) {
+      return e.code;
     }
   }
   return null;
@@ -85,8 +86,9 @@ function runOnce(roots) {
   stats.relinked = 0;
   stats.sourced = 0;
   stats.failed = [];
-  roots.filter((t) => fs.existsSync(t)).forEach(walk);
-  return roots.filter((t) => fs.existsSync(t)).length;
+  const present = roots.filter((t) => fs.existsSync(t));
+  present.forEach(walk);
+  return present.length;
 }
 
 if (process.argv.includes("--watch")) {

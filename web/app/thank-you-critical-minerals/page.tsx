@@ -10,33 +10,39 @@ import {
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { JsonLd } from "@/components/site/JsonLd";
 import { ButtonLink, Card, Eyebrow, H2, PhoneLink, Section } from "@/components/site/ui";
-import { signDownloadToken } from "@/lib/download-token";
+import { signHandbookToken } from "@/lib/handbook-token";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Your Critical Minerals Report is Ready | Anchor Silver Capital",
+  title: "Your Silver IRA Handbook is Ready | Anchor Silver Capital",
   description:
-    "Your free Critical Minerals Report is ready — download the PDF instantly or speak with an Anchor Silver specialist about physical silver and self-directed IRA allocation.",
+    "Your free Silver IRA Handbook is ready — download the PDF instantly or speak with an Anchor Silver specialist about a tax-free direct transfer for your 401(k) or IRA.",
   path: "/thank-you-critical-minerals",
 });
 
 // Rendered per-request so the download link always carries a fresh signed
 // token when HANDBOOK_DOWNLOAD_SECRET is enabled (a prerendered token would
 // expire). Post-conversion page — no SEO/caching value lost.
+//
+// The GHL Critical Minerals Report form redirects here. We only publish one
+// lead magnet — the Silver IRA Handbook — so this URL delivers it.
 export const dynamic = "force-dynamic";
 
 const chapters = [
   {
-    title: "Supply Constraints & Geopolitical Risk Factors",
-    body: "Where mine output, processing, and export controls concentrate risk for Western buyers.",
+    n: "Chapter 3",
+    title: "Direct Transfer vs. Indirect Rollovers",
+    body: "Why a trustee-to-trustee transfer keeps the IRS out of your pocket — and how a 60-day mistake can cost 10%.",
   },
   {
-    title: "Silver's Role as an Industrial Critical Mineral",
-    body: "Solar, electronics, and defense demand measured against a structural mine-supply deficit.",
+    n: "Chapter 4",
+    title: "IRS-Approved .999 Silver Standards",
+    body: "Exactly which silver bars and coins qualify for IRA ownership under IRC Section 408(m)(3).",
   },
   {
-    title: "Asset Allocation & Self-Directed Storage Strategies",
-    body: "How physical holdings sit alongside a self-directed IRA, custodian, and depository.",
+    n: "Chapter 5",
+    title: "Custodian & Depository Roles",
+    body: "Who holds title, who holds metal, and how Equity Trust and Delaware Depository work together.",
   },
 ];
 
@@ -45,16 +51,14 @@ const brassButton =
 
 export default function ThankYouCriticalMineralsPage() {
   // Signed link when token verification is enabled, plain endpoint otherwise.
-  const token = signDownloadToken("critical-minerals");
-  const reportHref = token
-    ? `/api/download-critical-minerals-report?token=${encodeURIComponent(token)}`
-    : "/api/download-critical-minerals-report";
+  const token = signHandbookToken();
+  const handbookHref = token
+    ? `/api/download-handbook?token=${encodeURIComponent(token)}`
+    : "/api/download-handbook";
 
   return (
     <>
-      <JsonLd
-        data={breadcrumbSchema("/thank-you-critical-minerals", "Critical Minerals Report Ready")}
-      />
+      <JsonLd data={breadcrumbSchema("/thank-you-critical-minerals", "Silver IRA Handbook Ready")} />
 
       {/* ── Hero / status ── */}
       <section className="chart-lines relative -mt-[112px] bg-ink px-5 pb-16 pt-[152px] text-silver">
@@ -66,12 +70,12 @@ export default function ThankYouCriticalMineralsPage() {
           </span>
 
           <h1 className="mt-6 font-fraunces text-3xl font-light leading-[1.12] text-white sm:text-5xl">
-            Your Critical Minerals Report is Ready
+            Your Silver IRA Handbook is Ready
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-silver sm:text-lg">
-            We have sent a copy to your email address. You can also view or download the
-            full analysis immediately below.
+            We&apos;ve sent a copy to your email. You can also download or view the full
+            guide immediately below.
           </p>
         </div>
       </section>
@@ -80,54 +84,39 @@ export default function ThankYouCriticalMineralsPage() {
       <Section>
         <div className="mx-auto w-full max-w-4xl">
           <Card className="grid items-start gap-8 md:grid-cols-[260px_1fr] md:p-8">
-            {/* Report cover — brand-styled document preview */}
+            {/* Book preview — brand hero artwork */}
             <figure className="mx-auto w-full max-w-[260px]">
-              <div className="chart-lines flex h-[300px] flex-col justify-between rounded-md border border-silver/20 bg-hero-from p-5 text-left shadow-[var(--shadow-card)]">
-                <div>
-                  <p className="font-mono text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-brass-light">
-                    Investor Briefing · 2026 Edition
-                  </p>
-                  <span aria-hidden="true" className="mt-3 block h-px w-10 bg-brass/70" />
-                </div>
-
-                <div>
-                  <p className="font-fraunces text-2xl font-light leading-[1.15] text-white">
-                    The Critical Minerals Report
-                  </p>
-                  <p className="mt-2 text-[0.7rem] leading-snug text-silver">
-                    Strategic metals, supply chain risks, and physical asset allocation.
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 border-t border-silver/20 pt-3">
-                  <AnchorGlyph className="h-4 w-4 shrink-0 text-secondary" />
-                  <span className="font-display text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-silver">
-                    Anchor Silver Capital
-                  </span>
-                </div>
+              <div className="overflow-hidden rounded-md border border-border shadow-[var(--shadow-card)]">
+                <img
+                  src="/images/hero-book-preview.jpeg"
+                  alt="The Silver IRA Handbook — 2026 Edition"
+                  width={1600}
+                  height={900}
+                  className="h-[300px] w-full object-cover"
+                />
               </div>
               <figcaption className="mt-3 text-center text-xs uppercase tracking-wider text-muted-foreground">
-                The Critical Minerals Report · Educational Guide
+                The Silver IRA Handbook · Educational Guide
               </figcaption>
             </figure>
 
             {/* Description + download */}
             <div>
               <Eyebrow className="text-brass">Instant Access</Eyebrow>
-              <H2 className="mt-2">The Critical Minerals Report</H2>
-              <p className="mt-3 leading-relaxed text-muted-foreground">
-                Strategic metals, supply chain risks, and physical asset allocation.
-              </p>
+              <H2 className="mt-2">What&apos;s inside the guide</H2>
 
               <ul className="mt-6 space-y-5">
                 {chapters.map((c) => (
-                  <li key={c.title} className="flex gap-3.5">
+                  <li key={c.n} className="flex gap-3.5">
                     <FileText
                       className="mt-0.5 h-5 w-5 shrink-0 text-brass"
                       aria-hidden="true"
                     />
                     <div>
-                      <p className="font-medium text-foreground">{c.title}</p>
+                      <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-wider text-brass">
+                        {c.n}
+                      </p>
+                      <p className="mt-0.5 font-medium text-foreground">{c.title}</p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                         {c.body}
                       </p>
@@ -136,14 +125,9 @@ export default function ThankYouCriticalMineralsPage() {
                 ))}
               </ul>
 
-              <a
-                href={reportHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={brassButton}
-              >
+              <a href={handbookHref} target="_blank" rel="noopener noreferrer" className={brassButton}>
                 <Download className="h-4 w-4" aria-hidden="true" />
-                Download Critical Minerals Report
+                Download PDF Now
               </a>
               <p className="mt-3 text-xs text-muted-foreground">
                 Opens in a new tab · No further sign-up required
@@ -157,11 +141,11 @@ export default function ThankYouCriticalMineralsPage() {
       <section className="bg-hero-from px-5 py-16 text-center md:py-24">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display text-3xl text-white md:text-[2.6rem]">
-            Discuss Strategic Metal Allocation with a Specialist
+            Ready to Explore Your Transfer Options?
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-silver">
-            Speak with an Anchor Silver specialist to learn how critical minerals and
-            physical silver fit into your broader portfolio or self-directed IRA.
+            Speak with an Anchor Silver specialist to verify whether your existing 401(k)
+            or IRA qualifies for a tax-free direct transfer. No pressure, no obligations.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -174,7 +158,7 @@ export default function ThankYouCriticalMineralsPage() {
 
           <p className="mt-6 inline-flex items-center justify-center gap-2 text-xs uppercase tracking-wider text-silver-deep">
             <ShieldCheck className="h-4 w-4 shrink-0 text-brass" aria-hidden="true" />
-            100% Confidential · Direct Trustee-to-Trustee Transfers · No Obligation
+            100% Confidential · Direct Trustee-to-Trustee Transfers
           </p>
         </div>
       </section>
@@ -186,16 +170,20 @@ export default function ThankYouCriticalMineralsPage() {
       >
         <div className="mx-auto w-full max-w-4xl">
           <p className="text-xs leading-relaxed text-silver-deep">
-            <strong className="font-semibold text-silver">Compliance disclosure:</strong>{" "}
-            {SITE.legal} is a precious metals dealer, not a registered investment advisor,
-            broker-dealer, or tax advisor, and nothing on this page or in the attached
-            report constitutes investment, legal, or tax advice. Physical precious metals
-            carry risk of loss, including the possible loss of principal; past performance
-            does not guarantee future results. Third-party custodians (such as Equity
-            Trust Company) and depositories (such as Delaware Depository) are independent,
-            unaffiliated third parties, and their services, solvency, and performance are
-            their sole responsibility. Please consult your own financial, legal, and tax
-            professionals before making any financial decision, and review our full{" "}
+            <strong className="font-semibold text-silver">
+              Compliance disclosure:
+            </strong>{" "}
+            {SITE.legal} is a precious metals dealer. It is not a registered investment
+            advisor, broker-dealer, or tax advisor, and nothing on this page or in the
+            attached guide constitutes investment, legal, or tax advice. Precious metals
+            are volatile and carry risk, including the possible loss of principal; past
+            performance does not guarantee future results. Purchases may be subject to
+            price spreads, storage, and insurance costs. Third-party custodians (such as
+            Equity Trust Company) and depositories (such as Delaware Depository) are
+            independent, unaffiliated third parties, and their services, solvency, and
+            performance are their sole responsibility. Please consult your own financial,
+            legal, and tax professionals before making any financial decision, and review
+            our full{" "}
             <Link
               href="/riskdisclosure"
               className="font-medium text-secondary underline underline-offset-2 hover:text-white"

@@ -8,13 +8,14 @@ import { createHmac, timingSafeEqual } from "node:crypto";
  * When set, a valid, unexpired `?token=<exp>.<sig>` is required (403 otherwise),
  * and each thank-you page signs its own link automatically.
  *
- * One secret covers every lead magnet, but the scope is part of the HMAC
- * message — a handbook token can never be replayed against another endpoint.
+ * One secret covers every lead magnet, but the scope stays part of the HMAC
+ * message — a token can never be replayed against a differently-scoped
+ * endpoint.
  *
  * Token format: `<unix-expiry>.<base64url HMAC-SHA256 of "<scope>:<exp>">`
  */
 
-export type DownloadScope = "handbook" | "critical-minerals";
+export type DownloadScope = "handbook";
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 24; // 24 hours
 

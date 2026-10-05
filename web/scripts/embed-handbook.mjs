@@ -1,9 +1,8 @@
 /**
- * Embeds the private lead-magnet PDFs into the Worker bundle.
+ * Embeds the private lead-magnet PDF into the Worker bundle.
  *
- * Sources of truth (never in /public):
- *   private_docs/Silver-IRA-Handbook.pdf      → lib/generated/handbook-pdf.ts
- *   private_docs/Critical-Minerals-Report.pdf → lib/generated/critical-minerals-pdf.ts
+ * Source of truth (never in /public):
+ *   private_docs/Silver-IRA-Handbook.pdf → lib/generated/handbook-pdf.ts
  *
  * Runs automatically on every `pnpm build` (local and on Cloudflare CI), because
  * Cloudflare Workers cannot read project files from disk at runtime — only files
@@ -30,13 +29,6 @@ const LEAD_MAGNETS = [
     base64Const: "HANDBOOK_PDF_BASE64",
     bytesConst: "HANDBOOK_PDF_BYTES",
     endpoint: "/api/download-handbook",
-  },
-  {
-    file: "Critical-Minerals-Report.pdf",
-    out: "critical-minerals-pdf.ts",
-    base64Const: "CRITICAL_MINERALS_PDF_BASE64",
-    bytesConst: "CRITICAL_MINERALS_PDF_BYTES",
-    endpoint: "/api/download-critical-minerals-report",
   },
 ];
 
