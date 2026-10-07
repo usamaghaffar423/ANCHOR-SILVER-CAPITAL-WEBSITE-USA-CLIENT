@@ -16,6 +16,17 @@ export const SITE = {
 } as const;
 
 /**
+ * Effective date for the Privacy Policy / Terms — derived at build time so the
+ * legal pages always carry the current date (currently October 2026) without a
+ * manual edit on every deploy.
+ */
+export const policyEffectiveDate = new Date().toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+/**
  * Gate for using Scottsdale Mint/Silver-branded imagery (lion crest, "Scottsdale"
  * wordmark visible) as a prominent/centerpiece shot. While false, every branded
  * image is treated as a background/texture ONLY — always behind a scrim, never a

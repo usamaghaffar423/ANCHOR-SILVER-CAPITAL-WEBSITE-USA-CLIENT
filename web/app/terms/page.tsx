@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Prose, Section } from "@/components/site/ui";
-import { SITE, pageMeta } from "@/lib/site";
+import { SITE, pageMeta, policyEffectiveDate } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
   title: "Terms of Use — Anchor Silver Capital",
   description:
-    "Terms and conditions governing use of the Anchor Silver Capital website and services.",
+    "Terms and conditions governing use of the Anchor Silver Capital website, services, and TCPA/SMS messaging consent.",
   path: "/terms",
 });
 
@@ -22,7 +22,7 @@ export default function Terms() {
       <Section>
         <Prose>
           <p>
-            <strong>Effective Date:</strong> August 16, 2026
+            <strong>Effective Date:</strong> {policyEffectiveDate}
           </p>
           <p>
             Welcome to the website of {SITE.legal} (“we,” “us,” or “our”). By accessing or using this
@@ -59,7 +59,45 @@ export default function Terms() {
             for providing accurate shipping and account information.
           </p>
 
-          <h3>5. Intellectual Property</h3>
+          <h3>5. Text Messaging, Telephone Calls, and TCPA Consent</h3>
+          <p>
+            <strong>Program name:</strong> Anchor Silver Capital SMS Program.
+          </p>
+          <p>
+            By submitting your phone number through any form on this website, you give {SITE.legal}{" "}
+            <strong>express written consent</strong> under the Telephone Consumer Protection Act
+            (TCPA), 47 U.S.C. § 227, and related federal and state laws, to contact you at the
+            number provided using autodialed or prerecorded voice calls, artificial or prerecorded
+            voice messages, and text (SMS) messages.
+          </p>
+          <p>
+            <strong>Message frequency:</strong> Message frequency varies. You may receive messages
+            about your inquiry, appointment reminders, follow-ups on a consultation you requested,
+            and information about precious metals products and services.
+          </p>
+          <p>
+            <strong>Message and data rates may apply.</strong> Check with your mobile carrier for
+            details. Consent is not a condition of any purchase.
+          </p>
+          <p>
+            <strong>Opt-out instructions:</strong> Reply <strong>STOP</strong> to cancel, reply{" "}
+            <strong>HELP</strong> for help, at any time. After you send STOP, we will send a
+            confirmation message and cease further texts to that number. You may also opt out or
+            revoke consent by calling {SITE.phone} or emailing{" "}
+            <a href={`mailto:${SITE.email}`} className="text-primary underline underline-offset-4">
+              {SITE.email}
+            </a>
+            . Carriers are not liable for delayed or undelivered messages.
+          </p>
+          <p>
+            You represent that you are the subscriber or customary user of the phone number you
+            provide, and that you are authorized to grant this consent. You agree to notify us
+            promptly if your number changes or is reassigned. This consent remains in effect until
+            you revoke it, and revocation does not affect prior lawful messages or any separate
+            consent you have given for calls or emails that are not covered by this section.
+          </p>
+
+          <h3>6. Intellectual Property</h3>
           <p>
             All content on this website, including text, graphics, logos, and the Anchor Silver
             Capital mark, is our property or the property of our licensors and is protected by
@@ -67,32 +105,36 @@ export default function Terms() {
             derivative works without our written permission.
           </p>
 
-          <h3>6. Limitation of Liability</h3>
+          <h3>7. Limitation of Liability</h3>
           <p>
             To the fullest extent permitted by law, {SITE.legal} is not liable for any indirect,
             incidental, consequential, or punitive damages arising from your use of this website or
             our services, including market losses on precious metals.
           </p>
 
-          <h3>7. Governing Law</h3>
+          <h3>8. Governing Law</h3>
           <p>
             These Terms of Use are governed by the laws of the State of California, without regard to
             its conflict-of-law principles. Any disputes arising under these terms will be resolved
             in the state or federal courts located in Los Angeles County, California.
           </p>
 
-          <h3>8. Changes to These Terms</h3>
+          <h3>9. Changes to These Terms</h3>
           <p>
             We may update these Terms of Use from time to time. The most current version will always
             be posted on this page with the effective date. Continued use of the website after
             changes constitutes your acceptance of the revised terms.
           </p>
 
-          <h3>9. Contact Us</h3>
+          <h3>10. Contact Us</h3>
           <p>
             Questions about these Terms of Use may be directed to{" "}
             <a href={`mailto:${SITE.email}`} className="text-primary underline underline-offset-4">
               {SITE.email}
+            </a>{" "}
+            or by phone at{" "}
+            <a href={SITE.phoneHref} className="text-primary underline underline-offset-4">
+              {SITE.phone}
             </a>
             .
           </p>
