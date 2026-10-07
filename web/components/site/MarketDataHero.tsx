@@ -6,10 +6,16 @@ import { HeroMarketCard } from "@/components/site/HeroMarketCard";
 /**
  * Original home hero — data-heavy layout with live market card.
  * Kept intact for A/B testing against PremiumGuideHero.
+ *
+ * Same full-screen contract as PremiumGuideHero: at least one viewport tall at
+ * every breakpoint, with the negative margin cancelling the sticky header so
+ * the next section never peeks above the fold. The market card moves below the
+ * fold under lg so the copy-only hero stays one screen on phones and tablets.
  */
 export function MarketDataHero() {
   return (
-    <section className="hero-surface relative flex min-h-dvh -mt-[60px] flex-col justify-center px-5 pb-10 pt-[84px] text-silver md:min-h-0 md:-mt-[112px] md:block md:justify-normal md:pb-20 md:pt-[140px]">
+    <>
+    <section className="hero-surface relative flex min-h-dvh -mt-[72px] flex-col justify-center px-5 pb-10 pt-[96px] text-silver md:pb-20 md:pt-[140px]">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
         <div className="min-w-0 order-1">
           <p className="eyebrow text-xs text-brass-light sm:text-sm">
@@ -48,10 +54,18 @@ export function MarketDataHero() {
           </ul>
         </div>
 
-        <div className="mx-auto w-full min-w-0 max-w-md order-2 lg:mx-0 lg:max-w-none lg:pl-2">
+        <div className="mx-auto w-full min-w-0 max-w-md order-2 hidden lg:mx-0 lg:block lg:max-w-none lg:pl-2">
           <HeroMarketCard />
         </div>
       </div>
     </section>
+
+    {/* Market card below the fold on mobile/tablet, so the hero stays one screen */}
+    <section className="bg-hero-to px-5 pb-14 pt-10 lg:hidden">
+      <div className="mx-auto w-full max-w-md">
+        <HeroMarketCard />
+      </div>
+    </section>
+    </>
   );
 }
