@@ -54,43 +54,41 @@ function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProp
   }, []);
 
   return (
-    <div className="w-full">
-      <div style={{ height }}>
-        <iframe
-          src={src}
-          style={{ width: "100%", height: "100%", border: "none", borderRadius: "8px" }}
-          id={`inline-${formId}`}
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name={formName}
-          data-height={String(height)}
-          data-layout-iframe-id={`inline-${formId}`}
-          data-form-id={formId}
-          data-cookie-consent="true"
-          data-cookie-consent-provider="auto"
-          title={title ?? formName}
-        />
-      </div>
-      <LegalLinks lead="Submitting this form means you agree to our" className="mt-3 text-center" />
+    <div style={{ minHeight: height }}>
+      <iframe
+        src={src}
+        style={{ width: "100%", height, border: "none", borderRadius: "8px" }}
+        id={`inline-${formId}`}
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-trigger-value=""
+        data-activation-type="alwaysActivated"
+        data-activation-value=""
+        data-deactivation-type="neverDeactivate"
+        data-deactivation-value=""
+        data-form-name={formName}
+        data-height={String(height)}
+        data-layout-iframe-id={`inline-${formId}`}
+        data-form-id={formId}
+        data-cookie-consent="true"
+        data-cookie-consent-provider="auto"
+        title={title ?? formName}
+      />
     </div>
   );
 }
 
 export function GhlFormEmbed(props: GhlFormEmbedProps) {
   return (
-    <Suspense
-      fallback={
-        <div className="w-full">
+    <div className="w-full">
+      <Suspense
+        fallback={
           <div style={{ height: props.height }} aria-hidden="true" />
-        </div>
-      }
-    >
-      <GhlFormEmbedInner {...props} />
-    </Suspense>
+        }
+      >
+        <GhlFormEmbedInner {...props} />
+      </Suspense>
+      <LegalLinks lead="Submitting this form means you agree to our" className="mt-3 text-center" />
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+nodeLinker: hoisted
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - unrs-resolver
