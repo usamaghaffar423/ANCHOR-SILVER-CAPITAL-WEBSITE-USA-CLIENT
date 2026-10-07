@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Anchor, Lock } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
-import { GuidePopup } from "@/components/site/GuidePopup";
+import { LazyGuidePopup } from "@/components/site/LazyGuidePopup";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { InlineGhlForm } from "@/components/site/InlineGhlForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
@@ -179,7 +179,7 @@ export default function Home() {
   return (
     <>
       <PremiumGuideHero today={new Date().toISOString()} />
-      <GuidePopup />
+      <LazyGuidePopup />
 
       <Section className="md:py-24">
         <H2>Two Ways to Anchor Your Savings</H2>

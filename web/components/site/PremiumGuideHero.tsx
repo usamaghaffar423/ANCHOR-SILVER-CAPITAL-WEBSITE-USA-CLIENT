@@ -2,10 +2,22 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Lock } from "lucide-react";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
 import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
-import { GuideLeadModal } from "@/components/site/GuideLeadModal";
+
+// Code-split out of the initial bundle: the modal renders nothing until it is
+// opened, so pulling it behind an intent signal (hover/focus/tap on a CTA)
+// keeps Radix Dialog + the GHL wrapper out of the hydration task without
+// changing any server-rendered HTML or shifting layout.
+const GuideLeadModal = dynamic(
+  () =>
+    import("@/components/site/GuideLeadModal").then((m) => ({
+      default: m.GuideLeadModal,
+    })),
+  { ssr: false, loading: () => null },
+);
 
 /**
  * Premium lead-magnet hero — replaces the data-heavy MarketDataHero with a
@@ -31,7 +43,14 @@ import { GuideLeadModal } from "@/components/site/GuideLeadModal";
  */
 export function PremiumGuideHero({ today }: { today?: string | null }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const open = () => setModalOpen(true);
+  const [modalLoaded, setModalLoaded] = useState(false);
+  // Warm the chunk on first intent (hover / focus / tap) so the dialog is
+  // already there when the click lands.
+  const arm = () => setModalLoaded(true);
+  const open = () => {
+    arm();
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -52,6 +71,8 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
             <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4 md:mt-6">
               <button
                 onClick={open}
+                onPointerEnter={arm}
+                onFocus={arm}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light sm:w-auto"
               >
                 Get the free Silver guide
@@ -77,7 +98,7 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
 
           {/* ─── Right Column: Lead Card (lg and up only) ─── */}
           <div className="mx-auto w-full min-w-0 max-w-md order-2 hidden lg:mx-0 lg:block lg:max-w-none lg:pl-2">
-            <GuideCard onSelect={open} />
+            <GuideCard onSelect={open} onArm={arm} />
           </div>
         </div>
       </section>
@@ -85,16 +106,18 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
       {/* Lead card below the fold on mobile/tablet, so the hero stays one screen */}
       <section className="bg-hero-to px-5 pb-14 pt-10 lg:hidden">
         <div className="mx-auto w-full max-w-md">
-          <GuideCard onSelect={open} />
+          <GuideCard onSelect={open} onArm={arm} />
         </div>
       </section>
 
-      <GuideLeadModal open={modalOpen} onOpenChange={setModalOpen} />
+      {modalLoaded ? (
+        <GuideLeadModal open={modalOpen} onOpenChange={setModalOpen} />
+      ) : null}
     </>
   );
 }
 
-function GuideCard({ onSelect }: { onSelect: () => void }) {
+function GuideCard({ onSelect, onArm }: { onSelect: () => void; onArm: () => void }) {
   return (
     <div className="overflow-hidden rounded-xl border border-white/15 bg-[#F8FAFC] shadow-2xl">
       {/* Top section: book mockup area */}
@@ -126,6 +149,8 @@ function GuideCard({ onSelect }: { onSelect: () => void }) {
         </p>
         <button
           onClick={onSelect}
+          onPointerEnter={onArm}
+          onFocus={onArm}
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
         >
           Send me the free guide
