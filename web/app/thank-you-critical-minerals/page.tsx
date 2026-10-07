@@ -14,7 +14,7 @@ import { signHandbookToken } from "@/lib/handbook-token";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Your Silver IRA Handbook is Ready | Anchor Silver Capital",
+  title: "Your Silver IRA Handbook is Ready",
   description:
     "Your free Silver IRA Handbook is ready — download the PDF instantly or speak with an Anchor Silver specialist about a tax-free direct transfer for your 401(k) or IRA.",
   path: "/thank-you-critical-minerals",

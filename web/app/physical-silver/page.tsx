@@ -17,7 +17,7 @@ const junkSilver = "/assets/junk-silver.jpg";
 const silverRounds = "/assets/silver-rounds.jpg";
 
 export const metadata: Metadata = pageMeta({
-  title: "Buy Physical Silver — Bars, Rounds & Coins | Anchor Silver",
+  title: "Buy Physical Silver — Bars, Rounds & Coins",
   description:
     "Buy physical silver rounds, bars, and coins shipped fully insured to your door or stored at IDS of Delaware. Minimum order $5,000. All-in pricing before you commit.",
   path: "/physical-silver",

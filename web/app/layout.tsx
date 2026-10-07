@@ -6,40 +6,59 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
-import { SITE, localBusinessSchema } from "@/lib/site";
+import { SITE, OG_IMAGE, rootSchemaGraph } from "@/lib/site";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-D92G9EWD3Q";
 
-const OG_IMAGE =
-  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bb0d26bede5054ac2c25a7dd6db0cf3b/id-preview-a8032d31--d12d1c21-bb52-4208-81f4-e081d110f3a3.lovable.app-1786907128021.png";
-
+/**
+ * Root metadata. Every route that doesn't define its own inherits this; routes
+ * that do override `title` (through the template), `description` and
+ * `alternates.canonical` via pageMeta(). The root canonical is the home page —
+ * so any route without its own canonical would point at `/`, which is why
+ * guide-success ships its own metadata too.
+ */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.origin),
   title: {
-    default: SITE.name,
-    template: "%s",
+    default: "Anchor Silver Capital | Physical Silver IRA & Precious Metals",
+    template: "%s | Anchor Silver Capital",
   },
   description:
-    "Anchor Silver Capital offers Silver IRA rollovers and direct physical silver purchases.",
+    "Protect your retirement with physical Silver IRAs. Transparent fee structure ($50 setup, $200/yr flat AET custodian, $12/mo IDS Delaware storage) and max 15% spot markup.",
+  alternates: {
+    canonical: "./",
+  },
   authors: [{ name: SITE.legal }],
   icons: {
     icon: { url: "/favicon.svg", type: "image/svg+xml" },
     apple: "/favicon.svg",
   },
   openGraph: {
-    siteName: SITE.name,
-    type: "website",
-    title: SITE.name,
+    title: "Anchor Silver Capital | Physical Silver IRA Specialist",
     description:
-      "Anchor Silver Capital offers Silver IRA rollovers and direct physical silver purchases.",
+      "Flat-fee Self-Directed Silver IRAs backed by physical bullion stored at IDS of Delaware.",
+    url: SITE.origin,
+    siteName: SITE.name,
+    locale: "en_US",
+    type: "website",
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE.name,
-    description:
-      "Anchor Silver Capital offers Silver IRA rollovers and direct physical silver purchases.",
+    title: "Anchor Silver Capital",
+    description: "Physical Silver IRA Rollovers & Transparent Pricing.",
     images: [OG_IMAGE],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -53,9 +72,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
         />
+        {/* YMYL entity graph: FinancialService (us) + FinancialProduct (the IRA) */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rootSchemaGraph) }}
         />
       </head>
       <body>

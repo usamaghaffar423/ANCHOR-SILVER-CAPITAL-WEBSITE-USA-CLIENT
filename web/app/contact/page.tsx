@@ -3,10 +3,10 @@ import { PageHero } from "@/components/site/PageHero";
 import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Card, H2, Section } from "@/components/site/ui";
-import { SITE, breadcrumbSchema, localBusinessSchema, pageMeta } from "@/lib/site";
+import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Contact Anchor Silver Capital — Marina del Rey, CA",
+  title: "Contact — Marina del Rey, CA",
   description:
     "Call (866) 818-7243 or email info@anchorsilvercapital.com. Anchor Silver Capital, 475 Washington Blvd., Marina del Rey, CA 90292. Mon-Fri 8am-6pm Pacific.",
   path: "/contact",
@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMeta({
 export default function Contact() {
   return (
     <>
-      <JsonLd data={localBusinessSchema} />
+      {/* The FinancialService entity itself lives in the root layout's @graph. */}
       <JsonLd data={breadcrumbSchema("/contact", "Contact")} />
       <PageHero
         eyebrow="Contact"

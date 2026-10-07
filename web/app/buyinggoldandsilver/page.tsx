@@ -6,7 +6,7 @@ import { Section, H2, Card, buttonStyles } from "@/components/site/ui";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Buying Gold & Silver | Anchor Silver Capital",
+  title: "Buying Gold & Silver",
   description:
     "Buy physical gold and silver — common bullion and premium products. Transparent pricing, confirmed verbally with a Commodity Specialist before any order is finalized.",
   path: "/buyinggoldandsilver",

@@ -4,7 +4,7 @@ import { Prose, Section } from "@/components/site/ui";
 import { SITE, pageMeta, policyEffectiveDate } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Privacy Policy — Anchor Silver Capital",
+  title: "Privacy Policy",
   description:
     "Anchor Silver Capital LLC's privacy policy explains how we collect, use, and protect your personal information, including SMS consent data and call recordings.",
   path: "/privacy",

@@ -4,7 +4,7 @@ import { Prose, Section } from "@/components/site/ui";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Disclaimer — Anchor Silver Capital",
+  title: "Disclaimer",
   description:
     "Important disclaimers regarding precious metals, investment risk, and the information provided on this website.",
   path: "/disclaimer",

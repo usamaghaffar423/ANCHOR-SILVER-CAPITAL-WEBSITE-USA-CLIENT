@@ -24,7 +24,7 @@ const texVault = "/assets/tex-vault.jpg";
 
 export const metadata: Metadata = {
   ...pageMeta({
-    title: "Homepage v1 (archived design) | Anchor Silver Capital",
+    title: "Homepage v1 (archived design)",
     description:
       "Archived previous homepage design, kept for reference. The live homepage is at /.",
     path: "/home-v1",

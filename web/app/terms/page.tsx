@@ -4,7 +4,7 @@ import { Prose, Section } from "@/components/site/ui";
 import { SITE, pageMeta, policyEffectiveDate } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Terms of Use — Anchor Silver Capital",
+  title: "Terms of Use",
   description:
     "Terms and conditions governing use of the Anchor Silver Capital website, services, and TCPA/SMS messaging consent.",
   path: "/terms",

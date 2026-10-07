@@ -6,7 +6,7 @@ import { H2, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Get Started — Free Silver IRA Consultation | Anchor Silver",
+  title: "Get Started — Free Silver IRA Consultation",
   description:
     "Request a callback from a silver specialist. No pressure, no hard sell — a straight conversation about whether a Silver IRA or physical silver fits your situation.",
   path: "/get-started",

@@ -5,7 +5,7 @@ import { Prose, Section } from "@/components/site/ui";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Risk Disclosure Statement — Anchor Silver Capital",
+  title: "Risk Disclosure Statement",
   description:
     "Read the full Risk Disclosure Statement for Anchor Silver Capital LLC before purchasing precious metals products.",
   path: "/riskdisclosure",

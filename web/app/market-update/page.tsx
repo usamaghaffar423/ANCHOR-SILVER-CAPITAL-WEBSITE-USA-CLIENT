@@ -4,7 +4,7 @@ import { MarketUpdateContent } from "@/components/site/MarketUpdateContent";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver & Gold Market Update — Prices and Ratio | Anchor",
+  title: "Silver & Gold Market Update — Prices and Ratio",
   description:
     "Live gold and silver spot prices, the gold to silver ratio, and plain-spoken commentary on industrial demand, the supply deficit, and Fed policy.",
   path: "/market-update",

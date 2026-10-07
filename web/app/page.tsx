@@ -13,7 +13,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver IRA Rollovers & Physical Silver | Anchor Silver Capital",
+  title: "Silver IRA Rollovers & Physical Silver",
   description:
     "Roll your 401k or IRA into a Silver IRA tax-free. Buy physical silver rounds, bars, and coins delivered to your door. Marina del Rey, CA. Call (866) 818-7243.",
   path: "/",

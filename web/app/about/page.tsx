@@ -26,7 +26,7 @@ const galleryImages = [
 ];
 
 export const metadata: Metadata = pageMeta({
-  title: "About Anchor Silver Capital — Marina del Rey Silver Dealer",
+  title: "About — Marina del Rey Silver Dealer",
   description:
     "Anchor Silver Capital LLC is a California precious metals dealer and Silver IRA specialist. Our story, our values, our custodian and depository partners.",
   path: "/about",

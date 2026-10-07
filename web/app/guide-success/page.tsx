@@ -1,11 +1,22 @@
+import type { Metadata } from "next";
 import { Lock } from "lucide-react";
+import { pageMeta } from "@/lib/site";
 
 /**
  * Success page after submitting the guide request form.
  * Embeds the PDF in a restricted iframe (no toolbar) for a premium
  * "in-app" preview experience. Reached after a successful submission of the
  * GHL-hosted guide request form.
+ *
+ * Ships its own metadata so it doesn't inherit the root layout's home-page
+ * canonical — otherwise this route would declare itself a duplicate of `/`.
  */
+export const metadata: Metadata = pageMeta({
+  title: "Your Silver Investor Guide Is Ready",
+  description:
+    "Preview the 2026 Silver Investor Guide — Silver IRA rollovers, physical silver ownership, and how fees are disclosed before you commit.",
+  path: "/guide-success",
+});
 export default function GuideSuccessPage() {
   return (
     <section className="hero-surface relative -mt-[60px] px-5 pb-16 pt-[120px] text-silver md:-mt-[112px] md:pb-24 md:pt-[160px]">

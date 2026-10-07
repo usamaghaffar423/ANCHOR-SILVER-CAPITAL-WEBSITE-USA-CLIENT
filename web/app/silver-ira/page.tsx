@@ -8,9 +8,9 @@ import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver IRA Rollover — Tax-Free 401k to Silver IRA | Anchor",
+  title: "Self-Directed Silver IRA Rollover & Fees",
   description:
-    "Roll a 401k, IRA, or annuity into a self-directed Silver IRA tax-free and penalty-free. AET custodian, IDS of Delaware storage, transparent fees.",
+    "Learn how to roll over your 401(k) or IRA into physical silver. Clear fees: $200/yr flat AET custodian fee and $12/mo storage at IDS Delaware.",
   path: "/silver-ira",
   type: "article",
 });

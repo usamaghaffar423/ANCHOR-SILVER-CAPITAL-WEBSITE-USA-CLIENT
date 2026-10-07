@@ -72,17 +72,31 @@ export function breadcrumbSchema(path: string, label: string) {
   };
 }
 
-export const localBusinessSchema = {
-  "@context": "https://schema.org",
+const ORGANIZATION_ID = `${SITE.origin}/#organization`;
+
+/**
+ * YMYL entity graph injected into <head> on every route: who we are and exactly
+ * what the product costs, in machine-readable form for search engines and for
+ * answer engines that cite the site directly.
+ *
+ * The fee strings below are the published schedule — AET $50 setup + $200/year,
+ * IDS of Delaware $12/month ($144/year), dealer premium capped at 15% over spot.
+ * Change them here and on the Silver IRA / FAQ pages together.
+ *
+ * Nodes carry no `@context` so both can sit inside a single `@graph`.
+ */
+const financialServiceNode = {
   "@type": "FinancialService",
-  name: SITE.legal,
-  alternateName: SITE.name,
+  "@id": ORGANIZATION_ID,
+  name: SITE.name,
+  legalName: SITE.legal,
+  alternateName: SITE.legal,
   url: SITE.origin,
   telephone: "+1-866-818-7243",
   email: SITE.email,
   logo: `${SITE.origin}/favicon.svg`,
   image: `${SITE.origin}/favicon.svg`,
-  priceRange: "$$$",
+  priceRange: "Up to 15% over spot",
   sameAs: [
     "https://www.facebook.com/anchorsilvercapital",
     "https://www.linkedin.com/company/anchorsilvercapital",
@@ -107,11 +121,37 @@ export const localBusinessSchema = {
   ],
 };
 
+const financialProductNode = {
+  "@type": "FinancialProduct",
+  "@id": `${SITE.origin}/#silver-ira`,
+  name: "Self-Directed Silver IRA",
+  provider: { "@id": ORGANIZATION_ID },
+  feesAndCommissionsSpecification:
+    "AET Custodian Fee: $50 setup, then $200/year flat. IDS of Delaware Storage: $12/month ($144/year flat). Dealer premium: maximum 15% over spot.",
+  description:
+    "IRS-approved physical Silver IRA backed by secured vaults at IDS of Delaware with American Estate & Trust (AET) as custodian.",
+};
+
+export const rootSchemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": [financialServiceNode, financialProductNode],
+};
+
+/** Social card image, shared by the root metadata and every route's pageMeta. */
+export const OG_IMAGE =
+  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bb0d26bede5054ac2c25a7dd6db0cf3b/id-preview-a8032d31--d12d1c21-bb52-4208-81f4-e081d110f3a3.lovable.app-1786907128021.png";
+
 type OgType = "website" | "article";
 
 /**
  * Standard metadata helper so every route ships unique, self-referencing tags.
- * Ported from the source `pageHead()` head() helper.
+ *
+ * `title` is returned bare — the root layout's `title.template` appends
+ * "| Anchor Silver Capital", so page titles must never repeat the brand
+ * themselves. Social titles are branded here explicitly because a child
+ * route's `openGraph` object *replaces* the root one rather than merging
+ * into it (verified on the live site), so `siteName`, `locale`, the card
+ * style and the image all have to be set per route.
  */
 export function pageMeta({
   title,
@@ -124,19 +164,25 @@ export function pageMeta({
   path: string;
   type?: OgType;
 }): Metadata {
+  const socialTitle = `${title} | ${SITE.name}`;
   return {
     title,
     description,
     alternates: { canonical: path },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       type,
       url: `${SITE.origin}${path}`,
+      siteName: SITE.name,
+      locale: "en_US",
+      images: [OG_IMAGE],
     },
     twitter: {
-      title,
+      card: "summary_large_image",
+      title: socialTitle,
       description,
+      images: [OG_IMAGE],
     },
   };
 }

@@ -8,7 +8,7 @@ import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver Supply Deficit — Six Straight Years | Anchor Silver",
+  title: "Silver Supply Deficit — Six Straight Years",
   description:
     "The world has mined less silver than it uses for six consecutive years. Why byproduct mining can't respond, what industry consumes, and an honest read of the data.",
   path: "/silver-supply",

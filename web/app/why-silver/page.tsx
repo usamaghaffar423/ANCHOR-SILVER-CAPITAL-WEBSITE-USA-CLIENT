@@ -9,7 +9,7 @@ import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Why Invest in Silver — Supply Deficit & Real Money | Anchor",
+  title: "Why Invest in Silver — Supply Deficit & Real Money",
   description:
     "Why silver: five thousand years as real money, six straight years of supply deficit, industrial demand, currency debasement, and the gold to silver ratio explained.",
   path: "/why-silver",
