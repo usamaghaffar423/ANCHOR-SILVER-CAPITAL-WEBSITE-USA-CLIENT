@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Script from "next/script";
 import "./globals.css";
+import { Analytics } from "@/components/site/Analytics";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import { SITE, OG_IMAGE, rootSchemaGraph } from "@/lib/site";
-
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-D92G9EWD3Q";
 
 /**
  * Root metadata. Every route that doesn't define its own inherits this; routes
@@ -122,22 +120,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <CookieBanner />
         <ScrollToTop />
-        {/* lazyOnload: gtag is ~175 KB / ~400 ms of main-thread scripting. It
-            only runs after the window load event, so it lands outside the
-            interaction window Lighthouse scores TBT against. Trade-off: a very
-            fast bounce can now be missed by Analytics. */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="lazyOnload"
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
-          `}
-        </Script>
+        <Analytics />
       </body>
     </html>
   );
