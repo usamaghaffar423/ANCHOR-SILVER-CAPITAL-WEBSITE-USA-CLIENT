@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-const linkCls = "text-primary underline underline-offset-4 hover:text-primary/80";
+const linkCls =
+  "whitespace-nowrap text-primary underline underline-offset-4 hover:text-primary/80";
 
 /**
  * Privacy Policy + Terms of Use links shown with every lead form (GuidePopup

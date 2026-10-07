@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
+import { LegalLinks } from "@/components/site/LegalLinks";
 
 const STORAGE_KEY = "asc_guide_popup_seen";
 
@@ -66,9 +67,14 @@ export function GuidePopup() {
         if (!v) handleClose();
       }}
     >
-      <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-md">
+      {/*
+        Same problem as GuideLeadModal: the form is taller than a 92vh sheet, so
+        keep the banner and the Privacy/Terms line pinned and let only the form
+        itself scroll.
+      */}
+      <DialogContent className="flex max-h-[92vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-md">
         {/* Top banner */}
-        <div className="relative bg-gradient-to-br from-primary to-hero-from px-6 pb-6 pt-8 text-center text-white">
+        <div className="relative shrink-0 bg-gradient-to-br from-primary to-hero-from px-6 pb-6 pt-8 text-center text-white">
           <button
             onClick={handleClose}
             className="absolute right-3 top-3 rounded-full p-1 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
@@ -87,13 +93,22 @@ export function GuidePopup() {
           </p>
         </div>
 
-        {/* GHL-hosted handbook form — same embed as GuideLeadModal */}
-        <div className="px-6 pb-6">
+        {/* Scrollable region — GHL-hosted handbook form (same embed as GuideLeadModal) */}
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
           <GhlFormEmbed
             formId={FORM_ID}
             formName={FORM_NAME}
             height={936}
             title={FORM_NAME}
+            showLegal={false}
+          />
+        </div>
+
+        {/* Always-visible legal foot */}
+        <div className="shrink-0 border-t border-border bg-background px-6 py-3">
+          <LegalLinks
+            lead="Submitting this form means you agree to our"
+            className="text-center"
           />
         </div>
       </DialogContent>

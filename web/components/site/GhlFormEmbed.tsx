@@ -13,6 +13,13 @@ type GhlFormEmbedProps = {
   formName: string;
   height: number;
   title?: string;
+  /**
+   * Render the Privacy/Terms line directly under the embed (default). Dialogs
+   * pass `false` and pin their own copy to a fixed foot, because a form that is
+   * taller than the sheet would otherwise push the legal line off-screen.
+   */
+  showLegal?: boolean;
+  legalClassName?: string;
 };
 
 function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProps) {
@@ -82,6 +89,27 @@ function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProp
     document.body.appendChild(script);
   }, [active]);
 
+  // GHL's resizer rewrites the iframe height once the form is measured
+  // (824px of desktop markup renders ~1005px at 390px wide, and it can shrink
+  // on other layouts too). `min-height` on the host is only a floor, so a
+  // shorter iframe would leave a blank gap between the form and the legal
+  // line. Track the real box so the line always sits directly under the form.
+  useEffect(() => {
+    if (!active) return;
+    const node = hostRef.current;
+    if (!node || typeof ResizeObserver === "undefined") return;
+    const frame = node.querySelector("iframe");
+    if (!frame) return;
+    const sync = () => {
+      const h = frame.getBoundingClientRect().height;
+      if (h > 0) node.style.minHeight = `${Math.round(h)}px`;
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(frame);
+    return () => ro.disconnect();
+  }, [active]);
+
   return (
     <div ref={hostRef} style={{ minHeight: height }}>
       {active && (
@@ -109,7 +137,11 @@ function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProp
   );
 }
 
-export function GhlFormEmbed(props: GhlFormEmbedProps) {
+export function GhlFormEmbed({
+  showLegal = true,
+  legalClassName = "mt-3 text-center",
+  ...props
+}: GhlFormEmbedProps) {
   return (
     <div className="w-full">
       <Suspense
@@ -119,7 +151,12 @@ export function GhlFormEmbed(props: GhlFormEmbedProps) {
       >
         <GhlFormEmbedInner {...props} />
       </Suspense>
-      <LegalLinks lead="Submitting this form means you agree to our" className="mt-3 text-center" />
+      {showLegal && (
+        <LegalLinks
+          lead="Submitting this form means you agree to our"
+          className={legalClassName}
+        />
+      )}
     </div>
   );
 }
