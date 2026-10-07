@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { buttonStyles } from "./ui";
+import { LegalLinks } from "./LegalLinks";
 import { useUtm } from "@/lib/useUtm";
 import {
   leadSchema,
@@ -161,6 +162,7 @@ export function CallbackForm({
           </span>
         </label>
         {errors.consentTcpa && <p className={errorText}>{errors.consentTcpa.message}</p>}
+        <LegalLinks lead="By checking the box and submitting, I have read and agree to the" />
       </div>
 
       {variant !== "simple" && (

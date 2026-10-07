@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { LegalLinks } from "@/components/site/LegalLinks";
 
 const GHL_EMBED_JS = "https://links.precisiondatastrategies.com/js/form_embed.js";
 const GHL_EMBED_SCRIPT_ID = "ghl-form-embed-js";
@@ -41,26 +42,29 @@ export function GhlFormEmbed({ formId, formName, height, title }: GhlFormEmbedPr
   }, []);
 
   return (
-    <div className="w-full" style={{ height }}>
-      <iframe
-        src={`https://links.precisiondatastrategies.com/widget/form/${formId}`}
-        style={{ width: "100%", height: "100%", border: "none", borderRadius: "8px" }}
-        id={`inline-${formId}`}
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name={formName}
-        data-height={String(height)}
-        data-layout-iframe-id={`inline-${formId}`}
-        data-form-id={formId}
-        data-cookie-consent="true"
-        data-cookie-consent-provider="auto"
-        title={title ?? formName}
-      />
+    <div className="w-full">
+      <div style={{ height }}>
+        <iframe
+          src={`https://links.precisiondatastrategies.com/widget/form/${formId}`}
+          style={{ width: "100%", height: "100%", border: "none", borderRadius: "8px" }}
+          id={`inline-${formId}`}
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name={formName}
+          data-height={String(height)}
+          data-layout-iframe-id={`inline-${formId}`}
+          data-form-id={formId}
+          data-cookie-consent="true"
+          data-cookie-consent-provider="auto"
+          title={title ?? formName}
+        />
+      </div>
+      <LegalLinks lead="Submitting this form means you agree to our" className="mt-3 text-center" />
     </div>
   );
 }

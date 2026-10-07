@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { buttonStyles } from "./ui";
 
 const KEY = "asc-cookie-consent";
@@ -36,7 +37,15 @@ export function CookieBanner() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-relaxed">
           We use cookies to measure site performance and improve your experience. You can decline
-          non-essential cookies at any time. See our Privacy Policy for details.
+          non-essential cookies at any time. See our{" "}
+          <Link href="/privacy" className="underline underline-offset-4 hover:text-background">
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link href="/terms" className="underline underline-offset-4 hover:text-background">
+            Terms of Use
+          </Link>{" "}
+          for details.
         </p>
         <div className="flex shrink-0 gap-2">
           <button className={`${buttonStyles.outlineLight} py-2 text-xs`} onClick={() => decide("declined")}>
