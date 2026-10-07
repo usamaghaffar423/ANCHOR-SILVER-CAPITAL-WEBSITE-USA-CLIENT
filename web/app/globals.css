@@ -41,6 +41,7 @@
   /* Home hero accents (Phase 4 hero redesign). */
   --color-brass: var(--brass);
   --color-brass-light: var(--brass-light);
+  --color-brass-deep: var(--brass-deep);
   --color-gain: var(--gain);
   --color-loss: var(--loss);
   --color-hero-from: var(--hero-from);
@@ -101,6 +102,10 @@
   /* Home hero (Phase 4). Brass on deep forest, mint for positive change. */
   --brass: oklch(0.646 0.088 78); /* #b98a4b */
   --brass-light: oklch(0.78 0.06 80); /* #d8b483 */
+  /* Brass darkened for LIGHT surfaces: #b98a4b only reaches 2.87:1 on
+     --muted, so every brass-on-light usage has to come from this token
+     (5.02:1 on --muted, 5.80:1 on white) to clear WCAG AA. */
+  --brass-deep: oklch(0.51 0.075 78); /* #7e6131 */
   --gain: oklch(0.82 0.1 158); /* #8fd6ac — positive change */
   --loss: oklch(0.72 0.13 25); /* #e59a86 — negative change, muted terracotta */
   --hero-from: oklch(0.19 0.02 160); /* #0f2019 */

@@ -24,6 +24,40 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Applied by OpenNext (`getNextConfigHeaders` in the routing handler) to every
+  // SSR/HTML route. Static files under public/ are served by the ASSETS binding
+  // and get the same values from public/_headers instead — keep the two in sync.
+  // X-Frame-Options: DENY is safe here: no route frames its own origin (the
+  // /guide-success PDF iframe points at a path that is served by ASSETS, which
+  // _headers leaves unframed).
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains; preload",
+          },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "origin-when-cross-origin" },
+        ],
+      },
+      // Optimized images had no cache lifetime at all (`must-revalidate`), so
+      // every repeat visit re-downloaded them. Source files under public/images
+      // are immutable-ish content, so a year + revalidate is safe.
+      {
+        source: "/_next/image",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, stale-while-revalidate=86400",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

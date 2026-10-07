@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Lock } from "lucide-react";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
 import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
@@ -103,19 +104,26 @@ function GuideCard({ onSelect }: { onSelect: () => void }) {
           FREE
         </span>
 
-        {/* 3D Book mockup — real image, covers full area */}
-        <img
+        {/* 3D Book mockup — real image, covers full area. `priority` + `sizes`
+            keep the mobile card at one 400px file instead of the 1600px source,
+            and make it the preloaded candidate the LCP element actually uses. */}
+        <Image
           src="/images/hero-book-preview.jpeg"
           alt="The Silver IRA Handbook — 2026 Edition"
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          fill
+          priority
+          sizes="(max-width: 1024px) calc(100vw - 40px), 50vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>
 
-      {/* Bottom section: CTA area */}
+      {/* Bottom section: CTA area. Not a heading: the card is a component inside
+          the hero, and an <h3> here skipped straight from the page <h1> — the
+          skipped-level violation Lighthouse reports as heading-order. */}
       <div className="px-5 pb-6 pt-5 sm:px-8">
-        <h3 className="text-center font-display text-lg font-semibold text-foreground sm:text-xl">
+        <p className="text-center font-display text-lg font-semibold text-foreground sm:text-xl">
           2026 EDITION: What to know before you move retirement money into silver
-        </h3>
+        </p>
         <button
           onClick={onSelect}
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"

@@ -366,7 +366,7 @@ export default function HomeV1() {
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-primary/25 bg-card">
                     <s.Icon className="h-6 w-6 text-primary" />
                   </span>
-                  <span className="font-mono text-sm text-silver-deep">0{i + 1}</span>
+                  <span className="font-mono text-sm text-muted-foreground">0{i + 1}</span>
                 </div>
                 <h3 className="mt-4 text-xl">{s.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>

@@ -121,7 +121,7 @@ export default function BuyingGoldAndSilver() {
           {steps.map((s) => (
             <li key={s.n} className="relative">
               <Card className="h-full">
-                <span className="font-mono text-sm text-silver-deep">{s.n}</span>
+                <span className="font-mono text-sm text-muted-foreground">{s.n}</span>
                 <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
               </Card>

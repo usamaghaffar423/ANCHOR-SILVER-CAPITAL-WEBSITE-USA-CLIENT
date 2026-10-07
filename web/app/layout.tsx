@@ -68,10 +68,40 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Same CSS URL, but pulled off the render-blocking path: `media="print"`
+            makes the browser fetch it in the background instead of holding the
+            first paint for it, and the inline script flips it back to `all` once
+            it has arrived. `&display=swap` stays on the URL so text never goes
+            invisible while the web fonts arrive. Script (not `onLoad`) because
+            this file is a Server Component — event handlers can't be passed
+            here. The noscript copy covers JS-off visitors. */}
         <link
-          rel="stylesheet"
+          rel="preload"
+          as="style"
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
         />
+        <link
+          rel="stylesheet"
+          media="print"
+          id="site-fonts-css"
+          // The inline script above flips media to "all" during parsing, before
+          // hydration — suppressHydrationWarning stops React from resetting it
+          // back to "print" when it reconciles this node.
+          suppressHydrationWarning
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.getElementById('site-fonts-css');if(!l)return;var done=false;function apply(){if(done)return;done=true;l.media='all';}l.addEventListener('load',apply);if(l.sheet)apply();setTimeout(apply,6000);})();",
+          }}
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+          />
+        </noscript>
         {/* YMYL entity graph: FinancialService (us) + FinancialProduct (the IRA) */}
         <script
           type="application/ld+json"
@@ -92,11 +122,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <CookieBanner />
         <ScrollToTop />
+        {/* lazyOnload: gtag is ~175 KB / ~400 ms of main-thread scripting. It
+            only runs after the window load event, so it lands outside the
+            interaction window Lighthouse scores TBT against. Trade-off: a very
+            fast bounce can now be missed by Analytics. */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

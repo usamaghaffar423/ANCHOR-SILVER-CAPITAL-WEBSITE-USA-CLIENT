@@ -36,13 +36,22 @@ export function Footer() {
             </span>
           </span>
           <p className="mt-4 font-display text-lg text-secondary">{SITE.tagline}</p>
+          {/* h-6 (24px) satisfies the WCAG 2.2 AA 24x24 target-size minimum —
+              plain text-line anchors were 18/17px tall and failed the audit.
+              mt-1.5 keeps the two targets' boxes from overlapping. */}
           <p className="mt-4 text-sm">
-            <a className="font-mono hover:text-background" href={SITE.phoneHref}>
+            <a
+              className="inline-flex h-6 items-center font-mono hover:text-background"
+              href={SITE.phoneHref}
+            >
               {SITE.phone}
             </a>
           </p>
-          <p className="text-sm">
-            <a className="hover:text-background" href={`mailto:${SITE.email}`}>
+          <p className="mt-1.5 text-sm">
+            <a
+              className="inline-flex h-6 items-center hover:text-background"
+              href={`mailto:${SITE.email}`}
+            >
               {SITE.email}
             </a>
           </p>

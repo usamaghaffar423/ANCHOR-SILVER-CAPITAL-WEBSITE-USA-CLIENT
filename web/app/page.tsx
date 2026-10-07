@@ -318,7 +318,7 @@ export default function Home() {
       </section>
 
       <Section tone="muted" className="md:py-24">
-        <p className="eyebrow text-brass">The case for silver</p>
+        <p className="eyebrow text-brass-deep">The case for silver</p>
         <H2 className="mt-3">Three reasons this metal holds when others don&apos;t</H2>
         <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-muted-foreground">
           Each argument is independent. All three point the same direction.
@@ -326,7 +326,7 @@ export default function Home() {
         <div className="mt-14 space-y-14">
           {caseRows.map((row) => (
             <FeatureRow key={row.n} image={row.image} alt={row.alt} reverse={row.reverse}>
-              <p className="font-fraunces text-5xl leading-none text-brass/40">{row.n}</p>
+              <p className="font-fraunces text-5xl leading-none text-brass-deep/80">{row.n}</p>
               <h3 className="mt-4 text-2xl">{row.heading}</h3>
               <p className="mt-3 leading-relaxed text-muted-foreground">{row.body}</p>
             </FeatureRow>
@@ -350,7 +350,7 @@ export default function Home() {
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-primary/25 bg-card">
                     <s.Icon className="h-6 w-6 text-primary" />
                   </span>
-                  <span className="font-mono text-sm text-silver-deep">0{i + 1}</span>
+                  <span className="font-mono text-sm text-muted-foreground">0{i + 1}</span>
                 </div>
                 <h3 className="mt-4 text-xl">{s.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
@@ -409,7 +409,7 @@ export default function Home() {
       </section>
 
       <Section tone="muted" className="md:py-24">
-        <p className="eyebrow text-brass">A different kind of company</p>
+        <p className="eyebrow text-brass-deep">A different kind of company</p>
         <H2 className="mt-3">Most dealers take 35–65%. We don&apos;t.</H2>
         <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-muted-foreground">
           The industry charges a fortune in fees buried in the premium. We show you exactly what
@@ -440,7 +440,7 @@ export default function Home() {
                   <th className="border-b-2 border-border px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Industry standard
                   </th>
-                  <th className="border-b-2 border-brass px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-brass">
+                  <th className="border-b-2 border-brass px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-brass-deep">
                     Anchor Silver
                   </th>
                 </tr>
