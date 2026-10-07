@@ -102,6 +102,42 @@ export function spotLabel(
   return `${metal} spot $${price.toFixed(2)}/oz, ${basis}`;
 }
 
+/* ------------------------- shared snapshot loader ------------------------- */
+
+const MARKET_URL = "/api/market";
+
+// Several hooks on one page (`useMarket` + `useFiveYear`) each want the same
+// snapshot. Without sharing, a single page load issued seven identical
+// requests; on a cold cache they all missed the route's 60 s ISR entry at
+// once, each waiting on the upstream spot feed (~2.3 s). One in-flight
+// promise plus a short TTL means the whole page now makes one request.
+const MARKET_TTL_MS = 15_000;
+
+let marketInflight: Promise<unknown> | null = null;
+let marketCache: { at: number; json: unknown } | null = null;
+
+function loadMarketJson(): Promise<unknown> {
+  const now = Date.now();
+  if (marketCache && now - marketCache.at < MARKET_TTL_MS) {
+    return Promise.resolve(marketCache.json);
+  }
+  if (marketInflight) return marketInflight;
+
+  marketInflight = (async () => {
+    try {
+      const res = await fetch(MARKET_URL);
+      if (!res.ok) throw new Error(`market snapshot ${res.status}`);
+      const json = await res.json();
+      marketCache = { at: Date.now(), json };
+      return json;
+    } finally {
+      marketInflight = null;
+    }
+  })();
+
+  return marketInflight;
+}
+
 /* --------------------------------- hooks ---------------------------------- */
 
 export function useMetals(): Metals {
@@ -112,9 +148,14 @@ export function useMetals(): Metals {
     const load = async () => {
       try {
         // Cached, server-side snapshot: spot prices + the five-year change.
-        const res = await fetch("/api/market");
-        if (!res.ok || cancelled) return;
-        const j = await res.json();
+        const j = (await loadMarketJson()) as {
+          silver?: unknown;
+          gold?: unknown;
+          live?: unknown;
+          updatedAt?: unknown;
+          fiveYearPct?: unknown;
+        } | null;
+        if (cancelled) return;
         const silver = Number(j?.silver);
         const gold = Number(j?.gold);
         if (cancelled || !(silver > 0) || !(gold > 0)) return;
