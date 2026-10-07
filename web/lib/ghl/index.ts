@@ -7,7 +7,7 @@
  *   opportunities deals + pipeline stage moves
  *   conversations SMS / Email / internal comments
  *   webhooks      Ed25519 signature verification + event dispatch
- *   lead-push     the /api/lead bridge (site-specific)
+ *   lead-push     lead → GHL contact upsert (site-specific)
  */
 
 export { ghlRequest } from "./client";

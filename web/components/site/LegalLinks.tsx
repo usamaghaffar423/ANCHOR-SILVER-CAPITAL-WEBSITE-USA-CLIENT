@@ -3,9 +3,9 @@ import Link from "next/link";
 const linkCls = "text-primary underline underline-offset-4 hover:text-primary/80";
 
 /**
- * Privacy Policy + Terms of Use links shown with every lead form (native
- * CallbackForm/GuidePopup and the GHL iframe embeds). Kept in one place so the
- * wording and targets can never drift between forms.
+ * Privacy Policy + Terms of Use links shown with every lead form (GuidePopup
+ * and the GHL iframe embeds). Kept in one place so the wording and targets can
+ * never drift between forms.
  */
 export function LegalLinks({
   lead = "By submitting, you agree to our",

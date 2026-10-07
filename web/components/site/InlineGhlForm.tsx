@@ -6,7 +6,7 @@ const FORM_NAME = "Critical Minerals Report Form";
 /**
  * End-of-page lead form slot (the closing section above the footer on the
  * marketing pages). The form itself is hosted in GHL and rendered inside an
- * iframe — no `/api/lead` round-trip, no TCPA/consent markup of our own.
+ * iframe — no server-side lead route and no TCPA/consent markup of our own.
  * On submit GHL redirects to `/thank-you-critical-minerals`, which delivers
  * the Silver IRA Handbook (the site's only lead magnet).
  */

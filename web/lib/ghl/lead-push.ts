@@ -1,5 +1,5 @@
 /**
- * Site-specific lead → GHL bridge, called from /api/lead's fan-out.
+ * Site-specific lead → GHL contact bridge (upsert, never duplicate).
  *
  * Behavior:
  *   - upsert (never duplicate) by email/phone
@@ -7,8 +7,8 @@
  *   - custom fields: driven by GHL_FIELD_MAP `{"interest":"<customFieldId>",…}`
  *   - optional workflow enrollment via GHL_WORKFLOW_ID
  *
- * Throws on failure so `Promise.allSettled` in the route keeps it non-fatal —
- * the lead is already in Turso by the time this runs. Unconfigured = skip.
+ * Throws on failure so callers can treat it as a non-fatal side channel.
+ * Unconfigured = skip.
  */
 
 import { ghlRequest } from "./client";

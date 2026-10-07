@@ -1,4 +1,4 @@
-import { tursoConfigured, tursoBatch } from "@/lib/db/turso";
+import { tursoConfigured, tursoBatch } from "@/lib/turso";
 
 /**
  * Rolling daily silver spot log (`silver_price_history`), appended to by the

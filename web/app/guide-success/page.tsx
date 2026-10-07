@@ -3,8 +3,8 @@ import { Lock } from "lucide-react";
 /**
  * Success page after submitting the guide request form.
  * Embeds the PDF in a restricted iframe (no toolbar) for a premium
- * "in-app" preview experience. The user is redirected here by the
- * GuideLeadModal after a successful POST to /api/lead.
+ * "in-app" preview experience. Reached after a successful submission of the
+ * GHL-hosted guide request form.
  */
 export default function GuideSuccessPage() {
   return (

@@ -4,7 +4,7 @@ import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
 import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
-import { CallbackForm } from "@/components/site/CallbackForm";
+import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
@@ -436,7 +436,11 @@ export default function HomeV1() {
             </p>
           </div>
           <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">
-            <CallbackForm />
+            <GhlFormEmbed
+              formId="Mdko5iPIZ5nyZmvORTsp"
+              formName="Silver IRA Onboarding Form"
+              height={824}
+            />
           </div>
         </div>
       </section>

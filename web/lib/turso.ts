@@ -1,10 +1,9 @@
 /**
  * Minimal Turso (libSQL) access over the HTTP pipeline API.
  *
- * The full Drizzle + `@libsql/client` setup is deferred until the custom domain
- * is assigned (see lib/leads.ts). This helper is enough for the one table the
- * market widget needs — `silver_price_history` — without adding a dependency.
- * Swap it for the Drizzle client when lib/leads.ts is wired.
+ * Deliberately dependency-free: plain `fetch` against Turso's `/v2/pipeline`
+ * endpoint, so the site carries no database driver or ORM. Tables are created
+ * on demand by their callers (`CREATE TABLE IF NOT EXISTS`).
  *
  * Dormant until TURSO_DATABASE_URL + TURSO_AUTH_TOKEN are set: every call
  * returns null so callers degrade gracefully.
