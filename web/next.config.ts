@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
     // would otherwise be silently coerced back down to 75.
     qualities: [75, 78],
   },
+  // GHL/ads still reference the bare `/thank-you` path from older campaigns.
+  // `statusCode: 301` (not `permanent: true`) so the status is a true 301.
+  async redirects() {
+    return [
+      {
+        source: "/thank-you",
+        destination: "/thank-you-handbook",
+        statusCode: 301,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

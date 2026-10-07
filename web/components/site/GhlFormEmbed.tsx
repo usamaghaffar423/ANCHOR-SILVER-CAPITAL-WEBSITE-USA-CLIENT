@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { LegalLinks } from "@/components/site/LegalLinks";
 
 const GHL_EMBED_JS = "https://links.precisiondatastrategies.com/js/form_embed.js";
 const GHL_EMBED_SCRIPT_ID = "ghl-form-embed-js";
+const GHL_FORM_BASE = "https://links.precisiondatastrategies.com/widget/form/";
 
 type GhlFormEmbedProps = {
   formId: string;
@@ -13,7 +15,17 @@ type GhlFormEmbedProps = {
   title?: string;
 };
 
-export function GhlFormEmbed({ formId, formName, height, title }: GhlFormEmbedProps) {
+function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProps) {
+  const searchParams = useSearchParams();
+
+  // Forward the landing URL's query string (utm_source / utm_medium /
+  // utm_campaign / utm_term / utm_content, gclid, ...) to the GHL-hosted form
+  // so attribution survives the iframe hop. Read via `useSearchParams` inside a
+  // Suspense boundary so the value is present on the very first render of the
+  // iframe — no hydration mismatch and no second iframe load.
+  const forward = searchParams.toString();
+  const src = `${GHL_FORM_BASE}${formId}${forward ? `?${forward}` : ""}`;
+
   useEffect(() => {
     const w = window as unknown as {
       __ghl_iframe_resizer_initialized__?: boolean;
@@ -45,7 +57,7 @@ export function GhlFormEmbed({ formId, formName, height, title }: GhlFormEmbedPr
     <div className="w-full">
       <div style={{ height }}>
         <iframe
-          src={`https://links.precisiondatastrategies.com/widget/form/${formId}`}
+          src={src}
           style={{ width: "100%", height: "100%", border: "none", borderRadius: "8px" }}
           id={`inline-${formId}`}
           data-layout="{'id':'INLINE'}"
@@ -66,5 +78,19 @@ export function GhlFormEmbed({ formId, formName, height, title }: GhlFormEmbedPr
       </div>
       <LegalLinks lead="Submitting this form means you agree to our" className="mt-3 text-center" />
     </div>
+  );
+}
+
+export function GhlFormEmbed(props: GhlFormEmbedProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full">
+          <div style={{ height: props.height }} aria-hidden="true" />
+        </div>
+      }
+    >
+      <GhlFormEmbedInner {...props} />
+    </Suspense>
   );
 }

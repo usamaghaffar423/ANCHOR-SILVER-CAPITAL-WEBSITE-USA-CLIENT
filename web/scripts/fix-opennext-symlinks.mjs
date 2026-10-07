@@ -93,9 +93,40 @@ function runOnce(roots) {
 
 if (process.argv.includes("--watch")) {
   const roots = [path.join(ROOT, ".open-next")];
-  console.log("fix-opennext-symlinks: watching " + roots.join(", ") + " ...");
+  // OpenNext wipes .open-next (initOutputDir -> rmSync) at build start and
+  // then re-copies the standalone tree; only repair once that copy exists,
+  // otherwise relinked entries make the wipe fail with ENOTEMPTY.
+  const marker = path.join(ROOT, ".open-next", "server-functions", "default", "node_modules");
+  console.log("fix-opennext-symlinks: watching " + marker + " ...");
+  // States: "wipe" = marker present from a previous run, wait for OpenNext to
+  // delete it; "copy" = marker absent, wait for the fresh copy to appear.
+  // Repairing while rmSync runs causes ENOTEMPTY, so never touch before wipe.
+  let phase = fs.existsSync(marker) ? "wipe" : "copy";
+  let armed = false;
+  console.log("fix-opennext-symlinks: phase=" + phase);
   let last = "";
   setInterval(() => {
+    const exists = fs.existsSync(marker);
+    if (!armed) {
+      if (phase === "wipe") {
+        if (!exists) {
+          phase = "copy";
+          console.log("fix-opennext-symlinks: wipe detected, waiting for copy ...");
+        }
+        return;
+      }
+      if (exists) {
+        armed = true;
+        console.log("fix-opennext-symlinks: copy detected, repairing ...");
+      }
+      return;
+    }
+    if (!exists) {
+      armed = false;
+      phase = "copy";
+      console.log("fix-opennext-symlinks: copy gone (rebuild), waiting ...");
+      return;
+    }
     try {
       runOnce(roots);
     } catch (e) {
