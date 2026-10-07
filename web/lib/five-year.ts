@@ -1,5 +1,9 @@
 import { unstable_cache } from "next/cache";
-import { getGoldApiSilverAverage, getHistoricalSilver } from "@/lib/metals";
+import {
+  getComexSilverAverage,
+  getGoldApiSilverAverage,
+  getHistoricalSilver,
+} from "@/lib/metals";
 
 /**
  * The five-year-ago reference silver price (USD/oz), resolved server-side only.
@@ -13,7 +17,10 @@ import { getGoldApiSilverAverage, getHistoricalSilver } from "@/lib/metals";
  *      around the target date — one call per day at most (free tier: 10/hour)
  *   b) the configured historical provider (METALS_API_KEY + METALS_PROVIDER)
  *      for the exact target date
- *   c) null  → /api/market returns fiveYearPct: null and the hero renders the
+ *   c) COMEX front-month silver futures averaged over the same ±7-day window
+ *      (keyless, Yahoo Finance) — keeps the figure live when no paid key is
+ *      configured instead of hiding it indefinitely
+ *   d) null  → /api/market returns fiveYearPct: null and the hero renders the
  *      neutral headline (see components/site/market.tsx). There is deliberately
  *      no hard-coded seed price: an unverifiable figure is worse than no figure.
  */
@@ -26,7 +33,7 @@ export type FiveYearRef = {
   price: number;
   /** ISO date (YYYY-MM-DD) the reference price is measured from. */
   date: string;
-  source: "gold-api" | "historical-api";
+  source: "gold-api" | "historical-api" | "comex";
 };
 
 function isoDaysAgo(days: number): string {
@@ -54,7 +61,16 @@ async function resolveFiveYearRef(): Promise<FiveYearRef | null> {
     return { price: fromProvider, date: targetIso, source: "historical-api" };
   }
 
-  // c) nothing verifiable — the caller falls back to the neutral headline
+  // c) keyless COMEX reference over the same ±7-day window
+  const fromComex = await getComexSilverAverage(
+    new Date(targetMs - WINDOW_DAYS * DAY_MS),
+    new Date(targetMs + WINDOW_DAYS * DAY_MS),
+  );
+  if (fromComex && fromComex > 0) {
+    return { price: fromComex, date: targetIso, source: "comex" };
+  }
+
+  // d) nothing verifiable — the caller falls back to the neutral headline
   return null;
 }
 

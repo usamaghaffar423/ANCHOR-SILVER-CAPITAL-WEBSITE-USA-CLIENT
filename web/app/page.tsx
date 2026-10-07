@@ -99,12 +99,12 @@ const caseRows = [
 ];
 
 const trustCells = [
-  { Icon: Lock, name: "Equity Trust Company", role: "IRA Custodian Partner" },
-  { Icon: Anchor, name: "Delaware Depository", role: "Storage Partner" },
+  { Icon: Lock, name: "American Estate & Trust (AET)", role: "IRA Custodian Partner" },
+  { Icon: Anchor, name: "IDS of Delaware", role: "Storage Partner" },
 ];
 
 const compareRows: [string, string, string][] = [
-  ["Total fees", "35%–65%", "8%–15%"],
+  ["Total fees", "35%–65%", "15%"],
   ["Pricing", "Hidden premiums", "All-in quote upfront"],
   ["Approach", "High-pressure", "Education first"],
   ["Focus", "Gold-first", "Silver-first"],
@@ -119,12 +119,12 @@ const steps = [
   },
   {
     title: "We Handle the Paperwork",
-    body: "Equity Trust IRA setup, rollover forms, depository account. You sign, we do the rest.",
+    body: "AET IRA setup, rollover forms, depository account. You sign, we do the rest.",
     Icon: DocIcon,
   },
   {
     title: "Your Silver Is Secured",
-    body: "Shipped fully insured to Delaware Depository or your door. View holdings online.",
+    body: "Shipped fully insured to IDS of Delaware or your door. View holdings online.",
     Icon: VaultIcon,
   },
 ];
@@ -251,7 +251,7 @@ export default function Home() {
                   <span className="text-primary">—</span> Insured shipping to your door
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Or allocated storage at Delaware Depository
+                  <span className="text-primary">—</span> Or allocated storage at IDS of Delaware
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary">—</span> $5,000 minimum
@@ -304,7 +304,7 @@ export default function Home() {
               Insured. Viewable online.
             </h2>
             <p className="mt-4 max-w-[42ch] text-base leading-relaxed text-silver sm:text-[1.08rem]">
-              Your silver is stored at Delaware Depository — allocated to you, not pooled. You can
+              Your silver is stored at IDS of Delaware — allocated to you, not pooled. You can
               verify your holdings any time.
             </p>
             <Link
@@ -423,10 +423,10 @@ export default function Home() {
               premiums — often never disclosed upfront.
             </p>
             <p className="border-l-[3px] border-brass py-1 pl-[18px] font-fraunces text-[1.4rem] leading-snug text-primary">
-              Our fee is 8–15% — all in, upfront, in writing before you commit.
+              Our fee is capped at 15% — all in, upfront, in writing before you commit.
             </p>
             <p>
-              Your metal only needs to appreciate 10–15% for you to break even. That&apos;s the
+              Your metal only needs to appreciate 15% for you to break even. That&apos;s the
               difference between a company that serves clients and one that takes advantage of them.
             </p>
           </div>

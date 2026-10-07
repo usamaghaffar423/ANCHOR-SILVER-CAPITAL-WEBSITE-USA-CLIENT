@@ -7,7 +7,7 @@ export const SITE = {
   phone: "(866) 818-7243",
   phoneHref: "tel:+18668187243",
   email: "info@anchorsilvercapital.com",
-  street: "475 Washington Blvd.",
+  street: "475 Washington Blvd",
   city: "Marina del Rey",
   state: "CA",
   zip: "90292",

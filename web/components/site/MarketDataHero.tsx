@@ -43,7 +43,7 @@ export function MarketDataHero() {
             </Link>
           </div>
           <ul className="mt-5 hidden flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep sm:flex md:mt-7">
-            {["Equity Trust", "Delaware Depository"].map((b) => (
+            {["AET", "IDS of Delaware"].map((b) => (
               <li key={b} className="flex items-center gap-1.5">
                 <span aria-hidden="true" className="text-brass">
                   ✦

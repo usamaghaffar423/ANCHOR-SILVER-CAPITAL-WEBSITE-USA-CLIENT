@@ -10,7 +10,7 @@ import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "Silver IRA Rollover — Tax-Free 401k to Silver IRA | Anchor",
   description:
-    "Roll a 401k, IRA, or annuity into a self-directed Silver IRA tax-free and penalty-free. Equity Trust custodian, Delaware Depository storage, transparent fees.",
+    "Roll a 401k, IRA, or annuity into a self-directed Silver IRA tax-free and penalty-free. AET custodian, IDS of Delaware storage, transparent fees.",
   path: "/silver-ira",
   type: "article",
 });
@@ -25,16 +25,16 @@ const qualify = [
 
 const process = [
   {
-    t: "Open Your Equity Trust Account",
-    d: "We guide you through opening a self-directed IRA with Equity Trust Company — the largest self-directed IRA custodian in the United States. Takes about 15-20 minutes online.",
+    t: "Open Your AET Account",
+    d: "We guide you through opening a self-directed IRA with American Estate & Trust (AET) — the largest self-directed IRA custodian in the United States. Takes about 15-20 minutes online.",
   },
   {
     t: "Fund Your Account",
-    d: "Equity Trust coordinates a direct rollover or transfer from your existing plan — no taxes, no penalties, no 60-day clock. Typically 10-21 business days.",
+    d: "AET coordinates a direct rollover or transfer from your existing plan — no taxes, no penalties, no 60-day clock. Typically 10-21 business days.",
   },
   {
     t: "Purchase and Secure Your Silver",
-    d: "You direct Equity Trust to purchase silver from us. We ship your metals directly to Delaware Depository — held in your name, fully insured, viewable online.",
+    d: "You direct AET to purchase silver from us. We ship your metals directly to IDS of Delaware — held in your name, fully insured, viewable online.",
   },
 ];
 
@@ -49,7 +49,7 @@ const faqs = [
   },
   {
     q: "Can I store IRA silver at home?",
-    a: "No. IRS rules require IRA-held metals to be held by an approved depository. Your metals are stored at Delaware Depository in your IRA's name.",
+    a: "No. IRS rules require IRA-held metals to be held by an approved depository. Your metals are stored at IDS of Delaware in your IRA's name.",
   },
   {
     q: "How long does the process take?",
@@ -101,7 +101,7 @@ export default function SilverIra() {
           ))}
         </ol>
         <p className="mt-6 text-xs uppercase tracking-wider text-muted-foreground">
-          IRA Custodian Partner: Equity Trust Company
+          IRA Custodian Partner: American Estate & Trust (AET)
         </p>
       </Section>
 
@@ -126,11 +126,11 @@ export default function SilverIra() {
             alt="Neat rows of silver bars on industrial steel vault shelving under a single overhead light."
             reverse
           >
-            <H2>Storage at Delaware Depository</H2>
+            <H2>Storage at IDS of Delaware</H2>
             <Prose className="mt-5">
               <p>
-                Your IRA-held silver is stored at Delaware Depository Service Company in Wilmington,
-                Delaware. You cannot store IRA-held metals at home. Delaware Depository provides fully
+                Your IRA-held silver is stored at IDS of Delaware. You cannot store IRA-held metals
+                at home. IDS of Delaware provides fully
                 allocated or commingled storage, full insurance coverage, and online account access.
               </p>
             </Prose>
@@ -140,9 +140,11 @@ export default function SilverIra() {
         <H2 className="mt-14">Fees, Stated Plainly</H2>
         <Prose className="mt-5">
           <p>
-            Equity Trust account fee: $80-100/year. Delaware Depository storage: approximately
-            0.10-0.15% of metal value annually, $100-150 minimum. Dealer premium varies by product
-            and volume — your specialist will quote before any purchase. No hidden fees.
+            AET account fee: $50 one-time setup, then $200 per year. This is a flat fee. It does not
+            change based on how much metal you hold. IDS of Delaware storage: $12 per month ($144 per
+            year). This is also a flat fee. It does not change based on metal type or amount. Dealer
+            premium varies by product and volume. Your specialist will quote the price before any
+            purchase. No hidden fees.
           </p>
         </Prose>
       </Section>

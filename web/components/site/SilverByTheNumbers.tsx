@@ -1,6 +1,6 @@
 "use client";
 
-import { PLACEHOLDER, useFiveYear, useMarket } from "@/components/site/market";
+import { PLACEHOLDER, spotBasis, useFiveYear, useMarket } from "@/components/site/market";
 import { H2, Section } from "@/components/site/ui";
 import { CountUp } from "@/components/site/Reveal";
 
@@ -9,8 +9,11 @@ import { CountUp } from "@/components/site/Reveal";
  * because it reads live market data via the `useMarket` client hook, and the
  * home route itself is a server component that exports metadata.
  *
- * No 12-month figure: the only performance stat is the server-computed,
- * guarded five-year change, which renders as "—" until it is verified.
+ * Opens with the live silver spot ticker (full-width strip, so the figure and
+ * its complete mandatory label sit on one line) and is followed by the four
+ * stat tiles in their original 4-across grid. No 12-month figure: the only
+ * performance stat is the server-computed, guarded five-year change, which
+ * renders as "—" until it is verified.
  */
 export function SilverByTheNumbers() {
   const m = useMarket();
@@ -19,7 +22,25 @@ export function SilverByTheNumbers() {
   return (
     <Section tone="sage" className="md:py-24">
       <H2 className="text-primary-foreground">Silver by the Numbers</H2>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+      {/* Live spot ticker — full width so the price and label share one line. */}
+      <div className="mt-10 rounded-sm border border-primary-foreground/25 p-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+          <p className="font-mono text-4xl leading-none text-primary-foreground md:text-5xl">
+            {m.silver != null ? (
+              <CountUp value={m.silver} prefix="$" decimals={2} />
+            ) : (
+              PLACEHOLDER
+            )}
+          </p>
+          <p className="eyebrow text-primary-foreground/75">Live silver spot per troy ounce</p>
+        </div>
+        <p className="mt-3 max-w-[80ch] border-t border-primary-foreground/15 pt-3 text-[0.78rem] leading-relaxed text-primary-foreground/60">
+          {spotBasis(m.updatedAt)}
+        </p>
+      </div>
+
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
             v:
@@ -29,7 +50,7 @@ export function SilverByTheNumbers() {
                 PLACEHOLDER
               ),
             l: "Silver over five years (approx.)",
-            c: "Calculated server-side from verified historical data and hidden until verified. Source: gold-api.com",
+            c: "Calculated server-side from verified historical data and hidden until verified. Source: gold-api.com spot, COMEX front-month five-year reference",
           },
           {
             v: <CountUp value={6} />,

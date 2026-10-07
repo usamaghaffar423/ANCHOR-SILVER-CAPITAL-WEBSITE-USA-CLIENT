@@ -71,30 +71,19 @@ export default function RiskDisclosure() {
           <p>
             {SITE.legal} makes no representation, warranty, or guarantee regarding the future value,
             price appreciation, or profitability of any product purchased. Anyone who suggests a
-            guaranteed return on precious metals is not speaking on behalf of Silver Capital&rsquo;s
-            behalf, and you should notify our Client Relations Department in writing immediately.
+            guaranteed return on precious metals is not speaking on behalf of Anchor Silver Capital,
+            and you should notify our Client Relations Department in writing immediately.
           </p>
 
           <h3>3. Premiums and Pricing</h3>
           <p>
             All products are sold at a premium over the spot price of the underlying metal. This
-            premium covers sourcing, fabrication, delivery, and operational costs. Premiums vary by
-            product type:
-          </p>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>
-              <strong>Common Bullion Products</strong> (e.g., government-minted coins, standard bars):
-              typically 2% to 15% over spot
-            </li>
-            <li>
-              <strong>Premium Products</strong> (e.g., semi-numismatic and numismatic items): typically
-              5% to 15% over spot
-            </li>
-          </ul>
-          <p>
-            Because you buy at the &ldquo;ask&rdquo; price and sell back at the lower &ldquo;bid&rdquo;
-            price, your investment must appreciate beyond this spread before you realize a profit.
-            Premiums and spreads are subject to change and may vary between transactions.
+            premium covers sourcing, fabrication, delivery, and operational costs. Our premium does
+            not exceed 15% over spot on any product, all in, and is quoted to you in writing before
+            you commit to any purchase. Because you buy at the &ldquo;ask&rdquo; price and sell back
+            at the lower &ldquo;bid&rdquo; price, your investment must appreciate beyond this spread
+            before you realize a profit. Premiums and spreads are subject to change and may vary
+            between transactions.
           </p>
 
           <h3>4. Liquidity Risk</h3>

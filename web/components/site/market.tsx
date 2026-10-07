@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
  * Live market data for the client widgets.
  *
  * Rules of this module (see the site compliance spec):
- *   • **No fallback prices.** Until a real snapshot arrives — and any time one
- *     can't be fetched — every figure renders as "—". Nothing is invented.
+ *   • **No invented prices.** Until a real snapshot arrives — and any time one
+ *     can't be fetched — every figure renders as "—". The server may serve the
+ *     last rate gold-api.com actually returned (as-of stamped, `live: false`);
+ *     nothing here is ever made up.
  *   • **No 12-month / yearly figures.** There is no baseline, no `silverYear`,
  *     no "past 12 months" chip anywhere in the codebase.
  *   • **Every spot price carries its full label** (as-of time, "not a quote",
- *     source) via `spotLabel()`.
+ *     source) via `spotLabel()` / `spotBasis()`.
  *   • The five-year headline figure is computed server-side (lib/five-year.ts);
  *     this module only re-checks it before rendering.
  */
@@ -32,7 +34,7 @@ export const PLACEHOLDER = "—";
 export const SPOT_SOURCE = "gold-api.com";
 
 /** Hero headline used on the server render and whenever data can't be verified. */
-export const NEUTRAL_HEADLINE_LEAD = "Six years of supply shortfall, and it";
+export const NEUTRAL_HEADLINE_LEAD = "Six years of supply deficit, and it";
 export const HEADLINE_TAIL = "hasn't closed.";
 export const NEUTRAL_HEADLINE = `${NEUTRAL_HEADLINE_LEAD} ${HEADLINE_TAIL}`;
 
@@ -72,6 +74,16 @@ export function formatAsOf(iso: string | null | undefined): string {
 }
 
 /**
+ * Everything a spot figure must be stamped with, minus the price itself:
+ * "indicative", as-of time, "not a quote", and source. Exported so a display
+ * that shows the price in a large type of its own (the home page spot ticker)
+ * can still carry the complete mandatory label underneath.
+ */
+export function spotBasis(updatedAt: string | null | undefined): string {
+  return `indicative, as of ${formatAsOf(updatedAt)}. Not a quote; dealable prices are confirmed at the time of transaction. Source: ${SPOT_SOURCE}.`;
+}
+
+/**
  * The mandatory label for a spot price display. Price `null` (feed blocked,
  * loading, or failed) renders the *same sentence* with the PLACEHOLDER where the
  * figure would be — no number is invented, and the two states are within a few
@@ -83,11 +95,11 @@ export function spotLabel(
   price: number | null,
   updatedAt: string | null,
 ): string {
-  const basis = `Not a quote; dealable prices are confirmed at the time of transaction. Source: ${SPOT_SOURCE}.`;
+  const basis = spotBasis(updatedAt);
   if (price == null || !Number.isFinite(price)) {
-    return `${metal} spot ${PLACEHOLDER}/oz, indicative, as of ${formatAsOf(updatedAt)}. ${basis}`;
+    return `${metal} spot ${PLACEHOLDER}/oz, ${basis}`;
   }
-  return `${metal} spot $${price.toFixed(2)}/oz, indicative, as of ${formatAsOf(updatedAt)}. ${basis}`;
+  return `${metal} spot $${price.toFixed(2)}/oz, ${basis}`;
 }
 
 /* --------------------------------- hooks ---------------------------------- */

@@ -49,22 +49,42 @@ export default function Privacy() {
             parties.
           </p>
 
-          <h3>3. Text Messaging &amp; SMS Communication</h3>
+          <h3>3. Text Messaging, Telephone Calls, and TCPA Consent</h3>
           <p>
-            If you provide your mobile number and affirmatively opt in, we may send you text messages
-            about your inquiry, appointment reminders, and information about precious metals products
-            and services. Mobile numbers and opt-in consent data collected for SMS communication
-            will not be shared, sold, rented, or leased to third parties or affiliates for marketing
-            purposes under any circumstances.
+            <strong>Program name:</strong> Anchor Silver Capital SMS Program.
           </p>
           <p>
-            Your SMS consent is stored as a record of your express written consent under the
-            Telephone Consumer Protection Act (TCPA) and is used only to send messages you have
-            agreed to receive. Consent is not a condition of any purchase. Message frequency varies.
-            Message and data rates may apply. You may opt out at any time by replying{" "}
-            <strong>STOP</strong> to any message, or reply <strong>HELP</strong> for help. Opting
-            out of SMS does not affect your ability to contact us by phone or email, and it does not
-            remove you from our records where we are required to retain them.
+            By submitting your phone number through any form on this website, you give {SITE.legal}{" "}
+            <strong>express written consent</strong> under the Telephone Consumer Protection Act
+            (TCPA), 47 U.S.C. § 227, and related federal and state laws, to contact you at the
+            number provided using autodialed or prerecorded voice calls, artificial or prerecorded
+            voice messages, and text (SMS) messages.
+          </p>
+          <p>
+            <strong>Message frequency:</strong> Message frequency varies. You may receive messages
+            about your inquiry, appointment reminders, follow-ups on a consultation you requested,
+            and information about precious metals products and services.
+          </p>
+          <p>
+            <strong>Message and data rates may apply.</strong> Check with your mobile carrier for
+            details. Consent is not a condition of any purchase.
+          </p>
+          <p>
+            <strong>Opt-out instructions:</strong> Reply <strong>STOP</strong> to cancel, reply{" "}
+            <strong>HELP</strong> for help, at any time. After you send STOP, we will send a
+            confirmation message and cease further texts to that number. You may also opt out or
+            revoke consent by calling {SITE.phone} or emailing{" "}
+            <a href={`mailto:${SITE.email}`} className="text-primary underline underline-offset-4">
+              {SITE.email}
+            </a>
+            . Carriers are not liable for delayed or undelivered messages.
+          </p>
+          <p>
+            You represent that you are the subscriber or customary user of the phone number you
+            provide, and that you are authorized to grant this consent. You agree to notify us
+            promptly if your number changes or is reassigned. This consent remains in effect until
+            you revoke it, and revocation does not affect prior lawful messages or any separate
+            consent you have given for calls or emails that are not covered by this section.
           </p>
 
           <h3>4. Call Recording</h3>
@@ -91,7 +111,7 @@ export default function Privacy() {
             (such as custodians, depositories, and payment processors), and when required by law or
             to protect our rights. We require these providers to keep your information confidential.
             We do not share, sell, rent, or lease your mobile number or SMS opt-in consent data for
-            third-party marketing purposes, as stated in Section 3.
+            third-party marketing purposes.
           </p>
 
           <h3>7. Data Security</h3>

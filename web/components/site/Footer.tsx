@@ -16,7 +16,7 @@ const services = [
   { to: "/silver-ira", label: "Silver IRA Rollover" },
   { to: "/silver-ira", label: "401k to Silver IRA" },
   { to: "/physical-silver", label: "Physical Silver Purchase" },
-  { to: "/silver-ira", label: "IRA Storage at Delaware Depository" },
+  { to: "/silver-ira", label: "IRA Storage at IDS of Delaware" },
   { to: "/get-started", label: "Free Consultation" },
 ];
 
@@ -84,8 +84,8 @@ export function Footer() {
         <div>
           <ColTitle>Trust</ColTitle>
           <ul className="space-y-3 text-sm">
-            <li className="text-xs leading-relaxed">IRA Custodian Partner: Equity Trust Company</li>
-            <li className="text-xs leading-relaxed">Depository Partner: Delaware Depository</li>
+            <li className="text-xs leading-relaxed">IRA Custodian Partner: American Estate & Trust (AET)</li>
+            <li className="text-xs leading-relaxed">Depository Partner: IDS of Delaware</li>
           </ul>
         </div>
       </div>

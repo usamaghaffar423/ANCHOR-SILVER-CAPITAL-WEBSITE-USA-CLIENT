@@ -55,7 +55,7 @@ export default function GetStarted() {
             </p>
             <p className="mt-1 text-sm text-muted-foreground">Hours: {SITE.hours}</p>
             <p className="mt-8 text-xs uppercase tracking-wider text-muted-foreground">
-              Equity Trust Company · Delaware Depository
+              American Estate & Trust (AET) · IDS of Delaware
             </p>
           </div>
 

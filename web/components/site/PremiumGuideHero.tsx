@@ -65,7 +65,7 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
 
             {/* Trust badges — bottom of text block (custodian + depository only) */}
             <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep md:mt-7">
-              {["Equity Trust", "Delaware Depository"].map((b) => (
+              {["AET", "IDS of Delaware"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">✦</span>
                   {b}

@@ -132,12 +132,12 @@ const steps = [
   },
   {
     title: "We Handle the Paperwork",
-    body: "Equity Trust IRA setup, rollover forms, depository account. You sign, we do the rest.",
+    body: "AET IRA setup, rollover forms, depository account. You sign, we do the rest.",
     Icon: DocIcon,
   },
   {
     title: "Your Silver Is Secured",
-    body: "Shipped fully insured to Delaware Depository or your door. View holdings online.",
+    body: "Shipped fully insured to IDS of Delaware or your door. View holdings online.",
     Icon: VaultIcon,
   },
 ];
@@ -162,7 +162,7 @@ const testimonials = [
   },
 ];
 
-const trustBadges = ["Equity Trust Company", "Delaware Depository"];
+const trustBadges = ["American Estate & Trust (AET)", "IDS of Delaware"];
 
 function Stars({ className = "text-primary" }: { className?: string }) {
   return (
@@ -218,7 +218,7 @@ export default function HomeV1() {
               </Link>
             </div>
             <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep">
-              {["Equity Trust", "Delaware Depository"].map((b) => (
+              {["AET", "IDS of Delaware"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">
                     ✦
@@ -281,7 +281,7 @@ export default function HomeV1() {
                   <span className="text-primary">—</span> Insured shipping to your door
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Or allocated storage at Delaware Depository
+                  <span className="text-primary">—</span> Or allocated storage at IDS of Delaware
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary">—</span> $5,000 minimum

@@ -73,6 +73,7 @@ export function Header() {
               <Link
                 key={item.to}
                 href={item.to}
+                scroll={false}
                 className={`text-sm font-medium transition-colors hover:text-background ${
                   path === item.to ? "text-background" : "text-background/90"
                 }`}
@@ -80,7 +81,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link href="/get-started" className={`${buttonStyles.silver} py-2.5`}>
+            <Link href="/get-started" scroll={false} className={`${buttonStyles.silver} py-2.5`}>
               Get Started
             </Link>
           </nav>
@@ -121,6 +122,7 @@ export function Header() {
                 <Link
                   key={item.to}
                   href={item.to}
+                  scroll={false}
                   className="font-display text-2xl text-background"
                   onClick={() => setMenu(false)}
                 >
@@ -128,7 +130,12 @@ export function Header() {
                 </Link>
               ),
             )}
-            <Link href="/get-started" className={`${buttonStyles.silver} mt-4 w-full`}>
+            <Link
+              href="/get-started"
+              scroll={false}
+              className={`${buttonStyles.silver} mt-4 w-full`}
+              onClick={() => setMenu(false)}
+            >
               Get Started
             </Link>
             <a href={SITE.phoneHref} className="font-mono text-secondary">

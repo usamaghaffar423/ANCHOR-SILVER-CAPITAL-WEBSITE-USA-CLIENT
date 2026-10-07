@@ -39,7 +39,7 @@ const chapters = [
   {
     n: "Chapter 5",
     title: "Custodian & Depository Roles",
-    body: "Who holds title, who holds metal, and how Equity Trust and Delaware Depository work together.",
+    body: "Who holds title, who holds metal, and how AET and IDS of Delaware work together.",
   },
 ];
 
@@ -176,7 +176,7 @@ export default function ThankYouHandbookPage() {
             are volatile and carry risk, including the possible loss of principal; past
             performance does not guarantee future results. Purchases may be subject to
             price spreads, storage, and insurance costs. Third-party custodians (such as
-            Equity Trust Company) and depositories (such as Delaware Depository) are
+            American Estate & Trust (AET)) and depositories (such as IDS of Delaware) are
             independent, unaffiliated third parties, and their services, solvency, and
             performance are their sole responsibility. Please consult your own financial,
             legal, and tax professionals before making any financial decision, and review

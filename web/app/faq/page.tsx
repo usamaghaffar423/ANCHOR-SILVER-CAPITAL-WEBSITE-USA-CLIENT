@@ -53,7 +53,7 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "Can I store my silver at a depository instead of at home?",
-        a: "Yes. We can arrange allocated storage at Delaware Depository — your specific bars or coins held in your name, fully insured, with online access.",
+        a: "Yes. We can arrange allocated storage at IDS of Delaware — your specific bars or coins held in your name, fully insured, with online access.",
       },
       {
         q: "What is a premium over spot?",
@@ -99,7 +99,7 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "What are your fees?",
-        a: "Equity Trust account fee is $80-100 per year. Delaware Depository storage runs approximately 0.10-0.15% of metal value annually with a $100-150 minimum. Dealer premium varies by product and volume and is always quoted before purchase.",
+        a: "AET's account fee is $50 one-time, then $200 per year. This is a flat fee and does not change based on how much metal you hold. Storage at IDS of Delaware is $12 per month ($144 per year). This is also a flat fee and does not change based on metal type or amount. Dealer premium varies by product and volume. It is always quoted before purchase.",
       },
       {
         q: "What is your buyback policy?",

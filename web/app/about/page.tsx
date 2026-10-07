@@ -49,9 +49,9 @@ const values = [
 ];
 
 const partners = [
-  ["Equity Trust Company", "IRA Custodian"],
-  ["Delaware Depository", "Precious Metals Storage"],
-  ["A-Mark Precious Metals", "Wholesale Supplier"],
+  ["American Estate & Trust (AET)", "IRA Custodian"],
+  ["IDS of Delaware", "Precious Metals Storage"],
+  ["Bayside Metal Exchange", "Wholesale Supplier"],
 ];
 
 export default function About() {
