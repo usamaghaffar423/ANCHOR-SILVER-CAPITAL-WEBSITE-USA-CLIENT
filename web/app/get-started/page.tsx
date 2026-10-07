@@ -55,7 +55,7 @@ export default function GetStarted() {
             </p>
             <p className="mt-1 text-sm text-muted-foreground">Hours: {SITE.hours}</p>
             <p className="mt-8 text-xs uppercase tracking-wider text-muted-foreground">
-              BBB Accredited Business · Equity Trust Company · Delaware Depository
+              Equity Trust Company · Delaware Depository
             </p>
           </div>
 

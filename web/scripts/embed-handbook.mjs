@@ -2,7 +2,7 @@
  * Embeds the private lead-magnet PDF into the Worker bundle.
  *
  * Source of truth (never in /public):
- *   private_docs/Silver-IRA-Handbook.pdf → lib/generated/handbook-pdf.ts
+ *   private_docs/Silver-IRA-Handbook-2026-Edition.pdf → lib/generated/handbook-pdf.ts
  *
  * Runs automatically on every `pnpm build` (local and on Cloudflare CI), because
  * Cloudflare Workers cannot read project files from disk at runtime — only files
@@ -24,7 +24,7 @@ const outDir = path.join(root, "lib", "generated");
 
 const LEAD_MAGNETS = [
   {
-    file: "Silver-IRA-Handbook.pdf",
+    file: "Silver-IRA-Handbook-2026-Edition.pdf",
     out: "handbook-pdf.ts",
     base64Const: "HANDBOOK_PDF_BASE64",
     bytesConst: "HANDBOOK_PDF_BYTES",

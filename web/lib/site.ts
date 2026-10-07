@@ -7,10 +7,10 @@ export const SITE = {
   phone: "(866) 818-7243",
   phoneHref: "tel:+18668187243",
   email: "info@anchorsilvercapital.com",
-  street: "2450 Colorado Avenue, Suite 300",
-  city: "Santa Monica",
+  street: "475 Washington Blvd.",
+  city: "Marina del Rey",
   state: "CA",
-  zip: "90404",
+  zip: "90292",
   origin: "https://anchorsilvercapital.com",
   hours: "Monday–Friday 8am–6pm Pacific",
 } as const;
@@ -96,7 +96,7 @@ export const localBusinessSchema = {
     postalCode: SITE.zip,
     addressCountry: "US",
   },
-  geo: { "@type": "GeoCoordinates", latitude: 34.0195, longitude: -118.4695 },
+  geo: { "@type": "GeoCoordinates", latitude: 33.9803, longitude: -118.4517 },
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",

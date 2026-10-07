@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Lock } from "lucide-react";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
+import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
 import { GuideLeadModal } from "@/components/site/GuideLeadModal";
 
 /**
@@ -13,8 +14,11 @@ import { GuideLeadModal } from "@/components/site/GuideLeadModal";
  *
  * Framer-motion is not in this project — hover animations use Tailwind
  * group-hover + CSS perspective transforms instead.
+ *
+ * `today` is rendered on the server (see app/page.tsx) so the disclaimer date
+ * is present in the shipped HTML instead of popping in after hydration.
  */
-export function PremiumGuideHero() {
+export function PremiumGuideHero({ today }: { today?: string | null }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -28,9 +32,11 @@ export function PremiumGuideHero() {
             </p>
             <HeroHeadline />
             <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
-              Own real metal in your retirement, backed by a six-year supply shortfall — not a
-              promise. Start with the free investor guide.
+              Own physical silver in your retirement account or outright. Six consecutive years of
+              supply shortfall, according to the Silver Institute. Plan on holding at least five
+              years. Start with the free investor guide.
             </p>
+            <HeroDisclaimer today={today} />
             <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4 md:mt-6">
               <button
                 onClick={() => setModalOpen(true)}
@@ -46,9 +52,9 @@ export function PremiumGuideHero() {
               </a>
             </div>
 
-            {/* Trust badges — bottom of text block */}
+            {/* Trust badges — bottom of text block (custodian + depository only) */}
             <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep md:mt-7">
-              {["BBB Accredited A+", "Equity Trust", "Delaware Depository"].map((b) => (
+              {["Equity Trust", "Delaware Depository"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">✦</span>
                   {b}

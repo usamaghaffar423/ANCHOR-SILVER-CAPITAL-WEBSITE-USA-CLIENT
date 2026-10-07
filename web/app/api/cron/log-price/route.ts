@@ -4,7 +4,7 @@ import { logTodaySilverPrice } from "@/lib/silver-history";
 
 /**
  * Daily job (Vercel Cron — see vercel.json). Appends today's silver spot price
- * to `silver_price_history` so the DB builds a rolling 12-month history that can
+ * to `silver_price_history` so the DB builds a rolling history that can
  * eventually replace the paid historical API.
  *
  * Auth: Vercel sends `Authorization: Bearer $CRON_SECRET` when CRON_SECRET is
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   }
 
   const spot = await getSpotPrices();
-  if (!spot.live) {
+  if (!spot) {
     return NextResponse.json(
       { ok: false, error: "spot_unavailable" },
       { status: 502 },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMarket } from "@/components/site/market";
+import { PLACEHOLDER, useFiveYear, useMarket } from "@/components/site/market";
 import { H2, Section } from "@/components/site/ui";
 import { CountUp } from "@/components/site/Reveal";
 
@@ -8,18 +8,28 @@ import { CountUp } from "@/components/site/Reveal";
  * Home "Silver by the Numbers" band. Extracted from the source route file
  * because it reads live market data via the `useMarket` client hook, and the
  * home route itself is a server component that exports metadata.
+ *
+ * No 12-month figure: the only performance stat is the server-computed,
+ * guarded five-year change, which renders as "—" until it is verified.
  */
 export function SilverByTheNumbers() {
   const m = useMarket();
+  const fiveYear = useFiveYear();
+
   return (
     <Section tone="sage" className="md:py-24">
       <H2 className="text-primary-foreground">Silver by the Numbers</H2>
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           {
-            v: <CountUp value={Math.max(m.silverYear, 0)} decimals={1} suffix="%" />,
-            l: "12-month gain",
-            c: "More than most equity indices over the same period",
+            v:
+              fiveYear != null ? (
+                <CountUp value={fiveYear} suffix="%" />
+              ) : (
+                PLACEHOLDER
+              ),
+            l: "Silver over five years (approx.)",
+            c: "Calculated server-side from verified historical data and hidden until verified. Source: gold-api.com",
           },
           {
             v: <CountUp value={6} />,
@@ -32,7 +42,12 @@ export function SilverByTheNumbers() {
             c: "Solar, EVs, AI infrastructure — demand that doesn't wait for a dip in price",
           },
           {
-            v: <CountUp value={m.ratio} decimals={1} suffix=":1" />,
+            v:
+              m.ratio != null ? (
+                <CountUp value={m.ratio} decimals={1} suffix=":1" />
+              ) : (
+                PLACEHOLDER
+              ),
             l: "Gold-to-silver ratio",
             c: "Above the 60:1 long-run mean — silver historically cheap relative to gold",
           },

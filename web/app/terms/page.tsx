@@ -138,6 +138,13 @@ export default function Terms() {
             </a>
             .
           </p>
+          <address className="not-italic text-sm leading-relaxed text-muted-foreground">
+            {SITE.legal}
+            <br />
+            {SITE.street}
+            <br />
+            {SITE.city}, {SITE.state} {SITE.zip}
+          </address>
         </Prose>
       </Section>
     </>

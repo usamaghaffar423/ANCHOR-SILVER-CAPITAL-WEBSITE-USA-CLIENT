@@ -3,9 +3,12 @@
 Lead-magnet PDFs live here, **outside `/public`**, so no static URL
 (`https://anchorsilvercapital.com/docs/...`) can ever serve them.
 
-| PDF (drop it here)                   | Generated module                        | Public endpoint                                |
-| ------------------------------------ | --------------------------------------- | ---------------------------------------------- |
-| `Silver-IRA-Handbook.pdf`            | `lib/generated/handbook-pdf.ts`          | `GET /api/download-handbook`                    |
+| PDF (drop it here)                                | Generated module                | Public endpoint                    |
+| ------------------------------------------------- | ------------------------------- | ---------------------------------- |
+| `Silver-IRA-Handbook-2026-Edition.pdf`            | `lib/generated/handbook-pdf.ts` | `GET /api/download-handbook`       |
+
+The file is served as `Anchor-Silver-IRA-Handbook-2026-Edition.pdf` so the
+downloaded name matches the "2026 Edition" copy used across the site.
 
 This is the only lead magnet: every thank-you page (including
 `/thank-you-critical-minerals`, which the Critical Minerals Report form

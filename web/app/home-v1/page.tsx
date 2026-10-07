@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
+import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
 import { CallbackForm } from "@/components/site/CallbackForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
@@ -161,12 +162,7 @@ const testimonials = [
   },
 ];
 
-const trustBadges = [
-  "BBB Accredited — A+",
-  "Equity Trust Company",
-  "Delaware Depository",
-  "Fox Business · Yahoo Finance · Newsmax",
-];
+const trustBadges = ["Equity Trust Company", "Delaware Depository"];
 
 function Stars({ className = "text-primary" }: { className?: string }) {
   return (
@@ -200,12 +196,13 @@ export default function HomeV1() {
       <section className="hero-surface relative -mt-[112px] px-5 pb-14 pt-[124px] text-silver md:pb-20 md:pt-[140px]">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="min-w-0">
-            <p className="eyebrow text-brass-light">The metal that&apos;s quietly climbing</p>
+            <p className="eyebrow text-brass-light">Free 2026 Edition</p>
             <HeroHeadline />
             <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-silver md:text-[1.08rem]">
               Own real metal in your retirement, backed by a six-year supply shortfall — not a
               promise. Start with the free investor guide.
             </p>
+            <HeroDisclaimer today={new Date().toISOString()} />
             <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <Link
                 href="/get-started"
@@ -221,7 +218,7 @@ export default function HomeV1() {
               </Link>
             </div>
             <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep">
-              {["BBB Accredited A+", "Equity Trust", "Delaware Depository"].map((b) => (
+              {["Equity Trust", "Delaware Depository"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">
                     ✦
@@ -409,7 +406,7 @@ export default function HomeV1() {
       </Section>
 
       <Section className="md:py-20">
-        <ul className="grid gap-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mx-auto grid w-full max-w-3xl gap-4 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground sm:grid-cols-2">
           {trustBadges.map((b) => (
             <li key={b} className="flex min-h-[4.5rem] items-center justify-center rounded-sm border border-border px-5 py-4">
               {b}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
+import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
 import { HeroMarketCard } from "@/components/site/HeroMarketCard";
 
 /**
@@ -16,9 +17,11 @@ export function MarketDataHero() {
           </p>
           <HeroHeadline />
           <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
-            Own real metal in your retirement, backed by a six-year supply shortfall — not a promise.
-            Start with the free investor guide.
+            Own physical silver in your retirement account or outright. Six consecutive years of
+            supply shortfall, according to the Silver Institute. Plan on holding at least five
+            years. Start with the free investor guide.
           </p>
+          <HeroDisclaimer today={new Date().toISOString()} />
           <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4 md:mt-6">
             <Link
               href="/get-started"
@@ -34,7 +37,7 @@ export function MarketDataHero() {
             </Link>
           </div>
           <ul className="mt-5 hidden flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep sm:flex md:mt-7">
-            {["BBB Accredited A+", "Equity Trust", "Delaware Depository"].map((b) => (
+            {["Equity Trust", "Delaware Depository"].map((b) => (
               <li key={b} className="flex items-center gap-1.5">
                 <span aria-hidden="true" className="text-brass">
                   ✦

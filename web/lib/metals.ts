@@ -1,39 +1,106 @@
 /**
- * Metals data — thin provider adapters. **Server-only** (reads METALS_API_KEY);
- * never import this from a client component.
+ * Metals data — thin provider adapters. **Server-only** (reads GOLD_API_KEY /
+ * METALS_API_KEY); never import this from a client component.
  *
  * Two concerns:
  *   1. Current spot prices — keyless (api.gold-api.com), used by /api/market.
- *   2. A historical silver price ~365 days ago, for the hero's trailing-12-month
- *      change. This needs a paid provider, so the adapter is isolated here: swap
- *      it with the METALS_PROVIDER env var and nothing else changes.
+ *      Returns `null` on any failure: there are no hard-coded fallback prices,
+ *      so a failed feed renders as "no price" instead of an invented figure.
+ *   2. Historical silver lookups used by the five-year engine — see
+ *      lib/five-year.ts.
  *
- * Supported historical provider: "metalpriceapi" (metalpriceapi.com). Add
- * another by writing a `HistoricalLookup` and registering it in
- * HISTORICAL_PROVIDERS.
+ * Supported historical providers: gold-api.com /history (GOLD_API_KEY) and
+ * metalpriceapi.com (METALS_API_KEY). Add another by writing a
+ * `HistoricalLookup` and registering it in HISTORICAL_PROVIDERS.
  */
 
-export type SpotPrices = { silver: number; gold: number; live: boolean };
-
-/** Conservative last-resort figures so /api/market always returns a shape. */
-const SPOT_FALLBACK: SpotPrices = { silver: 65.4, gold: 3320, live: false };
+export type SpotPrices = {
+  silver: number;
+  gold: number;
+  live: boolean;
+  /** Provider's own snapshot timestamp (ISO), or null if it didn't send one. */
+  updatedAt: string | null;
+};
 
 const GOLD_API = "https://api.gold-api.com/price";
+const GOLD_API_HISTORY = "https://api.gold-api.com/history";
 
-/** Current silver + gold spot (USD/oz). Falls back to indicative figures. */
-export async function getSpotPrices(): Promise<SpotPrices> {
+/** Current silver + gold spot (USD/oz). `null` whenever the feed can't be read. */
+export async function getSpotPrices(): Promise<SpotPrices | null> {
   try {
     const [xag, xau] = await Promise.all([
       fetch(`${GOLD_API}/XAG`, { next: { revalidate: 3600 } }),
       fetch(`${GOLD_API}/XAU`, { next: { revalidate: 3600 } }),
     ]);
-    if (!xag.ok || !xau.ok) return SPOT_FALLBACK;
-    const silver = Number((await xag.json())?.price);
-    const gold = Number((await xau.json())?.price);
-    if (!(silver > 0) || !(gold > 0)) return SPOT_FALLBACK;
-    return { silver, gold, live: true };
+    if (!xag.ok || !xau.ok) return null;
+    const silverJson = (await xag.json()) as {
+      price?: unknown;
+      updatedAt?: unknown;
+    };
+    const goldJson = (await xau.json()) as { price?: unknown };
+    const silver = Number(silverJson?.price);
+    const gold = Number(goldJson?.price);
+    if (!(silver > 0) || !(gold > 0)) return null;
+    const updatedAt =
+      typeof silverJson?.updatedAt === "string" ? silverJson.updatedAt : null;
+    return { silver, gold, live: true, updatedAt };
   } catch {
-    return SPOT_FALLBACK;
+    return null;
+  }
+}
+
+/**
+ * Average silver USD/oz over `[start, end]` from gold-api.com `/history`.
+ *
+ * Requires `GOLD_API_KEY` (free tier, 10 requests/hour — this result is cached
+ * for a day by lib/five-year.ts, so it is never called per request). Returns
+ * `null` on a missing key, a non-OK response, or an unusable payload.
+ */
+export async function getGoldApiSilverAverage(
+  start: Date,
+  end: Date,
+): Promise<number | null> {
+  const key = process.env.GOLD_API_KEY;
+  if (!key) return null;
+
+  const params = new URLSearchParams({
+    symbol: "XAG",
+    startTimestamp: String(Math.floor(start.getTime() / 1000)),
+    endTimestamp: String(Math.floor(end.getTime() / 1000)),
+    groupBy: "day",
+    aggregation: "avg",
+    orderBy: "asc",
+  });
+
+  try {
+    const res = await fetch(`${GOLD_API_HISTORY}?${params.toString()}`, {
+      headers: { "x-api-key": key },
+      next: { revalidate: 86_400 },
+    });
+    if (!res.ok) return null;
+    const rows: unknown = await res.json();
+    if (!Array.isArray(rows) || rows.length === 0) return null;
+
+    const values: number[] = [];
+    for (const entry of rows) {
+      if (!entry || typeof entry !== "object") continue;
+      const row = entry as Record<string, unknown>;
+      const avg = Number(row.avg_price);
+      const max = Number(row.max_price);
+      const min = Number(row.min_price);
+      const price = Number.isFinite(avg) && avg > 0
+        ? avg
+        : Number.isFinite(max) && Number.isFinite(min) && max > 0 && min > 0
+          ? (max + min) / 2
+          : Number(row.price);
+      if (Number.isFinite(price) && price > 0) values.push(price);
+    }
+    if (values.length === 0) return null;
+    const mean = values.reduce((a, b) => a + b, 0) / values.length;
+    return mean > 0 ? mean : null;
+  } catch (err) {
+    console.error("[metals] gold-api history lookup failed", err);
+    return null;
   }
 }
 
@@ -84,8 +151,7 @@ export function historicalApiConfigured(): boolean {
 
 /**
  * Silver USD/oz on the given date via the configured provider. Returns null when
- * no key is set, the provider name is unknown, or the call fails — the caller
- * then falls back to the DB history table.
+ * no key is set, the provider name is unknown, or the call fails.
  */
 export async function getHistoricalSilver(isoDate: string): Promise<number | null> {
   const name = historicalProviderName();

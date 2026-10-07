@@ -47,6 +47,8 @@ export function Footer() {
             </a>
           </p>
           <address className="mt-2 text-sm not-italic leading-relaxed">
+            {SITE.legal}
+            <br />
             {SITE.street}
             <br />
             {SITE.city}, {SITE.state} {SITE.zip}
@@ -82,12 +84,6 @@ export function Footer() {
         <div>
           <ColTitle>Trust</ColTitle>
           <ul className="space-y-3 text-sm">
-            <li className="inline-flex items-center gap-2 rounded-sm border border-silver/25 px-3 py-2 text-xs uppercase tracking-wider">
-              BBB Accredited Business
-            </li>
-            <li className="text-xs leading-relaxed text-silver-deep">
-              As seen on: Fox Business · Yahoo Finance · Newsmax
-            </li>
             <li className="text-xs leading-relaxed">IRA Custodian Partner: Equity Trust Company</li>
             <li className="text-xs leading-relaxed">Depository Partner: Delaware Depository</li>
           </ul>

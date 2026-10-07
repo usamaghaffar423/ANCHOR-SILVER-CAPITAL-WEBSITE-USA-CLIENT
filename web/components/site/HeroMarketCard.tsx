@@ -1,79 +1,19 @@
 "use client";
 
-import { useMemo } from "react";
-import { useMarket } from "@/components/site/market";
+import { PLACEHOLDER, spotLabel, useMarket } from "@/components/site/market";
 
 /**
- * Home hero market card. Live spot prices, the gold/silver ratio and the
- * trailing-12-month change come from `useMarket()`. The trend line is anchored
- * to two real points — the ~12-month-ago reference and the current price — with
- * an illustrative shape between them (labelled as such). Renders with the SSR
- * fallback figures first so there is no layout shift.
+ * Hero market card (home-v1). Shows the live silver and gold spot figures with
+ * the full mandatory label (as-of time, "not a quote", source). While the feed
+ * is loading or blocked every figure is "—" — there are no fallback prices, and
+ * the card keeps its shape so nothing shifts.
  */
-
-// Fraction of the total 12-month climb reached at each monthly step. Shape only;
-// the endpoints are the real anchor and the live price.
-const TREND_SHAPE = [
-  0, 0.07, 0.176, 0.141, 0.282, 0.387, 0.352, 0.528, 0.634, 0.739, 0.845, 0.915, 1,
-] as const;
-
-const VB = { w: 480, h: 268 };
-const PLOT = { left: 44, right: 440, top: 30, bottom: 220 };
-
-function niceBounds(min: number, max: number) {
-  const lo = Math.max(0, Math.floor((min - 3) / 10) * 10);
-  const hi = Math.ceil((max + 3) / 10) * 10;
-  return { lo, hi: hi <= lo ? lo + 10 : hi };
-}
-
-// Relative labels — the page is statically generated, so absolute month names
-// would freeze at build time. These stay correct without a redeploy.
-const X_LABELS = ["12 mo ago", "6 mo ago", "Now"] as const;
-
 export function HeroMarketCard() {
   const m = useMarket();
-  const { silver, gold, ratio, live, silverYear, silverRef } = m;
 
-  const chart = useMemo(() => {
-    const current = silver;
-    // Anchor the trend to the same ~12-month-ago reference every other figure
-    // on the page uses (real resolved price, else the documented BASELINE).
-    const anchor = silverRef;
-    const prices = TREND_SHAPE.map((s) => anchor + s * (current - anchor));
-    const { lo, hi } = niceBounds(Math.min(...prices), Math.max(...prices));
-
-    const x = (i: number) =>
-      PLOT.left + (i / (prices.length - 1)) * (PLOT.right - PLOT.left);
-    const y = (p: number) =>
-      PLOT.top + (1 - (p - lo) / (hi - lo)) * (PLOT.bottom - PLOT.top);
-
-    const pts = prices.map((p, i) => [x(i), y(p)] as const);
-    const line = pts.map(([px, py], i) => `${i ? "L" : "M"}${px.toFixed(1)},${py.toFixed(1)}`).join(" ");
-    const area = `${line} L${PLOT.right},${PLOT.bottom} L${PLOT.left},${PLOT.bottom} Z`;
-
-    const gridValues: number[] = [];
-    for (let v = lo; v <= hi; v += 10) gridValues.push(v);
-
-    return { line, area, last: pts[pts.length - 1], gridValues, y };
-  }, [silver, silverRef]);
-
-  // Trailing-12-month change: whole number, sign-aware arrow + colour, always
-  // with the window label. Derived from the shared reference so it matches the
-  // hero headline and the announcement bar exactly.
-  const pctRounded = Math.round(silverYear);
-  const dir: "up" | "down" | "flat" =
-    pctRounded > 0 ? "up" : pctRounded < 0 ? "down" : "flat";
-  const badge = {
-    text: `${dir === "up" ? "▲" : dir === "down" ? "▼" : "—"} ${
-      pctRounded > 0 ? "+" : ""
-    }${pctRounded}% · past 12 months`,
-    cls:
-      dir === "up"
-        ? "text-gain bg-gain/15"
-        : dir === "down"
-          ? "text-loss bg-loss/15"
-          : "text-silver bg-white/10",
-  };
+  const silverText = m.silver != null ? `$${m.silver.toFixed(2)}` : PLACEHOLDER;
+  const goldText = m.gold != null ? `$${Math.round(m.gold).toLocaleString("en-US")}` : PLACEHOLDER;
+  const ratioText = m.ratio != null ? `${m.ratio.toFixed(1)}:1` : PLACEHOLDER;
 
   return (
     <div className="rounded-xl border border-white/15 bg-white/[0.04] p-4 backdrop-blur-sm sm:p-6">
@@ -81,84 +21,22 @@ export function HeroMarketCard() {
         <span className="font-plex text-[0.65rem] uppercase tracking-[0.12em] text-silver-deep sm:text-[0.7rem]">
           Silver · USD / oz
         </span>
-        <span className="flex items-center gap-1.5 font-plex text-[0.65rem] text-gain sm:text-[0.7rem]">
-          <span
-            className="hero-live-dot inline-block h-[6px] w-[6px] rounded-full bg-gain sm:h-[7px] sm:w-[7px]"
-            aria-hidden="true"
-          />
-          {live ? "Live" : "Indicative"}
-        </span>
       </div>
 
       <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="font-fraunces text-3xl font-light leading-none text-white sm:text-4xl lg:text-[2.6rem]">
-          ${silver.toFixed(2)}
-        </span>
-        <span className="font-plex text-[0.75rem] sm:text-[0.8rem]">
-          <span className={`rounded px-1.5 py-0.5 ${badge.cls}`}>{badge.text}</span>
+          {silverText}
         </span>
       </div>
 
-      <svg
-        className="mt-4 hidden block h-auto w-full max-w-full sm:block"
-        width={VB.w}
-        height={VB.h}
-        viewBox={`0 0 ${VB.w} ${VB.h}`}
-        preserveAspectRatio="xMidYMid meet"
-        role="img"
-        aria-label={`Silver spot price, ${
-          dir === "down" ? "down" : dir === "up" ? "up" : "little changed"
-        } about ${Math.abs(pctRounded)} percent over the last 12 months. Illustrative trend.`}
-      >
-        <defs>
-          <linearGradient id="hero-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--brass)" stopOpacity="0.32" />
-            <stop offset="100%" stopColor="var(--brass)" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        {chart.gridValues.map((v) => {
-          const gy = chart.y(v);
-          return (
-            <g key={v}>
-              <line
-                className="hero-chart-grid"
-                x1={PLOT.left}
-                y1={gy}
-                x2={PLOT.right}
-                y2={gy}
-              />
-              <text className="hero-chart-axis" x={8} y={gy + 4}>
-                ${v}
-              </text>
-            </g>
-          );
-        })}
-
-        <path fill="url(#hero-area)" d={chart.area} />
-        <path className="hero-chart-line hero-line-draw" pathLength={1} d={chart.line} />
-        <circle
-          className="hero-chart-dot"
-          cx={chart.last[0]}
-          cy={chart.last[1]}
-          r={4.5}
-        />
-
-        <text className="hero-chart-axis" x={PLOT.left} y={VB.h - 30} textAnchor="start">
-          {X_LABELS[0]}
-        </text>
-        <text className="hero-chart-axis" x={(PLOT.left + PLOT.right) / 2} y={VB.h - 30} textAnchor="middle">
-          {X_LABELS[1]}
-        </text>
-        <text className="hero-chart-axis" x={PLOT.right} y={VB.h - 30} textAnchor="end">
-          {X_LABELS[2]}
-        </text>
-      </svg>
+      <p className="mt-2 font-plex text-[0.62rem] leading-relaxed text-silver-deep sm:text-[0.68rem]">
+        {spotLabel("Silver", m.silver, m.updatedAt)}
+      </p>
 
       <div className="mt-3 flex border-t border-white/15 pt-3 sm:mt-4 sm:pt-3.5">
         {[
-          { v: `$${Math.round(gold).toLocaleString("en-US")}`, l: "Gold / oz" },
-          { v: `${ratio.toFixed(1)}:1`, l: "G/S Ratio" },
+          { v: goldText, l: "Gold / oz" },
+          { v: ratioText, l: "G/S Ratio" },
           { v: "6 yrs", l: "Supply deficit" },
         ].map((s, i) => (
           <div
@@ -174,9 +52,10 @@ export function HeroMarketCard() {
       </div>
 
       <p className="mt-2 font-plex text-[0.58rem] leading-relaxed text-silver-deep/85 sm:mt-3 sm:text-[0.62rem]">
-        About ${silverRef.toFixed(2)}/oz a year ago, about ${silver.toFixed(2)} now; the trend
-        line between is illustrative. Prices update during market hours. Past performance does not
-        guarantee future results.
+        {spotLabel("Gold", m.gold, m.updatedAt)}
+      </p>
+      <p className="mt-2 font-plex text-[0.58rem] leading-relaxed text-silver-deep/85 sm:mt-3 sm:text-[0.62rem]">
+        Prices update during market hours. Past performance does not guarantee future results.
       </p>
     </div>
   );

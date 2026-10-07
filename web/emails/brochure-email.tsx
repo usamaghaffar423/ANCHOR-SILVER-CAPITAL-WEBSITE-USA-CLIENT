@@ -91,7 +91,7 @@ export default function BrochureEmail({
           {/* Footer */}
           <Section style={footer}>
             <Text style={fBrand}>Anchor Silver Capital</Text>
-            <Text style={fLine}>2450 Colorado Avenue, Suite 300, Santa Monica, CA 90404</Text>
+            <Text style={fLine}>475 Washington Blvd., Marina del Rey, CA 90292</Text>
             <Text style={fLine}>
               info@anchorsilvercapital.com &nbsp;·&nbsp; {phone}
             </Text>

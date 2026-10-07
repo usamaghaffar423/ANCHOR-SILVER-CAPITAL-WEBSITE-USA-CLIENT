@@ -6,9 +6,9 @@ import { Card, H2, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, localBusinessSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Contact Anchor Silver Capital — Santa Monica, CA",
+  title: "Contact Anchor Silver Capital — Marina del Rey, CA",
   description:
-    "Call (866) 818-7243 or email info@anchorsilvercapital.com. Anchor Silver Capital, 2450 Colorado Avenue, Suite 300, Santa Monica, CA 90404. Mon-Fri 8am-6pm Pacific.",
+    "Call (866) 818-7243 or email info@anchorsilvercapital.com. Anchor Silver Capital, 475 Washington Blvd., Marina del Rey, CA 90292. Mon-Fri 8am-6pm Pacific.",
   path: "/contact",
 });
 
@@ -42,6 +42,8 @@ export default function Contact() {
           <Card>
             <h2 className="text-lg">Address</h2>
             <address className="mt-2 text-sm not-italic leading-relaxed text-muted-foreground">
+              {SITE.legal}
+              <br />
               {SITE.street}
               <br />
               {SITE.city}, {SITE.state} {SITE.zip}
@@ -60,10 +62,10 @@ export default function Contact() {
             </p>
             <div
               role="img"
-              aria-label="Map of 2450 Colorado Avenue, Suite 300, Santa Monica, California"
+              aria-label="Map of 475 Washington Blvd., Marina del Rey, California"
               className="chart-lines mt-8 flex h-64 items-center justify-center rounded-sm border border-border bg-card text-sm text-muted-foreground"
             >
-              Map — Santa Monica, CA 90404
+              Map — Marina del Rey, CA 90292
             </div>
           </div>
           <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">

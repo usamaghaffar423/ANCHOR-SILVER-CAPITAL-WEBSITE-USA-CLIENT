@@ -1,40 +1,34 @@
 import { NextResponse } from "next/server";
 import { getSpotPrices } from "@/lib/metals";
-import { getTwelveMonthSilverRef } from "@/lib/silver-history";
+import { fiveYearChangePct, getFiveYearSilverRef } from "@/lib/five-year";
 
 /**
- * Cached market snapshot for the home hero (and other market widgets).
+ * Cached market snapshot for the client market widgets (components/site/market.tsx).
  *
- * Caching: spot prices refresh ~hourly (this segment + the underlying fetches);
- * the trailing-12-month reference refreshes daily behind its own 24h cache. The
- * whole response is served from cache so the hero renders instantly.
+ * Everything here is resolved **server-side**: the provider keys in
+ * lib/metals.ts and lib/five-year.ts never reach the browser — only this JSON
+ * does. Prices are `null` when the feed can't be read (there are no hard-coded
+ * fallback prices anywhere in the codebase).
+ *
+ * Caching: spot prices refresh hourly; the five-year reference refreshes every
+ * 6h behind its own cache. The response is served from cache so widgets render
+ * instantly without a client-side waterfall.
  */
 export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export async function GET() {
-  const [spot, ref] = await Promise.all([
-    getSpotPrices(),
-    getTwelveMonthSilverRef(),
-  ]);
+  const [spot, ref] = await Promise.all([getSpotPrices(), getFiveYearSilverRef()]);
 
-  // changePct = ((silverNow - silver12moAgo) / silver12moAgo) * 100, or null
-  // when the 12-months-ago price can't be resolved.
-  const changePct =
-    ref && ref.price > 0
-      ? ((spot.silver - ref.price) / ref.price) * 100
-      : null;
+  // Whole-percent five-year change, rounded DOWN; null unless both inputs are real.
+  const fiveYearPct = fiveYearChangePct(spot?.silver, ref);
 
   return NextResponse.json({
-    silver: spot.silver,
-    gold: spot.gold,
-    ratio: spot.gold / spot.silver,
-    changePct,
-    // The real ~12-month-ago silver price the change is measured from (USD/oz),
-    // or null when it can't be resolved. Clients show this as the concrete
-    // "a year ago" figure and derive their own % from it.
-    refPrice: ref && ref.price > 0 ? ref.price : null,
-    asOf: new Date().toISOString(),
-    live: spot.live,
+    silver: spot ? spot.silver : null,
+    gold: spot ? spot.gold : null,
+    live: Boolean(spot?.live),
+    // Provider snapshot time — drives the "as of" text and the >4h fail-safe.
+    updatedAt: spot ? spot.updatedAt : null,
+    fiveYearPct,
   });
 }

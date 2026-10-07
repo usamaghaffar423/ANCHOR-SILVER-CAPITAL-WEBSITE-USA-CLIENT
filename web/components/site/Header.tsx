@@ -5,23 +5,25 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "../brand/AnchorMark";
 import { NAV, SITE } from "@/lib/site";
-import { useMarket, yearMove } from "@/components/site/market";
 import { buttonStyles } from "./ui";
 
+/**
+ * Announcement bar. Deliberately static: it carries the fallback banner copy
+ * rather than spot figures, so it renders the same text with the API blocked,
+ * loading, or live — no price, no percentage, no layout shift.
+ */
 function TopBar() {
   const [open, setOpen] = useState(true);
-  const { silver, silverYear, goldYear } = useMarket();
   if (!open) return null;
   return (
     <div className="hidden bg-ink px-5 text-silver md:block">
       <div className="mx-auto flex h-9 w-full max-w-6xl items-center justify-between gap-3 py-1 text-[0.7rem] leading-none tracking-wide">
         <p className="whitespace-normal sm:truncate">
-          Silver {yearMove(silverYear)} over 12 months (${silver.toFixed(0)}/oz). Gold{" "}
-          {yearMove(goldYear)}.{" "}
-          <span className="hidden sm:inline">Call us: </span>
+          Free consultation. Call{" "}
           <a href={SITE.phoneHref} className="font-mono underline underline-offset-2">
             {SITE.phone}
           </a>
+          .
         </p>
         <button
           onClick={() => setOpen(false)}

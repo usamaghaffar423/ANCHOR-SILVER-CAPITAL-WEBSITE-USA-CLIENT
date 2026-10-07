@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Anchor, Lock, Shield, Star } from "lucide-react";
+import { Anchor, Lock } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
 import { GuidePopup } from "@/components/site/GuidePopup";
@@ -15,7 +15,7 @@ import { SITE, pageMeta } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "Silver IRA Rollovers & Physical Silver | Anchor Silver Capital",
   description:
-    "Roll your 401k or IRA into a Silver IRA tax-free. Buy physical silver rounds, bars, and coins delivered to your door. Santa Monica, CA. Call (866) 818-7243.",
+    "Roll your 401k or IRA into a Silver IRA tax-free. Buy physical silver rounds, bars, and coins delivered to your door. Marina del Rey, CA. Call (866) 818-7243.",
   path: "/",
 });
 
@@ -99,10 +99,8 @@ const caseRows = [
 ];
 
 const trustCells = [
-  { Icon: Shield, name: "BBB Accredited A+", role: "Better Business Bureau" },
   { Icon: Lock, name: "Equity Trust Company", role: "IRA Custodian Partner" },
   { Icon: Anchor, name: "Delaware Depository", role: "Storage Partner" },
-  { Icon: Star, name: "Fox · Yahoo · Newsmax", role: "As seen on" },
 ];
 
 const compareRows: [string, string, string][] = [
@@ -180,7 +178,7 @@ function Avatar({ name }: { name: string }) {
 export default function Home() {
   return (
     <>
-      <PremiumGuideHero />
+      <PremiumGuideHero today={new Date().toISOString()} />
       <GuidePopup />
 
       <Section className="md:py-24">
@@ -369,9 +367,6 @@ export default function Home() {
 
       <Section tone="muted" className="md:py-24">
         <H2>What Our Clients Say</H2>
-        <p className="mt-4 text-[0.82rem] text-muted-foreground">
-          Rated 5 stars by our clients · BBB · Google · Trustpilot
-        </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {testimonials.map((t) => (
             <Card key={t.name} className="flex h-full flex-col">
@@ -396,7 +391,7 @@ export default function Home() {
 
       <section className="bg-hero-from px-5 py-11">
         <div className="mx-auto w-full max-w-6xl">
-          <ul className="grid grid-cols-1 gap-px overflow-hidden bg-white/8 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-px overflow-hidden bg-white/8 sm:grid-cols-2">
             {trustCells.map(({ Icon, name, role }) => (
               <li
                 key={name}
