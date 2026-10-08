@@ -48,10 +48,15 @@ const nextConfig: NextConfig = {
       // prerender header (`s-maxage=31536000`) lets any intermediary keep one
       // snapshot for a year with no revalidation path — which is how a post-
       // deploy change keeps being served to Bing/Googlebot long after it
-      // shipped. Hashed `_next/static` bundles are exempt so they stay
-      // immutable (see the rule below and public/_headers).
+      // shipped. Everything that is NOT a rendered document is excluded so it
+      // keeps its own lifetime:
+      //   _next/static/*  content-hashed bundles -> immutable (public/_headers)
+      //   _next/image     optimizer -> a year + SWR (rule below)
+      //   api/*           Next's own s-maxage (e.g. /api/market revalidates 60s)
+      //   images|assets|favicon.svg|_headers -> static, see public/_headers
       {
-        source: "/((?!_next/static|_next/image).*)",
+        source:
+          "/((?!_next/static|_next/image|api/|images/|assets/|favicon\\.svg|_headers).*)",
         headers: [
           {
             key: "Cache-Control",
