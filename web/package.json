@@ -8,7 +8,8 @@
     "handbook:embed": "node scripts/embed-handbook.mjs",
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy && node scripts/cf-purge.mjs",
+    "cache:purge": "node scripts/cf-purge.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test:ghl": "node --import tsx --test scripts/ghl/webhook.test.ts scripts/ghl/client.test.ts scripts/ghl/mapping.test.ts"

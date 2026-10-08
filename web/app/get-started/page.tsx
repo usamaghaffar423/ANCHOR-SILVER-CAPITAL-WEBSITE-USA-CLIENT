@@ -64,6 +64,7 @@ export default function GetStarted() {
               formId="Mdko5iPIZ5nyZmvORTsp"
               formName="Silver IRA Onboarding Form"
               height={824}
+              consent
             />
           </div>
         </div>

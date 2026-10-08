@@ -59,7 +59,9 @@ export default function Terms() {
             for providing accurate shipping and account information.
           </p>
 
-          <h3>5. Text Messaging, Telephone Calls, and TCPA Consent</h3>
+          <h3 id="tcpa-consent" className="scroll-mt-28">
+            5. Text Messaging, Telephone Calls, and TCPA Consent
+          </h3>
           <p>
             <strong>Program name:</strong> Anchor Silver Capital SMS Program.
           </p>

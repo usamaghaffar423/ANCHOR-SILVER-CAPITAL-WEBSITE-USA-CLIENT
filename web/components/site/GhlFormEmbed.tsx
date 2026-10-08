@@ -1,12 +1,24 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useId, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { LegalLinks } from "@/components/site/LegalLinks";
 
 const GHL_EMBED_JS = "https://links.precisiondatastrategies.com/js/form_embed.js";
 const GHL_EMBED_SCRIPT_ID = "ghl-form-embed-js";
 const GHL_FORM_BASE = "https://links.precisiondatastrategies.com/widget/form/";
+
+/**
+ * The TCPA/SMS consent label GHL renders inside its own form. It is repeated
+ * here as first-party markup because the embed is a cross-origin iframe: bots
+ * and compliance reviewers that fetch the raw HTML would otherwise never see
+ * it. The wording must stay byte-identical to the GHL label.
+ */
+const TCPA_CONSENT_LINK_TEXT = "[View full consent terms]";
+const TCPA_CONSENT_TEXT =
+  "I agree to be contacted about my inquiry by call, text, or email, including by automated systems and prerecorded or artificial voice messages. ";
+const TCPA_CONSENT_LABEL = `${TCPA_CONSENT_TEXT}${TCPA_CONSENT_LINK_TEXT}`;
 
 type GhlFormEmbedProps = {
   formId: string;
@@ -20,6 +32,13 @@ type GhlFormEmbedProps = {
    */
   showLegal?: boolean;
   legalClassName?: string;
+  /**
+   * Server-render a real TCPA consent checkbox and hold the embed back until it
+   * is ticked. Without it the only consent control is inside the cross-origin
+   * iframe, so a plain HTTP fetch of the page contains no consent markup at
+   * all. The checkbox is a genuine gate, never a decorative one.
+   */
+  consent?: boolean;
 };
 
 function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProps) {
@@ -140,17 +159,59 @@ function GhlFormEmbedInner({ formId, formName, height, title }: GhlFormEmbedProp
 export function GhlFormEmbed({
   showLegal = true,
   legalClassName = "mt-3 text-center",
+  consent = false,
   ...props
 }: GhlFormEmbedProps) {
+  const consentId = useId();
+  const [agreed, setAgreed] = useState(false);
+  // With `consent` on, nothing from GHL is mounted — no iframe, no third-party
+  // script — until the visitor has ticked the box.
+  const showEmbed = !consent || agreed;
+
   return (
     <div className="w-full">
-      <Suspense
-        fallback={
-          <div style={{ height: props.height }} aria-hidden="true" />
-        }
-      >
-        <GhlFormEmbedInner {...props} />
-      </Suspense>
+      {consent && (
+        <div className="mb-4 rounded-md border border-border bg-background p-4">
+          <label
+            htmlFor={consentId}
+            title={TCPA_CONSENT_LABEL}
+            className="flex cursor-pointer items-start gap-3"
+          >
+            <input
+              id={consentId}
+              type="checkbox"
+              checked={agreed}
+              onChange={(event) => setAgreed(event.currentTarget.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+            />
+            <span className="text-xs leading-relaxed text-muted-foreground">
+              {TCPA_CONSENT_TEXT}
+              <Link
+                href="/terms#tcpa-consent"
+                className="whitespace-nowrap text-primary underline underline-offset-4 hover:text-primary/80"
+              >
+                {TCPA_CONSENT_LINK_TEXT}
+              </Link>
+            </span>
+          </label>
+          {!agreed && (
+            <p className="mt-2 pl-7 text-[0.7rem] leading-relaxed text-muted-foreground/80">
+              Accept the consent above to load the secure form.
+            </p>
+          )}
+        </div>
+      )}
+
+      {showEmbed && (
+        <Suspense
+          fallback={
+            <div style={{ height: props.height }} aria-hidden="true" />
+          }
+        >
+          <GhlFormEmbedInner {...props} />
+        </Suspense>
+      )}
+
       {showLegal && (
         <LegalLinks
           lead="Submitting this form means you agree to our"

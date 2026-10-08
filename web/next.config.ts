@@ -44,6 +44,21 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "origin-when-cross-origin" },
         ],
       },
+      // HTML must never be served from a stale cache. Left alone, Next's own
+      // prerender header (`s-maxage=31536000`) lets any intermediary keep one
+      // snapshot for a year with no revalidation path — which is how a post-
+      // deploy change keeps being served to Bing/Googlebot long after it
+      // shipped. Hashed `_next/static` bundles are exempt so they stay
+      // immutable (see the rule below and public/_headers).
+      {
+        source: "/((?!_next/static|_next/image).*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
       // Optimized images had no cache lifetime at all (`must-revalidate`), so
       // every repeat visit re-downloaded them. Source files under public/images
       // are immutable-ish content, so a year + revalidate is safe.

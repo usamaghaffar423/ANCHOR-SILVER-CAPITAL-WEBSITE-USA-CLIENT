@@ -137,9 +137,14 @@ export const rootSchemaGraph = {
   "@graph": [financialServiceNode, financialProductNode],
 };
 
-/** Social card image, shared by the root metadata and every route's pageMeta. */
-export const OG_IMAGE =
-  "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bb0d26bede5054ac2c25a7dd6db0cf3b/id-preview-a8032d31--d12d1c21-bb52-4208-81f4-e081d110f3a3.lovable.app-1786907128021.png";
+/**
+ * Social card image, shared by the root metadata and every route's pageMeta.
+ *
+ * Hosted on our own origin (public/images/og-default.png, 1200×630) so link
+ * unfurlers never depend on a third-party preview bucket, and so the asset is
+ * covered by the same `_headers` rules as the rest of the site.
+ */
+export const OG_IMAGE = `${SITE.origin}/images/og-default.png`;
 
 type OgType = "website" | "article";
 
