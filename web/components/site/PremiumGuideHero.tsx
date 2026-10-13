@@ -31,9 +31,10 @@ const GuideLeadModal = dynamic(
  * under the 108px header, so `min-h-dvh` still puts its bottom edge at or below
  * the fold whether or not the dismissible TopBar is open).
  *
- * Mobile/tablet: the hero holds the copy block only, so the whole hero is
- * visible without scrolling — the lead card sits in its own section directly
- * below. lg and up: the card returns to the right-hand column.
+ * Mobile/tablet: the hero holds the copy block plus a compact handbook thumb
+ * beside the primary CTA — book, offer, and headline all ship inside the
+ * one-screen hero, with nothing pushed below the fold. lg and up: two columns,
+ * copy left and the full lead card right.
  *
  * Framer-motion is not in this project — hover animations use Tailwind
  * group-hover + CSS perspective transforms instead.
@@ -54,8 +55,8 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
 
   return (
     <>
-      <section className="hero-surface relative flex min-h-dvh -mt-[72px] flex-col justify-center px-5 pb-10 pt-[96px] text-silver md:pb-20 md:pt-[140px]">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
+      <section className="hero-surface relative flex min-h-dvh -mt-[72px] flex-col justify-center px-5 pb-8 pt-[96px] text-silver md:pb-14 md:pt-[120px] lg:pb-20 lg:pt-[140px]">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
           {/* ─── Left Column: Copy ─── */}
           <div className="min-w-0 order-1">
             <p className="eyebrow text-xs text-brass-light sm:text-sm">
@@ -68,7 +69,44 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
               years. Start with the free investor guide.
             </p>
             <HeroDisclaimer today={today} />
-            <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4 md:mt-6">
+
+            {/* Mobile/tablet: handbook thumb beside the CTA, so the book lives
+                inside the one-screen hero instead of below the fold. */}
+            <div className="mt-4 flex items-center gap-4 md:mt-5 lg:hidden">
+              <div className="relative aspect-[4/5] w-[104px] shrink-0 overflow-hidden rounded-lg border border-white/15 shadow-xl sm:w-[136px]">
+                <Image
+                  src="/images/hero-book-preview.jpeg"
+                  alt="The Silver IRA Handbook — 2026 Edition"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 104px, 136px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+                <button
+                  onClick={open}
+                  onPointerEnter={arm}
+                  onFocus={arm}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-5 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
+                >
+                  Get the free Silver guide
+                </button>
+                <a
+                  href="tel:+18668187243"
+                  className="text-center text-sm text-silver underline decoration-1 underline-offset-4 transition-colors hover:text-white sm:text-left"
+                >
+                  or talk to a specialist →
+                </a>
+                <p className="flex items-center gap-1.5 text-[0.7rem] leading-relaxed text-silver-deep">
+                  <Lock className="h-3 w-3 shrink-0" aria-hidden="true" />
+                  No cost, no obligation · Mailed or emailed
+                </p>
+              </div>
+            </div>
+
+            {/* Desktop CTA row (lg and up) */}
+            <div className="mt-6 hidden w-full flex-row items-center gap-4 sm:w-auto lg:flex">
               <button
                 onClick={open}
                 onPointerEnter={arm}
@@ -86,7 +124,7 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
             </div>
 
             {/* Trust badges — bottom of text block (custodian + depository only) */}
-            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep md:mt-7">
+            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep md:mt-6 lg:mt-7">
               {["AET", "IDS of Delaware"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">✦</span>
@@ -100,13 +138,6 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
           <div className="mx-auto w-full min-w-0 max-w-md order-2 hidden lg:mx-0 lg:block lg:max-w-none lg:pl-2">
             <GuideCard onSelect={open} onArm={arm} />
           </div>
-        </div>
-      </section>
-
-      {/* Lead card below the fold on mobile/tablet, so the hero stays one screen */}
-      <section className="bg-hero-to px-5 pb-14 pt-10 lg:hidden">
-        <div className="mx-auto w-full max-w-md">
-          <GuideCard onSelect={open} onArm={arm} />
         </div>
       </section>
 
@@ -127,15 +158,14 @@ function GuideCard({ onSelect, onArm }: { onSelect: () => void; onArm: () => voi
           FREE
         </span>
 
-        {/* 3D Book mockup — real image, covers full area. `priority` + `sizes`
-            keep the mobile card at one 400px file instead of the 1600px source,
-            and make it the preloaded candidate the LCP element actually uses. */}
+        {/* 3D Book mockup — real image, covers full area. The card only ships
+            at lg+, so one 50vw candidate is all the preload needs. */}
         <Image
           src="/images/hero-book-preview.jpeg"
           alt="The Silver IRA Handbook — 2026 Edition"
           fill
           priority
-          sizes="(max-width: 1024px) calc(100vw - 40px), 50vw"
+          sizes="50vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>

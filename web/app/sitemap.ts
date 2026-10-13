@@ -26,6 +26,7 @@ const DIRECTIVE: Record<string, { changeFrequency: MetadataRoute.Sitemap[number]
   "/guide-success": { changeFrequency: "monthly", priority: 0.3 },
   "/terms": { changeFrequency: "monthly", priority: 0.4 },
   "/privacy": { changeFrequency: "monthly", priority: 0.4 },
+  "/sms-consent": { changeFrequency: "yearly", priority: 0.3 },
 };
 
 const FALLBACK = { changeFrequency: "monthly" as const, priority: 0.7 };

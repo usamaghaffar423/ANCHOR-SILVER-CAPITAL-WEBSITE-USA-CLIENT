@@ -56,6 +56,7 @@ export const PAGES = [
   "/contact",
   "/privacy",
   "/terms",
+  "/sms-consent",
   "/disclaimer",
   "/riskdisclosure",
   "/guide-success",
