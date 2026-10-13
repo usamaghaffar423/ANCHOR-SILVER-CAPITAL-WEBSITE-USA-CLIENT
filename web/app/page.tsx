@@ -178,7 +178,7 @@ function Avatar({ name }: { name: string }) {
 export default function Home() {
   return (
     <>
-      <PremiumGuideHero today={new Date().toISOString()} />
+      <PremiumGuideHero />
       <LazyGuidePopup />
 
       <Section className="md:py-24">

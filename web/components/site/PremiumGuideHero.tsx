@@ -5,7 +5,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Lock } from "lucide-react";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
-import { HeroDisclaimer } from "@/components/site/HeroDisclaimer";
 
 // Code-split out of the initial bundle: the modal renders nothing until it is
 // opened, so pulling it behind an intent signal (hover/focus/tap on a CTA)
@@ -38,11 +37,8 @@ const GuideLeadModal = dynamic(
  *
  * Framer-motion is not in this project — hover animations use Tailwind
  * group-hover + CSS perspective transforms instead.
- *
- * `today` is rendered on the server (see app/page.tsx) so the disclaimer date
- * is present in the shipped HTML instead of popping in after hydration.
  */
-export function PremiumGuideHero({ today }: { today?: string | null }) {
+export function PremiumGuideHero() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalLoaded, setModalLoaded] = useState(false);
   // Warm the chunk on first intent (hover / focus / tap) so the dialog is
@@ -64,11 +60,11 @@ export function PremiumGuideHero({ today }: { today?: string | null }) {
             </p>
             <HeroHeadline />
             <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
-              Own physical silver in your retirement account or outright. Six consecutive years of
-              supply shortfall, according to the Silver Institute. Plan on holding at least five
-              years. Start with the free investor guide.
+              Own physical silver in your IRA or cash account—supported by six consecutive years of
+              global supply shortfalls (Silver Institute). Hold for at least five years and start
+              today with our free investor guide. (Spot data: gold-api.com, Oct 13, 2026. Past
+              performance does not guarantee future results; silver is volatile).
             </p>
-            <HeroDisclaimer today={today} />
 
             {/* Mobile/tablet: handbook thumb beside the CTA, so the book lives
                 inside the one-screen hero instead of below the fold. */}
