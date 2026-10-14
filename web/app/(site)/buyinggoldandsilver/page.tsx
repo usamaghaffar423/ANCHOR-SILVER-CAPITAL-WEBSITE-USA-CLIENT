@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
+import { LeadForm } from "@/components/forms/LeadForm";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, H2, Card, buttonStyles } from "@/components/site/ui";
 import { SITE, pageMeta } from "@/lib/site";
@@ -198,11 +198,7 @@ export default function BuyingGoldAndSilver() {
           the metals behind the market — no cost, no obligation.
         </p>
         <div className="mt-10 w-full max-w-3xl">
-          <GhlFormEmbed
-            formId="3SC4Eeds4Q91kqrFEijR"
-            formName="Critical Minerals Report Form"
-            height={822}
-          />
+          <LeadForm submitLabel="Send Me the Report" />
         </div>
       </Section>
 

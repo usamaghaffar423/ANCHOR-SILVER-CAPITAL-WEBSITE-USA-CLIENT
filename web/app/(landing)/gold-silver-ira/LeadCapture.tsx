@@ -1,21 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-/* DEV: see Landing_Page_Dev_Instructions.md §2. Set FORM_ENDPOINT to the live
-   submit URL (the GoHighLevel webhook or inbound endpoint Ron provides).
-   While it is empty this page runs in preview mode and does not send anything. */
-const FORM_ENDPOINT = "";
-
-function track(name: string) {
-  try {
-    const w = window as unknown as { uetq?: unknown[] };
-    w.uetq = w.uetq || [];
-    w.uetq.push("event", name, {});
-  } catch {
-    /* noop */
-  }
-}
+import { LEAD_WEBHOOK_URL, fetchVisitorIp, trackUet } from "@/lib/lead";
 
 export function LeadCapture() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,8 +37,8 @@ export function LeadCapture() {
     const onClick = (e: MouseEvent) => {
       const t = e.target as Element | null;
       if (!t) return;
-      if (t.closest("[data-call]")) track("phone_click");
-      if (t.closest("[data-download]")) track("handbook_download");
+      if (t.closest("[data-call]")) trackUet("phone_click");
+      if (t.closest("[data-download]")) trackUet("handbook_download");
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
@@ -120,28 +106,27 @@ export function LeadCapture() {
     data.phone = "+1" + digits;
 
     function done() {
-      track("lead");
+      trackUet("lead");
       setSent(true);
     }
 
-    if (!FORM_ENDPOINT) {
-      done();
-      return;
-    }
     setSending(true);
-    fetch(FORM_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error("bad");
-        done();
+    void (async () => {
+      data.ip = await fetchVisitorIp();
+      fetch(LEAD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       })
-      .catch(() => {
-        setSending(false);
-        setErr("Something went wrong. Please try again or call (866) 818-7243.");
-      });
+        .then((r) => {
+          if (!r.ok) throw new Error("bad");
+          done();
+        })
+        .catch(() => {
+          setSending(false);
+          setErr("Something went wrong. Please try again or call (866) 818-7243.");
+        });
+    })();
   }
 
   return (

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
-import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
+import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Card, H2, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -69,11 +69,7 @@ export default function Contact() {
             </div>
           </div>
           <div className="rounded-md bg-card p-6 shadow-[var(--shadow-card)]">
-            <GhlFormEmbed
-              formId="Mdko5iPIZ5nyZmvORTsp"
-              formName="Silver IRA Onboarding Form"
-              height={824}
-            />
+            <LeadForm />
           </div>
         </div>
       </Section>

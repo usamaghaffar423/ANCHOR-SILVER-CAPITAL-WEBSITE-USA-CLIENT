@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
-import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
+import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
@@ -175,14 +175,9 @@ export default function SilverIra() {
             <p className="mt-3 text-sm text-primary-foreground/85">{SITE.hours}</p>
           </div>
 
-          {/* GHL-hosted onboarding form — white card matches the old inline form */}
+          {/* Native lead form — white card matches the old inline form */}
           <div className="w-full rounded-md border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-            <GhlFormEmbed
-              formId="Mdko5iPIZ5nyZmvORTsp"
-              formName="Silver IRA Onboarding Form"
-              height={824}
-              title="Silver IRA Onboarding Form"
-            />
+            <LeadForm />
           </div>
         </div>
       </Section>

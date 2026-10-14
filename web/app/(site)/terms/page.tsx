@@ -60,62 +60,20 @@ export default function Terms() {
           </p>
 
           <h3 id="tcpa-consent" className="scroll-mt-28">
-            5. Text Messaging, Telephone Calls, and TCPA Consent
+            5. Telephone Calls, Text Messages, and Email
           </h3>
           <p>
-            <strong>Program name:</strong> Anchor Silver Capital SMS Program, operated by Anchor
-            Silver Capital LLC, 475 Washington Blvd, Marina del Rey, CA 90292.
+            By submitting our contact form, you agree that Anchor Silver Capital LLC, 475
+            Washington Blvd, Marina del Rey, CA 90292, may call, text, or email you about your
+            inquiry, such as scheduling and confirming calls, follow-ups, and materials you
+            requested. We do not use prerecorded or artificial voice calls for these contacts.
+            Message frequency varies. Message and data rates may apply. Reply STOP to opt out of
+            texts, or call (866) 818-7243 or email info@anchorsilvercapital.com to opt out of
+            calls or email. Carriers are not liable for delayed or undelivered messages.
           </p>
           <p>
-            <strong>How you opt in:</strong>
-          </p>
-          <p>
-            (1) Website form: by checking the separate, optional text-message box on our contact
-            form and submitting it, you provide your express written consent to receive recurring
-            automated marketing and promotional text messages, and appointment and service
-            messages, from Anchor Silver Capital LLC at the mobile number you provide, including
-            messages sent using an automated system.
-          </p>
-          <p>
-            (2) By phone: during a call with a representative, you may agree verbally. We record
-            your answer with a date and time before any text is sent.
-          </p>
-          <p>
-            Consent is not a condition of any purchase, and not agreeing does not affect your
-            inquiry.
-          </p>
-          <p>
-            <strong>Message types:</strong> educational content about precious metals and IRA
-            rollovers, offers and promotions, appointment confirmations, scheduling follow-ups, and
-            materials you requested.
-          </p>
-          <p>
-            <strong>Message frequency:</strong> up to 6 marketing messages per month, plus
-            appointment and service messages.
-          </p>
-          <p>Message and data rates may apply.</p>
-          <p>
-            <strong>Opt-out:</strong> Reply <strong>STOP</strong> at any time to cancel. Reply{" "}
-            <strong>HELP</strong> for help. You may also opt out by calling (866) 818-7243 or
-            emailing info@anchorsilvercapital.com. Carriers are not liable for delayed or
-            undelivered messages.
-          </p>
-          <p>
-            <strong>Telephone calls and email:</strong> by checking the contact box on our form,
-            you agree that Anchor Silver Capital LLC may call or email you about your inquiry,
-            including by automated dialing systems. You may revoke this consent at any time by
-            contacting us.
-          </p>
-          <p>
-            <strong>Inquiries submitted through our landing pages:</strong> by submitting an
-            inquiry, you agree that Anchor Silver Capital LLC may call, text, or email you about
-            your inquiry. Message and data rates may apply. Reply <strong>STOP</strong> at any time
-            to opt out of texts. We do not sell or share your contact information for marketing
-            purposes.
-          </p>
-          <p>
-            We do not share, sell, rent, or lease mobile numbers or SMS consent data to third
-            parties for marketing purposes.
+            We do not share, sell, rent, or lease mobile numbers or consent data to third parties
+            for marketing purposes.
           </p>
 
           <h3>6. Intellectual Property</h3>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Anchor, Lock } from "lucide-react";
@@ -6,7 +6,7 @@ import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
 import { LazyGuidePopup } from "@/components/site/LazyGuidePopup";
 import { FeatureRow } from "@/components/site/FeatureRow";
-import { InlineGhlForm } from "@/components/site/InlineGhlForm";
+import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
 import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
 import { Reveal } from "@/components/site/Reveal";
@@ -75,7 +75,7 @@ const caseRows = [
   {
     n: "01",
     heading: "It Holds Its Ground",
-    body: "No counterparty. No printing press. Silver is what it is, whatever the dollar does. An ounce is an ounce — it doesn't need anyone's promise to hold its value.",
+    body: "No counterparty. No printing press. Silver is what it is, whatever the dollar does. An ounce is an ounce â€” it doesn't need anyone's promise to hold its value.",
     image: "/images/silver-vs-currency.jpg",
     alt: "A solid silver bar beside worn old banknotes on a dark green surface.",
     reverse: false,
@@ -83,7 +83,7 @@ const caseRows = [
   {
     n: "02",
     heading: "Supply Can't Keep Up",
-    body: "Six straight years of global mine deficit while industrial demand keeps climbing — solar panels, EVs, AI infrastructure. The shortfall is being covered by drawing down finite stockpiles.",
+    body: "Six straight years of global mine deficit while industrial demand keeps climbing â€” solar panels, EVs, AI infrastructure. The shortfall is being covered by drawing down finite stockpiles.",
     image: "/images/silver-supply-deficit.jpg",
     alt: "Dimly lit vault shelves of silver bars, some shelves partly emptied.",
     reverse: true,
@@ -104,7 +104,7 @@ const trustCells = [
 ];
 
 const compareRows: [string, string, string][] = [
-  ["Total fees", "35%–65%", "15%"],
+  ["Total fees", "35%â€“65%", "15%"],
   ["Pricing", "Hidden premiums", "All-in quote upfront"],
   ["Approach", "High-pressure", "Education first"],
   ["Focus", "Gold-first", "Silver-first"],
@@ -114,7 +114,7 @@ const compareRows: [string, string, string][] = [
 const steps = [
   {
     title: "Talk to a Specialist",
-    body: "A 10-minute call, no pressure — we tell you honestly whether silver fits.",
+    body: "A 10-minute call, no pressure â€” we tell you honestly whether silver fits.",
     Icon: PhoneIcon,
   },
   {
@@ -138,7 +138,7 @@ const testimonials = [
   },
   {
     quote:
-      "Direct, no-nonsense, and they answered every question honestly — including the ones where the answer wasn't what I expected.",
+      "Direct, no-nonsense, and they answered every question honestly â€” including the ones where the answer wasn't what I expected.",
     name: "Patricia L.",
     meta: "Retired teacher, Austin TX",
   },
@@ -152,7 +152,7 @@ const testimonials = [
 function Stars({ className = "text-primary" }: { className?: string }) {
   return (
     <span aria-label="Five out of five stars" className={`text-sm tracking-widest ${className}`}>
-      ★★★★★
+      â˜…â˜…â˜…â˜…â˜…
     </span>
   );
 }
@@ -204,24 +204,24 @@ export default function Home() {
               <h3 className="mt-5 text-2xl">Silver IRA Rollover</h3>
               <ul className="mt-4 space-y-2 text-base text-muted-foreground">
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> 401k, IRA, or annuity rollover
+                  <span className="text-primary">â€”</span> 401k, IRA, or annuity rollover
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Penalty-free, tax-free
+                  <span className="text-primary">â€”</span> Penalty-free, tax-free
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> $25,000 minimum
+                  <span className="text-primary">â€”</span> $25,000 minimum
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Any age for IRA, annuity, or former
-                  employer 401k; current employer 401k at 59½+
+                  <span className="text-primary">â€”</span> Any age for IRA, annuity, or former
+                  employer 401k; current employer 401k at 59Â½+
                 </li>
               </ul>
               <Link
                 href="/silver-ira"
                 className="mt-6 inline-block font-semibold text-primary underline underline-offset-4"
               >
-                Learn About Silver IRA →
+                Learn About Silver IRA â†’
               </Link>
             </Card>
           </Reveal>
@@ -245,23 +245,23 @@ export default function Home() {
               <h3 className="mt-5 text-2xl">Physical Silver Delivered</h3>
               <ul className="mt-4 space-y-2 text-base text-muted-foreground">
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Rounds, bars, and coins
+                  <span className="text-primary">â€”</span> Rounds, bars, and coins
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Insured shipping to your door
+                  <span className="text-primary">â€”</span> Insured shipping to your door
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Or allocated storage at IDS of Delaware
+                  <span className="text-primary">â€”</span> Or allocated storage at IDS of Delaware
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> $5,000 minimum
+                  <span className="text-primary">â€”</span> $5,000 minimum
                 </li>
               </ul>
               <Link
                 href="/physical-silver"
                 className="mt-6 inline-block font-semibold text-primary underline underline-offset-4"
               >
-                Buy Physical Silver →
+                Buy Physical Silver â†’
               </Link>
             </Card>
           </Reveal>
@@ -304,7 +304,7 @@ export default function Home() {
               Insured. Viewable online.
             </h2>
             <p className="mt-4 max-w-[42ch] text-base leading-relaxed text-silver sm:text-[1.08rem]">
-              Your silver is stored at IDS of Delaware — allocated to you, not pooled. You can
+              Your silver is stored at IDS of Delaware â€” allocated to you, not pooled. You can
               verify your holdings any time.
             </p>
             <Link
@@ -372,7 +372,7 @@ export default function Home() {
             <Card key={t.name} className="flex h-full flex-col">
               <Stars />
               <blockquote className="mt-4 font-fraunces text-base italic leading-relaxed text-foreground">
-                “{t.quote}”
+                â€œ{t.quote}â€
               </blockquote>
               <div className="mt-auto flex items-center gap-3 pt-5">
                 <Avatar name={t.name} />
@@ -410,7 +410,7 @@ export default function Home() {
 
       <Section tone="muted" className="md:py-24">
         <p className="eyebrow text-brass-deep">A different kind of company</p>
-        <H2 className="mt-3">Most dealers take 35–65%. We don&apos;t.</H2>
+        <H2 className="mt-3">Most dealers take 35â€“65%. We don&apos;t.</H2>
         <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-muted-foreground">
           The industry charges a fortune in fees buried in the premium. We show you exactly what
           you pay before you commit to anything.
@@ -418,12 +418,12 @@ export default function Home() {
         <div className="mt-10 grid items-start gap-10 lg:grid-cols-2">
           <div className="space-y-4 text-base leading-relaxed text-foreground">
             <p>
-              If you invest $100,000 with most silver dealers, you&apos;ll receive $35,000–$65,000
+              If you invest $100,000 with most silver dealers, you&apos;ll receive $35,000â€“$65,000
               worth of actual metal. The rest disappears in fees, commissions, and marked-up
-              premiums — often never disclosed upfront.
+              premiums â€” often never disclosed upfront.
             </p>
             <p className="border-l-[3px] border-brass py-1 pl-[18px] font-fraunces text-[1.4rem] leading-snug text-primary">
-              Our fee is capped at 15% — all in, upfront, in writing before you commit.
+              Our fee is capped at 15% â€” all in, upfront, in writing before you commit.
             </p>
             <p>
               Your metal only needs to appreciate 15% for you to break even. That&apos;s the
@@ -487,7 +487,7 @@ export default function Home() {
             </p>
             <p className="mt-2 text-sm text-silver">{SITE.hours}</p>
           </div>
-          <InlineGhlForm />
+          <InlineLeadForm />
         </div>
       </section>
     </>

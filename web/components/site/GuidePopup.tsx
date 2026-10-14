@@ -3,19 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { GhlFormEmbed } from "@/components/site/GhlFormEmbed";
-import { LegalLinks } from "@/components/site/LegalLinks";
+import { LeadForm } from "@/components/forms/LeadForm";
 
 const STORAGE_KEY = "asc_guide_popup_seen";
 
-const FORM_ID = "alxqzSiTiGE5BWiIkyaV";
-const FORM_NAME = "Silver IRA Handbook Request Form";
-
 /**
  * Scroll-triggered popup on the home page — fires once per browser after the
- * visitor scrolls past the hero. The body is the same GHL-hosted Silver IRA
- * Handbook embed the hero CTA opens (GuideLeadModal), so every lead lands in
- * GHL directly; only the branded banner and the scroll trigger stay ours.
+ * visitor scrolls past the hero. The body is the native Silver IRA Handbook
+ * lead form (same as GuideLeadModal), posting straight to the GHL inbound
+ * webhook; only the branded banner and the scroll trigger are ours.
  */
 export function GuidePopup() {
   const [open, setOpen] = useState(false);
@@ -68,9 +64,8 @@ export function GuidePopup() {
       }}
     >
       {/*
-        Same problem as GuideLeadModal: the form is taller than a 92vh sheet, so
-        keep the banner and the Privacy/Terms line pinned and let only the form
-        itself scroll.
+        Same structure as GuideLeadModal: banner on top, native lead form
+        (with the compliance notice inside it) in the scrollable body.
       */}
       <DialogContent className="flex max-h-[92vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-md">
         {/* Top banner */}
@@ -93,23 +88,9 @@ export function GuidePopup() {
           </p>
         </div>
 
-        {/* Scrollable region — GHL-hosted handbook form (same embed as GuideLeadModal) */}
+        {/* Scrollable region — native handbook form posting to the GHL webhook */}
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6">
-          <GhlFormEmbed
-            formId={FORM_ID}
-            formName={FORM_NAME}
-            height={936}
-            title={FORM_NAME}
-            showLegal={false}
-          />
-        </div>
-
-        {/* Always-visible legal foot */}
-        <div className="shrink-0 border-t border-border bg-background px-6 py-3">
-          <LegalLinks
-            lead="Submitting this form means you agree to our"
-            className="text-center"
-          />
+          <LeadForm submitLabel="Send Me the Handbook" />
         </div>
       </DialogContent>
     </Dialog>

@@ -6,6 +6,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
+import { UetEvents } from "@/components/site/UetEvents";
 import { SITE, OG_IMAGE, rootSchemaGraph } from "@/lib/site";
 
 /**
@@ -121,6 +122,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <CookieBanner />
         <ScrollToTop />
         <Analytics />
+        <UetEvents />
       </body>
     </html>
   );

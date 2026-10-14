@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion, type QA } from "@/components/site/Accordion";
 import { JsonLd } from "@/components/site/JsonLd";
-import { InlineGhlForm } from "@/components/site/InlineGhlForm";
+import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { H2, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
@@ -24,7 +24,7 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "Do I qualify for a Silver IRA?",
-        a: "A former employer 401k, traditional or Roth IRA, or annuity of $25,000 or more qualifies at any age. A current employer 401k generally requires age 59½ or older for an in-service distribution.",
+        a: "A former employer 401k, traditional or Roth IRA, or annuity of $25,000 or more qualifies at any age. A current employer 401k generally requires age 59Â½ or older for an in-service distribution.",
       },
       {
         q: "How long does the rollover process take?",
@@ -53,11 +53,11 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "Can I store my silver at a depository instead of at home?",
-        a: "Yes. We can arrange allocated storage at IDS of Delaware — your specific bars or coins held in your name, fully insured, with online access.",
+        a: "Yes. We can arrange allocated storage at IDS of Delaware â€” your specific bars or coins held in your name, fully insured, with online access.",
       },
       {
         q: "What is a premium over spot?",
-        a: "Spot is the price of raw metal. The premium covers minting, distribution, and dealer margin. We quote the all-in price — metal, premium, and shipping — before you commit.",
+        a: "Spot is the price of raw metal. The premium covers minting, distribution, and dealer margin. We quote the all-in price â€” metal, premium, and shipping â€” before you commit.",
       },
     ],
   },
@@ -151,7 +151,7 @@ export default function Faq() {
       <Section tone="sage">
         <H2 className="text-primary-foreground">Still Have a Question?</H2>
         <div className="mt-8">
-          <InlineGhlForm
+          <InlineLeadForm
             subheading="Leave your details and a silver specialist will get back to you."
           />
         </div>
