@@ -95,6 +95,13 @@ export default function Privacy() {
             contacting us.
           </p>
           <p>
+            <strong>Inquiries submitted through our landing pages:</strong> by submitting an
+            inquiry, you agree that Anchor Silver Capital LLC may call, text, or email you about
+            your inquiry. Message and data rates may apply. Reply <strong>STOP</strong> at any time
+            to opt out of texts. We do not sell or share your contact information for marketing
+            purposes.
+          </p>
+          <p>
             We do not share, sell, rent, or lease mobile numbers or SMS consent data to third
             parties for marketing purposes.
           </p>
