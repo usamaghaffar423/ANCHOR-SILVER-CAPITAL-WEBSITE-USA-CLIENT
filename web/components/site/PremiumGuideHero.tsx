@@ -51,40 +51,46 @@ export function PremiumGuideHero() {
 
   return (
     <>
-      <section className="hero-surface relative flex min-h-dvh -mt-[72px] flex-col justify-center px-5 pb-8 pt-[96px] text-silver md:pb-14 md:pt-[120px] lg:pb-20 lg:pt-[140px]">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
-          {/* ─── Left Column: Copy ─── */}
-          <div className="min-w-0 order-1">
-            <p className="eyebrow text-xs text-brass-light sm:text-sm">
-              Free 2026 Edition
-            </p>
-            <HeroHeadline />
-            <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
-              Own physical silver in your IRA or cash account—supported by six consecutive years of
-              global supply shortfalls (Silver Institute). Hold for at least five years and start
-              today with our free investor guide. (Spot data: gold-api.com, Oct 13, 2026. Past
-              performance does not guarantee future results; silver is volatile).
-            </p>
+      <section className="hero-surface relative flex min-h-dvh -mt-[72px] flex-col justify-center px-5 pb-10 pt-[96px] text-silver md:pb-14 md:pt-[112px] lg:pb-20 lg:pt-[140px]">
+        <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center lg:grid lg:grid-cols-2 lg:items-center lg:gap-14">
+          {/* Left column — on mobile it fills the viewport height and
+              distributes three groups (copy / handbook+CTA / trust) from top
+              to bottom, so the one-screen hero reads as a composed layout
+              instead of a centered clump with dead space above and below.
+              On lg it collapses back to a plain block column. */}
+          <div className="order-1 flex w-full min-w-0 flex-1 flex-col justify-between lg:block">
+            {/* ─── Copy group (top) ─── */}
+            <div>
+              <p className="eyebrow text-xs text-brass-light sm:text-sm">
+                Free 2026 Edition
+              </p>
+              <HeroHeadline />
+              <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
+                Own physical silver in your IRA or cash account—supported by six consecutive years
+                of global supply shortfalls (Silver Institute). Hold for at least five years and
+                start today with our free investor guide. (Spot data: gold-api.com, Oct 13, 2026.
+                Past performance does not guarantee future results; silver is volatile).
+              </p>
+            </div>
 
-            {/* Mobile/tablet: handbook thumb beside the CTA, so the book lives
-                inside the one-screen hero instead of below the fold. */}
-            <div className="mt-4 flex items-center gap-4 md:mt-5 lg:hidden">
-              <div className="relative aspect-[4/5] w-[104px] shrink-0 overflow-hidden rounded-lg border border-white/15 shadow-xl sm:w-[136px]">
+            {/* ─── Handbook + CTA group (middle) — mobile/tablet only ─── */}
+            <div className="flex items-center gap-5 lg:hidden">
+              <div className="relative aspect-[4/5] w-[132px] shrink-0 overflow-hidden rounded-lg border border-white/15 shadow-xl sm:w-[156px]">
                 <Image
                   src="/images/hero-book-preview.jpeg"
                   alt="The Silver IRA Handbook — 2026 Edition"
                   fill
                   priority
-                  sizes="(max-width: 640px) 104px, 136px"
+                  sizes="(max-width: 640px) 132px, 156px"
                   className="object-cover"
                 />
               </div>
-              <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+              <div className="flex min-w-0 flex-1 flex-col gap-3">
                 <button
                   onClick={open}
                   onPointerEnter={arm}
                   onFocus={arm}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-5 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-5 py-4 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
                 >
                   Get the free Silver guide
                 </button>
@@ -119,8 +125,8 @@ export function PremiumGuideHero() {
               </a>
             </div>
 
-            {/* Trust badges — bottom of text block (custodian + depository only) */}
-            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep md:mt-6 lg:mt-7">
+            {/* ─── Trust group (bottom anchor) — custodian + depository ─── */}
+            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[0.74rem] text-silver-deep lg:mt-7">
               {["AET", "IDS of Delaware"].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">
                   <span aria-hidden="true" className="text-brass">✦</span>
