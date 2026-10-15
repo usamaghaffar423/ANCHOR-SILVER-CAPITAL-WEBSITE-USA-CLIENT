@@ -113,12 +113,14 @@ export function LeadCapture() {
     setSending(true);
     void (async () => {
       data.ip = await fetchVisitorIp();
+      console.log("Submitting payload:", data);
       fetch(LEAD_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
         .then(async (r) => {
+          console.log("Response status:", r.status);
           console.info(`[lead-capture] webhook POST ${r.status} ${r.statusText}`);
           if (!r.ok) {
             const detail = await r.text().catch(() => "");

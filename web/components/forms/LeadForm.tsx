@@ -101,6 +101,7 @@ export function LeadForm({
         ...readUtmFields(),
         notice_version: NOTICE_VERSION,
       };
+      console.log("Submitting payload:", payload);
       setSending(true);
       try {
         const r = await fetch(LEAD_WEBHOOK_URL, {
@@ -108,6 +109,7 @@ export function LeadForm({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        console.log("Response status:", r.status);
         console.info(`[lead-form] webhook POST ${r.status} ${r.statusText}`);
         if (!r.ok) {
           const detail = await r.text().catch(() => "");
