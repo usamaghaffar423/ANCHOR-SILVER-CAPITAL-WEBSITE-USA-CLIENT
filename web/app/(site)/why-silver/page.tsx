@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -9,7 +9,7 @@ import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Why Invest in Silver â€” Supply Deficit & Real Money",
+  title: "Why Invest in Silver — Supply Deficit & Real Money",
   description:
     "Why silver: five thousand years as real money, six straight years of supply deficit, industrial demand, currency debasement, and the gold to silver ratio explained.",
   path: "/why-silver",
@@ -23,7 +23,7 @@ export default function WhySilver() {
       <PageHero
         eyebrow="Why Silver"
         title="Why Silver? Because It Doesn't Depend on Anyone's Promise."
-        subtitle="Every currency in history that wasn't backed by something real has eventually lost most of its value. Silver has been real money for five thousand years â€” and it's more essential to the modern world than ever."
+        subtitle="Every currency in history that wasn't backed by something real has eventually lost most of its value. Silver has been real money for five thousand years — and it's more essential to the modern world than ever."
       />
 
       <Section>
@@ -35,7 +35,7 @@ export default function WhySilver() {
           <Prose className="mt-5">
             <p>
               Silver is the most electrically conductive element on earth, the best thermal conductor
-              of any metal, and the most reflective. These aren't marketing claims â€” they're physical
+              of any metal, and the most reflective. These aren't marketing claims — they're physical
               properties that make silver irreplaceable in the modern economy, from solar panels to
               electronics to medical devices. It has been money for longer than any currency alive
               today, and it doesn't require anyone's promise to hold its value.
@@ -56,9 +56,9 @@ export default function WhySilver() {
           </p>
           <Prose className="mt-5">
             <p>
-              Global silver mines produce roughly 820â€“850 million ounces annually. Total demand has
+              Global silver mines produce roughly 820–850 million ounces annually. Total demand has
               consistently outpaced that. The difference comes from drawing down above-ground
-              stockpiles â€” stockpiles that are finite. When they run low, price is the only mechanism
+              stockpiles — stockpiles that are finite. When they run low, price is the only mechanism
               left to ration supply.
             </p>
             <p>
@@ -99,7 +99,7 @@ export default function WhySilver() {
             <p>
               The gold-to-silver ratio measures how many ounces of silver it takes to buy one ounce of
               gold. The long-run historical average sits around 60:1. When the ratio runs meaningfully
-              above that, silver has historically been cheap relative to gold â€” and has closed that
+              above that, silver has historically been cheap relative to gold — and has closed that
               gap dramatically when it corrects.
             </p>
           </Prose>
@@ -126,7 +126,7 @@ export default function WhySilver() {
           href="/silver-supply"
           className="mt-5 inline-block text-sm font-semibold text-brass-light underline underline-offset-4"
         >
-          See the full supply picture â†’
+          See the full supply picture →
         </Link>
       </Banner>
 
@@ -134,7 +134,7 @@ export default function WhySilver() {
         <H2 className="text-primary-foreground">Ready to Put Real Weight Behind Your Savings?</H2>
         <div className="mt-8">
           <InlineLeadForm
-            subheading="Leave your details and a silver specialist will call â€” no cost, no obligation."
+            subheading="Leave your details and a silver specialist will call — no cost, no obligation."
           />
         </div>
       </Section>

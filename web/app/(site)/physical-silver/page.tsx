@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -17,7 +17,7 @@ const junkSilver = "/assets/junk-silver.jpg";
 const silverRounds = "/assets/silver-rounds.jpg";
 
 export const metadata: Metadata = pageMeta({
-  title: "Buy Physical Silver â€” Bars, Rounds & Coins",
+  title: "Buy Physical Silver — Bars, Rounds & Coins",
   description:
     "Buy physical silver rounds, bars, and coins shipped fully insured to your door or stored at IDS of Delaware. Minimum order $5,000. All-in pricing before you commit.",
   path: "/physical-silver",
@@ -27,49 +27,49 @@ export const metadata: Metadata = pageMeta({
 const products = [
   {
     name: "American Silver Eagles",
-    detail: "1 oz Â· .999 fine Â· IRA eligible",
+    detail: "1 oz · .999 fine · IRA eligible",
     img: silverEagle,
     alt: "Polished one ounce silver bullion coin resting on neutral linen",
   },
   {
     name: "Morgan Silver Dollars",
-    detail: "Pre-1921 US classic Â· 90% silver",
+    detail: "Pre-1921 US classic · 90% silver",
     img: morganDollar,
     alt: "Stack of aged silver dollar coins on a dark surface",
   },
   {
     name: "Peace Silver Dollars",
-    detail: "1921-1935 US classic Â· 90% silver",
+    detail: "1921-1935 US classic · 90% silver",
     img: peaceDollar,
     alt: "Two silver dollar coins leaning together on grey stone",
   },
   {
     name: "Canadian Maple Leafs",
-    detail: "1 oz Â· .9999 fine Â· IRA eligible",
+    detail: "1 oz · .9999 fine · IRA eligible",
     img: mapleLeaf,
     alt: "Brilliant one ounce silver coin with reeded edge on white background",
   },
   {
     name: "10 oz Silver Bars",
-    detail: ".999 fine Â· approved refiners",
+    detail: ".999 fine · approved refiners",
     img: bar10oz,
     alt: "Three stacked ten ounce poured silver bars with cast texture",
   },
   {
     name: "100 oz Silver Bars",
-    detail: ".999 fine Â· lowest premium per ounce",
+    detail: ".999 fine · lowest premium per ounce",
     img: bar100oz,
     alt: "Large one hundred ounce cast silver bar on a dark background",
   },
   {
     name: "Junk Silver",
-    detail: "Pre-1964 US coins Â· 90% silver",
+    detail: "Pre-1964 US coins · 90% silver",
     img: junkSilver,
     alt: "Scattered pile of worn small silver coins of mixed sizes",
   },
   {
     name: "Generic Silver Rounds",
-    detail: "1 oz Â· .999 fine Â· value pricing",
+    detail: "1 oz · .999 fine · value pricing",
     img: silverRounds,
     alt: "Four polished one ounce silver rounds fanned across a pale surface",
   },
@@ -82,7 +82,7 @@ export default function PhysicalSilver() {
       <PageHero
         eyebrow="Physical Silver"
         title="Real Metal. Delivered to Your Door."
-        subtitle="Skip the paper derivatives and the promises. Own physical silver you can hold â€” insured, delivered, yours."
+        subtitle="Skip the paper derivatives and the promises. Own physical silver you can hold — insured, delivered, yours."
       />
 
       <Banner
@@ -129,7 +129,7 @@ export default function PhysicalSilver() {
             <H2>Every Order, The Way You&apos;d Expect</H2>
             <Prose className="mt-5">
               <p>
-                Rounds and bars ship exactly as pictured â€” brilliant uncirculated, verified
+                Rounds and bars ship exactly as pictured — brilliant uncirculated, verified
                 weight and purity, protective packaging. What you order is what arrives.
               </p>
             </Prose>
@@ -149,8 +149,8 @@ export default function PhysicalSilver() {
         <H2>Understanding Premiums</H2>
         <Prose className="mt-5">
           <p>
-            All silver sells at a premium over spot price. We quote you the all-in price â€” metal
-            plus premium plus shipping â€” before you commit to anything.
+            All silver sells at a premium over spot price. We quote you the all-in price — metal
+            plus premium plus shipping — before you commit to anything.
           </p>
         </Prose>
 
@@ -166,7 +166,7 @@ export default function PhysicalSilver() {
         <Prose className="mt-5">
           <p>
             Prefer not to store silver at home? We can arrange allocated storage at Delaware
-            Depository â€” your specific bars or coins held in your name, fully insured, accessible
+            Depository — your specific bars or coins held in your name, fully insured, accessible
             online.
           </p>
           <p className="font-mono text-sm text-primary">Minimum order: $5,000</p>
@@ -178,8 +178,8 @@ export default function PhysicalSilver() {
           <div>
             <H2>Get a Quote</H2>
             <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-              Tell us roughly what you're considering and a specialist will send an all-in quote â€”
-              metal, premium, and insured shipping â€” with no obligation.
+              Tell us roughly what you're considering and a specialist will send an all-in quote —
+              metal, premium, and insured shipping — with no obligation.
             </p>
           </div>
           <InlineLeadForm />

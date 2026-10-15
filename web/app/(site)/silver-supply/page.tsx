@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -8,7 +8,7 @@ import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver Supply Deficit â€” Six Straight Years",
+  title: "Silver Supply Deficit — Six Straight Years",
   description:
     "The world has mined less silver than it uses for six consecutive years. Why byproduct mining can't respond, what industry consumes, and an honest read of the data.",
   path: "/silver-supply",
@@ -18,15 +18,15 @@ export const metadata: Metadata = pageMeta({
 const sections = [
   {
     h: "The Basic Math",
-    p: "Global silver mines produce approximately 820-850 million ounces per year â€” a number that's been essentially flat for a decade. Total demand has consistently exceeded that. The difference is covered by drawing down above-ground stockpiles built up over previous decades.",
+    p: "Global silver mines produce approximately 820-850 million ounces per year — a number that's been essentially flat for a decade. Total demand has consistently exceeded that. The difference is covered by drawing down above-ground stockpiles built up over previous decades.",
   },
   {
     h: "Why Supply Can't Respond",
-    p: "Roughly 70% of silver is mined as a byproduct of copper, zinc, and lead operations. Silver supply doesn't ramp up when silver prices rise â€” it depends on the economics of other metals entirely. New primary silver mines take 7-15 years to bring online.",
+    p: "Roughly 70% of silver is mined as a byproduct of copper, zinc, and lead operations. Silver supply doesn't ramp up when silver prices rise — it depends on the economics of other metals entirely. New primary silver mines take 7-15 years to bring online.",
   },
   {
     h: "What's Actually Consuming the Silver",
-    p: "Solar panels, electric vehicles, AI data centers, defense electronics, 5G infrastructure. These are not optional purchases â€” they're contracted, scheduled industrial demand that doesn't wait for a better price.",
+    p: "Solar panels, electric vehicles, AI data centers, defense electronics, 5G infrastructure. These are not optional purchases — they're contracted, scheduled industrial demand that doesn't wait for a better price.",
   },
   {
     h: "The Honest Picture",
@@ -40,7 +40,7 @@ export default function SupplyStory() {
       <JsonLd data={breadcrumbSchema("/silver-supply", "The Supply Story")} />
       <PageHero
         eyebrow="The Supply Story"
-        title="Six Years of Supply Deficit â€” and No Clear End in Sight"
+        title="Six Years of Supply Deficit — and No Clear End in Sight"
         subtitle="The world has used more silver than it has mined for six consecutive years. Here's what that actually means."
       />
 
@@ -79,8 +79,8 @@ export default function SupplyStory() {
             <H2>What a Deficit Looks Like Up Close</H2>
             <Prose className="mt-5">
               <p>
-                Every bar here already has a buyer. Above-ground stockpiles â€” not new mine
-                supply â€” are what&apos;s closing the gap, and stockpiles run out.
+                Every bar here already has a buyer. Above-ground stockpiles — not new mine
+                supply — are what&apos;s closing the gap, and stockpiles run out.
               </p>
             </Prose>
           </div>
@@ -94,11 +94,11 @@ export default function SupplyStory() {
           <Link className="underline" href="/silver-ira">
             Silver IRA rollover
           </Link>{" "}
-          or a physical purchase â€” plainly, without a sales pitch.
+          or a physical purchase — plainly, without a sales pitch.
         </p>
         <div className="mt-8">
           <InlineLeadForm
-            subheading="Leave your details and a silver specialist will call â€” plainly, without a sales pitch."
+            subheading="Leave your details and a silver specialist will call — plainly, without a sales pitch."
           />
         </div>
       </Section>

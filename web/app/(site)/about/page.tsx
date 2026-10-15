@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
@@ -26,7 +26,7 @@ const galleryImages = [
 ];
 
 export const metadata: Metadata = pageMeta({
-  title: "About â€” Marina del Rey Silver Dealer",
+  title: "About — Marina del Rey Silver Dealer",
   description:
     "Anchor Silver Capital LLC is a California precious metals dealer and Silver IRA specialist. Our story, our values, our custodian and depository partners.",
   path: "/about",
@@ -60,7 +60,7 @@ export default function About() {
       <JsonLd data={breadcrumbSchema("/about", "About Us")} />
       <PageHero
         eyebrow="About Us"
-        title="We Believe in Steady Ground â€” and Real Upside."
+        title="We Believe in Steady Ground — and Real Upside."
         subtitle="A precious metals dealer built for people who want something real behind their savings."
       />
 
@@ -73,13 +73,13 @@ export default function About() {
           </p>
           <p>
             We're not here to sell excitement for its own sake. We're here to help you put real
-            weight behind your savings â€” physical silver, held in your name, backed by a structural
+            weight behind your savings — physical silver, held in your name, backed by a structural
             supply deficit now in its sixth consecutive year, outside the reach of any bank, any
             market crash, any currency devaluation.
           </p>
           <p>
             Silver has been money for five thousand years, and it's more essential to the modern
-            economy than it has ever been. It doesn't need anyone's promise to hold its value â€” and
+            economy than it has ever been. It doesn't need anyone's promise to hold its value — and
             the fundamentals behind it right now are the strongest we've seen in decades.
           </p>
         </Prose>
@@ -112,7 +112,7 @@ export default function About() {
       <Section tone="light">
         <H2>A Closer Look</H2>
         <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-          A sample of the physical silver our clients hold â€” rounds, bars, and bullion coins.
+          A sample of the physical silver our clients hold — rounds, bars, and bullion coins.
         </p>
         <Gallery className="mt-10" images={galleryImages} />
       </Section>
@@ -129,7 +129,7 @@ export default function About() {
         <div className="mt-8">
           <InlineLeadForm
             heading="Get a Free Consultation"
-            subheading="Leave your details and a silver specialist will follow up â€” no cost, no obligation."
+            subheading="Leave your details and a silver specialist will follow up — no cost, no obligation."
           />
         </div>
       </Section>
