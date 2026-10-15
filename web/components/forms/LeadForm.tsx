@@ -108,10 +108,16 @@ export function LeadForm({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        if (!r.ok) throw new Error("bad response");
+        console.info(`[lead-form] webhook POST ${r.status} ${r.statusText}`);
+        if (!r.ok) {
+          const detail = await r.text().catch(() => "");
+          console.error(`[lead-form] webhook non-200: ${r.status}`, detail);
+          throw new Error(`webhook ${r.status}`);
+        }
         trackUet("lead");
         setSent(true);
-      } catch {
+      } catch (e) {
+        console.error("[lead-form] webhook request failed", e);
         setSending(false);
         setErr("Something went wrong. Please try again or call (866) 818-7243.");
       }

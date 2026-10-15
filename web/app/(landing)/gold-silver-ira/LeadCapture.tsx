@@ -118,11 +118,17 @@ export function LeadCapture() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-        .then((r) => {
-          if (!r.ok) throw new Error("bad");
+        .then(async (r) => {
+          console.info(`[lead-capture] webhook POST ${r.status} ${r.statusText}`);
+          if (!r.ok) {
+            const detail = await r.text().catch(() => "");
+            console.error(`[lead-capture] webhook non-200: ${r.status}`, detail);
+            throw new Error(`webhook ${r.status}`);
+          }
           done();
         })
-        .catch(() => {
+        .catch((e) => {
+          console.error("[lead-capture] webhook request failed", e);
           setSending(false);
           setErr("Something went wrong. Please try again or call (866) 818-7243.");
         });
