@@ -42,6 +42,7 @@ a{color:inherit}
 .hb img{width:72px;height:auto;border-radius:3px;flex:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 .hb p{font-size:.92rem;color:var(--hero-muted)}
 .hb strong{color:var(--hero-ink);display:block;font-weight:600}
+.book3d,.jump{display:none}
 
 /* form */
 .card{background:var(--surface);color:var(--ink);border-radius:8px;padding:26px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.28)}
@@ -132,5 +133,22 @@ footer a{color:var(--muted)}
   .row{grid-template-columns:minmax(0,1fr);gap:6px}
   section.s{padding-block:46px}
   .card{padding:20px}
+  /* Approved mobile hero layout: centered stack — brand/phone centered,
+     3D handbook above the headline, gold/silver headline accents, centered
+     lead, centered points column, full-width jump CTA; eyebrow and the
+     thumbnail card are suppressed on phones only (desktop unchanged). */
+  .bar{flex-direction:column;align-items:center;justify-content:center;gap:9px;padding-block:16px 2px}
+  .bar .callnow{font-size:1rem}
+  .pitch{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .pitch .eyebrow{display:none}
+  .book3d{display:block;width:70%;max-width:300px;margin-top:4px}
+  .book3d img{display:block;width:100%;height:auto;mix-blend-mode:screen}
+  .hero h1{margin-top:20px}
+  .hero h1 .wg{color:var(--gold-fill)}
+  .hero h1 .ws{color:#C6CCD1}
+  .hero .lead{max-width:66%;margin-top:16px;text-align:center;font-size:1.02rem}
+  .points{max-width:70%;margin:26px auto 0;text-align:left}
+  .jump{display:flex;align-items:center;justify-content:center;width:76%;margin-top:26px;padding:15px 18px;border-radius:8px;background:linear-gradient(180deg,#F5DC9B 0%,#E7C575 45%,#CCA14C 100%);color:#171208;font-weight:800;font-size:1.02rem;letter-spacing:.03em;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5)}
+  .hb{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}

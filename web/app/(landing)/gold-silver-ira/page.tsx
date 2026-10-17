@@ -36,11 +36,22 @@ export default function GoldSilverIraPage() {
             </div>
           </div>
           <div className="hero-grid">
-            <div>
+            <div className="pitch">
+              <div className="book3d">
+                <img
+                  src="/images/ira-handbook-3d.jpg"
+                  alt="The Precious Metals IRA Handbook"
+                  width={724}
+                  height={632}
+                />
+              </div>
               <div className="eyebrow" style={{ color: "var(--gold-fill)" }}>
                 Gold and silver IRA
               </div>
-              <h1>Move retirement savings into real gold and silver.</h1>
+              <h1>
+                Move retirement savings into real <span className="wg">gold</span> and{" "}
+                <span className="ws">silver</span>.
+              </h1>
               <p className="lead">
                 Get the free handbook, then talk it through with a specialist. A direct transfer is
                 generally not taxed or penalized, and your metal is held in your name at an approved
@@ -93,6 +104,9 @@ export default function GoldSilverIraPage() {
                   <span>A free, no-obligation consultation with a real person</span>
                 </li>
               </ul>
+              <a className="jump" href="#handbook">
+                GET MY FREE HANDBOOK
+              </a>
               <div className="hb">
                 <img
                   src="/images/ira-handbook-cover.jpg"
