@@ -43,25 +43,27 @@ export function Logo({
 }) {
   return (
     <img
-      src="/images/logo-03.png"
+      src="/images/logo-122.png"
       alt="Anchor Silver Capital"
-      className={`h-10 w-auto ${className}`}
+      width={552}
+      height={165}
+      className={`h-14 w-auto ${className}`}
     />
   );
 }
 
 /**
- * Header logo: `logo-07.png` is tightly cropped (no padding), so it is sized
- * to fill the 72px header bar properly.
+ * Header logo: `logo-122.png` is a transparent, tightly cropped PNG (no
+ * padding), so it is sized to fill the 72px header bar properly.
  */
 export function HeaderLogo({ className = "" }: { className?: string }) {
   return (
     <img
-      src="/images/logo-07.png"
+      src="/images/logo-122.png"
       alt="Anchor Silver Capital"
-      width={1418}
-      height={376}
-      className={`h-11 w-auto sm:h-12 ${className}`}
+      width={552}
+      height={165}
+      className={`h-12 w-auto sm:h-14 ${className}`}
     />
   );
 }
