@@ -14,19 +14,12 @@ export default function GoldSilverIraPage() {
         <div className="wrap">
           <div className="bar">
             <div className="brand">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="5" r="2.2" />
-                <path d="M12 7.2V21M7.5 11.5h9M4 14c0 4 3.5 7 8 7s8-3 8-7" />
-              </svg>
-              Anchor Silver Capital
+              <img
+                src="/images/logo-122.png"
+                alt="Anchor Silver Capital"
+                width={552}
+                height={165}
+              />
             </div>
             <div className="callnow">
               Prefer to talk?{" "}

@@ -2,14 +2,14 @@
  * THE canonical Anchor Silver Capital mark.
  *
  * The header/footer Logo renders the full-color brand PNG from
- * `public/images/logo-03.png`. The AnchorGlyph SVG below remains the
+ * `public/images/logo-122.png`. The AnchorGlyph SVG below remains the
  * single source of truth for the brand anchor geometry and is mirrored
  * byte-for-byte in `public/favicon.svg`, so the favicon and the anchor
  * glyph share the exact same path data.
  *
  * If AnchorGlyph's path data changes, `public/favicon.svg` MUST be updated
  * to match. Replacing the Logo PNG is a separate concern — just swap
- * `public/images/logo-03.png`.
+ * `public/images/logo-122.png`.
  */
 export const ANCHOR_VIEWBOX = "0 0 24 24";
 
