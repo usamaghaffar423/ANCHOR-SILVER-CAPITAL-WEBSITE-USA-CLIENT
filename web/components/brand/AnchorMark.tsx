@@ -49,3 +49,19 @@ export function Logo({
     />
   );
 }
+
+/**
+ * Header logo: `logo-07.png` is tightly cropped (no padding), so it is sized
+ * to fill the 72px header bar properly.
+ */
+export function HeaderLogo({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src="/images/logo-07.png"
+      alt="Anchor Silver Capital"
+      width={1418}
+      height={376}
+      className={`h-11 w-auto sm:h-12 ${className}`}
+    />
+  );
+}

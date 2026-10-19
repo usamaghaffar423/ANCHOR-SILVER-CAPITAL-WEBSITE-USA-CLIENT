@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Logo } from "../brand/AnchorMark";
+import { HeaderLogo } from "../brand/AnchorMark";
 import { NAV, SITE } from "@/lib/site";
 import { buttonStyles } from "./ui";
 
@@ -65,7 +65,7 @@ export function Header() {
       >
         <div className="mx-auto flex h-[72px] w-full max-w-6xl items-center justify-between">
           <Link href="/" aria-label="Anchor Silver Capital home">
-            <Logo />
+            <HeaderLogo />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -106,7 +106,7 @@ export function Header() {
       {menu && (
         <div className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-accent px-6 pb-10 pt-6 md:hidden">
           <div className="flex items-center justify-between">
-            <Logo />
+            <HeaderLogo />
             <button
               aria-label="Close menu"
               className="-mr-2 grid h-11 w-11 place-items-center text-background"
