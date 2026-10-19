@@ -35,7 +35,20 @@ async function readHandbook(): Promise<Uint8Array<ArrayBuffer> | null> {
   return null;
 }
 
+/**
+ * Public downloads are CLOSED: the handbook is delivered only by the GHL
+ * workflow email. Flip to `true` to re-enable token-gated downloads.
+ */
+const DOWNLOADS_ENABLED = false;
+
 export async function GET(request: NextRequest) {
+  if (!DOWNLOADS_ENABLED) {
+    return NextResponse.json(
+      { error: "Not found" },
+      { status: 404, headers: { "Cache-Control": "no-store" } },
+    );
+  }
+
   const token = request.nextUrl.searchParams.get("token");
 
   if (!isHandbookTokenValid(token)) {
