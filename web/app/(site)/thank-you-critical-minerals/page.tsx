@@ -3,30 +3,20 @@ import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
-  Download,
   FileText,
   ShieldCheck,
 } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { JsonLd } from "@/components/site/JsonLd";
 import { ButtonLink, Card, Eyebrow, H2, PhoneLink, Section } from "@/components/site/ui";
-import { signHandbookToken } from "@/lib/handbook-token";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Your Silver IRA Handbook is Ready",
+  title: "Thank You — Your Handbook Is On Its Way",
   description:
-    "Your free Silver IRA Handbook is ready — download the PDF instantly or speak with an Anchor Silver specialist about a tax-free direct transfer for your 401(k) or IRA.",
+    "Thanks for your request. Your free Silver IRA Handbook is being emailed to you — or speak with an Anchor Silver specialist about a tax-free direct transfer for your 401(k) or IRA.",
   path: "/thank-you-critical-minerals",
 });
-
-// Rendered per-request so the download link always carries a fresh signed
-// token when HANDBOOK_DOWNLOAD_SECRET is enabled (a prerendered token would
-// expire). Post-conversion page — no SEO/caching value lost.
-//
-// The GHL Critical Minerals Report form redirects here. We only publish one
-// lead magnet — the Silver IRA Handbook — so this URL delivers it.
-export const dynamic = "force-dynamic";
 
 const chapters = [
   {
@@ -46,19 +36,10 @@ const chapters = [
   },
 ];
 
-const brassButton =
-  "mt-7 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light sm:w-auto";
-
 export default function ThankYouCriticalMineralsPage() {
-  // Signed link when token verification is enabled, plain endpoint otherwise.
-  const token = signHandbookToken();
-  const handbookHref = token
-    ? `/api/download-handbook?token=${encodeURIComponent(token)}`
-    : "/api/download-handbook";
-
   return (
     <>
-      <JsonLd data={breadcrumbSchema("/thank-you-critical-minerals", "Silver IRA Handbook Ready")} />
+      <JsonLd data={breadcrumbSchema("/thank-you-critical-minerals", "Thank You")} />
 
       {/* ── Hero / status ── */}
       <section className="chart-lines relative -mt-[112px] bg-ink px-5 pb-16 pt-[152px] text-silver">
@@ -70,17 +51,17 @@ export default function ThankYouCriticalMineralsPage() {
           </span>
 
           <h1 className="mt-6 font-fraunces text-3xl font-light leading-[1.12] text-white sm:text-5xl">
-            Your Silver IRA Handbook is Ready
+            Thank You — Your Handbook Is On Its Way
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-silver sm:text-lg">
-            We&apos;ve sent a copy to your email. You can also download or view the full
-            guide immediately below.
+            Your Silver IRA Handbook is being sent to your email. A specialist will also
+            be in touch shortly. Here&apos;s a preview of what&apos;s inside.
           </p>
         </div>
       </section>
 
-      {/* ── Lead magnet delivery card ── */}
+      {/* ── Guide preview card ── */}
       <Section>
         <div className="mx-auto w-full max-w-4xl">
           <Card className="grid items-start gap-8 md:grid-cols-[260px_1fr] md:p-8">
@@ -100,9 +81,9 @@ export default function ThankYouCriticalMineralsPage() {
               </figcaption>
             </figure>
 
-            {/* Description + download */}
+            {/* Description */}
             <div>
-              <Eyebrow className="text-brass">Instant Access</Eyebrow>
+              <Eyebrow className="text-brass">Check Your Email</Eyebrow>
               <H2 className="mt-2">What&apos;s inside the guide</H2>
 
               <ul className="mt-6 space-y-5">
@@ -125,13 +106,6 @@ export default function ThankYouCriticalMineralsPage() {
                 ))}
               </ul>
 
-              <a href={handbookHref} target="_blank" rel="noopener noreferrer" className={brassButton}>
-                <Download className="h-4 w-4" aria-hidden="true" />
-                Download PDF Now
-              </a>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Opens in a new tab · No further sign-up required
-              </p>
             </div>
           </Card>
         </div>

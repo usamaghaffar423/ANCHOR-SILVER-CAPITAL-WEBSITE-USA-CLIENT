@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { buttonStyles } from "@/components/site/ui";
 import {
@@ -40,8 +41,8 @@ const labelCls = "text-sm font-semibold text-foreground";
  * Native replacement for every embedded GHL form. POSTs the universal lead
  * payload (Landing dev instructions §1–2) straight to the GHL inbound
  * webhook — E.164 phone, UTM/msclkid capture, `website` honeypot, visitor IP —
- * then shows the thank-you state with the handbook download and fires the
- * UET `lead` event. No consent checkboxes: the compliance notice renders
+ * then fires the UET `lead` event and redirects to the thank-you page (no
+ * download is offered — GHL emails the handbook). No consent checkboxes: the compliance notice renders
  * directly under the submit button on every instance.
  */
 export function LeadForm({
@@ -51,6 +52,7 @@ export function LeadForm({
   submitLabel?: string;
   className?: string;
 }) {
+  const router = useRouter();
   const uid = useId();
   const id = (n: string) => `${uid}-${n}`;
   const [err, setErr] = useState("");
@@ -117,7 +119,10 @@ export function LeadForm({
           throw new Error(`webhook ${r.status}`);
         }
         trackUet("lead");
+        // GHL sends the handbook from its workflow — go straight to the
+        // thank-you page; nothing is offered for download here.
         setSent(true);
+        router.push("/thank-you-handbook");
       } catch (e) {
         console.error("[lead-form] webhook request failed", e);
         setSending(false);
@@ -132,13 +137,6 @@ export function LeadForm({
         <h3 className="font-display text-xl text-foreground">
           Thank you. Your brochure is on its way, and a specialist will call you shortly.
         </h3>
-        <a
-          href="/precious-metals-ira-handbook.pdf"
-          data-download=""
-          className={`${buttonStyles.primary} mt-5 inline-flex`}
-        >
-          Download the handbook (PDF)
-        </a>
       </div>
     );
   }

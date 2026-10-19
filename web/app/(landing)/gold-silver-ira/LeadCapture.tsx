@@ -216,14 +216,11 @@ export function LeadCapture() {
         </form>
       </div>
       <div className={sent ? "thanks on" : "thanks"} id="thanks" aria-live="polite">
-        <h2>Thank you. Your handbook is ready.</h2>
+        <h2>Thank you. Your handbook is on its way.</h2>
         <p>
-          We also emailed it to you. A specialist will call you shortly. You can also reach us at{" "}
+          We are emailing it to you now. A specialist will call you shortly. You can also reach us at{" "}
           <span className="num">(866) 818-7243</span>.
         </p>
-        <a className="dl" href="/precious-metals-ira-handbook.pdf" data-download="">
-          Download the handbook (PDF)
-        </a>
       </div>
     </>
   );
