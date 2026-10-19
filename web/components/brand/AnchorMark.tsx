@@ -1,12 +1,15 @@
 /**
  * THE canonical Anchor Silver Capital mark.
  *
- * This geometry is the single source of truth for the brand anchor.
- * The identical path data is mirrored byte-for-byte in `public/favicon.svg`
- * (and the apple-touch icon), so the header logo and the favicon are the
- * exact same glyph — same stroke weight, same crossbar, same flukes.
+ * The header/footer Logo renders the full-color brand PNG from
+ * `public/images/logo-03.png`. The AnchorGlyph SVG below remains the
+ * single source of truth for the brand anchor geometry and is mirrored
+ * byte-for-byte in `public/favicon.svg`, so the favicon and the anchor
+ * glyph share the exact same path data.
  *
- * If this file changes, `public/favicon.svg` MUST be updated to match.
+ * If AnchorGlyph's path data changes, `public/favicon.svg` MUST be updated
+ * to match. Replacing the Logo PNG is a separate concern — just swap
+ * `public/images/logo-03.png`.
  */
 export const ANCHOR_VIEWBOX = "0 0 24 24";
 
@@ -34,21 +37,15 @@ export function AnchorGlyph({ className }: { className?: string }) {
 }
 
 export function Logo({
-  tone = "dark",
   className = "",
 }: {
-  tone?: "dark" | "light";
   className?: string;
 }) {
-  const text = tone === "light" ? "text-background" : "text-accent";
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`}>
-      <AnchorGlyph className={`h-8 w-8 shrink-0 ${text}`} />
-      <span
-        className={`font-display text-[0.95rem] font-semibold uppercase leading-none tracking-[0.18em] ${text}`}
-      >
-        Anchor Silver Capital
-      </span>
-    </span>
+    <img
+      src="/images/logo-03.png"
+      alt="Anchor Silver Capital"
+      className={`h-10 w-auto ${className}`}
+    />
   );
 }

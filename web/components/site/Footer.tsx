@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AnchorGlyph } from "../brand/AnchorMark";
+import { Logo } from "../brand/AnchorMark";
 import { SITE } from "@/lib/site";
 
 const quickLinks = [
@@ -29,12 +29,7 @@ export function Footer() {
     <footer className="bg-ink px-5 pt-14 pb-8 text-silver">
       <div className="mx-auto grid w-full max-w-6xl gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <span className="inline-flex items-center gap-3">
-            <AnchorGlyph className="h-8 w-8 text-background" />
-            <span className="font-display text-[0.9rem] font-semibold uppercase tracking-[0.18em] text-background">
-              Anchor Silver Capital
-            </span>
-          </span>
+          <Logo className="mb-1" />
           <p className="mt-4 font-display text-lg text-secondary">{SITE.tagline}</p>
           {/* h-6 (24px) satisfies the WCAG 2.2 AA 24x24 target-size minimum —
               plain text-line anchors were 18/17px tall and failed the audit.

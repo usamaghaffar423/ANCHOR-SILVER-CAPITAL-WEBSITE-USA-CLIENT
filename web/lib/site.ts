@@ -95,8 +95,8 @@ const financialServiceNode = {
   url: SITE.origin,
   telephone: "+1-866-818-7243",
   email: SITE.email,
-  logo: `${SITE.origin}/favicon.svg`,
-  image: `${SITE.origin}/favicon.svg`,
+  logo: `${SITE.origin}/images/logo-03.png`,
+  image: `${SITE.origin}/images/logo-03.png`,
   priceRange: "Up to 15% over spot",
   sameAs: [
     "https://www.facebook.com/anchorsilvercapital",
