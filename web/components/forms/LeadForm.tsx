@@ -75,7 +75,7 @@ export function LeadForm({
     if (!first || !phone || !email || !acct || !bal) return;
 
     if (!first.value.trim()) {
-      setErr("Please enter your first name.");
+      setErr("Please enter your name.");
       first.focus();
       return;
     }
@@ -145,9 +145,9 @@ export function LeadForm({
     <form onSubmit={onSubmit} noValidate className={`grid gap-4 ${className}`}>
       <div className="grid gap-1.5">
         <label htmlFor={id("fname")} className={labelCls}>
-          First name
+          Name
         </label>
-        <input id={id("fname")} name="first_name" type="text" autoComplete="given-name" required className={inputCls} />
+        <input id={id("fname")} name="first_name" type="text" autoComplete="name" required className={inputCls} />
       </div>
       <div className="grid gap-1.5">
         <label htmlFor={id("phone")} className={labelCls}>

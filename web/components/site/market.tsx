@@ -73,6 +73,19 @@ export function formatAsOf(iso: string | null | undefined): string {
   });
 }
 
+/** "Oct 20, 2026" — the snapshot's own date, or null until one has arrived. */
+export function formatAsOfDate(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 /**
  * Everything a spot figure must be stamped with, minus the price itself:
  * "indicative", as-of time, "not a quote", and source. Exported so a display

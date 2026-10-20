@@ -73,7 +73,7 @@ export function LeadCapture() {
 
     let digits = phone.value.replace(/\D/g, "");
     if (!first.value.trim()) {
-      setErr("Please enter your first name.");
+      setErr("Please enter your name.");
       first.focus();
       return;
     }
@@ -144,8 +144,8 @@ export function LeadCapture() {
         <p className="sub">A specialist will also call you shortly to answer your questions.</p>
         <form id="leadForm" ref={formRef} noValidate onSubmit={onSubmit}>
           <div className="field">
-            <label htmlFor="fname">First name</label>
-            <input id="fname" name="first_name" type="text" autoComplete="given-name" required />
+            <label htmlFor="fname">Name</label>
+            <input id="fname" name="first_name" type="text" autoComplete="name" required />
           </div>
           <div className="field">
             <label htmlFor="phone">Phone</label>

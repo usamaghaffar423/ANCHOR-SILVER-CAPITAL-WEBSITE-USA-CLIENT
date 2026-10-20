@@ -3,7 +3,7 @@
  * METALS_API_KEY); never import this from a client component.
  *
  * Two concerns:
- *   1. Current spot prices — keyless (api.gold-api.com `/price/{SYMBOL}`), used
+ *   1. Current spot prices — keyless (api.gold-api.com `/price/{SYMBOL}/USD`), used
  *      by /api/market. Cached for 60s. A failed read falls back to the last
  *      reading gold-api actually returned (marked `live: false`) so an outage
  *      shows a stale-but-real, as-of-stamped rate instead of blanking the page;
@@ -48,8 +48,8 @@ function lastGoodSpotOrNull(): SpotPrices | null {
 export async function getSpotPrices(): Promise<SpotPrices | null> {
   try {
     const [xag, xau] = await Promise.all([
-      fetch(`${GOLD_API}/XAG`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
-      fetch(`${GOLD_API}/XAU`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
+      fetch(`${GOLD_API}/XAG/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
+      fetch(`${GOLD_API}/XAU/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
     ]);
     if (!xag.ok || !xau.ok) return lastGoodSpotOrNull();
     const silverJson = (await xag.json()) as {

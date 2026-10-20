@@ -32,10 +32,12 @@ export default function GoldSilverIraPage() {
             <div className="pitch">
               <div className="book3d">
                 <img
-                  src="/images/ira-handbook-3d.jpg"
-                  alt="The Precious Metals IRA Handbook"
-                  width={724}
-                  height={632}
+                  src="/images/gold-silver-handbook-cover-640.webp"
+                  alt="The Silver IRA Handbook, 2026 Edition, by Anchor Silver Capital"
+                  width={640}
+                  height={640}
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </div>
               <div className="eyebrow" style={{ color: "var(--gold-fill)" }}>
@@ -102,10 +104,12 @@ export default function GoldSilverIraPage() {
               </a>
               <div className="hb">
                 <img
-                  src="/images/ira-handbook-cover.jpg"
-                  alt="Cover of The Precious Metals IRA Handbook"
-                  width={420}
-                  height={544}
+                  src="/images/gold-silver-handbook-cover-240.webp"
+                  alt="Cover of The Silver IRA Handbook, 2026 Edition"
+                  width={240}
+                  height={240}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <p>
                   <strong>The Precious Metals IRA Handbook</strong>What qualifies, how a transfer

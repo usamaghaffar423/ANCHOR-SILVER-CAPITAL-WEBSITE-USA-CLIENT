@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -68,12 +69,13 @@ export default function ThankYouHandbookPage() {
             {/* Book preview — brand hero artwork */}
             <figure className="mx-auto w-full max-w-[260px]">
               <div className="overflow-hidden rounded-md border border-border shadow-[var(--shadow-card)]">
-                <img
-                  src="/images/hero-book-preview.jpeg"
-                  alt="The Silver IRA Handbook — 2026 Edition"
-                  width={1600}
-                  height={900}
-                  className="h-[300px] w-full object-cover"
+                <Image
+                  src="/images/gold-silver-handbook-cover.jpg"
+                  alt="The Silver IRA Handbook, 2026 Edition, by Anchor Silver Capital"
+                  width={1200}
+                  height={1200}
+                  sizes="(min-width: 768px) 260px, 100vw"
+                  className="aspect-square w-full object-cover"
                 />
               </div>
               <figcaption className="mt-3 text-center text-xs uppercase tracking-wider text-muted-foreground">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Lock } from "lucide-react";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
+import { formatAsOfDate, useMetals } from "@/components/site/market";
 
 // Code-split out of the initial bundle: the modal renders nothing until it is
 // opened, so pulling it behind an intent signal (hover/focus/tap on a CTA)
@@ -17,6 +18,23 @@ const GuideLeadModal = dynamic(
     })),
   { ssr: false, loading: () => null },
 );
+
+const HANDBOOK_COVER = "/images/gold-silver-handbook-cover.jpg";
+const HANDBOOK_COVER_ALT =
+  "The Silver IRA Handbook, 2026 Edition, by Anchor Silver Capital — moving retirement savings into physical silver";
+// 190px thumb below lg, 420px card from lg up (next/image still serves AVIF/WebP).
+const HANDBOOK_COVER_SIZES = "(min-width: 1024px) 420px, 190px";
+
+/**
+ * ", Oct 20, 2026" — the live gold-api.com snapshot's own date. The server render
+ * says ", live feed" so no stale date is ever baked into the HTML; it swaps to the
+ * real date as soon as the market snapshot arrives.
+ */
+function SpotAsOf() {
+  const { updatedAt } = useMetals();
+  const date = formatAsOfDate(updatedAt);
+  return <>{date ? `, ${date}` : ", live feed"}</>;
+}
 
 /**
  * Premium lead-magnet hero — replaces the data-heavy MarketDataHero with a
@@ -72,17 +90,17 @@ export function PremiumGuideHero() {
             <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
               Own physical silver in your IRA or cash account—supported by six consecutive years
               of global supply shortfalls (Silver Institute). Hold for at least five years and
-              start today with our free investor guide. (Spot data: gold-api.com, Oct 13, 2026.
+              start today with our free investor guide. (Spot data: gold-api.com<SpotAsOf />.
               Past performance does not guarantee future results; silver is volatile).
             </p>
 
-            <div className="relative mt-8 aspect-[4/5] w-[150px] overflow-hidden rounded-lg border border-white/15 shadow-xl">
+            <div className="relative mt-8 aspect-square w-[190px] overflow-hidden rounded-lg border border-white/15 shadow-xl">
               <Image
-                src="/images/hero-book-preview.jpeg"
-                alt="The Silver IRA Handbook — 2026 Edition"
+                src={HANDBOOK_COVER}
+                alt={HANDBOOK_COVER_ALT}
                 fill
                 priority
-                sizes="150px"
+                sizes={HANDBOOK_COVER_SIZES}
                 className="object-cover"
               />
             </div>
@@ -127,7 +145,7 @@ export function PremiumGuideHero() {
               <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-silver sm:text-base md:mt-4 md:text-[1.08rem]">
                 Own physical silver in your IRA or cash account—supported by six consecutive years
                 of global supply shortfalls (Silver Institute). Hold for at least five years and
-                start today with our free investor guide. (Spot data: gold-api.com, Oct 13, 2026.
+                start today with our free investor guide. (Spot data: gold-api.com<SpotAsOf />.
                 Past performance does not guarantee future results; silver is volatile).
               </p>
             </div>
@@ -177,22 +195,23 @@ export function PremiumGuideHero() {
 
 function GuideCard({ onSelect, onArm }: { onSelect: () => void; onArm: () => void }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-white/15 bg-[#F8FAFC] shadow-2xl">
-      {/* Top section: book mockup area */}
-      <div className="relative h-[280px] overflow-hidden sm:h-[340px]">
+    <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-xl border border-white/15 bg-[#F8FAFC] shadow-2xl">
+      {/* Top section: book cover. The artwork is square, so the box is square
+          too — the whole book stays visible instead of being cropped. */}
+      <div className="relative aspect-square overflow-hidden">
         {/* FREE ribbon */}
         <span className="absolute left-3 top-3 z-10 rounded bg-brass px-2.5 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-[#1b1408] shadow-md">
           FREE
         </span>
 
-        {/* 3D Book mockup — real image, covers full area. The card only ships
-            at lg+, so one 50vw candidate is all the preload needs. */}
+        {/* Book cover — same `sizes` as the mobile thumb so both <Image>s resolve
+            to identical candidates and the browser preloads a single file. */}
         <Image
-          src="/images/hero-book-preview.jpeg"
-          alt="The Silver IRA Handbook — 2026 Edition"
+          src={HANDBOOK_COVER}
+          alt={HANDBOOK_COVER_ALT}
           fill
           priority
-          sizes="50vw"
+          sizes={HANDBOOK_COVER_SIZES}
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>
