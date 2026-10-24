@@ -22,7 +22,7 @@ export type SatSite = {
   metal: "Gold" | "Silver";
   /** Wordmark shown in the header and footer. */
   wordmark: string;
-  /** utm_source / source label for this site. */
+  /** Source label sent with contact-form submissions. */
   source: string;
   /** Five metallic gradient stops of the site's logo (offsets 0, .3, .5, .7, 1). */
   logoStops: [string, string, string, string, string];
@@ -53,22 +53,11 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
   },
 };
 
-export type Placement = "module" | "footer-module";
-
 /**
- * The free IRA kit is the handbook offered on the main site's gold & silver IRA
- * landing page (it captures UTMs and fires the UET lead event). Each placement
- * gets its own utm_content so conversions can be attributed per button.
+ * Destination of every ad image on the price sites. Deliberately a plain URL: no
+ * UTM or other query parameters.
  */
-export function kitUrl(site: SatSite, placement: Placement, medium = "sponsor"): string {
-  const q = new URLSearchParams({
-    utm_source: site.source,
-    utm_medium: medium,
-    utm_campaign: "sponsored_placement",
-    utm_content: placement,
-  });
-  return `https://anchorsilvercapital.com/gold-silver-ira?${q.toString()}`;
-}
+export const AD_URL = "https://anchorsilvercapital.com/gold-silver-ira";
 
 /** Publisher named in the visible disclosure and the JSON-LD. */
 export const PUBLISHER = "Anchor Silver Capital LLC";

@@ -87,7 +87,7 @@ export async function SatPage({ site }: { site: SatSite }) {
         }
       />
 
-      <SatAdUnit site={site} placement="module" />
+      <SatAdUnit site={site} />
 
       <div className="sat-content">
         {c.sections.map((s) => (
@@ -109,7 +109,7 @@ export async function SatPage({ site }: { site: SatSite }) {
           </details>
         ))}
       </section>
-      <SatAdUnit site={site} placement="footer-module" />
+      <SatAdUnit site={site} />
     </SatShell>
   );
 }
