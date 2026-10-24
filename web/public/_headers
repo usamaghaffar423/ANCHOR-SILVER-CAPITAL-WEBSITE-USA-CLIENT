@@ -14,3 +14,6 @@
 
 /favicon.svg
   Cache-Control: public, max-age=86400, must-revalidate
+
+/precious-metals-ira-handbook.pdf
+  X-Robots-Tag: noindex, nofollow

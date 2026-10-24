@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { LEAD_WEBHOOK_URL, fetchVisitorIp, trackUet } from "@/lib/lead";
+import { BOOKING_URL, LEAD_WEBHOOK_URL, fetchVisitorIp, trackUet } from "@/lib/lead";
 
 export function LeadCapture() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -221,6 +221,18 @@ export function LeadCapture() {
           We are emailing it to you now. A specialist will call you shortly. You can also reach us at{" "}
           <span className="num">(866) 818-7243</span>.
         </p>
+        {BOOKING_URL ? (
+          <a className="dl" href={BOOKING_URL} rel="noopener">
+            Pick a time for your call
+          </a>
+        ) : (
+          <>
+            <button type="button" className="dl" disabled aria-disabled="true">
+              Pick a time for your call
+            </button>
+            <p className="hint">Online scheduling is coming soon.</p>
+          </>
+        )}
       </div>
     </>
   );

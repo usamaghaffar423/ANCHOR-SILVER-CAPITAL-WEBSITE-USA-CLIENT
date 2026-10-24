@@ -65,6 +65,9 @@ button.go:hover{filter:brightness(1.06)}
 .thanks.on{display:block}
 .thanks p{margin-top:10px;color:var(--muted)}
 .thanks .dl{display:inline-block;margin-top:16px;padding:13px 20px;border-radius:5px;background:var(--hero);color:var(--hero-ink);font-weight:600;text-decoration:none}
+.thanks button.dl{border:0;font:inherit;font-weight:600;cursor:pointer}
+.thanks button.dl[disabled]{opacity:.55;cursor:not-allowed}
+.thanks .hint{font-size:.85rem;margin-top:8px}
 .thanks .num{font-weight:600;color:var(--ink);white-space:nowrap}
 
 /* sections */

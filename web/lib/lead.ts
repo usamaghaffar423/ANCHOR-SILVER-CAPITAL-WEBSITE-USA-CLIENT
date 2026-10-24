@@ -11,6 +11,13 @@ export const LEAD_WEBHOOK_URL =
 
 export const NOTICE_VERSION = "v2.0";
 
+/**
+ * Scheduling link for the "Pick a time for your call" button on the landing
+ * page's thank-you state. Ron is supplying it; while empty the button renders
+ * disabled. Paste the URL here to enable it.
+ */
+export const BOOKING_URL = "";
+
 /** Microsoft UET event push — queues on `window.uetq` until the UET tag loads. */
 export function trackUet(
   name: "lead" | "phone_click" | "handbook_download",

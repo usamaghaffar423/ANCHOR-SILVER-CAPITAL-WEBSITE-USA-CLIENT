@@ -12,12 +12,16 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { ButtonLink, Card, Eyebrow, H2, PhoneLink, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = pageMeta({
+// Thank-you pages are only meant to be reached after a form submit: keep them out of the index.
+export const metadata: Metadata = {
+  ...pageMeta({
   title: "Thank You — Your Handbook Is On Its Way",
   description:
     "Thanks for your request. Your free Silver IRA Handbook is being emailed to you — or speak with an Anchor Silver specialist about a tax-free direct transfer for your 401(k) or IRA.",
   path: "/thank-you-handbook",
-});
+  }),
+  robots: { index: false, follow: false },
+};
 
 const chapters = [
   {
