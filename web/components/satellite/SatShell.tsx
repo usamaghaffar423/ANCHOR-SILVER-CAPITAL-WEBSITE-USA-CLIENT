@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { PUBLISHER, PUBLISHER_URL, kitUrl, type SatSite } from "@/lib/satellites";
+import { kitUrl, type SatSite } from "@/lib/satellites";
 
 /** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
 export function SatShell({ site, children }: { site: SatSite; children: ReactNode }) {
@@ -36,12 +36,9 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
             <Link href="/disclosure">Disclosure</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
-            <a href={PUBLISHER_URL} rel="noopener">
-              {PUBLISHER}
-            </a>
           </nav>
           <p style={{ marginTop: 10 }}>
-            © {new Date().getFullYear()} {PUBLISHER}
+            © {new Date().getFullYear()} {site.wordmark}
           </p>
         </div>
       </footer>

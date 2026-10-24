@@ -5,7 +5,7 @@ import { SatSignup } from "@/components/satellite/SatSignup";
 import { SatTool } from "@/components/satellite/SatTool";
 import { SAT_CONTENT } from "@/lib/satellite-content";
 import { getDailyCandles, getOhlc24h, getSpotPrices } from "@/lib/metals";
-import { PUBLISHER, PUBLISHER_URL, assertSatelliteHost, type SatSite } from "@/lib/satellites";
+import { assertSatelliteHost, type SatSite } from "@/lib/satellites";
 
 /**
  * Home page of a standalone price site. Server-rendered per request (spot, 24h
@@ -29,7 +29,6 @@ export async function SatPage({ site }: { site: SatSite }) {
     `<p style="font:12px sans-serif;margin:4px 0"><a href="${site.origin}/" target="_blank" rel="noopener">Live ${site.metal.toLowerCase()} price</a> from ${site.wordmark}</p>`,
   ].join("\n");
 
-  const publisher = { "@type": "Organization", name: PUBLISHER, url: PUBLISHER_URL };
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -38,7 +37,6 @@ export async function SatPage({ site }: { site: SatSite }) {
         "@id": `${site.origin}/#website`,
         url: `${site.origin}/`,
         name: site.wordmark,
-        publisher,
       },
       {
         "@type": "WebPage",

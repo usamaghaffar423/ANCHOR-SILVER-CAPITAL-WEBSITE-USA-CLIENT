@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { SatShell } from "@/components/satellite/SatShell";
-import { PUBLISHER, assertSatelliteHost, type SatSite } from "@/lib/satellites";
+import { assertSatelliteHost, type SatSite } from "@/lib/satellites";
 
 const UPDATED = "October 25, 2026";
 
@@ -13,10 +14,11 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
           <>
             <h1>Privacy</h1>
             <p>Last updated {UPDATED}.</p>
-            <h2>Who publishes this site</h2>
+            <h2>Who runs this site</h2>
             <p>
-              {site.host} is published by {PUBLISHER}, 475 Washington Blvd, Marina del Rey, CA 90292.
-              Questions: info@anchorsilvercapital.com.
+              {site.host} is run by its owner, who is identified on the{" "}
+              <Link href="/disclosure">disclosure page</Link>. Questions about this policy: use the{" "}
+              <Link href="/contact">contact page</Link>.
             </p>
             <h2>What we collect</h2>
             <p>
@@ -32,26 +34,27 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             <h2>Contact form</h2>
             <p>
               If you send us a message, we collect the name, email address and message you enter, your
-              IP address and the page you wrote from. They go to the customer-management system
-              (GoHighLevel) of {PUBLISHER} and are used to reply to you.
+              IP address and the page you wrote from. They go to the site owner&apos;s
+              customer-management system (GoHighLevel) and are used to reply to you.
             </p>
             <h2>Price-alert email signup</h2>
             <p>
               If you sign up for the daily price email, we collect your email address, your IP
-              address, the page you signed up from and any campaign tags in the link. They are sent to{" "}
-              the customer-management system (GoHighLevel) of {PUBLISHER} and used to send the email you
-              asked for. You can unsubscribe at any time using the link in any email.
+              address, the page you signed up from and any campaign tags in the link. They are sent to
+              the site owner&apos;s customer-management system (GoHighLevel) and used to send the email
+              you asked for. You can unsubscribe at any time using the link in any email.
             </p>
             <h2>Price data</h2>
             <p>
               Prices are fetched by our servers from gold-api.com; your browser does not contact that
               provider.
             </p>
-            <h2>Sponsored links</h2>
+            <h2>Advertising links</h2>
             <p>
-              The sponsored placement links to anchorsilvercapital.com. The link carries tags that
-              identify this site as the referrer. Once you leave this site, the privacy policy of
-              anchorsilvercapital.com applies.
+              The advertisement and the “Free IRA Kit” links lead to the website of the site owner
+              (see the <Link href="/disclosure">disclosure page</Link>). The links carry tags that
+              identify this site as the referrer. Once you leave this site, the privacy policy of the
+              site you arrive at applies.
             </p>
           </>
         ) : (
@@ -70,11 +73,11 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
               accuracy or availability, and we are not liable for decisions made using it. Past prices
               do not indicate future prices, and precious metals can lose value.
             </p>
-            <h2>Sponsorship and ownership</h2>
+            <h2>Advertising and ownership</h2>
             <p>
-              {site.host} is published by {PUBLISHER}, which also sponsors the advertisement shown on
-              the site. The sponsored placement is labeled and is a paid advertisement by the
-              publisher, not an independent recommendation.
+              The advertisement and related links on this site promote the owner&apos;s own products
+              and services. They are paid-for advertising, not independent recommendations. See the{" "}
+              <Link href="/disclosure">disclosure page</Link> for who owns and operates the site.
             </p>
             <h2>Use of the site</h2>
             <p>
