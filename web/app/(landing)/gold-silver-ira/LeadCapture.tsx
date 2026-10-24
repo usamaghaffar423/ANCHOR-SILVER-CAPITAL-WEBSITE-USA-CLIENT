@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { BOOKING_URL, LEAD_WEBHOOK_URL, fetchVisitorIp, trackUet } from "@/lib/lead";
+import {
+  BOOKING_URL,
+  LEAD_WEBHOOK_URL,
+  fetchVisitorIp,
+  setUetEnhancedConversion,
+  trackUet,
+} from "@/lib/lead";
 
 export function LeadCapture() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -99,6 +105,8 @@ export function LeadCapture() {
     data.approx_value = bal.value || "Not Specified";
 
     function done() {
+      // The submitted email and E.164 phone, set right before the lead event.
+      setUetEnhancedConversion((data.email ?? "").trim(), data.phone);
       trackUet("lead", { event_category: "lead_form", event_label: "landing_page" });
       setSent(true);
     }

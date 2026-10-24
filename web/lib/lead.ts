@@ -31,6 +31,21 @@ export function trackUet(
   }
 }
 
+/**
+ * Microsoft Ads enhanced conversions: hand UET the submitted email and phone
+ * (E.164) so the conversion can be matched. UET hashes them before sending.
+ * Call this immediately BEFORE the conversion event, only on a successful
+ * submit — never on page load. A missing value is passed as "" (never guessed).
+ */
+export function setUetEnhancedConversion(email: string, phone: string) {
+  try {
+    window.uetq = window.uetq || [];
+    window.uetq.push("set", { pid: { em: email || "", ph: phone || "" } });
+  } catch {
+    /* noop */
+  }
+}
+
 export const UTM_KEYS = [
   "utm_source",
   "utm_medium",
