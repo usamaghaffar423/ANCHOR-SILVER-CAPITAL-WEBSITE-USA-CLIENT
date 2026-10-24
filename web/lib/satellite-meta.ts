@@ -35,15 +35,24 @@ export function satHomeMeta(site: SatSite): Metadata {
   };
 }
 
-/** Metadata for the small legal pages (self-canonical, kept out of the index). */
-export function satLegalMeta(site: SatSite, kind: "privacy" | "terms"): Metadata {
-  const title = kind === "privacy" ? `Privacy | ${site.wordmark}` : `Terms of use | ${site.wordmark}`;
+type SmallPage = "privacy" | "terms" | "contact" | "disclosure";
+
+const SMALL_TITLES: Record<SmallPage, [string, string]> = {
+  privacy: ["Privacy", "Privacy policy"],
+  terms: ["Terms of use", "Terms of use"],
+  contact: ["Contact", "Contact"],
+  disclosure: ["Ownership and advertising disclosure", "Ownership and advertising disclosure"],
+};
+
+/** Metadata for the small pages (self-canonical). Privacy and terms stay out of the index. */
+export function satLegalMeta(site: SatSite, kind: SmallPage): Metadata {
+  const [title, label] = SMALL_TITLES[kind];
   return {
     metadataBase: new URL(site.origin),
-    title: { absolute: title },
-    description: `${kind === "privacy" ? "Privacy policy" : "Terms of use"} for ${site.host}.`,
+    title: { absolute: `${title} | ${site.wordmark}` },
+    description: `${label} for ${site.host}.`,
     alternates: { canonical: `${site.origin}/${kind}` },
     icons: { icon: favicon(accent(site)) },
-    robots: { index: false, follow: true },
+    robots: { index: kind === "contact" || kind === "disclosure", follow: true },
   };
 }

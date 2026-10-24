@@ -53,9 +53,6 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
   },
 };
 
-export const PHONE = "(866) 818-7243";
-export const PHONE_HREF = "tel:+18668187243";
-
 export type Placement = "header" | "hero" | "module" | "footer-module" | "mobile-bar";
 
 /**

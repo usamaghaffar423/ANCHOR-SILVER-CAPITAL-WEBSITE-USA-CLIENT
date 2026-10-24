@@ -1,7 +1,7 @@
 import { SAT_CONTENT } from "@/lib/satellite-content";
-import { PHONE, PHONE_HREF, kitUrl, type Placement, type SatSite } from "@/lib/satellites";
+import { kitUrl, type Placement, type SatSite } from "@/lib/satellites";
 
-/** Hero CTA row: one benefit sentence, the primary button and the click-to-call link. */
+/** Hero CTA row: one benefit sentence and the primary button, directly under the price card. */
 export function SatHeroCta({ site }: { site: SatSite }) {
   const c = SAT_CONTENT[site.key];
   return (
@@ -10,9 +10,6 @@ export function SatHeroCta({ site }: { site: SatSite }) {
       <div className="sat-actions">
         <a className="sat-btn" href={kitUrl(site, "hero")} rel="sponsored noopener">
           Get Your Free IRA Kit
-        </a>
-        <a className="sat-btn sat-btn-ghost" href={PHONE_HREF}>
-          Talk to a Specialist · {PHONE}
         </a>
       </div>
     </div>
@@ -23,7 +20,7 @@ export function SatHeroCta({ site }: { site: SatSite }) {
 export function SatTrust({ site }: { site: SatSite }) {
   const c = SAT_CONTENT[site.key];
   return (
-    <ul className="sat-trust" aria-label="About the sponsor">
+    <ul className="sat-trust" aria-label="About the advertised service">
       {c.trust.map((t) => (
         <li key={t.label}>
           <span>{t.label}</span>
@@ -35,10 +32,11 @@ export function SatTrust({ site }: { site: SatSite }) {
 }
 
 /**
- * The sponsor module. The SPONSORED label and the disclosure sentence are
- * unchanged from the original placement; bullets and buttons were added.
+ * Plain banner-style ad unit: an "Ad" label and one clickable creative that
+ * links through to the advertiser's IRA page. Who runs the site and who the
+ * advertiser is are stated on the Disclosure page (linked from every footer).
  */
-export function SatSponsorModule({
+export function SatAdUnit({
   site,
   placement,
 }: {
@@ -47,26 +45,12 @@ export function SatSponsorModule({
 }) {
   const c = SAT_CONTENT[site.key];
   return (
-    <aside className="sat-sponsor" aria-label="Sponsored">
-      <span className="sat-badge">Sponsored</span>
-      <h2>{c.sponsor.headline}</h2>
-      <p>
-        <strong>Sponsored by Anchor Silver Capital</strong>, the publisher of this site.{" "}
-        {c.sponsor.text}
-      </p>
-      <ul className="sat-bullets">
-        {c.bullets.map((b) => (
-          <li key={b}>{b}</li>
-        ))}
-      </ul>
-      <div className="sat-actions">
-        <a className="sat-btn" href={kitUrl(site, placement)} rel="sponsored noopener">
-          Get Your Free IRA Kit
-        </a>
-        <a className="sat-btn sat-btn-ghost" href={PHONE_HREF}>
-          Talk to a Specialist · {PHONE}
-        </a>
-      </div>
+    <aside className="sat-ad" aria-label="Advertisement">
+      <span className="sat-ad-label">Ad</span>
+      <a className="sat-ad-link" href={kitUrl(site, placement)} rel="sponsored noopener">
+        <span className="sat-ad-text">{c.sponsor.headline}</span>
+        <span className="sat-ad-cta">Get the free IRA kit →</span>
+      </a>
     </aside>
   );
 }

@@ -1,5 +1,5 @@
 import { JsonLd } from "@/components/site/JsonLd";
-import { SatHeroCta, SatSponsorModule, SatTrust } from "@/components/satellite/SatConvert";
+import { SatAdUnit, SatHeroCta, SatTrust } from "@/components/satellite/SatConvert";
 import { SatShell } from "@/components/satellite/SatShell";
 import { SatSignup } from "@/components/satellite/SatSignup";
 import { SatTool } from "@/components/satellite/SatTool";
@@ -85,7 +85,7 @@ export async function SatPage({ site }: { site: SatSite }) {
         }
       />
 
-      <SatSponsorModule site={site} placement="module" />
+      <SatAdUnit site={site} placement="module" />
 
       <div className="sat-content">
         {c.sections.map((s) => (
@@ -117,7 +117,7 @@ export async function SatPage({ site }: { site: SatSite }) {
           </details>
         ))}
       </section>
-      <SatSponsorModule site={site} placement="footer-module" />
+      <SatAdUnit site={site} placement="footer-module" />
     </SatShell>
   );
 }

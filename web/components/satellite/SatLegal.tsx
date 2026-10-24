@@ -29,6 +29,12 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
               (Cloudflare), which handles technical data such as your IP address and browser type to
               deliver the page and protect it from abuse.
             </p>
+            <h2>Contact form</h2>
+            <p>
+              If you send us a message, we collect the name, email address and message you enter, your
+              IP address and the page you wrote from. They go to the customer-management system
+              (GoHighLevel) of {PUBLISHER} and are used to reply to you.
+            </p>
             <h2>Price-alert email signup</h2>
             <p>
               If you sign up for the daily price email, we collect your email address, your IP
