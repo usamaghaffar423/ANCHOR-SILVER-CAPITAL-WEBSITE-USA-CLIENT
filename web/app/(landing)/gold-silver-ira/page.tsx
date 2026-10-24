@@ -483,6 +483,15 @@ export default function GoldSilverIraPage() {
           </p>
         </div>
       </footer>
+
+      <nav className="mbar" aria-label="Quick actions">
+        <a href="tel:+18668187243" data-call="">
+          Call (866) 818-7243
+        </a>
+        <a href="#handbook" className="primary">
+          Get the handbook
+        </a>
+      </nav>
     </>
   );
 }

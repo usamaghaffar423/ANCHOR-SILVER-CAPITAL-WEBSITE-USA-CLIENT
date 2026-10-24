@@ -154,4 +154,16 @@ footer a{color:var(--muted)}
   .jump{display:flex;align-items:center;justify-content:center;width:76%;margin-top:26px;padding:15px 18px;border-radius:8px;background:linear-gradient(180deg,#F5DC9B 0%,#E7C575 45%,#CCA14C 100%);color:#171208;font-weight:800;font-size:1.02rem;letter-spacing:.03em;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5)}
   .hb{display:none}
 }
+/* Phone-only sticky action bar. body padding keeps the footer links clear of it at
+   the bottom of the page; scroll-padding keeps focused form fields and the #handbook
+   anchor from landing underneath it. */
+.mbar{display:none}
+@media (max-width:767.98px){
+  :root{--mbar-h:58px}
+  html{scroll-padding-bottom:calc(var(--mbar-h) + 16px)}
+  body{padding-bottom:calc(var(--mbar-h) + env(safe-area-inset-bottom))}
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:1px;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--line);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -6px 20px rgba(0,0,0,.18)}
+  .mbar a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:var(--mbar-h);padding:6px 8px;background:var(--surface);color:var(--ink);font-weight:700;font-size:.95rem;text-decoration:none;line-height:1.2}
+  .mbar a.primary{background:var(--gold-fill);color:#1C2820}
+}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
