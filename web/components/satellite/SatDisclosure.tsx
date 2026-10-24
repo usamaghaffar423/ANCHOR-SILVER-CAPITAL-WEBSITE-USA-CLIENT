@@ -17,7 +17,7 @@ export async function SatDisclosure({ site }: { site: SatSite }) {
           also helps savers set up self-directed precious metals IRAs.
         </p>
         <p>
-          The advertisement on this site, and the “Free IRA Kit” buttons and related links, promote{" "}
+          The advertisements on this site promote{" "}
           {PUBLISHER}&apos;s own products and services and lead to its website. They are
           advertising by the site&apos;s owner, not independent recommendations or reviews.
         </p>

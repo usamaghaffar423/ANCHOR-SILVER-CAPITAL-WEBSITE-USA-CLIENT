@@ -1,21 +1,6 @@
 import { SAT_CONTENT } from "@/lib/satellite-content";
 import { kitUrl, type Placement, type SatSite } from "@/lib/satellites";
 
-/** Hero CTA row: one benefit sentence and the primary button, directly under the price card. */
-export function SatHeroCta({ site }: { site: SatSite }) {
-  const c = SAT_CONTENT[site.key];
-  return (
-    <div className="sat-herocta">
-      <p>{c.benefit}</p>
-      <div className="sat-actions">
-        <a className="sat-btn" href={kitUrl(site, "hero")} rel="sponsored noopener">
-          Get Your Free IRA Kit
-        </a>
-      </div>
-    </div>
-  );
-}
-
 /** Trust bar. Every marker is taken from copy already published on anchorsilvercapital.com. */
 export function SatTrust({ site }: { site: SatSite }) {
   const c = SAT_CONTENT[site.key];

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { kitUrl, type SatSite } from "@/lib/satellites";
+import type { SatSite } from "@/lib/satellites";
 
 /** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
 export function SatShell({ site, children }: { site: SatSite; children: ReactNode }) {
@@ -15,11 +15,6 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
           <Link className="sat-mark" href="/">
             {first} <span>{rest.join(" ")}</span>
           </Link>
-          <div className="sat-header-actions">
-            <a className="sat-btn sat-btn-sm" href={kitUrl(site, "header")} rel="sponsored noopener">
-              Free IRA Kit
-            </a>
-          </div>
         </div>
       </header>
       <main id="main" className="sat-wrap">
@@ -42,11 +37,6 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
           </p>
         </div>
       </footer>
-      <nav className="sat-mbar" aria-label="Quick actions">
-        <a href={kitUrl(site, "mobile-bar")} rel="sponsored noopener" className="primary">
-          Get the Free IRA Kit
-        </a>
-      </nav>
     </>
   );
 }

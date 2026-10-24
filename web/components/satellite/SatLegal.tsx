@@ -37,13 +37,6 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
               IP address and the page you wrote from. They go to the site owner&apos;s
               customer-management system (GoHighLevel) and are used to reply to you.
             </p>
-            <h2>Price-alert email signup</h2>
-            <p>
-              If you sign up for the daily price email, we collect your email address, your IP
-              address, the page you signed up from and any campaign tags in the link. They are sent to
-              the site owner&apos;s customer-management system (GoHighLevel) and used to send the email
-              you asked for. You can unsubscribe at any time using the link in any email.
-            </p>
             <h2>Price data</h2>
             <p>
               Prices are fetched by our servers from gold-api.com; your browser does not contact that
@@ -51,7 +44,7 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             </p>
             <h2>Advertising links</h2>
             <p>
-              The advertisement and the “Free IRA Kit” links lead to the website of the site owner
+              The advertisements lead to the website of the site owner
               (see the <Link href="/disclosure">disclosure page</Link>). The links carry tags that
               identify this site as the referrer. Once you leave this site, the privacy policy of the
               site you arrive at applies.

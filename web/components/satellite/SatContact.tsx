@@ -53,7 +53,7 @@ export function SatContactForm({ source }: { source: string }) {
 
   if (state === "done") {
     return (
-      <p role="status" className="sat-signup-ok">
+      <p role="status" className="sat-msg-ok">
         Thank you. Your message has been sent and we will reply by email.
       </p>
     );
@@ -87,7 +87,7 @@ export function SatContactForm({ source }: { source: string }) {
         {state === "sending" ? "Sending…" : "Send message"}
       </button>
       {err && (
-        <p role="alert" className="sat-signup-err">
+        <p role="alert" className="sat-msg-err">
           {err}
         </p>
       )}

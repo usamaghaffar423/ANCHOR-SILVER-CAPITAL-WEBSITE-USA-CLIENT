@@ -22,8 +22,6 @@ export type SatSite = {
   metal: "Gold" | "Silver";
   /** Wordmark shown in the header and footer. */
   wordmark: string;
-  /** GHL tag sent with the price-alert email signup. */
-  alertTag: string;
   /** utm_source / source label for this site. */
   source: string;
 };
@@ -37,7 +35,6 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     symbol: "XAU",
     metal: "Gold",
     wordmark: "Gold Current Price",
-    alertTag: "list:price-alert-gold",
     source: "goldcurrentprice.com",
   },
   silver: {
@@ -48,12 +45,11 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     symbol: "XAG",
     metal: "Silver",
     wordmark: "Silver Current Price",
-    alertTag: "list:price-alert-silver",
     source: "silvercurrentprice.com",
   },
 };
 
-export type Placement = "header" | "hero" | "module" | "footer-module" | "mobile-bar";
+export type Placement = "module" | "footer-module";
 
 /**
  * The free IRA kit is the handbook offered on the main site's gold & silver IRA

@@ -1,7 +1,6 @@
 import { JsonLd } from "@/components/site/JsonLd";
-import { SatAdUnit, SatHeroCta, SatTrust } from "@/components/satellite/SatConvert";
+import { SatAdUnit, SatTrust } from "@/components/satellite/SatConvert";
 import { SatShell } from "@/components/satellite/SatShell";
-import { SatSignup } from "@/components/satellite/SatSignup";
 import { SatTool } from "@/components/satellite/SatTool";
 import { SAT_CONTENT } from "@/lib/satellite-content";
 import { getDailyCandles, getOhlc24h, getSpotPrices } from "@/lib/metals";
@@ -84,10 +83,7 @@ export async function SatPage({ site }: { site: SatSite }) {
         chartNote={c.chartNote}
         embedCode={embedCode}
         afterSpot={
-          <>
-            <SatHeroCta site={site} />
-            <SatTrust site={site} />
-          </>
+          <SatTrust site={site} />
         }
       />
 
@@ -95,22 +91,12 @@ export async function SatPage({ site }: { site: SatSite }) {
 
       <div className="sat-content">
         {c.sections.map((s) => (
-          <div key={s.id} className="sat-block">
-            <section id={s.id}>
-              <h2>{s.h2}</h2>
-              {s.body.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </section>
-            {s.id === "premiums" && (
-              <SatSignup
-                heading={c.alert.heading}
-                text={c.alert.text}
-                tag={site.alertTag}
-                source={site.source}
-              />
-            )}
-          </div>
+          <section key={s.id} id={s.id}>
+            <h2>{s.h2}</h2>
+            {s.body.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </section>
         ))}
       </div>
 
