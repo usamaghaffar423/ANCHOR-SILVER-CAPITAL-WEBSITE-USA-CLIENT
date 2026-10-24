@@ -1,5 +1,7 @@
 import { JsonLd } from "@/components/site/JsonLd";
+import { SatHeroCta, SatSponsorModule, SatTrust } from "@/components/satellite/SatConvert";
 import { SatShell } from "@/components/satellite/SatShell";
+import { SatSignup } from "@/components/satellite/SatSignup";
 import { SatTool } from "@/components/satellite/SatTool";
 import { SAT_CONTENT } from "@/lib/satellite-content";
 import { getDailyCandles, getOhlc24h, getSpotPrices } from "@/lib/metals";
@@ -58,6 +60,9 @@ export async function SatPage({ site }: { site: SatSite }) {
     <SatShell site={site}>
       <JsonLd data={graph} />
       <section className="sat-hero">
+        <p className="sat-live">
+          <i aria-hidden="true" /> Updated every minute
+        </p>
         <h1>{c.h1}</h1>
         <p>{c.lede}</p>
       </section>
@@ -72,28 +77,34 @@ export async function SatPage({ site }: { site: SatSite }) {
         units={c.units}
         purities={c.purities}
         chartNote={c.chartNote}
+        afterSpot={
+          <>
+            <SatHeroCta site={site} />
+            <SatTrust site={site} />
+          </>
+        }
       />
 
-      <aside className="sat-sponsor" aria-label="Sponsored">
-        <span className="sat-badge">Sponsored</span>
-        <h2>{c.sponsor.headline}</h2>
-        <p>
-          <strong>Sponsored by Anchor Silver Capital</strong>, the publisher of this site.{" "}
-          {c.sponsor.text}
-        </p>
-        <a className="sat-btn" href={site.sponsorUrl} rel="sponsored noopener">
-          {c.sponsor.cta} →
-        </a>
-      </aside>
+      <SatSponsorModule site={site} placement="module" />
 
       <div className="sat-content">
         {c.sections.map((s) => (
-          <section key={s.id} id={s.id}>
-            <h2>{s.h2}</h2>
-            {s.body.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </section>
+          <div key={s.id} className="sat-block">
+            <section id={s.id}>
+              <h2>{s.h2}</h2>
+              {s.body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </section>
+            {s.id === "premiums" && (
+              <SatSignup
+                heading={c.alert.heading}
+                text={c.alert.text}
+                tag={site.alertTag}
+                source={site.source}
+              />
+            )}
+          </div>
         ))}
       </div>
 
@@ -106,6 +117,7 @@ export async function SatPage({ site }: { site: SatSite }) {
           </details>
         ))}
       </section>
+      <SatSponsorModule site={site} placement="footer-module" />
     </SatShell>
   );
 }

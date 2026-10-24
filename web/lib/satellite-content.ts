@@ -22,6 +22,14 @@ export type SatContent = {
   sponsor: { headline: string; text: string; cta: string };
   /** Plain-language description of what the chart shows. */
   chartNote: string;
+  /** One benefit sentence shown beside the hero CTA. */
+  benefit: string;
+  /** Verifiable trust markers (all taken from the published anchorsilvercapital.com copy). */
+  trust: { label: string; value: string }[];
+  /** Value-prop bullets for the sponsor module. */
+  bullets: string[];
+  /** Price-alert email signup copy. */
+  alert: { heading: string; text: string };
 };
 
 export const SAT_CONTENT: Record<SatKey, SatContent> = {
@@ -92,6 +100,23 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
       { label: "14k (.583)", fineness: 0.583 },
       { label: "10k (.417)", fineness: 0.417 },
     ],
+    benefit:
+      "Thinking about gold in a retirement account? The free IRA kit explains the rules, fees and rollover steps in plain English.",
+    trust: [
+      { label: "IRA custodian", value: "American Estate & Trust (AET)" },
+      { label: "Depository", value: "IDS of Delaware, insured" },
+      { label: "Metals", value: "IRS-approved bullion only" },
+      { label: "Premium", value: "Capped at 15% over spot" },
+    ],
+    bullets: [
+      "Physical gold and silver held at IDS of Delaware, fully insured and viewable online",
+      "A 401(k) or IRA rollover that is done correctly is generally not a taxable event",
+      "Dealer premium never exceeds 15% over spot, and the fee schedule is published up front",
+    ],
+    alert: {
+      heading: "Get today's gold price by email every morning",
+      text: "One short email with the gold spot price. Email only, no phone number needed.",
+    },
     sponsor: {
       headline: "Gold in a retirement account?",
       text: "Anchor Silver Capital helps savers hold physical gold and silver in a self-directed IRA, with its fee schedule published up front.",
@@ -173,6 +198,23 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
       { label: ".800", fineness: 0.8 },
       { label: ".350 wartime nickel", fineness: 0.35 },
     ],
+    benefit:
+      "Weighing silver for retirement savings? The free IRA kit explains the rules, fees and rollover steps in plain English.",
+    trust: [
+      { label: "IRA custodian", value: "American Estate & Trust (AET)" },
+      { label: "Depository", value: "IDS of Delaware, insured" },
+      { label: "Metals", value: "IRS-approved bullion only" },
+      { label: "Premium", value: "Capped at 15% over spot" },
+    ],
+    bullets: [
+      "Physical silver held at IDS of Delaware, fully insured and viewable online",
+      "Flat $200 per year custodian fee and $12 per month storage, published up front",
+      "Dealer premium never exceeds 15% over spot",
+    ],
+    alert: {
+      heading: "Get today's silver price by email every morning",
+      text: "One short email with the silver spot price. Email only, no phone number needed.",
+    },
     sponsor: {
       headline: "Silver in a retirement account?",
       text: "Anchor Silver Capital sets up self-directed Silver IRAs backed by physical bullion, with a flat custodian fee and storage costs published up front.",

@@ -7,11 +7,13 @@ const favicon = (color: string) =>
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="${color}"/></svg>`,
   )}`;
 
-const accent = (site: SatSite) => (site.key === "gold" ? "#e3b341" : "#2459a6");
+const accent = (site: SatSite) => (site.key === "gold" ? "#e3b341" : "#475562");
 
 /** Metadata for a price site's home page; canonical points at ITSELF. */
 export function satHomeMeta(site: SatSite): Metadata {
   const c = SAT_CONTENT[site.key];
+  // Static, branded 1200x630 image in public/<internalPath>/og.png (excluded from the host rewrite).
+  const og = `${site.origin}/${site.internalPath}/og.png`;
   return {
     metadataBase: new URL(site.origin),
     title: { absolute: c.title },
@@ -26,8 +28,9 @@ export function satHomeMeta(site: SatSite): Metadata {
       title: c.title,
       description: c.description,
       locale: "en_US",
+      images: [{ url: og, width: 1200, height: 630, alt: c.h1 }],
     },
-    twitter: { card: "summary", title: c.title, description: c.description },
+    twitter: { card: "summary_large_image", title: c.title, description: c.description, images: [og] },
     robots: { index: true, follow: true },
   };
 }

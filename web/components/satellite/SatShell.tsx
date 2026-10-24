@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { PUBLISHER, PUBLISHER_URL, type SatSite } from "@/lib/satellites";
+import { PHONE, PHONE_HREF, PUBLISHER, PUBLISHER_URL, kitUrl, type SatSite } from "@/lib/satellites";
 
 /** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
 export function SatShell({ site, children }: { site: SatSite; children: ReactNode }) {
@@ -15,9 +15,14 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
           <Link className="sat-mark" href="/">
             {first} <span>{rest.join(" ")}</span>
           </Link>
-          <span className="sat-live">
-            <i aria-hidden="true" /> Updated every minute
-          </span>
+          <div className="sat-header-actions">
+            <a className="sat-phone" href={PHONE_HREF} aria-label={`Call ${PHONE}`}>
+              {PHONE}
+            </a>
+            <a className="sat-btn sat-btn-sm" href={kitUrl(site, "header")} rel="sponsored noopener">
+              Free IRA Kit
+            </a>
+          </div>
         </div>
       </header>
       <main id="main" className="sat-wrap">
@@ -46,6 +51,12 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
           </p>
         </div>
       </footer>
+      <nav className="sat-mbar" aria-label="Quick actions">
+        <a href={PHONE_HREF}>Call Now</a>
+        <a href={kitUrl(site, "mobile-bar")} rel="sponsored noopener" className="primary">
+          Free Kit
+        </a>
+      </nav>
     </>
   );
 }

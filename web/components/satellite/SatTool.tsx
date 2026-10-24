@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useMetals } from "@/components/site/market";
 
 /**
@@ -29,6 +29,7 @@ export function SatTool({
   units,
   purities,
   chartNote,
+  afterSpot,
 }: {
   symbol: "XAU" | "XAG";
   metal: string;
@@ -39,6 +40,8 @@ export function SatTool({
   units: { label: string; perOz: number }[];
   purities: { label: string; fineness: number }[];
   chartNote: string;
+  /** Server-rendered content (hero CTA, trust bar) placed between the price card and the chart. */
+  afterSpot?: ReactNode;
 }) {
   const live = useMetals();
   const liveSpot = symbol === "XAU" ? live.gold : live.silver;
@@ -50,7 +53,8 @@ export function SatTool({
     const abs = spot - ohlc.open;
     return { abs, pct: (abs / ohlc.open) * 100 };
   }, [spot, ohlc]);
-  const dir = change ? (change.abs > 0 ? "up" : change.abs < 0 ? "down" : null) : null;
+  // Under half a cent rounds to $0.00, so it reads as unchanged rather than up/down.
+  const dir = change && Math.abs(change.abs) >= 0.005 ? (change.abs > 0 ? "up" : "down") : null;
 
   // gauge position of spot within the 24h low..high (clamped)
   const gauge = useMemo(() => {
@@ -109,6 +113,8 @@ export function SatTool({
           grey tick is the open 24 hours ago.
         </p>
       </section>
+
+      {afterSpot}
 
       <CandleChart metal={metal} symbol={symbol} initial={candles} note={chartNote} />
 
