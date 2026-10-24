@@ -39,6 +39,7 @@ export default function GoldSilverIraPage() {
                   fetchPriority="high"
                   decoding="async"
                 />
+                <span className="free-badge">Free</span>
               </div>
               <div className="eyebrow" style={{ color: "var(--gold-fill)" }}>
                 Gold and silver IRA
@@ -103,14 +104,16 @@ export default function GoldSilverIraPage() {
                 GET MY FREE HANDBOOK
               </a>
               <div className="hb">
-                <img
-                  src="/images/gold-silver-handbook-cover-240.webp"
-                  alt="Cover of The Silver IRA Handbook, 2026 Edition"
-                  width={240}
-                  height={240}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="cover">
+                  <img
+                    src="/images/gold-silver-handbook-cover-640.webp"
+                    alt="Cover of The Silver IRA Handbook, 2026 Edition"
+                    width={640}
+                    height={640}
+                    decoding="async"
+                  />
+                  <span className="free-badge">Free</span>
+                </div>
                 <p>
                   <strong>The Precious Metals IRA Handbook</strong>What qualifies, how a transfer
                   works, what it costs, and nine mistakes to avoid. Free.

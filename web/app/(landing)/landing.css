@@ -38,11 +38,14 @@ a{color:inherit}
 .points{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
 .points li{display:flex;gap:12px;align-items:flex-start;font-size:1rem}
 .points svg{flex:none;width:20px;height:20px;margin-top:3px}
-.hb{display:flex;gap:16px;align-items:center;margin-top:30px;padding:14px;border:1px solid rgba(197,169,106,.35);border-radius:6px;max-width:30em}
-.hb img{width:84px;height:84px;object-fit:cover;border-radius:4px;flex:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.hb{display:flex;gap:22px;align-items:center;margin-top:30px;padding:18px;border:1px solid rgba(197,169,106,.35);border-radius:6px;max-width:30em}
+.hb .cover{position:relative;flex:none;width:168px}
+.hb img{display:block;width:168px;height:168px;object-fit:cover;border-radius:6px;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.free-badge{position:absolute;top:-10px;right:-12px;z-index:1;padding:6px 13px;border-radius:999px;background:linear-gradient(180deg,#F5DC9B 0%,#E7C575 45%,#CCA14C 100%);color:#171208;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.4);transform:rotate(6deg)}
 .hb p{font-size:.92rem;color:var(--hero-muted)}
 .hb strong{color:var(--hero-ink);display:block;font-weight:600}
 .book3d,.jump{display:none}
+.book3d{position:relative}
 
 /* form */
 .card{background:var(--surface);color:var(--ink);border-radius:8px;padding:26px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.28)}
@@ -144,7 +147,8 @@ footer a{color:var(--muted)}
   .bar .callnow{font-size:1rem}
   .pitch{display:flex;flex-direction:column;align-items:center;text-align:center}
   .pitch .eyebrow{display:none}
-  .book3d{display:block;width:70%;max-width:300px;margin-top:4px}
+  .book3d{display:block;width:84%;max-width:340px;margin-top:4px}
+  .book3d .free-badge{top:-8px;right:-6px;padding:8px 16px;font-size:.95rem}
   .book3d img{display:block;width:100%;height:auto;aspect-ratio:1/1;border-radius:10px;box-shadow:0 14px 34px rgba(0,0,0,.45)}
   .hero h1{margin-top:20px}
   .hero h1 .wg{color:var(--gold-fill)}
