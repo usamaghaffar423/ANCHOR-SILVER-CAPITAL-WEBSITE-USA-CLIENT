@@ -60,10 +60,10 @@ export type Placement = "header" | "hero" | "module" | "footer-module" | "mobile
  * landing page (it captures UTMs and fires the UET lead event). Each placement
  * gets its own utm_content so conversions can be attributed per button.
  */
-export function kitUrl(site: SatSite, placement: Placement): string {
+export function kitUrl(site: SatSite, placement: Placement, medium = "sponsor"): string {
   const q = new URLSearchParams({
     utm_source: site.source,
-    utm_medium: "sponsor",
+    utm_medium: medium,
     utm_campaign: "sponsored_placement",
     utm_content: placement,
   });

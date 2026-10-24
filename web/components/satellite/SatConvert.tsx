@@ -32,9 +32,13 @@ export function SatTrust({ site }: { site: SatSite }) {
 }
 
 /**
- * Plain banner-style ad unit: an "Ad" label and one clickable creative that
- * links through to the advertiser's IRA page. Who runs the site and who the
- * advertiser is are stated on the Disclosure page (linked from every footer).
+ * Display ad unit: the advertiser's own image creative under a small "Ad" label.
+ * The whole image is one link to the advertiser's IRA kit page (UTM-tagged). Who
+ * owns the site is on the Disclosure page, linked from every footer.
+ *
+ * Files are in public/sat-gold|sat-silver (that prefix is excluded from the host
+ * rewrite). The square creatives (ad-square-*.webp) are kept for a narrow slot;
+ * the layout has none, so only the landscape one renders.
  */
 export function SatAdUnit({
   site,
@@ -43,13 +47,21 @@ export function SatAdUnit({
   site: SatSite;
   placement: Extract<Placement, "module" | "footer-module">;
 }) {
-  const c = SAT_CONTENT[site.key];
+  const base = `/${site.internalPath}/ad-landscape`;
   return (
     <aside className="sat-ad" aria-label="Advertisement">
       <span className="sat-ad-label">Ad</span>
-      <a className="sat-ad-link" href={kitUrl(site, placement)} rel="sponsored noopener">
-        <span className="sat-ad-text">{c.sponsor.headline}</span>
-        <span className="sat-ad-cta">Get the free IRA kit →</span>
+      <a className="sat-ad-link" href={kitUrl(site, placement, "display")} rel="sponsored noopener">
+        <img
+          src={`${base}-1600.webp`}
+          srcSet={`${base}-800.webp 800w, ${base}-1600.webp 1600w`}
+          sizes="(max-width: 720px) calc(100vw - 32px), 680px"
+          width={1600}
+          height={1066}
+          alt="Advertisement: Anchor Silver Capital free Precious Metals IRA Handbook. Get your free copy at anchorsilvercapital.com."
+          loading="lazy"
+          decoding="async"
+        />
       </a>
     </aside>
   );
