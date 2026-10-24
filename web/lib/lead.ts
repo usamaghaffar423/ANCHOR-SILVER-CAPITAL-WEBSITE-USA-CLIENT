@@ -11,12 +11,14 @@ export const LEAD_WEBHOOK_URL =
 
 export const NOTICE_VERSION = "v2.0";
 
-/** Microsoft UET event push — no-ops until the UET tag itself is installed. */
-export function trackUet(name: "lead" | "phone_click" | "handbook_download") {
+/** Microsoft UET event push — queues on `window.uetq` until the UET tag loads. */
+export function trackUet(
+  name: "lead" | "phone_click" | "handbook_download",
+  params: { event_category?: string; event_label?: string } = {},
+) {
   try {
-    const w = window as unknown as { uetq?: unknown[] };
-    w.uetq = w.uetq || [];
-    w.uetq.push("event", name, {});
+    window.uetq = window.uetq || [];
+    window.uetq.push("event", name, params);
   } catch {
     /* noop */
   }

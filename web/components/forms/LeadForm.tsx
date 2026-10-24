@@ -118,7 +118,7 @@ export function LeadForm({
           console.error(`[lead-form] webhook non-200: ${r.status}`, detail);
           throw new Error(`webhook ${r.status}`);
         }
-        trackUet("lead");
+        trackUet("lead", { event_category: "lead_form", event_label: "site_form" });
         // GHL sends the handbook from its workflow — go straight to the
         // thank-you page; nothing is offered for download here.
         setSent(true);

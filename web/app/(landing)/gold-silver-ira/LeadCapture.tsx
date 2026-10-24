@@ -106,7 +106,7 @@ export function LeadCapture() {
     data.phone = "+1" + digits;
 
     function done() {
-      trackUet("lead");
+      trackUet("lead", { event_category: "lead_form", event_label: "landing_page" });
       setSent(true);
     }
 

@@ -7,6 +7,7 @@ import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import { UetEvents } from "@/components/site/UetEvents";
+import { UetTag } from "@/components/site/UetTag";
 import { SITE, OG_IMAGE, rootSchemaGraph } from "@/lib/site";
 
 /**
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <UetTag />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Same CSS URL, but pulled off the render-blocking path: `media="print"`
