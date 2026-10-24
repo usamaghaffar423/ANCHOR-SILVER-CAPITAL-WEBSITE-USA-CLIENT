@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { SAT_CONTENT } from "@/lib/satellite-content";
 import type { SatSite } from "@/lib/satellites";
 
-const favicon = (color: string) =>
-  `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="${color}"/></svg>`,
-  )}`;
-
-const accent = (site: SatSite) => (site.key === "gold" ? "#e3b341" : "#475562");
+/** Emblem favicons generated from the supplied logo (public/sat-xxx/). */
+const icons = (site: SatSite): Metadata["icons"] => ({
+  icon: [
+    { url: `/${site.internalPath}/favicon.svg`, type: "image/svg+xml" },
+    { url: `/${site.internalPath}/favicon-32.png`, sizes: "32x32", type: "image/png" },
+    { url: `/${site.internalPath}/favicon.ico`, sizes: "48x48" },
+  ],
+  apple: { url: `/${site.internalPath}/apple-touch-icon.png`, sizes: "180x180" },
+});
 
 /** Metadata for a price site's home page; canonical points at ITSELF. */
 export function satHomeMeta(site: SatSite): Metadata {
@@ -20,7 +23,7 @@ export function satHomeMeta(site: SatSite): Metadata {
     description: c.description,
     keywords: c.keywords,
     alternates: { canonical: `${site.origin}/` },
-    icons: { icon: favicon(accent(site)) },
+    icons: icons(site),
     openGraph: {
       type: "website",
       url: `${site.origin}/`,
@@ -52,7 +55,7 @@ export function satLegalMeta(site: SatSite, kind: SmallPage): Metadata {
     title: { absolute: `${title} | ${site.wordmark}` },
     description: `${label} for ${site.host}.`,
     alternates: { canonical: `${site.origin}/${kind}` },
-    icons: { icon: favicon(accent(site)) },
+    icons: icons(site),
     robots: { index: kind === "contact" || kind === "disclosure", follow: true },
   };
 }

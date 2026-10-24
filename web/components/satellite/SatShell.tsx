@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { SatLogoMark } from "@/components/satellite/SatLogoMark";
 import type { SatSite } from "@/lib/satellites";
 
 /** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
@@ -12,8 +13,11 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
       </a>
       <header className="sat-header">
         <div className="sat-wrap">
-          <Link className="sat-mark" href="/">
-            {first} <span>{rest.join(" ")}</span>
+          <Link className="sat-mark" href="/" aria-label={site.wordmark}>
+            <SatLogoMark site={site} />
+            <span className="sat-mark-text">
+              <b>{first}</b> <span>{rest.join(" ")}</span>
+            </span>
           </Link>
         </div>
       </header>

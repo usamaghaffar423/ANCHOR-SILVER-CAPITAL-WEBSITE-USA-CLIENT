@@ -18,30 +18,32 @@ body {
   color: var(--text);
   font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-body.sat-gold {
-  --bg: #12100b;
-  --panel: #1c1912;
-  --panel-2: #26221a;
-  --text: #f1eada;
-  --muted: #b3a98f;
-  --line: #3a3426;
-  --accent: #e3b341;
-  --accent-ink: #1a1405;
+/* Both sites: the logo's dark green (#092619) with a metallic accent. */
+body.sat-gold,
+body.sat-silver {
+  color-scheme: dark;
+  --bg: #092619;
+  --panel: #0d3222;
+  --panel-2: #113b28;
+  --text: #eef3ee;
+  --muted: #a9bdb0;
+  --line: #1d4d35;
   --up: #86d9a6;
   --down: #f29a85;
 }
+body.sat-gold {
+  --accent: #d9b866;
+  --accent-ink: #17110a;
+  --edge: rgba(217, 184, 102, 0.32);
+  --grad: linear-gradient(135deg, #8f6c2a 0%, #d9b866 30%, #f7e8aa 50%, #b08a3a 72%, #e3c474 100%);
+  --grad-fill: linear-gradient(135deg, #d9b866 0%, #f7e8aa 45%, #e3c474 75%, #b08a3a 100%);
+}
 body.sat-silver {
-  /* warm ivory, graphite text, brushed steel accent */
-  --bg: #f6f3ec;
-  --panel: #fffdf8;
-  --panel-2: #ece8de;
-  --text: #1e2125;
-  --muted: #5b5f66;
-  --line: #d8d2c4;
-  --accent: #475562;
-  --accent-ink: #ffffff;
-  --up: #0c7a47;
-  --down: #b3361f;
+  --accent: #d4d6d8;
+  --accent-ink: #0b1a12;
+  --edge: rgba(212, 214, 216, 0.3);
+  --grad: linear-gradient(135deg, #8a8d91 0%, #d4d6d8 30%, #eceeef 50%, #a3a5a9 72%, #d8dadb 100%);
+  --grad-fill: linear-gradient(135deg, #d4d6d8 0%, #eceeef 45%, #d8dadb 75%, #a3a5a9 100%);
 }
 a {
   color: var(--accent);
@@ -724,4 +726,78 @@ a {
 .sat-embed-foot {
   font-size: 0.72rem;
   color: var(--muted);
+}
+
+/* ---- logo-based theme: metallic gradient on headings, buttons, highlights, borders ---- */
+.sat-header {
+  border-bottom-color: var(--edge);
+}
+.sat-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.sat-logo-mark {
+  flex: none;
+  display: block;
+}
+.sat-mark-text b {
+  font-weight: 700;
+  color: var(--accent);
+}
+.sat-mark-text span {
+  color: var(--text);
+}
+.sat-card,
+.sat-trust,
+.sat-embed-panel,
+.sat-ad-link,
+.sat-chart-tools button {
+  border-color: var(--edge);
+}
+.sat-btn,
+.sat-seg button[aria-pressed="true"] {
+  background: var(--grad-fill);
+  color: var(--accent-ink);
+}
+.sat-btn:hover {
+  filter: brightness(1.07);
+}
+.sat-seg {
+  border-color: var(--edge);
+}
+.sat-hero h1,
+.sat-content h2,
+.sat-faq h2,
+.sat-legal h1,
+.sat-legal h2 {
+  color: var(--accent);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sat-hero h1,
+  .sat-content h2,
+  .sat-faq h2,
+  .sat-legal h1 {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+.sat-gauge-pin {
+  background: var(--grad-fill);
+}
+.sat-faq summary {
+  color: var(--text);
+}
+.sat-input {
+  border-color: var(--edge);
+}
+
+/* the creative may be as dark as the page: always frame it so the ad is clearly bounded */
+.sat-ad-link {
+  border: 1px solid var(--edge);
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
 }

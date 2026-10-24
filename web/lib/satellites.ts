@@ -24,6 +24,8 @@ export type SatSite = {
   wordmark: string;
   /** utm_source / source label for this site. */
   source: string;
+  /** Five metallic gradient stops of the site's logo (offsets 0, .3, .5, .7, 1). */
+  logoStops: [string, string, string, string, string];
 };
 
 export const SAT_SITES: Record<SatKey, SatSite> = {
@@ -36,6 +38,7 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     metal: "Gold",
     wordmark: "Gold Current Price",
     source: "goldcurrentprice.com",
+    logoStops: ["#8f6c2a", "#d9b866", "#f7e8aa", "#b08a3a", "#e3c474"],
   },
   silver: {
     key: "silver",
@@ -46,6 +49,7 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     metal: "Silver",
     wordmark: "Silver Current Price",
     source: "silvercurrentprice.com",
+    logoStops: ["#8a8d91", "#d4d6d8", "#eceeef", "#a3a5a9", "#d8dadb"],
   },
 };
 
