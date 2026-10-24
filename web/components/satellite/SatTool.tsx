@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useMetals } from "@/components/site/market";
 
 /**
@@ -30,6 +30,7 @@ export function SatTool({
   purities,
   chartNote,
   afterSpot,
+  embedCode,
 }: {
   symbol: "XAU" | "XAG";
   metal: string;
@@ -42,6 +43,8 @@ export function SatTool({
   chartNote: string;
   /** Server-rendered content (hero CTA, trust bar) placed between the price card and the chart. */
   afterSpot?: ReactNode;
+  /** HTML snippet shown in the "Add to site" panel. */
+  embedCode: string;
 }) {
   const live = useMetals();
   const liveSpot = symbol === "XAU" ? live.gold : live.silver;
@@ -77,8 +80,8 @@ export function SatTool({
               <div className={`sat-change ${dir ?? ""}`}>
                 <span aria-hidden="true">{dir === "up" ? "▲" : dir === "down" ? "▼" : "■"}</span>{" "}
                 <span className="sr-only">{dir === "up" ? "Up" : dir === "down" ? "Down" : "Unchanged"} </span>
-                {change.abs >= 0 ? "+" : "−"}
-                {usd(Math.abs(change.abs))} ({change.pct >= 0 ? "+" : "−"}
+                {dir === "up" ? "+" : dir === "down" ? "−" : ""}
+                {usd(Math.abs(change.abs))} ({dir === "up" ? "+" : dir === "down" ? "−" : ""}
                 {Math.abs(change.pct).toFixed(2)}%)
               </div>
             ) : (
@@ -116,7 +119,7 @@ export function SatTool({
 
       {afterSpot}
 
-      <CandleChart metal={metal} symbol={symbol} initial={candles} note={chartNote} />
+      <CandleChart metal={metal} symbol={symbol} initial={candles} note={chartNote} embedCode={embedCode} />
 
       <div className="sat-grid-2">
         <section className="sat-card" aria-label="Price by unit">
@@ -170,18 +173,56 @@ function CandleChart({
   symbol,
   initial,
   note,
+  embedCode,
 }: {
   metal: string;
   symbol: string;
   initial: SatCandle[] | null;
   note: string;
+  embedCode: string;
 }) {
   const [days, setDays] = useState<(typeof DAYS)[number]>(30);
   const [data, setData] = useState<SatCandle[] | null>(initial);
   const [failed, setFailed] = useState(!initial);
   const [hover, setHover] = useState<number | null>(null);
   const wrap = useRef<HTMLDivElement>(null);
+  const card = useRef<HTMLElement>(null);
   const [w, setW] = useState(0);
+  const [fs, setFs] = useState(false);
+  const [fsH, setFsH] = useState(0);
+  const [embedOpen, setEmbedOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  // false on the server and during hydration, then the browser's real answer.
+  const canFullscreen = useSyncExternalStore(
+    () => () => {},
+    () => Boolean(document.fullscreenEnabled),
+    () => false,
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const on = document.fullscreenElement === card.current;
+      setFs(on);
+      setFsH(on ? Math.max(320, window.innerHeight - 200) : 0);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) void document.exitFullscreen();
+    else void card.current?.requestFullscreen();
+  }
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(embedCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* clipboard blocked: the text is selectable in the box */
+    }
+  }
 
   useEffect(() => {
     if (initial) return;
@@ -218,7 +259,7 @@ function CandleChart({
     return s.length >= 2 ? s : data.slice(-Math.min(data.length, days));
   }, [data, days]);
 
-  const h = w < 480 ? 250 : 340;
+  const h = fs && fsH ? fsH : w < 480 ? 250 : 340;
   const geo = useMemo(() => {
     if (!shown || w < 60) return null;
     const lo = Math.min(...shown.map((c) => c.l));
@@ -248,7 +289,7 @@ function CandleChart({
     new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
   return (
-    <section className="sat-card" aria-label={`${metal} daily candlestick chart`}>
+    <section ref={card} className="sat-card sat-chartcard" aria-label={`${metal} daily candlestick chart`}>
       <div className="sat-chart-head">
         <h2>{metal} daily candles</h2>
         <div className="sat-seg" role="group" aria-label="Chart range">
@@ -259,6 +300,34 @@ function CandleChart({
           ))}
         </div>
       </div>
+      <div className="sat-chart-tools">
+        {canFullscreen && (
+          <button type="button" onClick={toggleFullscreen}>
+            {fs ? "Exit full screen" : "Full screen"}
+          </button>
+        )}
+        <button type="button" aria-expanded={embedOpen} onClick={() => setEmbedOpen((v) => !v)}>
+          Add to site
+        </button>
+      </div>
+      {embedOpen && (
+        <div className="sat-embed-panel">
+          <p>
+            Show the live {metal.toLowerCase()} price on your own page. Paste this code where you want it;
+            the link underneath credits the source, so please keep it.
+          </p>
+          <textarea
+            readOnly
+            rows={5}
+            value={embedCode}
+            onFocus={(e) => e.currentTarget.select()}
+            aria-label="Embed code"
+          />
+          <button type="button" className="sat-btn sat-btn-sm" onClick={() => void copyCode()}>
+            {copied ? "Copied" : "Copy code"}
+          </button>
+        </div>
+      )}
       <div className="sat-chart" ref={wrap} style={{ height: h }}>
         {shown && geo ? (
           <>

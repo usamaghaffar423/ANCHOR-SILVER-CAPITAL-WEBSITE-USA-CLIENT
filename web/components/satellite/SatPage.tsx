@@ -22,6 +22,13 @@ export async function SatPage({ site }: { site: SatSite }) {
   ]);
   const spot = spotPair ? (site.symbol === "XAU" ? spotPair.gold : spotPair.silver) : null;
 
+  // The attribution link sits in the snippet itself (outside the iframe), so a site that
+  // pastes it links back here.
+  const embedCode = [
+    `<iframe src="${site.origin}/embed" title="Live ${site.metal.toLowerCase()} price" width="340" height="250" style="border:0;max-width:100%" loading="lazy"></iframe>`,
+    `<p style="font:12px sans-serif;margin:4px 0"><a href="${site.origin}/" target="_blank" rel="noopener">Live ${site.metal.toLowerCase()} price</a> from ${site.wordmark}</p>`,
+  ].join("\n");
+
   const publisher = { "@type": "Organization", name: PUBLISHER, url: PUBLISHER_URL };
   const graph = {
     "@context": "https://schema.org",
@@ -77,6 +84,7 @@ export async function SatPage({ site }: { site: SatSite }) {
         units={c.units}
         purities={c.purities}
         chartNote={c.chartNote}
+        embedCode={embedCode}
         afterSpot={
           <>
             <SatHeroCta site={site} />

@@ -91,10 +91,16 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
           },
-          { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "origin-when-cross-origin" },
         ],
+      },
+      // Clickjacking protection everywhere EXCEPT the embeddable price widget (/embed on the
+      // standalone price sites), which exists to be framed by other sites. The optional
+      // sat-xxx/ prefix covers matching after the host rewrite.
+      {
+        source: "/((?!(?:sat-[a-z]+/)?embed$).*)",
+        headers: [{ key: "X-Frame-Options", value: "DENY" }],
       },
       // HTML must never be served from a stale cache. Left alone, Next's own
       // prerender header (`s-maxage=31536000`) lets any intermediary keep one
