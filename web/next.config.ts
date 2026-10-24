@@ -66,7 +66,7 @@ const nextConfig: NextConfig = {
         },
         {
           // Rules chain, so the already-rewritten internal prefixes must not match again.
-          source: "/:path((?!api/|_next/|sat-gold|sat-silver).+)",
+          source: "/:path((?!api/|_next/|sat-gold|sat-silver|favicon\\.ico$).+)",
           has: [{ type: "host" as const, value: s.host }],
           destination: `/${s.internalPath}/:path`,
         },
