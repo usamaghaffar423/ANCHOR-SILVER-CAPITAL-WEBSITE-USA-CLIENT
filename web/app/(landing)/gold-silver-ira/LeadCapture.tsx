@@ -88,22 +88,15 @@ export function LeadCapture() {
       email.focus();
       return;
     }
-    if (!acct.value) {
-      setErr("Please choose where your retirement money is now.");
-      acct.focus();
-      return;
-    }
-    if (!bal.value) {
-      setErr('Please choose an approximate value, or "Prefer not to say".');
-      bal.focus();
-      return;
-    }
-
     const data: Record<string, string> = {};
     Array.prototype.forEach.call(form.elements, (el: HTMLInputElement | HTMLSelectElement) => {
       if (el.name && el.name !== "website") data[el.name] = el.value;
     });
     data.phone = "+1" + digits;
+    // Both selects are optional: send what the visitor chose, otherwise the same
+    // "Not Specified" default the site-wide LeadForm sends to GHL.
+    data.account_type = acct.value || "Not Specified";
+    data.approx_value = bal.value || "Not Specified";
 
     function done() {
       trackUet("lead", { event_category: "lead_form", event_label: "landing_page" });
@@ -164,8 +157,10 @@ export function LeadCapture() {
             <input id="email" name="email" type="email" autoComplete="email" required />
           </div>
           <div className="field">
-            <label htmlFor="acct">Where is your retirement money now?</label>
-            <select id="acct" name="account_type" required>
+            <label htmlFor="acct">
+              Where is your retirement money now? <span className="opt">(optional)</span>
+            </label>
+            <select id="acct" name="account_type">
               <option value="">Choose one</option>
               <option>401(k) from a former employer</option>
               <option>401(k) with a current employer</option>
@@ -179,8 +174,10 @@ export function LeadCapture() {
             </select>
           </div>
           <div className="field">
-            <label htmlFor="bal">Approximate value</label>
-            <select id="bal" name="approx_value" required>
+            <label htmlFor="bal">
+              Approximate value <span className="opt">(optional)</span>
+            </label>
+            <select id="bal" name="approx_value">
               <option value="">Choose one</option>
               <option>Under $25,000</option>
               <option>$25,000 to $99,999</option>
