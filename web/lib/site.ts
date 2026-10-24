@@ -39,6 +39,8 @@ export const NAV = [
   { to: "/why-silver", label: "Why Silver" },
   { to: "/silver-ira", label: "Silver IRA" },
   { to: "/physical-silver", label: "Physical Silver" },
+  { to: "/silver-price-per-ounce", label: "Silver Price" },
+  { to: "/gold-price-per-ounce", label: "Gold Price" },
   { to: "/about", label: "About" },
 ] as const;
 
@@ -53,6 +55,8 @@ export const PAGES = [
   "/get-started",
   "/faq",
   "/market-update",
+  "/silver-price-per-ounce",
+  "/gold-price-per-ounce",
   "/contact",
   "/privacy",
   "/terms",

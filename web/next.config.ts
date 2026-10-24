@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import { SAT_SITES } from "./lib/satellite-hosts";
+
+/** Host as a regex fragment (dots escaped) for `has` matchers. */
+const hostRegex = (host: string) => host.replace(/\./g, "\\.");
 
 const nextConfig: NextConfig = {
   images: {
@@ -17,6 +21,30 @@ const nextConfig: NextConfig = {
   // `statusCode: 301` (not `permanent: true`) so the status is a true 301.
   async redirects() {
     return [
+      // Standalone price sites: force https (the zones do not have Always Use HTTPS
+      // on) and fold www into the apex. Same site — not a redirect to anchorsilvercapital.com.
+      // `:path` (not `:path*`) because OpenNext does not expand the `*` modifier in an
+      // absolute destination. cf-visitor is the header Cloudflare sets on every request.
+      ...SAT_SITES.flatMap((s) =>
+        // "/" has its own rule: an empty :path does not compile in OpenNext (500).
+        [{ source: "/", path: "" }, { source: "/:path(.+)", path: "/:path" }].flatMap((r) => [
+          {
+            source: r.source,
+            has: [
+              { type: "host" as const, value: `(www\\.)?${hostRegex(s.host)}` },
+              { type: "header" as const, key: "cf-visitor", value: '"scheme":"http"\\}' },
+            ],
+            destination: `https://${s.host}${r.path || "/"}`,
+            statusCode: 301,
+          },
+          {
+            source: r.source,
+            has: [{ type: "host" as const, value: `www\\.${hostRegex(s.host)}` }],
+            destination: `https://${s.host}${r.path || "/"}`,
+            statusCode: 301,
+          },
+        ]),
+      ),
       {
         source: "/thank-you",
         destination: "/thank-you-handbook",
@@ -24,6 +52,30 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // goldcurrentprice.com / silvercurrentprice.com are separate sites served by this
+  // same app: each host is rewritten (not redirected) to its own route tree with its
+  // own root layout. /api and /_next stay shared. Unknown paths fall through to the
+  // tree and 404 there, so no anchorsilvercapital.com page is ever served on them.
+  async rewrites() {
+    return {
+      beforeFiles: SAT_SITES.flatMap((s) => [
+        {
+          source: "/",
+          has: [{ type: "host" as const, value: s.host }],
+          destination: `/${s.internalPath}`,
+        },
+        {
+          // Rules chain, so the already-rewritten internal prefixes must not match again.
+          source: "/:path((?!api/|_next/|sat-gold|sat-silver).+)",
+          has: [{ type: "host" as const, value: s.host }],
+          destination: `/${s.internalPath}/:path`,
+        },
+      ]),
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+
   // Applied by OpenNext (`getNextConfigHeaders` in the routing handler) to every
   // SSR/HTML route. Static files under public/ are served by the ASSETS binding
   // and get the same values from public/_headers instead — keep the two in sync.

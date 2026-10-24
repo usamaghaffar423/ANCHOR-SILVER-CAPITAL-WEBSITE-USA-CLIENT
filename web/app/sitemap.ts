@@ -18,6 +18,8 @@ const DIRECTIVE: Record<string, { changeFrequency: MetadataRoute.Sitemap[number]
   "/get-started": { changeFrequency: "weekly", priority: 0.8 },
   "/buyinggoldandsilver": { changeFrequency: "weekly", priority: 0.7 },
   "/silver-supply": { changeFrequency: "weekly", priority: 0.7 },
+  "/silver-price-per-ounce": { changeFrequency: "daily", priority: 0.8 },
+  "/gold-price-per-ounce": { changeFrequency: "daily", priority: 0.8 },
   "/market-update": { changeFrequency: "daily", priority: 0.7 },
   "/about": { changeFrequency: "monthly", priority: 0.7 },
   "/contact": { changeFrequency: "monthly", priority: 0.6 },
