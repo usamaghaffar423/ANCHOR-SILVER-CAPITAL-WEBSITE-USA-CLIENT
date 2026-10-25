@@ -26,21 +26,32 @@ export function SatTrust({ site }: { site: SatSite }) {
  * the layout has none, so only the landscape one renders.
  */
 export function SatAdUnit({ site }: { site: SatSite }) {
-  const base = `/${site.internalPath}/ad-landscape`;
+  const wide = `/${site.internalPath}/ad-landscape`;
+  const square = `/${site.internalPath}/ad-square`;
   return (
     <aside className="sat-ad" aria-label="Advertisement">
       <span className="sat-ad-label">Ad</span>
       <a className="sat-ad-link" href={AD_URL} rel="sponsored noopener">
-        <img
-          src={`${base}-1600.webp`}
-          srcSet={`${base}-800.webp 800w, ${base}-1600.webp 1600w`}
-          sizes="(max-width: 720px) calc(100vw - 32px), 680px"
-          width={1600}
-          height={1066}
-          alt="Advertisement: Anchor Silver Capital free Precious Metals IRA Handbook. Get your free copy at anchorsilvercapital.com."
-          loading="lazy"
-          decoding="async"
-        />
+        {/* Phones (under 768px) get the square creative; wider screens the landscape one. */}
+        <picture>
+          <source
+            media="(max-width: 767.98px)"
+            srcSet={`${square}-600.webp 600w, ${square}-1200.webp 1200w`}
+            sizes="calc(100vw - 32px)"
+            width={1600}
+            height={1600}
+          />
+          <img
+            src={`${wide}-1600.webp`}
+            srcSet={`${wide}-800.webp 800w, ${wide}-1600.webp 1600w`}
+            sizes="680px"
+            width={1600}
+            height={1066}
+            alt="Advertisement: Anchor Silver Capital free Precious Metals IRA Handbook. Get your free copy at anchorsilvercapital.com."
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       </a>
     </aside>
   );

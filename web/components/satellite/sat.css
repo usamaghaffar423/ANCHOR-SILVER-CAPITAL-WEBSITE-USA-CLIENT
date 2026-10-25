@@ -18,9 +18,8 @@ body {
   color: var(--text);
   font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-/* Both sites: the logo's dark green (#092619) with a metallic accent. */
-body.sat-gold,
-body.sat-silver {
+/* Gold: the logo's dark green (#092619) with the gold metallic gradient. */
+body.sat-gold {
   color-scheme: dark;
   --bg: #092619;
   --panel: #0d3222;
@@ -30,18 +29,26 @@ body.sat-silver {
   --line: #1d4d35;
   --up: #86d9a6;
   --down: #f29a85;
-}
-body.sat-gold {
   --accent: #d9b866;
   --accent-ink: #17110a;
   --edge: rgba(217, 184, 102, 0.32);
   --grad: linear-gradient(135deg, #8f6c2a 0%, #d9b866 30%, #f7e8aa 50%, #b08a3a 72%, #e3c474 100%);
   --grad-fill: linear-gradient(135deg, #d9b866 0%, #f7e8aa 45%, #e3c474 75%, #b08a3a 100%);
 }
+/* Silver: warm ivory (#F7F5F0, the light logo tile), graphite text, silver metallic accent. */
 body.sat-silver {
-  --accent: #d4d6d8;
-  --accent-ink: #0b1a12;
-  --edge: rgba(212, 214, 216, 0.3);
+  color-scheme: light;
+  --bg: #f7f5f0;
+  --panel: #fffdf8;
+  --panel-2: #efece4;
+  --text: #1e2125;
+  --muted: #5a5f66;
+  --line: #e1dccf;
+  --up: #0c7a47;
+  --down: #b3361f;
+  --accent: #475562;
+  --accent-ink: #1e2125;
+  --edge: #c3c5c8;
   --grad: linear-gradient(135deg, #8a8d91 0%, #d4d6d8 30%, #eceeef 50%, #a3a5a9 72%, #d8dadb 100%);
   --grad-fill: linear-gradient(135deg, #d4d6d8 0%, #eceeef 45%, #d8dadb 75%, #a3a5a9 100%);
 }
@@ -800,4 +807,97 @@ a {
   padding: 0;
   overflow: hidden;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+}
+
+/* ---- silver (light): silver is a fill/border/rule colour here, text stays graphite ---- */
+.sat-silver .sat-hero h1,
+.sat-silver .sat-content h2,
+.sat-silver .sat-faq h2 {
+  background: none;
+  -webkit-text-fill-color: var(--text);
+  color: var(--text);
+}
+.sat-silver .sat-hero h1::after,
+.sat-silver .sat-content h2::after,
+.sat-silver .sat-faq h2::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 88px;
+  margin-top: 12px;
+  border-radius: 2px;
+  background: var(--grad);
+}
+.sat-silver .sat-legal h1,
+.sat-silver .sat-legal h2 {
+  color: var(--text);
+}
+.sat-silver .sat-mark-text b {
+  color: var(--text);
+}
+.sat-silver .sat-btn {
+  border: 1px solid #8a8d91;
+}
+.sat-silver .sat-seg button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px #8a8d91;
+}
+.sat-silver .sat-gauge-pin {
+  box-shadow: 0 0 0 1px #8a8d91;
+}
+.sat-silver .sat-card,
+.sat-silver .sat-trust {
+  box-shadow: 0 1px 2px rgba(30, 33, 37, 0.06);
+}
+
+/* ---- footer: notice + links on the left, sister-site module on the right ---- */
+.sat-footer-grid {
+  display: grid;
+  gap: 28px;
+}
+@media (min-width: 820px) {
+  .sat-footer-grid {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: start;
+  }
+}
+.sat-sister {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  border: 1px solid var(--edge);
+  border-radius: 12px;
+  padding: 18px;
+  background: var(--panel);
+  color: var(--text);
+}
+.sat-sister-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--edge);
+}
+.sat-sister-eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sat-sister h2 {
+  margin: 2px 0 4px;
+  font: 700 1.2rem/1.25 var(--display);
+  color: var(--text);
+}
+.sat-sister p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.sat-sister .sat-sister-eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
 }

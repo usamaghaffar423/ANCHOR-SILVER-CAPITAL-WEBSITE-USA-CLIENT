@@ -24,8 +24,10 @@ export type SatSite = {
   wordmark: string;
   /** Source label sent with contact-form submissions. */
   source: string;
-  /** Five metallic gradient stops of the site's logo (offsets 0, .3, .5, .7, 1). */
-  logoStops: [string, string, string, string, string];
+  /** Logo emblem gradient (offset, colour) and the background tile colour it sits on. */
+  logo: { stops: [number, string][]; tile: string };
+  /** Page colour scheme and browser UI colour. */
+  scheme: "dark" | "light";
 };
 
 export const SAT_SITES: Record<SatKey, SatSite> = {
@@ -38,7 +40,11 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     metal: "Gold",
     wordmark: "Gold Current Price",
     source: "goldcurrentprice.com",
-    logoStops: ["#8f6c2a", "#d9b866", "#f7e8aa", "#b08a3a", "#e3c474"],
+    logo: {
+      stops: [[0, "#8f6c2a"], [0.3, "#d9b866"], [0.5, "#f7e8aa"], [0.7, "#b08a3a"], [1, "#e3c474"]],
+      tile: "#092619",
+    },
+    scheme: "dark",
   },
   silver: {
     key: "silver",
@@ -49,7 +55,8 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
     metal: "Silver",
     wordmark: "Silver Current Price",
     source: "silvercurrentprice.com",
-    logoStops: ["#8a8d91", "#d4d6d8", "#eceeef", "#a3a5a9", "#d8dadb"],
+    logo: { stops: [[0, "#0a2519"], [0.5, "#3b6b55"], [1, "#0a2519"]], tile: "#F7F5F0" },
+    scheme: "light",
   },
 };
 

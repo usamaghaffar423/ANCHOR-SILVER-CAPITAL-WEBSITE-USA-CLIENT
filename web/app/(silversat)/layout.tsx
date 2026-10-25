@@ -7,7 +7,7 @@ import "@/components/satellite/sat.css";
 const display = Fraunces({ subsets: ["latin"], weight: ["500", "600", "700"], display: "swap", variable: "--font-display" });
 
 /** Browser UI colour matches the logo background. */
-export const viewport: Viewport = { themeColor: "#092619" };
+export const viewport: Viewport = { themeColor: "#F7F5F0", colorScheme: "light" };
 
 /** Root layout for silvercurrentprice.com — independent of the Anchor Silver Capital site chrome. */
 export default function Layout({ children }: { children: ReactNode }) {

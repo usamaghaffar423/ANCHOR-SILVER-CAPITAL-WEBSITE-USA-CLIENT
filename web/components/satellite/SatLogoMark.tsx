@@ -1,19 +1,18 @@
 import type { SatSite } from "@/lib/satellites";
 
-const OFFSETS = ["0", ".3", ".5", ".7", "1"];
-
 /**
- * The emblem from the supplied dark logo (ring, trend arrow, baseline), inline so
- * the header needs no extra request. Geometry matches public/<site>/mark.svg.
+ * The emblem from the supplied logo (ring, trend arrow, baseline), inline so there is no
+ * extra request. Geometry matches public/<site>/mark.svg; gradient comes from the site's
+ * own logo file (gold on the dark tile, dark green on the cream tile).
  */
-export function SatLogoMark({ site }: { site: SatSite }) {
+export function SatLogoMark({ site, size = 40 }: { site: SatSite; size?: number }) {
   const id = `sat-mark-${site.key}`;
   return (
-    <svg viewBox="1380 890 1740 1740" width="40" height="40" aria-hidden="true" focusable="false" className="sat-logo-mark">
+    <svg viewBox="1380 890 1740 1740" width={size} height={size} aria-hidden="true" focusable="false" className="sat-logo-mark">
       <defs>
         <linearGradient id={id} gradientUnits="userSpaceOnUse" x1="1350" y1="0" x2="3150" y2="0">
-          {site.logoStops.map((c, i) => (
-            <stop key={OFFSETS[i]} offset={OFFSETS[i]} stopColor={c} />
+          {site.logo.stops.map(([o, c]) => (
+            <stop key={o} offset={o} stopColor={c} />
           ))}
         </linearGradient>
       </defs>
