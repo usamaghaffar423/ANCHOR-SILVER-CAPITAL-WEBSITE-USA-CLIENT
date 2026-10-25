@@ -9,8 +9,10 @@ import { AD_URL, type SatSite } from "@/lib/satellites";
  * rewrite). The square creatives (ad-square-*.webp) are kept for a narrow slot;
  * the layout has none, so only the landscape one renders.
  */
-export function SatAdUnit({ site }: { site: SatSite }) {
+/** `bottom` is the wide banner above the footer; `mid` is the larger 3:2 creative in the page body. */
+export function SatAdUnit({ site, variant = "mid" }: { site: SatSite; variant?: "mid" | "bottom" }) {
   const wide = `/${site.internalPath}/ad-v2-landscape`;
+  const banner = `/${site.internalPath}/ad-v3-banner`;
   const square = `/${site.internalPath}/ad-v2-square`;
   return (
     <aside className="sat-ad" aria-label="Advertisement">
@@ -26,11 +28,15 @@ export function SatAdUnit({ site }: { site: SatSite }) {
             height={1600}
           />
           <img
-            src={`${wide}-1600.webp`}
-            srcSet={`${wide}-800.webp 800w, ${wide}-1600.webp 1600w`}
+            src={variant === "bottom" ? `${banner}-1300.webp` : `${wide}-1600.webp`}
+            srcSet={
+              variant === "bottom"
+                ? `${banner}-650.webp 650w, ${banner}-1300.webp 1300w`
+                : `${wide}-800.webp 800w, ${wide}-1600.webp 1600w`
+            }
             sizes="(min-width: 1072px) 1040px, calc(100vw - 32px)"
-            width={1600}
-            height={1066}
+            width={variant === "bottom" ? 1300 : 1600}
+            height={variant === "bottom" ? 250 : 1066}
             alt="Advertisement: Anchor Silver Capital free Precious Metals IRA Handbook. Get your free copy at anchorsilvercapital.com."
             loading="lazy"
             decoding="async"

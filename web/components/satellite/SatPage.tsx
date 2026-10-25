@@ -106,7 +106,7 @@ export async function SatPage({ site }: { site: SatSite }) {
           </details>
         ))}
       </section>
-      <SatAdUnit site={site} />
+      <SatAdUnit site={site} variant="bottom" />
     </SatShell>
   );
 }
