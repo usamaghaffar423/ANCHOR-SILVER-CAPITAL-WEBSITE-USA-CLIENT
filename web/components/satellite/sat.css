@@ -618,7 +618,12 @@ a {
 /* ---- display ad unit (image creative) ---- */
 .sat-ad {
   margin-top: 36px;
-  max-width: 680px;
+}
+/* phones get the small square creative, so keep it compact there */
+@media (max-width: 767.98px) {
+  .sat-ad {
+    max-width: 420px;
+  }
 }
 .sat-ad-label {
   display: block;
