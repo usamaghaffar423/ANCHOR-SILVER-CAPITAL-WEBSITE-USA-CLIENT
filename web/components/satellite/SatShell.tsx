@@ -1,12 +1,16 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { SatLogoMark } from "@/components/satellite/SatLogoMark";
+import { SatNav } from "@/components/satellite/SatNav";
 import { SatSister } from "@/components/satellite/SatSister";
-import { PUBLISHER, type SatSite } from "@/lib/satellites";
+import { SAT_SITES, type SatSite } from "@/lib/satellites";
 
 /** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
 export function SatShell({ site, children }: { site: SatSite; children: ReactNode }) {
   const [first, ...rest] = site.wordmark.split(" ");
+  const other = site.key === "gold" ? SAT_SITES.silver : SAT_SITES.gold;
+  const otherLabel = `${other.metal} Price`;
+  const otherHref = `https://${other.host}/`;
   return (
     <>
       <a className="sat-skip" href="#main">
@@ -20,6 +24,14 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
               <b>{first}</b> <span>{rest.join(" ")}</span>
             </span>
           </Link>
+          <SatNav
+            items={[
+              { label: `${site.metal} Price`, href: "/" },
+              { label: otherLabel, href: otherHref, external: true },
+              { label: "Contact", href: "/contact" },
+              { label: "Disclosure", href: "/disclosure" },
+            ]}
+          />
         </div>
       </header>
       <main id="main" className="sat-wrap">
@@ -33,13 +45,14 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
               investment, tax or legal advice. Past prices do not predict future prices.
             </p>
             <nav aria-label="Footer">
+              <a href={otherHref}>{otherLabel}</a>
               <Link href="/contact">Contact</Link>
               <Link href="/disclosure">Disclosure</Link>
               <Link href="/privacy">Privacy</Link>
               <Link href="/terms">Terms</Link>
             </nav>
             <p style={{ marginTop: 10 }}>
-              © {new Date().getFullYear()} {PUBLISHER}
+              © {new Date().getFullYear()} {site.wordmark}
             </p>
           </div>
           <SatSister site={site} />

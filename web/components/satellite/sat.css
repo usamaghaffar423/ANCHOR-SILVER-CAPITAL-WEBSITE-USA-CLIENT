@@ -901,3 +901,72 @@ a {
   margin: 0;
   font-size: 0.68rem;
 }
+
+/* ---- header: logo left, dense data-site menu right ---- */
+.sat-header .sat-wrap {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+.sat-nav {
+  display: flex;
+  align-items: stretch;
+  margin-left: auto;
+}
+.sat-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font: 700 0.74rem/1.2 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.sat-nav a:last-child {
+  border-right: 1px solid var(--line);
+}
+.sat-nav a:hover {
+  color: var(--text);
+}
+.sat-nav a.is-current {
+  color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.sat-nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+@media (max-width: 720px) {
+  .sat-nav {
+    order: 3;
+    flex: 1 0 100%;
+    margin: 0 -16px;
+    padding: 0 16px;
+    border-top: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sat-nav::-webkit-scrollbar {
+    display: none;
+  }
+  /* four items share the row so none (Disclosure included) is ever off-screen */
+  .sat-nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 10px 6px;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+  .sat-nav a:first-child {
+    border-left: 0;
+  }
+}
+@media (max-width: 380px) {
+  .sat-nav a {
+    padding: 10px 4px;
+    font-size: 0.62rem;
+    letter-spacing: 0.03em;
+  }
+}

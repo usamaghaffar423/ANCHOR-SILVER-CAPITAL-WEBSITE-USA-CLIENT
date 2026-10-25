@@ -47,7 +47,7 @@ const SMALL_TITLES: Record<SmallPage, [string, string]> = {
   disclosure: ["Ownership and advertising disclosure", "Ownership and advertising disclosure"],
 };
 
-/** Metadata for the small pages (self-canonical). Privacy and terms stay out of the index. */
+/** Metadata for the small pages (self-canonical, indexable). */
 export function satLegalMeta(site: SatSite, kind: SmallPage): Metadata {
   const [title, label] = SMALL_TITLES[kind];
   return {
@@ -56,6 +56,6 @@ export function satLegalMeta(site: SatSite, kind: SmallPage): Metadata {
     description: `${label} for ${site.host}.`,
     alternates: { canonical: `${site.origin}/${kind}` },
     icons: icons(site),
-    robots: { index: kind === "contact" || kind === "disclosure", follow: true },
+    robots: { index: true, follow: true },
   };
 }
