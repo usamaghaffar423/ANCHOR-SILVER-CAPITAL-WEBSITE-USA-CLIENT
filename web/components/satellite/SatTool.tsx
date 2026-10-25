@@ -350,7 +350,15 @@ function CandleChart({
               ))}
               {shown.map((c, i) =>
                 i % geo.step === 0 ? (
-                  <text key={c.t} x={geo.x(i)} y={h - 6} fontSize="11" fill="var(--muted)" textAnchor="middle">
+                  // Labels near either edge are anchored inward so they are never cut off by the SVG box.
+                  <text
+                    key={c.t}
+                    x={geo.x(i) < M.left + 24 ? M.left : geo.x(i) > w - M.right - 24 ? w - M.right : geo.x(i)}
+                    y={h - 6}
+                    fontSize="11"
+                    fill="var(--muted)"
+                    textAnchor={geo.x(i) < M.left + 24 ? "start" : geo.x(i) > w - M.right - 24 ? "end" : "middle"}
+                  >
                     {fmtDay(c.t)}
                   </text>
                 ) : null,
