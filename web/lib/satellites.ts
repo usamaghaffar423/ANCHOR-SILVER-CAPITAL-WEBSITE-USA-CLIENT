@@ -22,7 +22,7 @@ export type SatSite = {
   metal: "Gold" | "Silver";
   /** Wordmark shown in the header and footer. */
   wordmark: string;
-  /** Source label sent with contact-form submissions. */
+  /** Source label sent with advertising-inquiry submissions. */
   source: string;
   /** Logo emblem gradient (offset, colour) and the background tile colour it sits on. */
   logo: { stops: [number, string][]; tile: string };

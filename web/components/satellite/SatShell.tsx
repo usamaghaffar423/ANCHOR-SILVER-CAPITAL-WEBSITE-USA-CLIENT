@@ -28,7 +28,7 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
             items={[
               { label: `${site.metal} Price`, href: "/" },
               { label: otherLabel, href: otherHref, external: true },
-              { label: "Contact", href: "/contact" },
+              { label: "Advertise", href: "/advertise" },
             ]}
           />
         </div>
@@ -45,7 +45,7 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
             </p>
             <nav aria-label="Footer">
               <a href={otherHref}>{otherLabel}</a>
-              <Link href="/contact">Contact</Link>
+              <Link href="/advertise">Advertise</Link>
               <Link href="/privacy">Privacy</Link>
               <Link href="/terms">Terms</Link>
             </nav>

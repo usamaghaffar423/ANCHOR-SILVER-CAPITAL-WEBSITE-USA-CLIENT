@@ -38,12 +38,12 @@ export function satHomeMeta(site: SatSite): Metadata {
   };
 }
 
-type SmallPage = "privacy" | "terms" | "contact";
+type SmallPage = "privacy" | "terms" | "advertise";
 
 const SMALL_TITLES: Record<SmallPage, [string, string]> = {
   privacy: ["Privacy", "Privacy policy"],
   terms: ["Terms of use", "Terms of use"],
-  contact: ["Contact", "Contact"],
+  advertise: ["Advertise", "Advertising inquiries"],
 };
 
 /** Metadata for the small pages (self-canonical, indexable). */

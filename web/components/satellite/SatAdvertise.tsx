@@ -4,13 +4,13 @@ import { useState } from "react";
 import { LEAD_WEBHOOK_URL, NOTICE_VERSION, fetchVisitorIp } from "@/lib/lead";
 
 /**
- * General contact form (name, email, message). Posts to the existing GHL inbound
- * webhook with the list:satellite-contact tag and form_type=contact so the
- * workflow can route it separately from a sales lead. Success is shown only after
- * the webhook answers OK.
+ * Advertising-inquiry form (the only form on these sites). Posts to the existing GHL
+ * inbound webhook tagged list:satellite-advertiser / form_type=advertiser_inquiry so the
+ * workflow can route it separately. Success is shown only after the webhook answers OK.
  */
-export function SatContactForm({ source }: { source: string }) {
+export function SatAdvertiseForm({ source }: { source: string }) {
   const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [hp, setHp] = useState("");
@@ -21,8 +21,9 @@ export function SatContactForm({ source }: { source: string }) {
     e.preventDefault();
     if (hp) return; // honeypot
     if (!name.trim()) return setErr("Please enter your name.");
+    if (!company.trim()) return setErr("Please enter your company name.");
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return setErr("Please enter a valid email address.");
-    if (message.trim().length < 3) return setErr("Please enter a message.");
+    if (message.trim().length < 3) return setErr("Please tell us what you would like to advertise.");
     setErr("");
     setState("sending");
     try {
@@ -32,11 +33,12 @@ export function SatContactForm({ source }: { source: string }) {
         body: JSON.stringify({
           first_name: name.trim(),
           name: name.trim(),
+          company_name: company.trim(),
           email: email.trim(),
           message: message.trim(),
-          tags: ["list:satellite-contact"],
-          tag: "list:satellite-contact",
-          form_type: "contact",
+          tags: ["list:satellite-advertiser"],
+          tag: "list:satellite-advertiser",
+          form_type: "advertiser_inquiry",
           lead_source: source,
           ip: await fetchVisitorIp(),
           page_url: location.href,
@@ -54,7 +56,7 @@ export function SatContactForm({ source }: { source: string }) {
   if (state === "done") {
     return (
       <p role="status" className="sat-msg-ok">
-        Thank you. Your message has been sent and we will reply by email.
+        Thank you. Your inquiry has been sent and we will reply by email.
       </p>
     );
   }
@@ -62,8 +64,12 @@ export function SatContactForm({ source }: { source: string }) {
   return (
     <form className="sat-form sat-contact" onSubmit={onSubmit} noValidate>
       <label>
-        Name
+        Your name
         <input className="sat-input" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+      </label>
+      <label>
+        Company
+        <input className="sat-input" value={company} onChange={(e) => setCompany(e.target.value)} autoComplete="organization" />
       </label>
       <label>
         Email
@@ -77,14 +83,14 @@ export function SatContactForm({ source }: { source: string }) {
         />
       </label>
       <label>
-        Message
+        What would you like to advertise?
         <textarea className="sat-input" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
       <div className="sat-hp" aria-hidden="true">
         <input tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} name="website" />
       </div>
       <button className="sat-btn" type="submit" disabled={state === "sending"}>
-        {state === "sending" ? "Sending…" : "Send message"}
+        {state === "sending" ? "Sending…" : "Send inquiry"}
       </button>
       {err && (
         <p role="alert" className="sat-msg-err">

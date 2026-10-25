@@ -16,8 +16,8 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             <p>Last updated {UPDATED}.</p>
             <h2>Who runs this site</h2>
             <p>
-              {site.host} is run by its owner. Questions about this policy: use the{" "}
-              <Link href="/contact">contact page</Link>.
+              {site.host} is run by its owner. Questions about this policy can be sent through the{" "}
+              <Link href="/advertise">advertising inquiry form</Link> (please mention "privacy" in your message).
             </p>
             <h2>What we collect</h2>
             <p>
@@ -30,11 +30,11 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
               (Cloudflare), which handles technical data such as your IP address and browser type to
               deliver the page and protect it from abuse.
             </p>
-            <h2>Contact form</h2>
+            <h2>Advertising inquiry form</h2>
             <p>
-              If you send us a message, we collect the name, email address and message you enter, your
-              IP address and the page you wrote from. They go to the site owner&apos;s
-              customer-management system (GoHighLevel) and are used to reply to you.
+              If you send an advertising inquiry, we collect the name, company, email address and
+              message you enter, your IP address and the page you wrote from. They go to the site
+              owner&apos;s customer-management system (GoHighLevel) and are used to reply to you.
             </p>
             <h2>Price data</h2>
             <p>

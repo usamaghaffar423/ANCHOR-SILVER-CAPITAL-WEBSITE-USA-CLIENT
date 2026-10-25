@@ -1,10 +1,8 @@
-import { SatContactPage } from "@/components/satellite/SatContactPage";
-import { satLegalMeta } from "@/lib/satellite-meta";
-import { SAT_SITES } from "@/lib/satellites";
+import { permanentRedirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-export const metadata = satLegalMeta(SAT_SITES.gold, "contact");
 
+/** The general contact form is gone; the only form is the advertising inquiry. */
 export default function Page() {
-  return <SatContactPage site={SAT_SITES.gold} />;
+  permanentRedirect("/advertise");
 }
