@@ -1,5 +1,5 @@
 import { JsonLd } from "@/components/site/JsonLd";
-import { SatAdUnit, SatTrust } from "@/components/satellite/SatConvert";
+import { SatAdUnit } from "@/components/satellite/SatConvert";
 import { SatShell } from "@/components/satellite/SatShell";
 import { SatTool } from "@/components/satellite/SatTool";
 import { SAT_CONTENT } from "@/lib/satellite-content";
@@ -82,9 +82,6 @@ export async function SatPage({ site }: { site: SatSite }) {
         purities={c.purities}
         chartNote={c.chartNote}
         embedCode={embedCode}
-        afterSpot={
-          <SatTrust site={site} />
-        }
       />
 
       <SatAdUnit site={site} />

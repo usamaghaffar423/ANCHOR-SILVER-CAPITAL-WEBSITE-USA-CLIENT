@@ -960,7 +960,7 @@ a {
   .sat-nav::-webkit-scrollbar {
     display: none;
   }
-  /* four items share the row so none (Disclosure included) is ever off-screen */
+  /* the menu items share the row so none is ever off-screen */
   .sat-nav a {
     flex: 1 1 auto;
     justify-content: center;

@@ -1,20 +1,4 @@
-import { SAT_CONTENT } from "@/lib/satellite-content";
 import { AD_URL, type SatSite } from "@/lib/satellites";
-
-/** Trust bar. Every marker is taken from copy already published on anchorsilvercapital.com. */
-export function SatTrust({ site }: { site: SatSite }) {
-  const c = SAT_CONTENT[site.key];
-  return (
-    <ul className="sat-trust" aria-label="About the advertised service">
-      {c.trust.map((t) => (
-        <li key={t.label}>
-          <span>{t.label}</span>
-          <b>{t.value}</b>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 /**
  * Display ad unit: the advertiser's own image creative under a small "Ad" label.

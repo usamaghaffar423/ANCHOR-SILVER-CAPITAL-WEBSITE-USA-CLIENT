@@ -29,7 +29,6 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
               { label: `${site.metal} Price`, href: "/" },
               { label: otherLabel, href: otherHref, external: true },
               { label: "Contact", href: "/contact" },
-              { label: "Disclosure", href: "/disclosure" },
             ]}
           />
         </div>

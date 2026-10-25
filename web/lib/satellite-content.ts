@@ -21,8 +21,6 @@ export type SatContent = {
   purities: { label: string; fineness: number }[];
   /** Plain-language description of what the chart shows. */
   chartNote: string;
-  /** Verifiable trust markers (all taken from the published anchorsilvercapital.com copy). */
-  trust: { label: string; value: string }[];
 };
 
 export const SAT_CONTENT: Record<SatKey, SatContent> = {
@@ -92,12 +90,6 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
       { label: "18k (.750)", fineness: 0.75 },
       { label: "14k (.583)", fineness: 0.583 },
       { label: "10k (.417)", fineness: 0.417 },
-    ],
-    trust: [
-      { label: "IRA custodian", value: "American Estate & Trust (AET)" },
-      { label: "Depository", value: "IDS of Delaware, insured" },
-      { label: "Metals", value: "IRS-approved bullion only" },
-      { label: "Premium", value: "Capped at 15% over spot" },
     ],
   },
 
@@ -174,12 +166,6 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
       { label: ".900 pre-1965 US coin", fineness: 0.9 },
       { label: ".800", fineness: 0.8 },
       { label: ".350 wartime nickel", fineness: 0.35 },
-    ],
-    trust: [
-      { label: "IRA custodian", value: "American Estate & Trust (AET)" },
-      { label: "Depository", value: "IDS of Delaware, insured" },
-      { label: "Metals", value: "IRS-approved bullion only" },
-      { label: "Premium", value: "Capped at 15% over spot" },
     ],
   },
 };
