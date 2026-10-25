@@ -4,12 +4,14 @@ import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
+  FileDown,
   FileText,
   ShieldCheck,
 } from "lucide-react";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { JsonLd } from "@/components/site/JsonLd";
-import { ButtonLink, Card, Eyebrow, H2, PhoneLink, Section } from "@/components/site/ui";
+import { ButtonLink, Card, Eyebrow, H2, PhoneLink, Section, buttonStyles } from "@/components/site/ui";
+import { BOOKING_URL } from "@/lib/lead";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 // Thank-you pages are only meant to be reached after a form submit: keep them out of the index.
@@ -60,9 +62,38 @@ export default function ThankYouHandbookPage() {
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-silver sm:text-lg">
-            Your Silver IRA Handbook is being sent to your email. A specialist will also
-            be in touch shortly. Here&apos;s a preview of what&apos;s inside.
+            Your Silver IRA Handbook is being sent to your email, or you can download it
+            right now. A specialist will also be in touch shortly.
           </p>
+
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <a
+              href="/precious-metals-ira-handbook.pdf"
+              download="Precious-Metals-IRA-Handbook.pdf"
+              className={`${buttonStyles.silver} px-8 py-4 text-base`}
+            >
+              <FileDown className="h-5 w-5" aria-hidden="true" />
+              Download the Handbook (PDF)
+            </a>
+            <p className="text-xs text-silver-deep">PDF, about 2 MB</p>
+            {BOOKING_URL ? (
+              <a href={BOOKING_URL} rel="noopener" className={buttonStyles.outlineLight}>
+                Pick a time for your call
+              </a>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  disabled
+                  aria-disabled="true"
+                  className={`${buttonStyles.outlineLight} cursor-not-allowed opacity-60`}
+                >
+                  Pick a time for your call
+                </button>
+                <p className="text-xs text-silver-deep">Online scheduling is coming soon.</p>
+              </>
+            )}
+          </div>
         </div>
       </section>
 

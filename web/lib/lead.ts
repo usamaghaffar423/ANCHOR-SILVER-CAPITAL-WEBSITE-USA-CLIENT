@@ -11,6 +11,21 @@ export const LEAD_WEBHOOK_URL =
 
 export const NOTICE_VERSION = "v2.0";
 
+/** Where every lead form sends a visitor after a successful submit. */
+export const THANK_YOU_PATH = "/thank-you-handbook";
+
+/**
+ * Leave for the thank-you page with a full page load (so any popup or modal the form
+ * was in is gone, and it also works between the two app roots). The short delay lets the
+ * UET conversion event finish sending before the page unloads.
+ */
+export function goToThankYou(delayMs = 500) {
+  window.setTimeout(
+    () => window.location.assign(new URL(THANK_YOU_PATH, window.location.origin).href),
+    delayMs,
+  );
+}
+
 /**
  * Scheduling link for the "Pick a time for your call" button on the landing
  * page's thank-you state. Ron is supplying it; while empty the button renders

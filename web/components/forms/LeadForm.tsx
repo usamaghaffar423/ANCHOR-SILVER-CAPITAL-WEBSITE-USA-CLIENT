@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import { buttonStyles } from "@/components/site/ui";
 import {
   LEAD_WEBHOOK_URL,
   NOTICE_VERSION,
   fetchVisitorIp,
+  goToThankYou,
   readUtmFields,
   toE164,
   trackUet,
@@ -41,8 +41,8 @@ const labelCls = "text-sm font-semibold text-foreground";
  * Native replacement for every embedded GHL form. POSTs the universal lead
  * payload (Landing dev instructions §1–2) straight to the GHL inbound
  * webhook — E.164 phone, UTM/msclkid capture, `website` honeypot, visitor IP —
- * then fires the UET `lead` event and redirects to the thank-you page (no
- * download is offered — GHL emails the handbook). No consent checkboxes: the compliance notice renders
+ * then fires the UET `lead` event and redirects to the thank-you page, which has
+ * the handbook download button (GHL also emails it). No consent checkboxes: the compliance notice renders
  * directly under the submit button on every instance.
  */
 export function LeadForm({
@@ -52,11 +52,10 @@ export function LeadForm({
   submitLabel?: string;
   className?: string;
 }) {
-  const router = useRouter();
   const uid = useId();
   const id = (n: string) => `${uid}-${n}`;
   const [err, setErr] = useState("");
-  const [sent, setSent] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [sending, setSending] = useState(false);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -119,26 +118,15 @@ export function LeadForm({
           throw new Error(`webhook ${r.status}`);
         }
         trackUet("lead", { event_category: "lead_form", event_label: "site_form" });
-        // GHL sends the handbook from its workflow — go straight to the
-        // thank-you page; nothing is offered for download here.
-        setSent(true);
-        router.push("/thank-you-handbook");
+        // No inline banner: straight to the thank-you page (download button lives there).
+        setRedirecting(true);
+        goToThankYou();
       } catch (e) {
         console.error("[lead-form] webhook request failed", e);
         setSending(false);
         setErr("Something went wrong. Please try again or call (866) 818-7243.");
       }
     })();
-  }
-
-  if (sent) {
-    return (
-      <div className={`py-8 text-center ${className}`} role="status">
-        <h3 className="font-display text-xl text-foreground">
-          Thank you. Your brochure is on its way, and a specialist will call you shortly.
-        </h3>
-      </div>
-    );
   }
 
   return (
@@ -205,7 +193,7 @@ export function LeadForm({
         disabled={sending}
         className={`${buttonStyles.primary} h-12 w-full disabled:opacity-60`}
       >
-        {sending ? "Sending..." : submitLabel}
+        {sending ? (redirecting ? "Redirecting..." : "Sending...") : submitLabel}
       </button>
       <p className="text-xs leading-relaxed text-muted-foreground">
         By submitting, you agree Anchor Silver Capital LLC may call, text, or email you about your

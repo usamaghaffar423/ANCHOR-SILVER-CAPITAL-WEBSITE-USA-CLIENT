@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  BOOKING_URL,
   LEAD_WEBHOOK_URL,
   fetchVisitorIp,
+  goToThankYou,
   setUetEnhancedConversion,
   trackUet,
 } from "@/lib/lead";
@@ -12,7 +12,7 @@ import {
 export function LeadCapture() {
   const formRef = useRef<HTMLFormElement>(null);
   const [err, setErr] = useState("");
-  const [sent, setSent] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -49,15 +49,6 @@ export function LeadCapture() {
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, []);
-
-  useEffect(() => {
-    if (!sent) return;
-    try {
-      document.getElementById("thanks")?.scrollIntoView({ block: "nearest" });
-    } catch {
-      /* noop */
-    }
-  }, [sent]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -108,7 +99,10 @@ export function LeadCapture() {
       // The submitted email and E.164 phone, set right before the lead event.
       setUetEnhancedConversion((data.email ?? "").trim(), data.phone);
       trackUet("lead", { event_category: "lead_form", event_label: "landing_page" });
-      setSent(true);
+      // No inline panel: go to the thank-you page. Longer delay than the site forms because
+      // this is a full navigation between app roots and the UET request must get out first.
+      setRedirecting(true);
+      goToThankYou(700);
     }
 
     setSending(true);
@@ -140,7 +134,7 @@ export function LeadCapture() {
 
   return (
     <>
-      <div id="formView" hidden={sent}>
+      <div id="formView">
         <h2>Send me the free handbook</h2>
         <p className="sub">A specialist will also call you shortly to answer your questions.</p>
         <form id="leadForm" ref={formRef} noValidate onSubmit={onSubmit}>
@@ -211,7 +205,7 @@ export function LeadCapture() {
             {err}
           </div>
           <button className="go" type="submit" disabled={sending}>
-            {sending ? "Sending..." : "Send me the handbook"}
+            {sending ? (redirecting ? "Redirecting..." : "Sending...") : "Send me the handbook"}
           </button>
           <p className="notice">
             By submitting, you agree Anchor Silver Capital LLC may call, text, or email you about
@@ -219,25 +213,6 @@ export function LeadCapture() {
             <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.
           </p>
         </form>
-      </div>
-      <div className={sent ? "thanks on" : "thanks"} id="thanks" aria-live="polite">
-        <h2>Thank you. Your handbook is on its way.</h2>
-        <p>
-          We are emailing it to you now. A specialist will call you shortly. You can also reach us at{" "}
-          <span className="num">(866) 818-7243</span>.
-        </p>
-        {BOOKING_URL ? (
-          <a className="dl" href={BOOKING_URL} rel="noopener">
-            Pick a time for your call
-          </a>
-        ) : (
-          <>
-            <button type="button" className="dl" disabled aria-disabled="true">
-              Pick a time for your call
-            </button>
-            <p className="hint">Online scheduling is coming soon.</p>
-          </>
-        )}
       </div>
     </>
   );
