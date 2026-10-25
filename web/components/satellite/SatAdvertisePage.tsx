@@ -8,7 +8,7 @@ export async function SatAdvertisePage({ site }: { site: SatSite }) {
   return (
     <SatShell site={site}>
       <article className="sat-legal">
-        <h1>Advertise on {site.host}</h1>
+        <h1>Advertising inquiries</h1>
         <p>
           Interested in advertising on {site.host}? Tell us about your business and what you would like to
           promote. Inquiries are reviewed by the site&apos;s owner, and we reply by email.

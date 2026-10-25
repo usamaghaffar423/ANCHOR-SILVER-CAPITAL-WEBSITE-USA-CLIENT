@@ -1076,3 +1076,12 @@ body {
     font-size: 0.8rem;
   }
 }
+
+/* long words (domain names) must wrap rather than push the page wider on small screens */
+.sat-legal h1,
+.sat-legal h2,
+.sat-legal p,
+.sat-legal li,
+.sat-footer p {
+  overflow-wrap: anywhere;
+}
