@@ -13,7 +13,6 @@ export function GET(req: Request) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${site.origin}/</loc><lastmod>${now}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority></url>
   <url><loc>${site.origin}/contact</loc><lastmod>${now}</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>${site.origin}/disclosure</loc><lastmod>${now}</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>${site.origin}/privacy</loc><lastmod>${now}</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>${site.origin}/terms</loc><lastmod>${now}</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>

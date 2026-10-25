@@ -2,8 +2,7 @@ import { AD_URL, type SatSite } from "@/lib/satellites";
 
 /**
  * Display ad unit: the advertiser's own image creative under a small "Ad" label.
- * The whole image is one link to the advertiser's IRA kit page (plain URL, no tags). Who
- * owns the site is on the Disclosure page, linked from every footer.
+ * The whole image is one link to the advertiser's IRA kit page (plain URL, no tags).
  *
  * Files are in public/sat-gold|sat-silver (that prefix is excluded from the host
  * rewrite). The square creatives (ad-square-*.webp) are kept for a narrow slot;

@@ -5,7 +5,7 @@ import { SatNav } from "@/components/satellite/SatNav";
 import { SatSister } from "@/components/satellite/SatSister";
 import { SAT_SITES, type SatSite } from "@/lib/satellites";
 
-/** Header + footer for a standalone price site, including the visible sponsor/ownership disclosure. */
+/** Header + footer for a standalone price site. */
 export function SatShell({ site, children }: { site: SatSite; children: ReactNode }) {
   const [first, ...rest] = site.wordmark.split(" ");
   const other = site.key === "gold" ? SAT_SITES.silver : SAT_SITES.gold;
@@ -46,7 +46,6 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
             <nav aria-label="Footer">
               <a href={otherHref}>{otherLabel}</a>
               <Link href="/contact">Contact</Link>
-              <Link href="/disclosure">Disclosure</Link>
               <Link href="/privacy">Privacy</Link>
               <Link href="/terms">Terms</Link>
             </nav>

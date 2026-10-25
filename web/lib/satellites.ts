@@ -66,10 +66,6 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
  */
 export const AD_URL = "https://anchorsilvercapital.com/gold-silver-ira";
 
-/** Publisher named in the visible disclosure and the JSON-LD. */
-export const PUBLISHER = "Anchor Silver Capital LLC";
-export const PUBLISHER_URL = "https://anchorsilvercapital.com";
-
 /**
  * 404 unless the request arrived on the site's own host (or its www alias).
  * Keeps the internal `/sat-gold` and `/sat-silver` trees from being reachable

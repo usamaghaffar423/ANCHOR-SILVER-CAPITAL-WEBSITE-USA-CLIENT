@@ -16,8 +16,7 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             <p>Last updated {UPDATED}.</p>
             <h2>Who runs this site</h2>
             <p>
-              {site.host} is run by its owner, who is identified on the{" "}
-              <Link href="/disclosure">disclosure page</Link>. Questions about this policy: use the{" "}
+              {site.host} is run by its owner. Questions about this policy: use the{" "}
               <Link href="/contact">contact page</Link>.
             </p>
             <h2>What we collect</h2>
@@ -44,10 +43,8 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             </p>
             <h2>Advertising links</h2>
             <p>
-              The advertisements lead to the website of the site owner
-              (see the <Link href="/disclosure">disclosure page</Link>). The links carry tags that
-              identify this site as the referrer. Once you leave this site, the privacy policy of the
-              site you arrive at applies.
+              The advertisements lead to the website of the site owner.
+              Once you leave this site, the privacy policy of the site you arrive at applies.
             </p>
           </>
         ) : (
@@ -69,8 +66,7 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             <h2>Advertising and ownership</h2>
             <p>
               The advertisement and related links on this site promote the owner&apos;s own products
-              and services. They are paid-for advertising, not independent recommendations. See the{" "}
-              <Link href="/disclosure">disclosure page</Link> for who owns and operates the site.
+              and services. They are paid-for advertising, not independent recommendations.
             </p>
             <h2>Use of the site</h2>
             <p>
