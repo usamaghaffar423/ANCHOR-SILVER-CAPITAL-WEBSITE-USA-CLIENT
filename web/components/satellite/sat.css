@@ -18,39 +18,43 @@ body {
   color: var(--text);
   font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-/* Gold: the logo's dark green (#092619) with the gold metallic gradient. */
+/* Gold: black page, gold accent (the metallic gradient stays in the logo and one thin rule). */
 body.sat-gold {
   color-scheme: dark;
-  --bg: #092619;
-  --panel: #0d3222;
-  --panel-2: #113b28;
-  --text: #eef3ee;
-  --muted: #a9bdb0;
-  --line: #1d4d35;
+  --bg: #0a0a09;
+  --panel: #131311;
+  --panel-2: #1b1a17;
+  --text: #ece8dd;
+  --muted: #aca696;
+  --line: #2b2923;
   --up: #86d9a6;
   --down: #f29a85;
   --accent: #d9b866;
   --accent-ink: #17110a;
-  --edge: rgba(217, 184, 102, 0.32);
+  --edge: rgba(217, 184, 102, 0.3);
+  --btn: #d9b866;
+  --btn-hover: #e6c97d;
+  --btn-border: #8f6c2a;
   --grad: linear-gradient(135deg, #8f6c2a 0%, #d9b866 30%, #f7e8aa 50%, #b08a3a 72%, #e3c474 100%);
-  --grad-fill: linear-gradient(135deg, #d9b866 0%, #f7e8aa 45%, #e3c474 75%, #b08a3a 100%);
 }
-/* Silver: warm ivory (#F7F5F0, the light logo tile), graphite text, silver metallic accent. */
+/* Silver: ivory page (#F7F5F0, the light logo tile), cool neutral panels and borders, graphite text. */
 body.sat-silver {
   color-scheme: light;
   --bg: #f7f5f0;
-  --panel: #fffdf8;
-  --panel-2: #efece4;
-  --text: #1e2125;
-  --muted: #5a5f66;
-  --line: #e1dccf;
+  --panel: #fbfbfa;
+  --panel-2: #eceeef;
+  --text: #1d2024;
+  --muted: #555a61;
+  --line: #d9dbde;
   --up: #0c7a47;
   --down: #b3361f;
-  --accent: #475562;
-  --accent-ink: #1e2125;
-  --edge: #c3c5c8;
+  --accent: #3f4a56;
+  --accent-ink: #1d2024;
+  --edge: #b4b7bb;
+  --btn: #d4d6d8;
+  --btn-hover: #e3e5e6;
+  --btn-border: #8a8d91;
   --grad: linear-gradient(135deg, #8a8d91 0%, #d4d6d8 30%, #eceeef 50%, #a3a5a9 72%, #d8dadb 100%);
-  --grad-fill: linear-gradient(135deg, #d4d6d8 0%, #eceeef 45%, #d8dadb 75%, #a3a5a9 100%);
 }
 a {
   color: var(--accent);
@@ -968,5 +972,102 @@ a {
     padding: 10px 4px;
     font-size: 0.62rem;
     letter-spacing: 0.03em;
+  }
+}
+
+/* ---- conservative tone: flat, square-cornered, no shine; legibility over decoration ---- */
+body {
+  font-size: 17px;
+}
+/* headings: solid colour, no metallic gradient text */
+.sat-hero h1,
+.sat-content h2,
+.sat-faq h2,
+.sat-legal h1,
+.sat-legal h2 {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--accent);
+}
+.sat-silver .sat-hero h1,
+.sat-silver .sat-content h2,
+.sat-silver .sat-faq h2,
+.sat-silver .sat-legal h1,
+.sat-silver .sat-legal h2 {
+  color: var(--text);
+}
+.sat-silver .sat-hero h1::after,
+.sat-silver .sat-content h2::after,
+.sat-silver .sat-faq h2::after {
+  content: none;
+}
+/* buttons and the selected range: flat fills */
+.sat-btn,
+.sat-seg button[aria-pressed="true"] {
+  background: var(--btn);
+  color: var(--accent-ink);
+  border: 1px solid var(--btn-border);
+  box-shadow: none;
+  filter: none;
+}
+.sat-btn:hover,
+.sat-seg button[aria-pressed="true"]:hover {
+  background: var(--btn-hover);
+  filter: none;
+}
+.sat-seg button[aria-pressed="true"] {
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--btn-border);
+}
+.sat-gauge-pin,
+.sat-silver .sat-gauge-pin {
+  background: var(--accent);
+  box-shadow: none;
+}
+/* square-ish corners, no shadows */
+.sat-card,
+.sat-trust,
+.sat-embed-panel,
+.sat-ad-link,
+.sat-sister,
+.sat-silver .sat-card,
+.sat-silver .sat-trust {
+  border-radius: 4px;
+  box-shadow: none;
+}
+.sat-ad-link img {
+  border-radius: 0;
+}
+.sat-btn,
+.sat-btn-sm,
+.sat-seg,
+.sat-chart-tools button,
+.sat-input,
+.sat-tip,
+.sat-empty {
+  border-radius: 3px;
+}
+.sat-tip {
+  box-shadow: none;
+}
+.sat-gauge-track {
+  border-radius: 2px;
+}
+/* a little larger and plainer where people actually read */
+.sat-footer {
+  font-size: 0.92rem;
+}
+.sat-note,
+.sat-asof {
+  font-size: 0.85rem;
+}
+.sat-card h2,
+.sat-trust span,
+.sat-sister-eyebrow {
+  font-size: 0.78rem;
+}
+@media (min-width: 721px) {
+  .sat-nav a {
+    font-size: 0.8rem;
   }
 }

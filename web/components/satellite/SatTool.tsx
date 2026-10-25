@@ -343,7 +343,7 @@ function CandleChart({
               {geo.yTicks.map((v) => (
                 <g key={v}>
                   <line x1={M.left} x2={w - M.right} y1={geo.y(v)} y2={geo.y(v)} stroke="var(--line)" />
-                  <text x={w - M.right + 6} y={geo.y(v) + 4} fontSize="11" fill="var(--muted)" fontFamily="ui-monospace, Consolas, monospace">
+                  <text x={w - M.right + 6} y={geo.y(v) + 4} fontSize="12" fill="var(--muted)" fontFamily="ui-monospace, Consolas, monospace">
                     {usd(v, 0)}
                   </text>
                 </g>
@@ -355,7 +355,7 @@ function CandleChart({
                     key={c.t}
                     x={geo.x(i) < M.left + 24 ? M.left : geo.x(i) > w - M.right - 24 ? w - M.right : geo.x(i)}
                     y={h - 6}
-                    fontSize="11"
+                    fontSize="12"
                     fill="var(--muted)"
                     textAnchor={geo.x(i) < M.left + 24 ? "start" : geo.x(i) > w - M.right - 24 ? "end" : "middle"}
                   >

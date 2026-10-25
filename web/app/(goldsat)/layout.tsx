@@ -7,7 +7,7 @@ import "@/components/satellite/sat.css";
 const display = Playfair_Display({ subsets: ["latin"], weight: ["600", "700"], display: "swap", variable: "--font-display" });
 
 /** Browser UI colour matches the logo background. */
-export const viewport: Viewport = { themeColor: "#092619", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#0a0a09", colorScheme: "dark" };
 
 /** Root layout for goldcurrentprice.com — independent of the Anchor Silver Capital site chrome. */
 export default function Layout({ children }: { children: ReactNode }) {
