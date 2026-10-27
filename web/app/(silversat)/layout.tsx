@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={`sat-silver ${display.variable}`}>{children}
-        <GoogleAnalytics />
+        <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );

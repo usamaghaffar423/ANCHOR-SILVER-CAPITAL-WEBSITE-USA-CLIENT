@@ -2,6 +2,7 @@ import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { Playfair_Display } from "next/font/google";
 import "@/components/satellite/sat.css";
+import { GoogleAnalytics } from "@/components/satellite/GoogleAnalytics";
 
 // Self-hosted at build time by next/font, so visitors' browsers make no request to Google.
 const display = Playfair_Display({ subsets: ["latin"], weight: ["600", "700"], display: "swap", variable: "--font-display" });
@@ -13,7 +14,9 @@ export const viewport: Viewport = { themeColor: "#0a0a09", colorScheme: "dark" }
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={`sat-gold ${display.variable}`}>{children}</body>
+      <body className={`sat-gold ${display.variable}`}>{children}
+        <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID_GOLD} />
+      </body>
     </html>
   );
 }

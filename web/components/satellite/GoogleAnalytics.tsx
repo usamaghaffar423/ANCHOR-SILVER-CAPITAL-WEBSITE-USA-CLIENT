@@ -1,8 +1,7 @@
 import Script from "next/script";
 
-/** Loads GA4 once site-wide. Renders nothing when NEXT_PUBLIC_GA_ID is unset. */
-export function GoogleAnalytics() {
-  const id = process.env.NEXT_PUBLIC_GA_ID;
+/** Loads GA4 once site-wide. Renders nothing when `id` (the site's NEXT_PUBLIC_GA_ID* env var) is unset. */
+export function GoogleAnalytics({ id }: { id: string | undefined }) {
   if (!id) return null;
   return (
     <>
