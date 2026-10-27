@@ -619,10 +619,35 @@ a {
 .sat-ad {
   margin-top: 36px;
 }
-/* phones get the small square creative, so keep it compact there */
-@media (max-width: 767.98px) {
+/* phones: creative fills the content width (square capped so it is not enormous) */
+.sat-ad-mid {
+  max-width: 560px;
+  margin-inline: auto;
+}
+.sat-ad-bottom {
+  margin-bottom: 8px;
+}
+/* larger screens: full-bleed across the viewport, up to 1600px; the 3:2 creative also never exceeds the screen height */
+@media (min-width: 768px) {
+  body {
+    overflow-x: clip;
+  }
   .sat-ad {
-    max-width: 420px;
+    margin-top: 48px;
+    max-width: none;
+    width: min(100vw, 1600px);
+    margin-left: calc(50% - min(100vw, 1600px) / 2);
+  }
+  .sat-ad-mid {
+    width: min(100vw, 1600px, 135vh);
+    margin-left: calc(50% - min(100vw, 1600px, 135vh) / 2);
+  }
+  .sat-ad-label {
+    padding-inline: 16px;
+  }
+  .sat-ad-link,
+  .sat-ad-link img {
+    border-radius: 0 !important;
   }
 }
 .sat-ad-label {
