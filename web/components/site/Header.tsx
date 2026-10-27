@@ -60,7 +60,12 @@ export function Header() {
       <TopBar />
       <div
         className={`px-5 transition-colors duration-300 ${
-          solid ? "bg-primary shadow-[var(--shadow-card)]" : "bg-ink md:bg-ink/0"
+          // Homepage: the brand green (#092619, same as the hero) at the top and while scrolling.
+          overHero
+            ? `bg-[#092619] ${scrolled ? "shadow-[var(--shadow-card)]" : ""}`
+            : solid
+              ? "bg-primary shadow-[var(--shadow-card)]"
+              : "bg-ink md:bg-ink/0"
         }`}
       >
         <div className="mx-auto flex h-[72px] w-full max-w-6xl items-center justify-between">
