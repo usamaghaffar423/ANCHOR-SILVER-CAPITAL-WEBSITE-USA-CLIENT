@@ -74,10 +74,17 @@
 }
 
 /* ------------------------------- hero ------------------------------- */
+/* The header + hero fill the screen exactly (100svh) and everything in the hero fits inside it. */
 .hp-hero {
   background: var(--g1);
   color: #fff;
-  padding: 12px 0 28px;
+  padding: 12px 0 16px;
+  min-height: calc(100svh - 72px);
+  display: flex;
+  align-items: center;
+}
+.hp-hero > .hp-wrap {
+  width: 100%;
 }
 .hp-hero-grid {
   display: grid;
@@ -89,7 +96,7 @@
 }
 .hp-h1wrap {
   container-type: inline-size;
-  max-width: 600px;
+  max-width: 640px;
 }
 .hp-h1 {
   font-family: var(--hp-display), Georgia, serif;
@@ -719,7 +726,8 @@ html[data-cookie-banner] .hp-sticky {
 /* ------------------------------- desktop ------------------------------- */
 @media (min-width: 860px) {
   .hp-hero {
-    padding: 72px 0 64px;
+    padding: 32px 0;
+    min-height: calc(100svh - 108px);
   }
   .hp-hero-grid {
     grid-template-columns: 1.15fr 0.85fr;
@@ -839,6 +847,125 @@ html[data-cookie-banner] .hp-sticky {
   }
   .hp-sticky {
     display: none;
+  }
+}
+
+/* Short phones (e.g. 375x667, 360x640): tighten so the whole hero, ticks and stars included, fits */
+@media (max-width: 859px) and (max-height: 760px) {
+  .hp-hero {
+    padding: 8px 0 12px;
+  }
+  .hp-hero-grid {
+    gap: 6px;
+  }
+  .hp-sub {
+    margin-top: 6px;
+  }
+  .hp-sub-mob {
+    font-size: 16px;
+  }
+  .hp-photo {
+    width: 34%;
+    margin-bottom: 2px;
+  }
+  .hp-card {
+    padding: 10px 14px;
+  }
+  .hp-q {
+    margin: 4px 0 6px;
+    font-size: 18px;
+  }
+  .hp-acct {
+    gap: 8px;
+  }
+  .hp-acct-btn {
+    min-height: 42px;
+  }
+  .hp-mob-below {
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .hp-hero {
+    padding-top: 4px;
+  }
+  .hp-checks {
+    gap: 4px 12px;
+    font-size: 13px;
+  }
+  .hp-proof {
+    font-size: 13px;
+  }
+}
+
+/* 667px-and-shorter phones: with the cookie bar on screen (first visit) everything must still clear it */
+@media (max-width: 859px) and (max-height: 700px) {
+  .hp-hero {
+    padding-top: 0;
+  }
+  .hp-photo {
+    width: 30%;
+  }
+  .hp-card {
+    padding: 8px 12px;
+  }
+  .hp-q {
+    margin: 3px 0 5px;
+    font-size: 17px;
+  }
+  .hp-acct-btn {
+    min-height: 40px;
+  }
+  .hp-stars svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Short phones (640px-class and iPhone SE): the photo is the first thing to go */
+@media (max-width: 859px) and (max-height: 660px) {
+  .hp-photo {
+    display: none;
+  }
+}
+
+/* Tablets in portrait: keep the photo from pushing the quiz off the screen */
+@media (min-width: 600px) and (max-width: 859px) {
+  .hp-photo {
+    max-width: 300px;
+  }
+}
+
+/* Short desktop windows (<= 780px tall): scale the headline block down so nothing is cut off */
+@media (min-width: 860px) and (max-height: 780px) {
+  .hp-hero {
+    padding: 20px 0;
+  }
+  .hp-h1wrap {
+    max-width: 500px;
+  }
+  .hp-sub {
+    margin-top: 16px;
+    font-size: 20px;
+  }
+  .hp-sub-desk strong {
+    font-size: 20px;
+  }
+  .hp-checks.hp-below {
+    margin-top: 18px;
+  }
+  .hp .hp-proof.hp-below {
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+  .hp-pill {
+    margin-bottom: 14px;
+  }
+  .hp-card {
+    padding: 20px;
+  }
+  .hp-photo {
+    width: 66%;
+    margin-bottom: 10px;
   }
 }
 
