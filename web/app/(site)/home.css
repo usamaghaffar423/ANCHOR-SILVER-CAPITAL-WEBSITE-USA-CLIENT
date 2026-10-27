@@ -9,7 +9,7 @@
   --foot: #061a11;
   --gold: #c5a96a;
   --gold-d: #9a7b34;
-  --gold-t: #8a6d2b;
+  --gold-t: #826626; /* spec #8a6d2b measured 4.47:1 on cream; nudged darker to clear WCAG AA 4.5 */
   --cream: #f7f5f0;
   --cream2: #fbfaf6;
   --ink: #22302a;

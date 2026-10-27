@@ -53,9 +53,9 @@ export const TRUST = [
 export const LOOK_INSIDE = {
   heading: "Take a look inside",
   items: [
-    { src: "/images/home/handbook-cover.webp", w: 1200, h: 1552, caption: "The handbook", alt: "Cover of The Precious Metals IRA Handbook: Gold and Silver" },
-    { src: "/images/home/handbook-page-03.webp", w: 765, h: 990, caption: "10 short chapters", alt: "Handbook contents page listing the chapters" },
-    { src: "/images/home/handbook-page-15.webp", w: 765, h: 990, caption: "Fees, stated plainly", alt: "Handbook chapter page laying out the fees" },
+    { name: "handbook-cover", widths: [320, 640] as [number, number], w: 1200, h: 1552, caption: "The handbook", alt: "Cover of The Precious Metals IRA Handbook: Gold and Silver" },
+    { name: "handbook-page-03", widths: [300, 600] as [number, number], w: 765, h: 990, caption: "10 short chapters", alt: "Handbook contents page listing the chapters" },
+    { name: "handbook-page-15", widths: [300, 600] as [number, number], w: 765, h: 990, caption: "Fees, stated plainly", alt: "Handbook chapter page laying out the fees" },
   ],
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { HomeImage } from "@/components/home/HomeImage";
 import Link from "next/link";
 import {
   createContext,
@@ -302,7 +302,7 @@ export function HeroPhoto() {
   const { step } = useHome();
   return (
     <div className={`hp-photo ${step === 2 ? "hp-photo-hide" : ""}`} aria-hidden="true">
-      <Image src="/images/home/metals3_cut.webp" alt="" width={1200} height={668} priority fetchPriority="high" unoptimized sizes="(max-width: 859px) 56vw, 400px" />
+      <HomeImage name="metals3_cut" widths={[420, 840]} w={1200} h={668} sizes="(max-width: 859px) 56vw, 382px" alt="" priority />
     </div>
   );
 }

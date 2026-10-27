@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { HomeImage } from "@/components/home/HomeImage";
 import { CallLink, FaqList, FinalCtaButtons, HeroForm, HeroHeading, HeroPhoto, HomeProvider, StickyBar } from "@/components/home/HomeClient";
 import { fraunces, inter } from "@/components/home/fonts";
 import { COMPLIANCE, FAQ, FINAL_CTA, HERO, HOW, LOOK_INSIDE, PHONE, TRUST } from "@/lib/home-content";
@@ -114,8 +114,8 @@ export default function HomePage() {
             <h2 className="hp-h2">{LOOK_INSIDE.heading}</h2>
             <ul className="hp-inside">
               {LOOK_INSIDE.items.map((it) => (
-                <li key={it.src}>
-                  <Image src={it.src} alt={it.alt} width={it.w} height={it.h} loading="lazy" unoptimized sizes="(max-width: 859px) 80vw, 290px" />
+                <li key={it.name}>
+                  <HomeImage name={it.name} widths={it.widths} w={it.w} h={it.h} alt={it.alt} sizes="(max-width: 859px) 280px, 290px" />
                   <p>{it.caption}</p>
                 </li>
               ))}
@@ -152,7 +152,7 @@ export default function HomePage() {
         {/* -------------------------------- final CTA -------------------------------- */}
         <section className="hp-sec hp-dark hp-final" aria-labelledby="hp-final-h">
           <div className="hp-wrap hp-final-grid">
-            <Image className="hp-final-cover" src="/images/home/handbook-cover.webp" alt="" width={1200} height={1552} loading="lazy" unoptimized sizes="240px" />
+            <HomeImage className="hp-final-cover" name="handbook-cover" widths={[320, 640]} w={1200} h={1552} alt="" sizes="(max-width: 859px) 180px, 240px" />
             <div>
               <h2 id="hp-final-h" className="hp-h2 hp-h2-dark hp-final-h">
                 {FINAL_CTA.line1}
