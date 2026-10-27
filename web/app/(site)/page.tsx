@@ -1,495 +1,181 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { Anchor, Lock } from "lucide-react";
-import { AnchorGlyph } from "@/components/brand/AnchorMark";
-import { PremiumGuideHero } from "@/components/site/PremiumGuideHero";
-import { LazyGuidePopup } from "@/components/site/LazyGuidePopup";
-import { FeatureRow } from "@/components/site/FeatureRow";
-import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
-import { SilverByTheNumbers } from "@/components/site/SilverByTheNumbers";
-import { Card, Disclaimer, H2, Section, buttonStyles } from "@/components/site/ui";
-import { Reveal } from "@/components/site/Reveal";
-import { SITE, pageMeta } from "@/lib/site";
+import { CallLink, FaqList, FinalCtaButtons, HeroForm, HeroHeading, HeroPhoto, HomeProvider, StickyBar } from "@/components/home/HomeClient";
+import { fraunces, inter } from "@/components/home/fonts";
+import { COMPLIANCE, FAQ, FINAL_CTA, HERO, HOW, LOOK_INSIDE, PHONE, TRUST } from "@/lib/home-content";
+import { pageMeta } from "@/lib/site";
+import "./home.css";
 
 export const metadata: Metadata = pageMeta({
-  title: "Silver IRA Rollovers & Physical Silver",
+  title: "Free Gold & Silver IRA Handbook",
   description:
-    "Roll your 401k or IRA into a Silver IRA tax-free. Buy physical silver rounds, bars, and coins delivered to your door. Marina del Rey, CA. Call (866) 818-7243.",
+    "Get the free Gold and Silver IRA handbook. See how a direct transfer works, what it costs, and talk to a real specialist with no pressure. Marina del Rey, CA. (866) 818-7243.",
   path: "/",
 });
 
-/* ---------------------------------- icons --------------------------------- */
-
-const iconProps = {
-  "aria-hidden": true as const,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.5,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-};
-
-function VaultIcon({ className = "" }: { className?: string }) {
+function Check() {
   return (
-    <svg {...iconProps} className={className}>
-      <rect x="2.5" y="4" width="19" height="16" rx="1.5" />
-      <circle cx="11" cy="12" r="4" />
-      <path d="M11 8.6v1.2M11 14.2v1.2M7.6 12h1.2M13.2 12h1.2M18 8.5v7" />
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
     </svg>
   );
 }
 
-function BoxIcon({ className = "" }: { className?: string }) {
+function Stars({ size = 28 }: { size?: number }) {
   return (
-    <svg {...iconProps} className={className}>
-      <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z" />
-      <path d="M3 7.5 12 12l9-4.5M12 12v9" />
-      <circle cx="12" cy="7.6" r="1.6" />
-    </svg>
-  );
-}
-
-function PhoneIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...iconProps} className={className}>
-      <path d="M4 5.5C4 4.7 4.7 4 5.5 4h2c.7 0 1.3.5 1.5 1.2l.6 2.4c.1.6-.1 1.2-.6 1.5l-1.2.8a12 12 0 0 0 5.3 5.3l.8-1.2c.4-.5 1-.7 1.5-.6l2.4.6c.7.2 1.2.8 1.2 1.5v2c0 .8-.7 1.5-1.5 1.5A14.5 14.5 0 0 1 4 5.5Z" />
-    </svg>
-  );
-}
-
-function DocIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg {...iconProps} className={className}>
-      <path d="M6 3h8l4 4v14H6Z" />
-      <path d="M14 3v4h4" />
-      <path d="M9 12.5l1.4 1.4 3-3M9 17h6" />
-    </svg>
-  );
-}
-
-/* ---------------------------------- data ---------------------------------- */
-
-const caseRows = [
-  {
-    n: "01",
-    heading: "It Holds Its Ground",
-    body: "No counterparty. No printing press. Silver is what it is, whatever the dollar does. An ounce is an ounce — it doesn't need anyone's promise to hold its value.",
-    image: "/images/silver-vs-currency.jpg",
-    alt: "A solid silver bar beside worn old banknotes on a dark green surface.",
-    reverse: false,
-  },
-  {
-    n: "02",
-    heading: "Supply Can't Keep Up",
-    body: "Six straight years of global mine deficit while industrial demand keeps climbing — solar panels, EVs, AI infrastructure. The shortfall is being covered by drawing down finite stockpiles.",
-    image: "/images/silver-supply-deficit.jpg",
-    alt: "Dimly lit vault shelves of silver bars, some shelves partly emptied.",
-    reverse: true,
-  },
-  {
-    n: "03",
-    heading: "Outside the System",
-    body: "Held outside the banking system. No bail-in risk, no counterparty, no institution to stay solvent. Physical silver is nobody's liability.",
-    image: "/images/silver-industrial-uses.jpg",
-    alt: "A .999 fine silver bar beside a solar cell and circuit board on dark green.",
-    reverse: false,
-  },
-];
-
-const trustCells = [
-  { Icon: Lock, name: "American Estate & Trust (AET)", role: "IRA Custodian Partner" },
-  { Icon: Anchor, name: "IDS of Delaware", role: "Storage Partner" },
-];
-
-const compareRows: [string, string, string][] = [
-  ["Total fees", "35%–65%", "15%"],
-  ["Pricing", "Hidden premiums", "All-in quote upfront"],
-  ["Approach", "High-pressure", "Education first"],
-  ["Focus", "Gold-first", "Silver-first"],
-  ["Quote in writing", "Rarely", "Always"],
-];
-
-const steps = [
-  {
-    title: "Talk to a Specialist",
-    body: "A 10-minute call, no pressure — we tell you honestly whether silver fits.",
-    Icon: PhoneIcon,
-  },
-  {
-    title: "We Handle the Paperwork",
-    body: "AET IRA setup, rollover forms, depository account. You sign, we do the rest.",
-    Icon: DocIcon,
-  },
-  {
-    title: "Your Silver Is Secured",
-    body: "Shipped fully insured to IDS of Delaware or your door. View holdings online.",
-    Icon: VaultIcon,
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "Anchor Silver Capital walked me through the entire process without any pressure. I finally feel like I have something real.",
-    name: "Robert M.",
-    meta: "Retired engineer, Phoenix AZ",
-  },
-  {
-    quote:
-      "Direct, no-nonsense, and they answered every question honestly — including the ones where the answer wasn't what I expected.",
-    name: "Patricia L.",
-    meta: "Retired teacher, Austin TX",
-  },
-  {
-    quote: "Smooth from start to finish, and they kept me updated at every step. No hard sell.",
-    name: "David K.",
-    meta: "Business owner, Seattle WA",
-  },
-];
-
-function Stars({ className = "text-primary" }: { className?: string }) {
-  return (
-    <span aria-label="Five out of five stars" className={`text-sm tracking-widest ${className}`}>
-      ★★★★★
+    <span className="hp-stars" role="img" aria-label="Five stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} aria-hidden="true" viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+          <path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9Z" />
+        </svg>
+      ))}
     </span>
   );
 }
 
-function Avatar({ name }: { name: string }) {
+export default function HomePage() {
   return (
-    <span
-      aria-hidden="true"
-      className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-sage-soft font-mono text-sm text-primary"
-    >
-      {name
-        .replace(/[^A-Za-z .]/g, "")
-        .split(" ")
-        .map((p) => p[0])
-        .join("")
-        .slice(0, 2)}
-    </span>
-  );
-}
-
-/* ---------------------------------- page ---------------------------------- */
-
-export default function Home() {
-  return (
-    <>
-      <PremiumGuideHero />
-      <LazyGuidePopup />
-
-      <Section className="md:py-24">
-        <H2>Two Ways to Anchor Your Savings</H2>
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
-          <Reveal>
-            <Card className="h-full overflow-hidden">
-              <div className="relative -mx-6 -mt-6 mb-6 h-[220px]">
-                <Image
-                  src="/images/silver-cast-landscape.jpg"
-                  alt="Silver bars cast in dramatic light."
-                  fill
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  quality={78}
-                  loading="lazy"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-hero-from/35" aria-hidden="true" />
+    <div className={`hp ${fraunces.variable} ${inter.variable}`}>
+      <HomeProvider>
+        {/* ----------------------------- hero ----------------------------- */}
+        <section className="hp-hero" aria-labelledby="hp-title">
+          <div className="hp-wrap hp-hero-grid">
+            <div className="hp-hero-text">
+              <p className="hp-pill">{HERO.pill}</p>
+              <div id="hp-title">
+                <HeroHeading />
               </div>
-              <span className="grid h-14 w-14 place-items-center rounded-sm bg-sage-soft">
-                <AnchorGlyph className="h-8 w-8 text-primary" />
-              </span>
-              <h3 className="mt-5 text-2xl">Silver IRA Rollover</h3>
-              <ul className="mt-4 space-y-2 text-base text-muted-foreground">
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> 401k, IRA, or annuity rollover
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> Penalty-free, tax-free
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> $25,000 minimum
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> Any age for IRA, annuity, or former
-                  employer 401k; current employer 401k at 59½+
-                </li>
-              </ul>
-              <Link
-                href="/silver-ira"
-                className="mt-6 inline-block font-semibold text-primary underline underline-offset-4"
-              >
-                Learn About Silver IRA →
-              </Link>
-            </Card>
-          </Reveal>
-          <Reveal delay={100}>
-            <Card className="h-full overflow-hidden">
-              <div className="relative -mx-6 -mt-6 mb-6 h-[220px]">
-                <Image
-                  src="/images/silver-coins-assorted.jpg"
-                  alt="Assortment of one-ounce silver bullion coins."
-                  fill
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  quality={78}
-                  loading="lazy"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-hero-from/20" aria-hidden="true" />
-              </div>
-              <span className="grid h-14 w-14 place-items-center rounded-sm bg-sage-soft">
-                <BoxIcon className="h-8 w-8 text-primary" />
-              </span>
-              <h3 className="mt-5 text-2xl">Physical Silver Delivered</h3>
-              <ul className="mt-4 space-y-2 text-base text-muted-foreground">
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> Rounds, bars, and coins
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> Insured shipping to your door
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> Or allocated storage at IDS of Delaware
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> $5,000 minimum
-                </li>
-              </ul>
-              <Link
-                href="/physical-silver"
-                className="mt-6 inline-block font-semibold text-primary underline underline-offset-4"
-              >
-                Buy Physical Silver →
-              </Link>
-            </Card>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* Full-bleed feature banner (replaces the former "Own It Outright" block). */}
-      <section className="relative isolate flex items-center overflow-hidden py-14 sm:h-[420px] sm:py-0">
-        <Image
-          src="/images/silver-bars-duo-dark.jpg"
-          alt="Two .999 fine silver bars in dramatic light."
-          fill
-          sizes="100vw"
-          quality={78}
-          loading="lazy"
-          className="object-cover object-center"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 z-10 hidden sm:block"
-          style={{
-            background:
-              "linear-gradient(90deg, color-mix(in oklab, var(--hero-from) 96%, transparent) 0%, color-mix(in oklab, var(--hero-from) 70%, transparent) 55%, transparent 85%)",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 z-10 sm:hidden"
-          style={{
-            background:
-              "linear-gradient(180deg, color-mix(in oklab, var(--hero-from) 88%, transparent), color-mix(in oklab, var(--hero-from) 80%, transparent))",
-          }}
-        />
-        <div className="relative z-20 mx-auto w-full max-w-6xl px-5 sm:px-10">
-          <div className="max-w-[600px]">
-            <p className="eyebrow text-brass-light">Real metal. Real ownership.</p>
-            <h2 className="mt-3.5 font-fraunces text-3xl font-light leading-[1.08] text-white sm:text-[2.6rem] lg:text-[3rem]">
-              Held in your name.
-              <br />
-              Insured. Viewable online.
-            </h2>
-            <p className="mt-4 max-w-[42ch] text-base leading-relaxed text-silver sm:text-[1.08rem]">
-              Your silver is stored at IDS of Delaware — allocated to you, not pooled. You can
-              verify your holdings any time.
-            </p>
-            <Link
-              href="/get-started"
-              className="mt-7 inline-flex items-center justify-center gap-2 rounded-sm bg-brass px-6 py-3.5 text-sm font-semibold text-[#1b1408] transition-colors hover:bg-brass-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-light"
-            >
-              Get the Free Silver Guide
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <Section tone="muted" className="md:py-24">
-        <p className="eyebrow text-brass-deep">The case for silver</p>
-        <H2 className="mt-3">Three reasons this metal holds when others don&apos;t</H2>
-        <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-muted-foreground">
-          Each argument is independent. All three point the same direction.
-        </p>
-        <div className="mt-14 space-y-14">
-          {caseRows.map((row) => (
-            <FeatureRow key={row.n} image={row.image} alt={row.alt} reverse={row.reverse}>
-              <p className="font-fraunces text-5xl leading-none text-brass-deep/80">{row.n}</p>
-              <h3 className="mt-4 text-2xl">{row.heading}</h3>
-              <p className="mt-3 leading-relaxed text-muted-foreground">{row.body}</p>
-            </FeatureRow>
-          ))}
-        </div>
-      </Section>
-
-      <SilverByTheNumbers />
-
-      <Section className="md:py-24">
-        <H2>Getting Started Is Simpler Than You Think</H2>
-        <ol className="relative mt-10 grid gap-6 md:grid-cols-3">
-          <span
-            aria-hidden="true"
-            className="absolute left-0 right-0 top-[3.4rem] hidden border-t border-dashed border-border md:block"
-          />
-          {steps.map((s, i) => (
-            <li key={s.title} className="relative">
-              <Card className="h-full">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-primary/25 bg-card">
-                    <s.Icon className="h-6 w-6 text-primary" />
-                  </span>
-                  <span className="font-mono text-sm text-muted-foreground">0{i + 1}</span>
-                </div>
-                <h3 className="mt-4 text-xl">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
-              </Card>
-            </li>
-          ))}
-        </ol>
-        <div className="mt-10">
-          <Link href="/get-started" className={buttonStyles.primary}>
-            Get Started Today
-          </Link>
-        </div>
-      </Section>
-
-      <Section tone="muted" className="md:py-24">
-        <H2>What Our Clients Say</H2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <Card key={t.name} className="flex h-full flex-col">
-              <Stars />
-              <blockquote className="mt-4 font-fraunces text-base italic leading-relaxed text-foreground">
-                “{t.quote}”
-              </blockquote>
-              <div className="mt-auto flex items-center gap-3 pt-5">
-                <Avatar name={t.name} />
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{t.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">{t.meta}</p>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-        <Disclaimer>
-          Client statements are illustrative and do not guarantee comparable results.
-        </Disclaimer>
-      </Section>
-
-      <section className="bg-hero-from px-5 py-11">
-        <div className="mx-auto w-full max-w-6xl">
-          <ul className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-px overflow-hidden bg-white/8 sm:grid-cols-2">
-            {trustCells.map(({ Icon, name, role }) => (
-              <li
-                key={name}
-                className="flex flex-col items-center gap-2 bg-hero-from px-6 py-7 text-center"
-              >
-                <span className="grid h-10 w-10 place-items-center rounded-full border border-brass/30 bg-brass/15 text-brass-light">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+              <p className="hp-sub">
+                <span className="hp-sub-desk">
+                  {HERO.subLead}
+                  <strong>{HERO.subBold}</strong>
                 </span>
-                <span className="text-sm font-semibold text-white">{name}</span>
-                <span className="text-xs tracking-wide text-silver-deep">{role}</span>
-              </li>
+                <strong className="hp-sub-mob">{HERO.subMobile}</strong>
+              </p>
+              <ul className="hp-checks hp-below">
+                {HERO.checks.map((c) => (
+                  <li key={c}>
+                    <span className="hp-chk">
+                      <Check />
+                    </span>
+                    {c}
+                  </li>
+                ))}
+              </ul>
+              <div className="hp-proof hp-below">
+                <Stars />
+                <span>{HERO.dealer}</span>
+              </div>
+            </div>
+
+            <div className="hp-hero-form">
+              <HeroPhoto />
+              <HeroForm />
+              <div className="hp-mob-below">
+                <ul className="hp-checks">
+                  {HERO.checks.map((c) => (
+                    <li key={c}>
+                      <span className="hp-chk">
+                        <Check />
+                      </span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+                <div className="hp-proof">
+                  <Stars size={22} />
+                  <span>{HERO.dealer}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------------------- trust strip ---------------------------- */}
+        <section className="hp-trust" aria-label="Why people trust Anchor">
+          <div className="hp-wrap hp-trust-grid">
+            {TRUST.map((t) => (
+              <div key={t.title} className="hp-trust-item">
+                <span className="hp-chk hp-chk-lg">
+                  <Check />
+                </span>
+                <div>
+                  <p className="hp-trust-t">{t.title}</p>
+                  <p className="hp-trust-s">{t.sub}</p>
+                </div>
+              </div>
             ))}
-          </ul>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <Section tone="muted" className="md:py-24">
-        <p className="eyebrow text-brass-deep">A different kind of company</p>
-        <H2 className="mt-3">Most dealers take 35–65%. We don&apos;t.</H2>
-        <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-muted-foreground">
-          The industry charges a fortune in fees buried in the premium. We show you exactly what
-          you pay before you commit to anything.
-        </p>
-        <div className="mt-10 grid items-start gap-10 lg:grid-cols-2">
-          <div className="space-y-4 text-base leading-relaxed text-foreground">
-            <p>
-              If you invest $100,000 with most silver dealers, you&apos;ll receive $35,000–$65,000
-              worth of actual metal. The rest disappears in fees, commissions, and marked-up
-              premiums — often never disclosed upfront.
-            </p>
-            <p className="border-l-[3px] border-brass py-1 pl-[18px] font-fraunces text-[1.4rem] leading-snug text-primary">
-              Our fee is capped at 15% — all in, upfront, in writing before you commit.
-            </p>
-            <p>
-              Your metal only needs to appreciate 15% for you to break even. That&apos;s the
-              difference between a company that serves clients and one that takes advantage of them.
-            </p>
+        {/* ---------------------------- look inside ---------------------------- */}
+        <section className="hp-sec hp-light">
+          <div className="hp-wrap">
+            <h2 className="hp-h2">{LOOK_INSIDE.heading}</h2>
+            <ul className="hp-inside">
+              {LOOK_INSIDE.items.map((it) => (
+                <li key={it.src}>
+                  <Image src={it.src} alt={it.alt} width={it.w} height={it.h} loading="lazy" unoptimized sizes="(max-width: 859px) 80vw, 290px" />
+                  <p>{it.caption}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="-mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0">
-            <table className="w-full min-w-[420px] border-collapse text-sm">
-              <thead>
-                <tr>
-                  <th className="border-b-2 border-border px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    What you get
-                  </th>
-                  <th className="border-b-2 border-border px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    Industry standard
-                  </th>
-                  <th className="border-b-2 border-brass px-3.5 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-brass-deep">
-                    Anchor Silver
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {compareRows.map(([label, industry, anchor], i) => {
-                  const divider = i < compareRows.length - 1 ? "border-b border-border" : "";
-                  return (
-                    <tr key={label}>
-                      <td className={`px-3.5 py-3.5 align-top text-foreground ${divider}`}>{label}</td>
-                      <td className={`px-3.5 py-3.5 align-top text-muted-foreground ${divider}`}>
-                        {industry}
-                      </td>
-                      <td className={`bg-brass/6 px-3.5 py-3.5 align-top font-medium text-primary ${divider}`}>
-                        {anchor}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </Section>
+        </section>
 
-      <section className="bg-accent px-5 py-16 md:py-24">
-        <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
-          <div>
-            <h2 className="max-w-3xl text-3xl text-background md:text-[2.6rem]">
-              The Anchor Is Set. The Tide Is Rising.
-            </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-silver">
-              The people who anchored early are in a very different position than those still
-              waiting.
-            </p>
-            <p className="mt-6 text-sm text-silver">
-              Prefer to talk now?{" "}
-              <a
-                href={SITE.phoneHref}
-                className="font-semibold text-secondary underline underline-offset-4"
-              >
-                Call {SITE.phone}
-              </a>
-            </p>
-            <p className="mt-2 text-sm text-silver">{SITE.hours}</p>
+        {/* ------------------------------ how it works ------------------------------ */}
+        <section className="hp-sec hp-dark">
+          <div className="hp-wrap">
+            <h2 className="hp-h2 hp-h2-dark">{HOW.heading}</h2>
+            <ol className="hp-how">
+              {HOW.steps.map((s, i) => (
+                <li key={s.title}>
+                  <span className="hp-num" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </li>
+              ))}
+            </ol>
           </div>
-          <InlineLeadForm />
-        </div>
-      </section>
-    </>
+        </section>
+
+        {/* ---------------------------------- FAQ ---------------------------------- */}
+        <section className="hp-sec hp-light">
+          <div className="hp-wrap hp-narrow">
+            <h2 className="hp-h2">{FAQ.heading}</h2>
+            <FaqList />
+          </div>
+        </section>
+
+        {/* -------------------------------- final CTA -------------------------------- */}
+        <section className="hp-sec hp-dark hp-final" aria-labelledby="hp-final-h">
+          <div className="hp-wrap hp-final-grid">
+            <Image className="hp-final-cover" src="/images/home/handbook-cover.webp" alt="" width={1200} height={1552} loading="lazy" unoptimized sizes="240px" />
+            <div>
+              <h2 id="hp-final-h" className="hp-h2 hp-h2-dark hp-final-h">
+                {FINAL_CTA.line1}
+                <br />
+                <span className="hp-nowrap">{FINAL_CTA.line2}</span>
+              </h2>
+              <FinalCtaButtons />
+              <p className="hp-final-call">
+                Prefer to talk? <CallLink location="final" className="hp-tel">{PHONE.display}</CallLink>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* -------------------------------- compliance -------------------------------- */}
+        <section className="hp-legal" aria-label="Important information">
+          <div className="hp-wrap hp-narrow">
+            <p>{COMPLIANCE}</p>
+          </div>
+        </section>
+
+        <StickyBar />
+      </HomeProvider>
+    </div>
   );
 }
