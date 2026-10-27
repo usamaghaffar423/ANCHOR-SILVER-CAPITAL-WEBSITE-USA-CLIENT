@@ -40,7 +40,7 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
         <div className="sat-wrap sat-footer-grid">
           <div>
             <p>
-              Prices are indicative spot prices from gold-api.com, not quotes or offers. Nothing here is
+              Prices are indicative spot prices, not quotes or offers. Nothing here is
               investment, tax or legal advice. Past prices do not predict future prices.
             </p>
             <nav aria-label="Footer">

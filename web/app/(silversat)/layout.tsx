@@ -2,6 +2,7 @@ import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { Fraunces } from "next/font/google";
 import "@/components/satellite/sat.css";
+import { GoogleAnalytics } from "@/components/satellite/GoogleAnalytics";
 
 // Self-hosted at build time by next/font, so visitors' browsers make no request to Google.
 const display = Fraunces({ subsets: ["latin"], weight: ["500", "600", "700"], display: "swap", variable: "--font-display" });
@@ -13,7 +14,9 @@ export const viewport: Viewport = { themeColor: "#F7F5F0", colorScheme: "light" 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={`sat-silver ${display.variable}`}>{children}</body>
+      <body className={`sat-silver ${display.variable}`}>{children}
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }

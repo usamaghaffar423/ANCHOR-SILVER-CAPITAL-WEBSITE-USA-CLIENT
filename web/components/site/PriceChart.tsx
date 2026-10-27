@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PLACEHOLDER, SPOT_SOURCE, spotBasis, useMetals } from "@/components/site/market";
+import { PLACEHOLDER, spotBasis, useMetals } from "@/components/site/market";
 
 /**
  * Live price block for /silver-price-per-ounce and /gold-price-per-ounce:
@@ -216,11 +216,11 @@ export function PriceChart({
       </dl>
       <p className="mt-2 text-xs text-silver/70">
         Open / high / low / close for the trailing 24 hours
-        {ohlc ? ` to ${fmtUtc(ohlc.endTimestamp * 1000)}` : ""}. Source: {SPOT_SOURCE}.
+        {ohlc ? ` to ${fmtUtc(ohlc.endTimestamp * 1000)}` : ""}.
       </p>
 
       <p className="mt-4 border-t border-white/10 pt-4 text-xs leading-relaxed text-silver/70">
-        {metal} spot {spot != null ? usd(spot) : PLACEHOLDER}/oz, {spotBasis(updatedAt)} Chart shows
+        {metal} spot {spot != null ? usd(spot) : PLACEHOLDER}/oz, {spotBasis(updatedAt, false)} Chart shows
         average prices per interval. Past performance does not guarantee future results.
       </p>
     </div>

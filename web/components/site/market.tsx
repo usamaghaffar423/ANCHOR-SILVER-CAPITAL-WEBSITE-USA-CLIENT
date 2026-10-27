@@ -92,8 +92,8 @@ export function formatAsOfDate(iso: string | null | undefined): string | null {
  * that shows the price in a large type of its own (the home page spot ticker)
  * can still carry the complete mandatory label underneath.
  */
-export function spotBasis(updatedAt: string | null | undefined): string {
-  return `indicative, as of ${formatAsOf(updatedAt)}. Not a quote; dealable prices are confirmed at the time of transaction. Source: ${SPOT_SOURCE}.`;
+export function spotBasis(updatedAt: string | null | undefined, withSource = true): string {
+  return `indicative, as of ${formatAsOf(updatedAt)}. Not a quote; dealable prices are confirmed at the time of transaction.${withSource ? ` Source: ${SPOT_SOURCE}.` : ""}`;
 }
 
 /**

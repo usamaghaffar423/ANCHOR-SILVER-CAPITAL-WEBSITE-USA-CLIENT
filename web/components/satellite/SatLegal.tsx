@@ -38,8 +38,7 @@ export async function SatLegal({ site, kind }: { site: SatSite; kind: "privacy" 
             </p>
             <h2>Price data</h2>
             <p>
-              Prices are fetched by our servers from gold-api.com; your browser does not contact that
-              provider.
+              Prices are fetched by our servers; your browser does not contact the price provider.
             </p>
             <h2>Advertising links</h2>
             <p>

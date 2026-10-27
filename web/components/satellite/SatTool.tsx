@@ -112,7 +112,7 @@ export function SatTool({
           </div>
         </div>
         <p className="sat-asof">
-          Indicative spot as of {asOf(updatedAt)}. Not a quote. Source: gold-api.com. The marker is now; the
+          Indicative spot as of {asOf(updatedAt)}. Not a quote. The marker is now; the
           grey tick is the open 24 hours ago.
         </p>
       </section>

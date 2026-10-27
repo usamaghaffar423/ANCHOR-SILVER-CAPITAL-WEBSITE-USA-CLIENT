@@ -62,7 +62,7 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
     faq: [
       {
         q: "Why is the gold price different on different websites?",
-        a: "Spot gold is assembled from several markets and each provider blends and rounds them differently, so figures can differ by a small amount at any given second. The figure here comes from gold-api.com and is refreshed every minute or so.",
+        a: "Spot gold is assembled from several markets and each provider blends and rounds them differently, so figures can differ by a small amount at any given second. The figure here is refreshed every minute or so.",
       },
       {
         q: "Can I buy gold at the price shown here?",
@@ -138,7 +138,7 @@ export const SAT_CONTENT: Record<SatKey, SatContent> = {
     faq: [
       {
         q: "What is the current silver price per ounce?",
-        a: "The figure at the top of this page is the live spot price of one troy ounce of silver in US dollars, refreshed about once a minute from gold-api.com. It is indicative, not a quote.",
+        a: "The figure at the top of this page is the live spot price of one troy ounce of silver in US dollars, refreshed about once a minute. It is indicative, not a quote.",
       },
       {
         q: "Is a troy ounce the same as a regular ounce?",

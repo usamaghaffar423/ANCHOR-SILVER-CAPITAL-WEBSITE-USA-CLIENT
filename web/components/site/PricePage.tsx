@@ -4,6 +4,7 @@ import { Accordion, type QA } from "@/components/site/Accordion";
 import { JsonLd } from "@/components/site/JsonLd";
 import { PageHero } from "@/components/site/PageHero";
 import { PriceChart } from "@/components/site/PriceChart";
+import { SourceLine } from "@/components/site/SourceLine";
 import { ButtonLink, Card, Disclaimer, H2, PhoneLink, Prose, Section } from "@/components/site/ui";
 import { getOhlc24h, getPriceHistory, getSpotPrices, type PriceSymbol } from "@/lib/metals";
 import { OG_IMAGE, SITE, breadcrumbSchema } from "@/lib/site";
@@ -112,6 +113,7 @@ export async function PricePage({ c }: { c: PriceContent }) {
             initialRange="1M"
             initialPoints={history}
           />
+          <SourceLine metal={c.metal} />
       </Section>
 
       {c.sections.map((s, i) => (
@@ -157,7 +159,7 @@ export async function PricePage({ c }: { c: PriceContent }) {
             { href: c.ira.href, t: c.ira.label, d: "Fees, eligibility and the rollover process, spelled out." },
             { href: "/faq", t: "FAQ", d: "Straight answers on fees, storage, rollovers and premiums." },
             {
-              href: "/precious-metals-ira-handbook.pdf",
+              href: "/precious-metals-ira-handbook.pdf?v=20261027",
               t: "Free Precious Metals IRA Handbook (PDF)",
               d: "A plain-English guide to holding gold and silver in a retirement account.",
             },

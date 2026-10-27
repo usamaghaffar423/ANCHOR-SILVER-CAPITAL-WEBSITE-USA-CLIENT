@@ -68,7 +68,7 @@ export default function ThankYouHandbookPage() {
 
           <div className="mt-8 flex flex-col items-center gap-3">
             <a
-              href="/precious-metals-ira-handbook.pdf"
+              href="/precious-metals-ira-handbook.pdf?v=20261027"
               download="Precious-Metals-IRA-Handbook.pdf"
               className={`${buttonStyles.silver} px-8 py-4 text-base`}
             >
