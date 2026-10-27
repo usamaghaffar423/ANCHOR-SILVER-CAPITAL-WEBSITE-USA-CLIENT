@@ -54,6 +54,12 @@ export function HomeProvider({ children }: { children: ReactNode }) {
     setAccount(a);
     setStep(2);
     trackHome("form_step1", { account_type: a, location: where });
+    if (where === "hero") {
+      // The clicked button is unmounted by the step change; move focus to the new heading so
+      // keyboard and screen-reader users land in the form (not first name: it would pop the
+      // phone keyboard over the card).
+      requestAnimationFrame(() => document.querySelector<HTMLElement>(".hp-fh")?.focus({ preventScroll: true }));
+    }
     if (where === "final") {
       // Hand the visitor back to the hero form, already on step 2.
       requestAnimationFrame(() => {
@@ -133,14 +139,26 @@ export function HeroForm() {
   const { account, step, setStep } = useHome();
   const uid = useId();
   const [err, setErr] = useState("");
+  const [errField, setErrField] = useState<"first_name" | "email" | "phone" | "">("");
   const [sending, setSending] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const errRef = useRef<HTMLParagraphElement>(null);
+
+  /** Clear the error as soon as the field it points at becomes valid (on input and on blur). */
+  function recheck(name: "first_name" | "email" | "phone", value: string) {
+    if (errField !== name) return;
+    const ok = name === "first_name" ? value.trim() !== "" : name === "email" ? /^[^@s]+@[^@s]+.[^@s]+$/.test(value.trim()) : toE164(value) !== null;
+    if (ok) {
+      setErr("");
+      setErrField("");
+    }
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (sending) return;
     setErr("");
+    setErrField("");
     const f = e.currentTarget;
     const get = (n: string) => ((f.elements.namedItem(n) as HTMLInputElement | null)?.value ?? "").trim();
     if (get("website")) return; // honeypot: bots fill it, people never see it
@@ -151,14 +169,17 @@ export function HeroForm() {
     const focus = (n: string) => (f.elements.namedItem(n) as HTMLInputElement | null)?.focus();
     if (!first) {
       setErr("Please enter your first name.");
+      setErrField("first_name");
       return focus("first_name");
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setErr("Please enter a valid email address.");
+      setErrField("email");
       return focus("email");
     }
     if (!e164) {
       setErr("Please enter a 10-digit mobile number.");
+      setErrField("phone");
       return focus("phone");
     }
 
@@ -206,7 +227,7 @@ export function HeroForm() {
             <span className="hp-dash" />
             <span>STEP 1 OF 2</span>
           </p>
-          <p className="hp-q" id={`${uid}-q`}>
+          <p className="hp-q" id={`${uid}-q`} tabIndex={-1}>
             {FORM.step1Question}
           </p>
           <div role="group" aria-labelledby={`${uid}-q`}>
@@ -220,24 +241,27 @@ export function HeroForm() {
             <span className="hp-dash on" />
             <span>STEP 2 OF 2</span>
             <span className="hp-pill-acct">{account || "Other"}</span>
-            <button type="button" className="hp-link" onClick={() => setStep(1)}>
+            <button type="button" className="hp-link" onClick={() => {
+                setStep(1);
+                requestAnimationFrame(() => document.querySelector<HTMLElement>(".hp-q")?.focus({ preventScroll: true }));
+              }}>
               Change
             </button>
           </p>
-          <h2 className="hp-fh">{FORM.step2Heading}</h2>
+          <h2 className="hp-fh" tabIndex={-1}>{FORM.step2Heading}</h2>
           <p className="hp-fsub">{FORM.step2Sub}</p>
           <label className="hp-lbl" htmlFor="hp-first">
             First name
           </label>
-          <input id="hp-first" name="first_name" type="text" autoComplete="given-name" placeholder="First name" className="hp-input" />
+          <input id="hp-first" name="first_name" type="text" autoComplete="given-name" placeholder="First name" className="hp-input" onInput={(e) => recheck("first_name", e.currentTarget.value)} onBlur={(e) => recheck("first_name", e.currentTarget.value)} aria-invalid={errField === "first_name" || undefined} />
           <label className="hp-lbl" htmlFor={`${uid}-email`}>
             Email
           </label>
-          <input id={`${uid}-email`} name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@email.com" className="hp-input" />
+          <input id={`${uid}-email`} name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@email.com" className="hp-input" onInput={(e) => recheck("email", e.currentTarget.value)} onBlur={(e) => recheck("email", e.currentTarget.value)} aria-invalid={errField === "email" || undefined} />
           <label className="hp-lbl" htmlFor={`${uid}-phone`}>
             Mobile phone
           </label>
-          <input id={`${uid}-phone`} name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="(555) 555-5555" className="hp-input" aria-describedby={`${uid}-help`} />
+          <input id={`${uid}-phone`} name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="(555) 555-5555" className="hp-input" aria-describedby={`${uid}-help`} onInput={(e) => recheck("phone", e.currentTarget.value)} onBlur={(e) => recheck("phone", e.currentTarget.value)} aria-invalid={errField === "phone" || undefined} />
           <p className="hp-help" id={`${uid}-help`}>
             {FORM.phoneHelper}
           </p>
@@ -261,7 +285,10 @@ export function HeroForm() {
           <p className="hp-consent">
             {FORM.consent} See our <Link href="/terms">Terms of Use</Link> and <Link href="/privacy">Privacy Policy</Link>.
           </p>
-          <button type="button" className="hp-link hp-back" onClick={() => setStep(1)}>
+          <button type="button" className="hp-link hp-back" onClick={() => {
+                setStep(1);
+                requestAnimationFrame(() => document.querySelector<HTMLElement>(".hp-q")?.focus({ preventScroll: true }));
+              }}>
             ← Back
           </button>
         </form>

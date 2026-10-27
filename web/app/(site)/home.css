@@ -57,7 +57,7 @@
 .hp-hero {
   background: var(--g1);
   color: #fff;
-  padding: 16px 0 28px;
+  padding: 12px 0 28px;
 }
 .hp-hero-grid {
   display: grid;
@@ -312,6 +312,13 @@
   color: var(--ink);
   font: inherit;
   font-size: 17px;
+}
+.hp-fh:focus,
+.hp-q:focus {
+  outline: none;
+}
+.hp-input[aria-invalid="true"] {
+  border-color: #9b2c1f;
 }
 .hp-input::placeholder {
   color: #6f766f;
@@ -617,6 +624,10 @@
   background: var(--foot);
   border-top: 1px solid var(--gline);
   transition: transform 0.25s ease;
+}
+/* the cookie banner (components/site/CookieBanner) flags <html> while it is showing */
+html[data-cookie-banner] .hp-sticky {
+  display: none;
 }
 .hp-sticky-hide {
   transform: translateY(110%);
