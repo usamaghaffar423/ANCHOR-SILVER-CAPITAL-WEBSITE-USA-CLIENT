@@ -239,7 +239,8 @@ export function HeroForm() {
           <p className="hp-stepper">
             <span className="hp-dash on" />
             <span className="hp-dash on" />
-            <span>STEP 2 OF 2</span>
+            <span className="hp-lab-m">STEP 2 OF 2</span>
+            <span className="hp-lab-d">LAST STEP</span>
             <span className="hp-pill-acct">{account || "Other"}</span>
             <button type="button" className="hp-link" onClick={() => {
                 setStep(1);
@@ -249,7 +250,7 @@ export function HeroForm() {
             </button>
           </p>
           <h2 className="hp-fh" tabIndex={-1}>{FORM.step2Heading}</h2>
-          <p className="hp-fsub">{FORM.step2Sub}</p>
+          <p className="hp-fsub hp-desk-only">{FORM.step2Sub}</p>
           <label className="hp-lbl" htmlFor="hp-first">
             First name
           </label>
@@ -341,9 +342,12 @@ export function FaqList() {
                 }}
               >
                 <span>{it.q}</span>
-                <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
+                <span className="hp-pm" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+                    <path d="M5 12h14" />
+                    <path className="hp-pm-v" d="M12 5v14" />
+                  </svg>
+                </span>
               </button>
             </h3>
             <div id={`${base}-p${i}`} role="region" aria-labelledby={`${base}-b${i}`} hidden={!isOpen}>

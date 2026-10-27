@@ -23,7 +23,6 @@ export function HomeImage({
 }) {
   const base = `/images/home/${name}`;
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={`${base}-${widths[0]}.webp`}
       srcSet={`${base}-${widths[0]}.webp ${widths[0]}w, ${base}-${widths[1]}.webp ${widths[1]}w`}

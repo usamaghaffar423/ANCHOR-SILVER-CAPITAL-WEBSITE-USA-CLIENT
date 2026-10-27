@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
 import { CallLink, FaqList, FinalCtaButtons, HeroForm, HeroHeading, HeroPhoto, HomeProvider, StickyBar } from "@/components/home/HomeClient";
-import { fraunces, inter } from "@/components/home/fonts";
+import { preload } from "react-dom";
 import { COMPLIANCE, FAQ, FINAL_CTA, HERO, HOW, LOOK_INSIDE, PHONE, TRUST } from "@/lib/home-content";
+import { Landmark, FileText, ShieldCheck, Vault } from "lucide-react";
 import { pageMeta } from "@/lib/site";
 import "./home.css";
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = pageMeta({
 
 function Check() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="hp-tick" aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
       <path d="m5 12.5 4.5 4.5L19 7.5" />
     </svg>
   );
@@ -34,8 +35,11 @@ function Stars({ size = 28 }: { size?: number }) {
 }
 
 export default function HomePage() {
+  // Above-the-fold fonts: fetched with the HTML instead of after the stylesheet is parsed.
+  preload("/fonts/home/fraunces-600-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  preload("/fonts/home/inter-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
-    <div className={`hp ${fraunces.variable} ${inter.variable}`}>
+    <div className="hp">
       <HomeProvider>
         {/* ----------------------------- hero ----------------------------- */}
         <section className="hp-hero" aria-labelledby="hp-title">
@@ -55,16 +59,17 @@ export default function HomePage() {
               <ul className="hp-checks hp-below">
                 {HERO.checks.map((c) => (
                   <li key={c}>
-                    <span className="hp-chk">
-                      <Check />
-                    </span>
+                    <Check />
                     {c}
                   </li>
                 ))}
               </ul>
               <div className="hp-proof hp-below">
                 <Stars />
-                <span>{HERO.dealer}</span>
+                <span className="hp-dealer">
+                  <ShieldCheck aria-hidden="true" size={18} />
+                  {HERO.dealer}
+                </span>
               </div>
             </div>
 
@@ -75,16 +80,17 @@ export default function HomePage() {
                 <ul className="hp-checks">
                   {HERO.checks.map((c) => (
                     <li key={c}>
-                      <span className="hp-chk">
-                        <Check />
-                      </span>
+                      <Check />
                       {c}
                     </li>
                   ))}
                 </ul>
                 <div className="hp-proof">
                   <Stars size={22} />
-                  <span>{HERO.dealer}</span>
+                  <span className="hp-dealer">
+                    <ShieldCheck aria-hidden="true" size={18} />
+                    {HERO.dealer}
+                  </span>
                 </div>
               </div>
             </div>
@@ -94,17 +100,18 @@ export default function HomePage() {
         {/* ---------------------------- trust strip ---------------------------- */}
         <section className="hp-trust" aria-label="Why people trust Anchor">
           <div className="hp-wrap hp-trust-grid">
-            {TRUST.map((t) => (
+            {TRUST.map((t, i) => {
+              const Icon = [ShieldCheck, Landmark, Vault, FileText][i];
+              return (
               <div key={t.title} className="hp-trust-item">
-                <span className="hp-chk hp-chk-lg">
-                  <Check />
-                </span>
+                <Icon className="hp-trust-ic" aria-hidden="true" size={26} strokeWidth={1.6} />
                 <div>
                   <p className="hp-trust-t">{t.title}</p>
                   <p className="hp-trust-s">{t.sub}</p>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

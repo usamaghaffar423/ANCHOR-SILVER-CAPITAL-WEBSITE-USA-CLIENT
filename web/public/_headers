@@ -17,3 +17,6 @@
 
 /precious-metals-ira-handbook.pdf
   X-Robots-Tag: noindex, nofollow
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
