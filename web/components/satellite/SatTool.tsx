@@ -185,6 +185,8 @@ function CandleChart({
   const [data, setData] = useState<SatCandle[] | null>(initial);
   const [failed, setFailed] = useState(!initial);
   const [hover, setHover] = useState<number | null>(null);
+  const [hoverY, setHoverY] = useState(0);
+  const [kind, setKind] = useState<"candles" | "line">("candles");
   const wrap = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLElement>(null);
   const [w, setW] = useState(0);
@@ -273,33 +275,76 @@ function CandleChart({
     const x = (i: number) => M.left + slot * (i + 0.5);
     const y = (p: number) => M.top + (1 - (p - y0) / (y1 - y0)) * ih;
     const bw = Math.max(2, Math.min(18, slot * 0.62));
-    const yTicks = Array.from({ length: 4 }, (_, i) => y0 + ((y1 - y0) * (i + 0.5)) / 4);
-    const step = Math.max(1, Math.round(shown.length / (w < 480 ? 3 : 6)));
-    return { x, y, bw, yTicks, step, ih, slot };
-  }, [shown, w, h]);
+    const nTicks = h < 300 ? 5 : 7;
+    const yTicks = Array.from({ length: nTicks }, (_, i) => y0 + ((y1 - y0) * (i + 0.5)) / nTicks);
+    const step = Math.max(1, Math.round(shown.length / (w < 480 ? 3 : 7)));
+    // 7-period simple moving average of closes, over the full history so the line starts at the left edge.
+    const all = data ?? shown;
+    const offset = all.length - shown.length;
+    const ma = shown.map((_, i) => {
+      const end = offset + i;
+      if (end < 6) return null;
+      let s = 0;
+      for (let k = end - 6; k <= end; k++) s += all[k].c;
+      return s / 7;
+    });
+    return { x, y, bw, yTicks, step, ih, slot, ma, y0, y1 };
+  }, [shown, data, w, h]);
 
   function onMove(e: React.PointerEvent<SVGSVGElement>) {
     if (!geo || !shown) return;
-    const px = e.clientX - e.currentTarget.getBoundingClientRect().left - M.left;
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = e.clientX - r.left - M.left;
     setHover(Math.min(shown.length - 1, Math.max(0, Math.floor(px / geo.slot))));
+    setHoverY(Math.min(h - M.bottom, Math.max(M.top, e.clientY - r.top)));
   }
 
-  const hc = hover != null && shown ? shown[hover] : null;
+  const lastC = shown ? shown[shown.length - 1] : null;
+  // Legend shows the hovered candle, or the latest one when the pointer is away.
+  const hc = hover != null && shown ? shown[hover] : lastC;
+  const hcIdx = hover != null ? hover : shown ? shown.length - 1 : 0;
+  const prevClose = shown && hcIdx > 0 ? shown[hcIdx - 1].c : hc ? hc.o : 0;
+  const hcChg = hc ? hc.c - prevClose : 0;
+  const hcPct = prevClose ? (hcChg / prevClose) * 100 : 0;
+  const hcMa = geo ? geo.ma[hcIdx] : null;
   const fmtDay = (t: number) =>
     new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
   return (
-    <section ref={card} className="sat-card sat-chartcard" aria-label={`${metal} daily candlestick chart`}>
+    <section ref={card} className="sat-card sat-chartcard sat-tv" aria-label={`${metal} daily candlestick chart`}>
       <div className="sat-chart-head">
-        <h2>{metal} daily candles</h2>
-        <div className="sat-seg" role="group" aria-label="Chart range">
-          {DAYS.map((d) => (
-            <button key={d} type="button" aria-pressed={days === d} onClick={() => setDays(d)}>
-              {d}D
+        <h2>{metal} · USD/oz · 1D</h2>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="sat-seg" role="group" aria-label="Chart type">
+            <button type="button" aria-pressed={kind === "candles"} onClick={() => setKind("candles")}>
+              Candles
             </button>
-          ))}
+            <button type="button" aria-pressed={kind === "line"} onClick={() => setKind("line")}>
+              Area
+            </button>
+          </div>
+          <div className="sat-seg" role="group" aria-label="Chart range">
+            {DAYS.map((d) => (
+              <button key={d} type="button" aria-pressed={days === d} onClick={() => setDays(d)}>
+                {d}D
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+      {hc && (
+        <div className="sat-tv-legend" aria-hidden="true">
+          <b>{fmtDay(hc.t)}</b>
+          <span>O <i className={hcChg >= 0 ? "up" : "down"}>{usd(hc.o)}</i></span>
+          <span>H <i className={hcChg >= 0 ? "up" : "down"}>{usd(hc.h)}</i></span>
+          <span>L <i className={hcChg >= 0 ? "up" : "down"}>{usd(hc.l)}</i></span>
+          <span>C <i className={hcChg >= 0 ? "up" : "down"}>{usd(hc.c)}</i></span>
+          <i className={hcChg >= 0 ? "up" : "down"}>
+            {hcChg >= 0 ? "+" : "−"}{usd(Math.abs(hcChg))} ({hcChg >= 0 ? "+" : "−"}{Math.abs(hcPct).toFixed(2)}%)
+          </i>
+          {hcMa != null && <span className="ma">MA 7 {usd(hcMa)}</span>}
+        </div>
+      )}
       <div className="sat-chart-tools">
         {canFullscreen && (
           <button type="button" onClick={toggleFullscreen}>
@@ -340,63 +385,121 @@ function CandleChart({
               onPointerDown={onMove}
               onPointerLeave={() => setHover(null)}
             >
+              <defs>
+                <linearGradient id={`tvfill-${symbol}`} x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stopColor="#2962ff" stopOpacity="0.38" />
+                  <stop offset="100%" stopColor="#2962ff" stopOpacity="0" />
+                </linearGradient>
+              </defs>
               {geo.yTicks.map((v) => (
                 <g key={v}>
-                  <line x1={M.left} x2={w - M.right} y1={geo.y(v)} y2={geo.y(v)} stroke="var(--line)" />
-                  <text x={w - M.right + 6} y={geo.y(v) + 4} fontSize="12" fill="var(--muted)" fontFamily="ui-monospace, Consolas, monospace">
+                  <line x1={M.left} x2={w - M.right} y1={geo.y(v)} y2={geo.y(v)} stroke="#2a2e39" strokeOpacity="0.7" />
+                  <text x={w - M.right + 6} y={geo.y(v) + 4} fontSize="11.5" fill="#787b86" fontFamily="ui-monospace, Consolas, monospace">
                     {usd(v, 0)}
                   </text>
                 </g>
               ))}
               {shown.map((c, i) =>
                 i % geo.step === 0 ? (
-                  // Labels near either edge are anchored inward so they are never cut off by the SVG box.
-                  <text
-                    key={c.t}
-                    x={geo.x(i) < M.left + 24 ? M.left : geo.x(i) > w - M.right - 24 ? w - M.right : geo.x(i)}
-                    y={h - 6}
-                    fontSize="12"
-                    fill="var(--muted)"
-                    textAnchor={geo.x(i) < M.left + 24 ? "start" : geo.x(i) > w - M.right - 24 ? "end" : "middle"}
-                  >
-                    {fmtDay(c.t)}
-                  </text>
+                  <g key={c.t}>
+                    <line x1={geo.x(i)} x2={geo.x(i)} y1={M.top} y2={h - M.bottom} stroke="#2a2e39" strokeOpacity="0.45" />
+                    <text
+                      x={geo.x(i) < M.left + 24 ? M.left : geo.x(i) > w - M.right - 24 ? w - M.right : geo.x(i)}
+                      y={h - 7}
+                      fontSize="11.5"
+                      fill="#787b86"
+                      textAnchor={geo.x(i) < M.left + 24 ? "start" : geo.x(i) > w - M.right - 24 ? "end" : "middle"}
+                    >
+                      {fmtDay(c.t)}
+                    </text>
+                  </g>
                 ) : null,
               )}
-              {shown.map((c, i) => {
-                const up = c.c >= c.o;
-                const col = up ? "var(--up)" : "var(--down)";
-                const top = geo.y(Math.max(c.o, c.c));
-                const bot = geo.y(Math.min(c.o, c.c));
-                return (
-                  <g key={c.t} opacity={hover == null || hover === i ? 1 : 0.55}>
-                    <line x1={geo.x(i)} x2={geo.x(i)} y1={geo.y(c.h)} y2={geo.y(c.l)} stroke={col} strokeWidth="1.5" />
-                    <rect
-                      x={geo.x(i) - geo.bw / 2}
-                      y={top}
-                      width={geo.bw}
-                      height={Math.max(2, bot - top)}
-                      fill={up ? "var(--panel)" : col}
-                      stroke={col}
-                      strokeWidth="1.5"
-                      rx="1"
-                    />
-                  </g>
-                );
-              })}
+              {kind === "line" && (
+                <>
+                  <path
+                    d={`M${geo.x(0)},${h - M.bottom} ${shown.map((c, i) => `L${geo.x(i)},${geo.y(c.c)}`).join(" ")} L${geo.x(shown.length - 1)},${h - M.bottom} Z`}
+                    fill={`url(#tvfill-${symbol})`}
+                  />
+                  <polyline
+                    points={shown.map((c, i) => `${geo.x(i)},${geo.y(c.c)}`).join(" ")}
+                    fill="none"
+                    stroke="#2962ff"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  />
+                </>
+              )}
+              {kind === "candles" &&
+                shown.map((c, i) => {
+                  const col = c.c >= c.o ? "#26a69a" : "#ef5350";
+                  const top = geo.y(Math.max(c.o, c.c));
+                  const bot = geo.y(Math.min(c.o, c.c));
+                  return (
+                    <g key={c.t}>
+                      <line x1={geo.x(i)} x2={geo.x(i)} y1={geo.y(c.h)} y2={geo.y(c.l)} stroke={col} strokeWidth="1" />
+                      <rect
+                        x={geo.x(i) - geo.bw / 2}
+                        y={top}
+                        width={geo.bw}
+                        height={Math.max(1, bot - top)}
+                        fill={col}
+                      />
+                    </g>
+                  );
+                })}
+              <polyline
+                points={shown.flatMap((_, i) => (geo.ma[i] != null ? [`${geo.x(i)},${geo.y(geo.ma[i] as number)}`] : [])).join(" ")}
+                fill="none"
+                stroke="#f5a623"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              {lastC && (
+                <g>
+                  <line
+                    x1={M.left}
+                    x2={w - M.right}
+                    y1={geo.y(lastC.c)}
+                    y2={geo.y(lastC.c)}
+                    stroke={lastC.c >= lastC.o ? "#26a69a" : "#ef5350"}
+                    strokeDasharray="2 3"
+                    strokeOpacity="0.9"
+                  />
+                  <rect x={w - M.right} y={geo.y(lastC.c) - 9} width={M.right} height={18} fill={lastC.c >= lastC.o ? "#26a69a" : "#ef5350"} rx="2" />
+                  <text x={w - M.right + 5} y={geo.y(lastC.c) + 4} fontSize="11.5" fill="#fff" fontWeight="600" fontFamily="ui-monospace, Consolas, monospace">
+                    {usd(lastC.c, 2)}
+                  </text>
+                </g>
+              )}
+              {hover != null && hc && (
+                <g pointerEvents="none">
+                  <line x1={geo.x(hover)} x2={geo.x(hover)} y1={M.top} y2={h - M.bottom} stroke="#787b86" strokeDasharray="4 4" />
+                  <line x1={M.left} x2={w - M.right} y1={hoverY} y2={hoverY} stroke="#787b86" strokeDasharray="4 4" />
+                  <rect x={w - M.right} y={hoverY - 9} width={M.right} height={18} fill="#363a45" rx="2" />
+                  <text x={w - M.right + 5} y={hoverY + 4} fontSize="11.5" fill="#fff" fontFamily="ui-monospace, Consolas, monospace">
+                    {usd(geo.y1 - ((hoverY - M.top) / geo.ih) * (geo.y1 - geo.y0), 2)}
+                  </text>
+                  <rect
+                    x={Math.min(Math.max(geo.x(hover) - 32, M.left), w - M.right - 64)}
+                    y={h - M.bottom + 2}
+                    width={64}
+                    height={18}
+                    fill="#363a45"
+                    rx="2"
+                  />
+                  <text
+                    x={Math.min(Math.max(geo.x(hover), M.left + 32), w - M.right - 32)}
+                    y={h - M.bottom + 15}
+                    fontSize="11.5"
+                    fill="#fff"
+                    textAnchor="middle"
+                  >
+                    {fmtDay(hc.t)}
+                  </text>
+                </g>
+              )}
             </svg>
-            {hc && hover != null && (
-              <div
-                className="sat-tip"
-                style={{ left: Math.min(Math.max(geo.x(hover) - 80, 4), w - 160) }}
-              >
-                <b>{fmtDay(hc.t)}</b>
-                <div><span>Open</span><span>{usd(hc.o)}</span></div>
-                <div><span>High</span><span>{usd(hc.h)}</span></div>
-                <div><span>Low</span><span>{usd(hc.l)}</span></div>
-                <div><span>Close</span><span>{usd(hc.c)}</span></div>
-              </div>
-            )}
           </>
         ) : (
           <div className="sat-empty" role="status">

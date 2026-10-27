@@ -1085,3 +1085,81 @@ body {
 .sat-footer p {
   overflow-wrap: anywhere;
 }
+
+/* ---- TradingView-style chart terminal: dark on both the gold and silver sites ---- */
+.sat-chartcard.sat-tv {
+  --panel: #131722;
+  --panel-2: #1e222d;
+  --line: #2a2e39;
+  --text: #d1d4dc;
+  --muted: #787b86;
+  --up: #26a69a;
+  --down: #ef5350;
+  --accent: #2962ff;
+  --accent-ink: #fff;
+  --btn: #2962ff;
+  --btn-hover: #4a7aff;
+  --btn-border: #2962ff;
+  background: #131722;
+  border-color: #2a2e39;
+  color: var(--text);
+}
+.sat-tv h2,
+.sat-tv .sat-note {
+  color: var(--muted);
+}
+.sat-tv .sat-chart-tools button {
+  color: var(--text);
+}
+.sat-tv .sat-chart-tools button:hover {
+  border-color: #2962ff;
+}
+.sat-tv .sat-seg button {
+  color: var(--text);
+}
+.sat-tv .sat-seg button[aria-pressed="true"] {
+  background: #2a2e39;
+  color: #fff;
+  box-shadow: none;
+}
+.sat-tv .sat-seg button[aria-pressed="true"]:hover {
+  background: #363a45;
+}
+.sat-tv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: baseline;
+  margin: 0 0 8px;
+  font: 0.78rem/1.4 ui-monospace, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  min-height: 1.4em;
+}
+.sat-tv-legend b {
+  color: var(--text);
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+}
+.sat-tv-legend i {
+  font-style: normal;
+}
+.sat-tv-legend .up {
+  color: var(--up);
+}
+.sat-tv-legend .down {
+  color: var(--down);
+}
+.sat-tv-legend .ma {
+  color: #f5a623;
+}
+.sat-tv .sat-chart {
+  background: #131722;
+  cursor: crosshair;
+}
+.sat-tv .sat-tip {
+  display: none;
+}
+.sat-tv .sat-empty {
+  border-color: var(--line);
+}
