@@ -974,3 +974,61 @@ html[data-cookie-banner] .hp-sticky {
     transition: none !important;
   }
 }
+
+/* ------------- mobile fixes: "Take a look inside" + final CTA (below desktop only) ------------- */
+@media (max-width: 859px) {
+  /* The global img reset makes images display:block, so they sat left while the caption centred. */
+  .hp-inside li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+  }
+  .hp-inside img {
+    margin-inline: auto;
+    max-width: min(280px, 100%);
+  }
+  /* The nowrap heading line forced the grid column (and so the whole section) wider than the screen. */
+  .hp-final-grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 440px;
+    margin-inline: auto;
+  }
+  .hp-final-grid > div {
+    min-width: 0;
+    width: 100%;
+  }
+  .hp-final .hp-nowrap {
+    white-space: normal;
+  }
+  .hp-final-h {
+    font-size: clamp(26px, 8vw, 34px);
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+  .hp-final-cover {
+    display: block;
+    margin-inline: auto;
+    max-width: min(220px, 60vw);
+  }
+  .hp-final .hp-acct {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .hp-final .hp-acct-btn {
+    min-width: 0;
+    width: 100%;
+    font-size: 14.5px;
+  }
+  .hp-final .hp-acct-btn > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 339px) {
+  .hp-final .hp-acct {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
