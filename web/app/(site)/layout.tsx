@@ -7,6 +7,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
+import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 import { UetEvents } from "@/components/site/UetEvents";
 import { UetTag } from "@/components/site/UetTag";
 import { SITE, OG_IMAGE, rootSchemaGraph } from "@/lib/site";
@@ -134,6 +135,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ScrollToTop />
         <Analytics />
         <UetEvents />
+        <PrivacyConsent />
       </body>
     </html>
   );

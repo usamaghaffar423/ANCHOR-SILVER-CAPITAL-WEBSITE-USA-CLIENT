@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import "./landing.css";
 import { UetTag } from "@/components/site/UetTag";
 import { GoogleAdsTag } from "@/components/site/GoogleAdsTag";
+import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 
 /**
  * Bare root layout for the standalone gold-silver-ira landing page.
@@ -28,7 +29,10 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <PrivacyConsent />
+      </body>
     </html>
   );
 }

@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/PageHero";
 import { Prose, Section } from "@/components/site/ui";
 import { SITE, pageMeta, policyEffectiveDate } from "@/lib/site";
+import {
+  CCPA_LAST_UPDATED,
+  CCPA_POLICY_APPROVED,
+  CCPA_SECTIONS,
+  PRIVACY_CONTACT,
+  THIRD_PARTIES,
+} from "@/content/privacy-ccpa";
 
 export const metadata: Metadata = pageMeta({
   title: "Privacy Policy",
@@ -134,6 +141,58 @@ export default function Privacy() {
           </address>
         </Prose>
       </Section>
+
+      {/* California section: published only once counsel approves the text (content/privacy-ccpa.ts). */}
+      {CCPA_POLICY_APPROVED && (
+        <Section tone="muted">
+          <Prose>
+            <section id="california-privacy-rights" aria-labelledby="ca-privacy-h">
+              <h2 id="ca-privacy-h">California Privacy Rights</h2>
+              <p>
+                <strong>Last updated:</strong> {CCPA_LAST_UPDATED}
+              </p>
+              {CCPA_SECTIONS.map((s) => (
+                <div key={s.heading}>
+                  <h3>{s.heading}</h3>
+                  {s.paragraphs?.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                  {s.bullets && (
+                    <ul>
+                      {s.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+              <h3>Service providers and partners</h3>
+              <ul>
+                {THIRD_PARTIES.map((p) => (
+                  <li key={p.name}>
+                    <strong>{p.name}:</strong> {p.purpose}
+                  </li>
+                ))}
+              </ul>
+              <p>
+                Make a request or change your choices on our{" "}
+                <a href="/privacy-choices" className="text-primary underline underline-offset-4">
+                  Your Privacy Choices
+                </a>{" "}
+                page, or email{" "}
+                <a href={`mailto:${PRIVACY_CONTACT.email}`} className="text-primary underline underline-offset-4">
+                  {PRIVACY_CONTACT.email}
+                </a>{" "}
+                or call{" "}
+                <a href={PRIVACY_CONTACT.tollFreeHref} className="text-primary underline underline-offset-4">
+                  {PRIVACY_CONTACT.tollFree}
+                </a>
+                .
+              </p>
+            </section>
+          </Prose>
+        </Section>
+      )}
     </>
   );
 }

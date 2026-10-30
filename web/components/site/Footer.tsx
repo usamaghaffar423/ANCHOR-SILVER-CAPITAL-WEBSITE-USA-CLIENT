@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "../brand/AnchorMark";
+import { PrivacyChoicesIcon } from "./PrivacyChoicesIcon";
 import { SITE } from "@/lib/site";
 
 const quickLinks = [
@@ -99,6 +100,11 @@ export function Footer() {
           Copyright 2026 {SITE.legal}. All rights reserved. |{" "}
           <Link href="/privacy" className="inline-block py-1.5 hover:text-background">
             Privacy Policy
+          </Link>{" "}
+          |{" "}
+          <Link href="/privacy-choices" className="inline-flex items-center gap-1.5 py-1.5 hover:text-background">
+            Your Privacy Choices
+            <PrivacyChoicesIcon />
           </Link>{" "}
           |{" "}
           <Link href="/terms" className="inline-block py-1.5 hover:text-background">

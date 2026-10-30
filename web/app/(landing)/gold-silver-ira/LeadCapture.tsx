@@ -1,5 +1,6 @@
 "use client";
 
+import { CcpaNotice } from "@/components/site/CcpaNotice";
 import { useEffect, useRef, useState } from "react";
 import {
   LEAD_WEBHOOK_URL,
@@ -212,6 +213,7 @@ export function LeadCapture() {
             your inquiry. Message and data rates may apply. Reply STOP to opt out of texts. See our{" "}
             <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.
           </p>
+          <CcpaNotice className="notice" />
         </form>
       </div>
     </>

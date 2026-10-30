@@ -8,6 +8,8 @@
  * ID: NEXT_PUBLIC_GOOGLE_ADS_ID (inlined at build time); falls back to the
  * current account so a build without the variable still ships the tag.
  */
+import { OPT_OUT_INLINE_CHECK } from "@/lib/consent-inline";
+
 export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-18499251240";
 
 export function GoogleAdsTag() {
@@ -17,7 +19,8 @@ export function GoogleAdsTag() {
       <script
         id="google-ads"
         dangerouslySetInnerHTML={{
-          __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(GOOGLE_ADS_ID)});`,
+          // Opt-out is declared before gtag('config') so Google ads features start denied (lib/consent.ts).
+          __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}if(${OPT_OUT_INLINE_CHECK})gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('js',new Date());gtag('config',${JSON.stringify(GOOGLE_ADS_ID)});`,
         }}
       />
     </>

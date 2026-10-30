@@ -1,5 +1,6 @@
 "use client";
 
+import { CcpaNotice } from "@/components/site/CcpaNotice";
 import { HomeImage } from "@/components/home/HomeImage";
 import Link from "next/link";
 import {
@@ -286,6 +287,7 @@ export function HeroForm() {
           <p className="hp-consent">
             {FORM.consent} See our <Link href="/terms">Terms of Use</Link> and <Link href="/privacy">Privacy Policy</Link>.
           </p>
+          <CcpaNotice className="hp-consent hp-ccpa" />
           <button type="button" className="hp-link hp-back" onClick={() => {
                 setStep(1);
                 requestAnimationFrame(() => document.querySelector<HTMLElement>(".hp-q")?.focus({ preventScroll: true }));

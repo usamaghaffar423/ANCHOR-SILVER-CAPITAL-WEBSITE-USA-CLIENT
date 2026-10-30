@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { GOOGLE_ADS_ID } from "@/components/site/GoogleAdsTag";
+import { isOptedOut } from "@/lib/consent";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-D92G9EWD3Q";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
@@ -43,6 +44,10 @@ export function Analytics() {
       config.innerHTML =
         `window.dataLayer=window.dataLayer||[];` +
         `function gtag(){dataLayer.push(arguments);}` +
+        // Opted-out visitors (Your Privacy Choices / Global Privacy Control) start with ads features denied.
+        (isOptedOut()
+          ? `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});`
+          : ``) +
         `gtag('js',new Date());` +
         `gtag('config','${GA_MEASUREMENT_ID}');` +
         // One gtag.js serves both: Google Ads (AW-…) shares this loader with GA4.

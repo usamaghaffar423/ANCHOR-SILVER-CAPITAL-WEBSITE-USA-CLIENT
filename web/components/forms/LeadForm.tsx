@@ -1,5 +1,6 @@
 "use client";
 
+import { CcpaNotice } from "@/components/site/CcpaNotice";
 import { useId, useState } from "react";
 import { buttonStyles } from "@/components/site/ui";
 import {
@@ -207,6 +208,7 @@ export function LeadForm({
         </a>
         .
       </p>
+      <CcpaNotice className="text-xs leading-relaxed text-muted-foreground" />
     </form>
   );
 }

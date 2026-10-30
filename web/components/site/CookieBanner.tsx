@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { buttonStyles } from "./ui";
+import { setOptOut } from "@/lib/consent";
 
 const KEY = "asc-cookie-consent";
 
@@ -32,6 +33,9 @@ export function CookieBanner() {
     } catch {
       /* storage blocked */
     }
+    // One consent module: Decline is an opt-out of sale/sharing (UET, Clarity, Google ads features); Accept clears it.
+    // Global Privacy Control still wins over Accept (see lib/consent.ts).
+    setOptOut(value === "declined");
     setShow(false);
   };
 

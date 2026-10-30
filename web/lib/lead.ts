@@ -1,3 +1,5 @@
+import { isOptedOut } from "@/lib/consent-state";
+
 /**
  * Shared lead-form plumbing: the live GoHighLevel inbound webhook, UET event
  * pushes, UTM/msclkid capture, E.164 phone normalization and visitor-IP lookup.
@@ -5,9 +7,8 @@
  * iframes).
  */
 
-/** Live GHL inbound webhook — Landing dev instructions §1. */
-export const LEAD_WEBHOOK_URL =
-  "https://services.leadconnectorhq.com/hooks/qW6EG0Ha1uQ0P6n5gugQ/webhook-trigger/JwNEkReQ9vro54FwMPXK";
+/** Live GHL inbound webhook — Landing dev instructions §1. (Defined in lead-webhook.ts so server code can read it without client imports.) */
+export { LEAD_WEBHOOK_URL } from "@/lib/lead-webhook";
 
 export const NOTICE_VERSION = "v2.0";
 
@@ -52,6 +53,8 @@ export function trackUet(
  * submit — never on page load. A missing value is passed as "" (never guessed).
  */
 export function setUetEnhancedConversion(email: string, phone: string) {
+  // Opted out of sale/sharing (toggle, banner Decline or Global Privacy Control): send no personal data to UET.
+  if (isOptedOut()) return;
   try {
     window.uetq = window.uetq || [];
     window.uetq.push("set", { pid: { em: email || "", ph: phone || "" } });

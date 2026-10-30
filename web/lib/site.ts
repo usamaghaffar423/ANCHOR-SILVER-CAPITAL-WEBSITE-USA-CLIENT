@@ -59,6 +59,7 @@ export const PAGES = [
   "/gold-price-per-ounce",
   "/contact",
   "/privacy",
+  "/privacy-choices",
   "/terms",
   "/sms-consent",
   "/disclaimer",
