@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { preload } from "react-dom";
 import { Check, Download, Phone } from "lucide-react";
+import { CalendlyEvents } from "@/components/site/CalendlyEvents";
 import { JsonLd } from "@/components/site/JsonLd";
 import { COMPLIANCE, PHONE } from "@/lib/home-content";
 import { BOOKING_URL } from "@/lib/lead";
@@ -19,6 +20,11 @@ export const metadata: Metadata = {
   }),
   robots: { index: false, follow: false },
 };
+
+/** Calendly inline embed, themed to the page (the booking link itself lives in lib/lead.ts). */
+const CALENDAR_SRC = BOOKING_URL
+  ? `${BOOKING_URL}?hide_gdpr_banner=1&background_color=fbfaf6&text_color=092619&primary_color=9a7b34`
+  : "";
 
 const PDF = "/precious-metals-ira-handbook.pdf?v=20261027";
 
@@ -48,8 +54,16 @@ const HANDY = [
  * so the page is a short, focused confirmation. Tokens, fonts and resets come from ../home.css.
  */
 export default function ThankYouHandbookPage() {
-  preload("/fonts/home/fraunces-600-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
-  preload("/fonts/home/inter-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  preload("/fonts/home/fraunces-600-latin.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+  preload("/fonts/home/inter-latin.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
   return (
     <div className="hp ty">
       <JsonLd data={breadcrumbSchema("/thank-you-handbook", "Thank You")} />
@@ -57,8 +71,17 @@ export default function ThankYouHandbookPage() {
       {/* ------------------------------ header ------------------------------ */}
       <header className="ty-top">
         <div className="ty-wrap ty-top-bar">
-          <Link href="/" aria-label="Anchor Silver Capital home" className="ty-logo">
-            <img src="/images/home/anchor-logo-horizontal.webp" alt="Anchor Silver Capital" width={552} height={165} />
+          <Link
+            href="/"
+            aria-label="Anchor Silver Capital home"
+            className="ty-logo"
+          >
+            <img
+              src="/images/home/anchor-logo-horizontal.webp"
+              alt="Anchor Silver Capital"
+              width={552}
+              height={165}
+            />
           </Link>
           <a href={PHONE.href} className="ty-top-call" data-call="">
             <span className="ty-top-ic" aria-hidden="true">
@@ -84,11 +107,14 @@ export default function ThankYouHandbookPage() {
             </p>
             <h1 id="ty-title">Your handbook is on its way.</h1>
             <p className="ty-sub">Check your inbox. Want it right now?</p>
-            <a href={PDF} download="Precious-Metals-IRA-Handbook.pdf" className="ty-btn ty-btn-gold">
+            <a
+              href={PDF}
+              download="Precious-Metals-IRA-Handbook.pdf"
+              className="ty-btn ty-btn-gold"
+            >
               <Download size={17} aria-hidden="true" />
               Download the handbook
             </a>
-            <p className="ty-fine">PDF, about 2.5 MB</p>
           </div>
           <div className="ty-hero-cover">
             <img
@@ -133,10 +159,14 @@ export default function ThankYouHandbookPage() {
               <h2>Want to talk sooner?</h2>
               <p>Call now or pick a time that works for you.</p>
               <div className="ty-talk-btns">
-                <a href={PHONE.href} className="ty-btn ty-btn-gold" data-call="">
+                <a
+                  href={PHONE.href}
+                  className="ty-btn ty-btn-gold"
+                  data-call=""
+                >
                   Call {PHONE.display}
                 </a>
-                <a href={BOOKING_URL || "#book"} className="ty-btn ty-btn-ghost" rel={BOOKING_URL ? "noopener" : undefined}>
+                <a href="#book" className="ty-btn ty-btn-ghost">
                   Pick a time
                 </a>
               </div>
@@ -155,19 +185,27 @@ export default function ThankYouHandbookPage() {
           </div>
 
           <div id="book" className="ty-book">
-            {BOOKING_URL ? (
-              <iframe src={BOOKING_URL} title="Book a call with an Anchor Silver specialist" loading="lazy" />
-            ) : (
-              <div className="ty-book-fallback">
-                <h2>Call to book your time</h2>
-                <p>
-                  Call{" "}
-                  <a href={PHONE.href} data-call="">
-                    {PHONE.display}
-                  </a>{" "}
-                  and we will set up a time that works for you. Online scheduling is coming soon.
-                </p>
-              </div>
+            <div className="ty-book-fallback">
+              <h2>Call to book your time</h2>
+              <p>
+                Call{" "}
+                <a href={PHONE.href} data-call="">
+                  {PHONE.display}
+                </a>
+                {BOOKING_URL
+                  ? ", or choose a time below."
+                  : " and we will set up a time that works for you."}
+              </p>
+            </div>
+            {BOOKING_URL && (
+              <>
+                <CalendlyEvents />
+                <iframe
+                  src={CALENDAR_SRC}
+                  title="Book a call with an Anchor Silver specialist"
+                  loading="lazy"
+                />
+              </>
             )}
           </div>
         </div>
@@ -176,10 +214,18 @@ export default function ThankYouHandbookPage() {
       {/* ------------------------------ footer ------------------------------ */}
       <footer className="ty-foot">
         <div className="ty-wrap">
-          <img src="/images/home/anchor-logo-horizontal.webp" alt="Anchor Silver Capital" width={552} height={165} className="ty-foot-logo" />
+          <img
+            src="/images/home/anchor-logo-horizontal.webp"
+            alt="Anchor Silver Capital"
+            width={552}
+            height={165}
+            className="ty-foot-logo"
+          />
           <p className="ty-legal">{COMPLIANCE}</p>
           <p className="ty-foot-links">
-            © {SITE.legal} · {SITE.city}, {SITE.state} · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Use</a> ·{" "}
+            © {SITE.legal} · {SITE.city}, {SITE.state} ·{" "}
+            <a href="/privacy">Privacy Policy</a> ·{" "}
+            <a href="/terms">Terms of Use</a> ·{" "}
             <a href="/riskdisclosure">Disclosure</a>
           </p>
         </div>

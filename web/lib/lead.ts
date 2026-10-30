@@ -27,15 +27,14 @@ export function goToThankYou(delayMs = 500) {
 }
 
 /**
- * Scheduling link for the "Pick a time for your call" button on the landing
- * page's thank-you state. Ron is supplying it; while empty the button renders
- * disabled. Paste the URL here to enable it.
+ * Scheduling link (Calendly 30-minute call), embedded under "Call to book your time" on
+ * /thank-you-handbook. While empty, that page falls back to "call to book" text.
  */
-export const BOOKING_URL = "";
+export const BOOKING_URL = "https://calendly.com/anchorsilvercapital-info/30min";
 
 /** Microsoft UET event push — queues on `window.uetq` until the UET tag loads. */
 export function trackUet(
-  name: "lead" | "phone_click" | "handbook_download",
+  name: "lead" | "phone_click" | "handbook_download" | "booking_scheduled",
   params: { event_category?: string; event_label?: string } = {},
 ) {
   try {
