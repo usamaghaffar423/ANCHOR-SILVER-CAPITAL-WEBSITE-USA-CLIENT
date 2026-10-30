@@ -19,7 +19,7 @@ function TopBar() {
     <div className="hidden bg-ink px-5 text-silver md:block">
       <div className="mx-auto flex h-9 w-full max-w-6xl items-center justify-between gap-3 py-1 text-[0.7rem] leading-none tracking-wide">
         <p className="whitespace-normal sm:truncate">
-          Free consultation. Call{" "}
+          Free consultation. Call Toll-Free{" "}
           <a href={SITE.phoneHref} className="font-mono underline underline-offset-2">
             {SITE.phone}
           </a>

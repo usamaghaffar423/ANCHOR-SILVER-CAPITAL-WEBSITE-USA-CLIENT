@@ -205,6 +205,11 @@ export default function ThankYouHandbookPage() {
                   title="Book a call with an Anchor Silver specialist"
                   loading="lazy"
                 />
+                <p className="ty-book-note">
+                  Our specialists are based in Marina del Rey, California
+                  (Pacific Time). Available times are shown in your local time
+                  zone.
+                </p>
               </>
             )}
           </div>
