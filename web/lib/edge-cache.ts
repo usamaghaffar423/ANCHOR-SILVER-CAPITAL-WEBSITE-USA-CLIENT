@@ -22,6 +22,9 @@ type Stamped<T> = { __at: number; value: T };
 
 const mem = new Map<string, Entry>();
 const inflight = new Map<string, Promise<unknown>>();
+/** When a stale-while-revalidate load last failed, so a down provider is not re-awaited by every request. */
+const failedAt = new Map<string, number>();
+const RETRY_AFTER_FAILURE_MS = 15_000;
 const CACHE_ORIGIN = "https://edge-cache.internal";
 /** An L2 hit may be up to `ttl` old, so its L1 copy lives only briefly. */
 const L1_AFTER_L2_HIT_SECONDS = 30;
@@ -45,15 +48,18 @@ function background(p: Promise<unknown>) {
 /**
  * `staleSeconds > 0` turns on stale-while-revalidate: a value older than `ttlSeconds`
  * (but younger than ttl + stale) is returned immediately while a refresh runs in the
- * background, so no visitor waits on the provider except the very first one ever.
+ * background. With nothing cached at all, `maxWaitMs` bounds the wait: after that the caller gets
+ * null (it renders "unavailable" / falls back) while the load keeps running in the background
+ * and fills the cache for the next request.
  */
 export async function cachedJson<T>(
   key: string,
   ttlSeconds: number,
   load: () => Promise<T | null>,
   staleSeconds = 0,
+  maxWaitMs = 0,
 ): Promise<T | null> {
-  if (staleSeconds > 0) return cachedJsonSwr(key, ttlSeconds, staleSeconds, load);
+  if (staleSeconds > 0) return cachedJsonSwr(key, ttlSeconds, staleSeconds, load, maxWaitMs);
   const now = Date.now();
   const hit = mem.get(key);
   if (hit && hit.exp > now) return hit.value as T;
@@ -112,6 +118,7 @@ async function cachedJsonSwr<T>(
   ttlSeconds: number,
   staleSeconds: number,
   load: () => Promise<T | null>,
+  maxWaitMs: number,
 ): Promise<T | null> {
   const now = Date.now();
   const mkey = `swr:${key}`;
@@ -120,7 +127,11 @@ async function cachedJsonSwr<T>(
     if (pending) return pending as Promise<T | null>;
     const run = (async (): Promise<T | null> => {
       const value = await load();
-      if (value == null) return null;
+      if (value == null) {
+        failedAt.set(mkey, Date.now());
+        return null;
+      }
+      failedAt.delete(mkey);
       mem.set(mkey, { exp: Date.now() + (ttlSeconds + staleSeconds) * 1000, value: { __at: Date.now(), value } satisfies Stamped<T> });
       const edge = edgeCache();
       if (edge) {
@@ -158,5 +169,21 @@ async function cachedJsonSwr<T>(
     if (now - stamped.__at > ttlSeconds * 1000) background(refresh());
     return stamped.value;
   }
-  return refresh();
+  // Provider recently failed and nothing is cached: answer "no value" at once, retry in the background.
+  if (maxWaitMs > 0 && Date.now() - (failedAt.get(mkey) ?? 0) < RETRY_AFTER_FAILURE_MS) {
+    if (!inflight.has(mkey) && Date.now() - (failedAt.get(mkey) ?? 0) > RETRY_AFTER_FAILURE_MS / 3) background(refresh());
+    return null;
+  }
+  const run = refresh();
+  if (maxWaitMs <= 0) return run;
+  background(run);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<null>((resolve) => {
+    timer = setTimeout(() => resolve(null), maxWaitMs);
+  });
+  try {
+    return await Promise.race([run, timeout]);
+  } finally {
+    clearTimeout(timer);
+  }
 }

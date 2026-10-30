@@ -33,6 +33,10 @@ const GOLD_API_HISTORY = "https://api.gold-api.com/history";
 
 /** Server-side cache window for the live spot pair (gold-api.com is keyless). */
 const SPOT_REVALIDATE_SECONDS = 60;
+/** A page render never waits longer than this on a provider; slower calls finish in the background. */
+const PROVIDER_MAX_WAIT_MS = 1500;
+/** Hard stop for the background provider call itself. */
+const PROVIDER_ABORT_MS = 10_000;
 
 /**
  * Last spot pair gold-api.com actually returned. Kept in module scope purely as
@@ -50,8 +54,8 @@ function lastGoodSpotOrNull(): SpotPrices | null {
 async function loadSpot(): Promise<SpotPrices | null> {
   try {
     const [xag, xau] = await Promise.all([
-      fetch(`${GOLD_API}/XAG/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
-      fetch(`${GOLD_API}/XAU/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
+      fetch(`${GOLD_API}/XAG/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS }, signal: AbortSignal.timeout(PROVIDER_ABORT_MS) }),
+      fetch(`${GOLD_API}/XAU/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS }, signal: AbortSignal.timeout(PROVIDER_ABORT_MS) }),
     ]);
     if (!xag.ok || !xau.ok) return null;
     const silverJson = (await xag.json()) as {
@@ -78,7 +82,7 @@ async function loadSpot(): Promise<SpotPrices | null> {
  * on Cloudflare Workers, so without this every page view waited on two gold-api.com calls.
  */
 export async function getSpotPrices(): Promise<SpotPrices | null> {
-  const spot = await cachedJson("spot", SPOT_REVALIDATE_SECONDS, loadSpot, 3600);
+  const spot = await cachedJson("spot", SPOT_REVALIDATE_SECONDS, loadSpot, 3600, PROVIDER_MAX_WAIT_MS);
   return spot ?? lastGoodSpotOrNull();
 }
 
@@ -450,7 +454,7 @@ async function loadOhlc24h(symbol: PriceSymbol): Promise<Ohlc | null> {
 
 /** Open/high/low/close over the trailing 24 hours (metals trade nearly round the clock). */
 export function getOhlc24h(symbol: PriceSymbol): Promise<Ohlc | null> {
-  return cachedJson(`ohlc:${symbol}`, 300, () => loadOhlc24h(symbol));
+  return cachedJson(`ohlc:${symbol}`, 300, () => loadOhlc24h(symbol), 86_400, PROVIDER_MAX_WAIT_MS);
 }
 
 /* ------------------------------ daily candles ------------------------------ */
@@ -527,5 +531,5 @@ async function loadCandles(symbol: PriceSymbol): Promise<Candle[] | null> {
 
 /** Daily candles for the last ~90 days, cached 30 min. Null = unavailable. */
 export function getDailyCandles(symbol: PriceSymbol): Promise<Candle[] | null> {
-  return cachedJson(`candles:${symbol}`, 1_800, () => loadCandles(symbol));
+  return cachedJson(`candles:${symbol}`, 1_800, () => loadCandles(symbol), 86_400, PROVIDER_MAX_WAIT_MS);
 }
