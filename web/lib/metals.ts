@@ -530,6 +530,7 @@ async function loadCandles(symbol: PriceSymbol): Promise<Candle[] | null> {
 }
 
 /** Daily candles for the last ~90 days, cached 30 min. Null = unavailable. */
-export function getDailyCandles(symbol: PriceSymbol): Promise<Candle[] | null> {
-  return cachedJson(`candles:${symbol}`, 1_800, () => loadCandles(symbol), 86_400, PROVIDER_MAX_WAIT_MS);
+/** `maxWaitMs`: page renders keep the default cap; API routes (no HTML waiting on them) pass a longer one. */
+export function getDailyCandles(symbol: PriceSymbol, maxWaitMs = PROVIDER_MAX_WAIT_MS): Promise<Candle[] | null> {
+  return cachedJson(`candles:${symbol}`, 1_800, () => loadCandles(symbol), 86_400, maxWaitMs);
 }

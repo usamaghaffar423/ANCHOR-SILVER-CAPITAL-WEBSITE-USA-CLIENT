@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const symbol = req.nextUrl.searchParams.get("symbol");
   if (!isPriceSymbol(symbol)) return NextResponse.json({ error: "bad_request" }, { status: 400 });
   if (!goldApiKeyConfigured()) return NextResponse.json({ error: "unconfigured" }, { status: 503 });
-  const candles = await getDailyCandles(symbol);
+  const candles = await getDailyCandles(symbol, 20_000);
   if (!candles) return NextResponse.json({ error: "unavailable" }, { status: 502 });
   return NextResponse.json(
     { symbol, candles, source: "gold-api.com" },

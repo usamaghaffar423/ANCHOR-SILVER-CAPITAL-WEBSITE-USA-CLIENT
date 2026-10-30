@@ -69,18 +69,25 @@ export function CandleChart({
   useEffect(() => {
     if (initial) return;
     let cancelled = false;
-    fetch(`/api/candles?symbol=${symbol}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((j: { candles?: SatCandle[] }) => {
-        if (cancelled) return;
-        if (Array.isArray(j.candles) && j.candles.length > 1) {
-          setData(j.candles);
-          setFailed(false);
-        }
-      })
-      .catch(() => undefined);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    // The first request after a cold start can find nothing cached yet, so retry a couple of times.
+    const load = (attempt: number) =>
+      fetch(`/api/candles?symbol=${symbol}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((j: { candles?: SatCandle[] }) => {
+          if (cancelled) return;
+          if (Array.isArray(j.candles) && j.candles.length > 1) {
+            setData(j.candles);
+            setFailed(false);
+          }
+        })
+        .catch(() => {
+          if (!cancelled && attempt < 2) timer = setTimeout(() => void load(attempt + 1), 4000);
+        });
+    void load(0);
     return () => {
       cancelled = true;
+      clearTimeout(timer);
     };
   }, [initial, symbol]);
 
