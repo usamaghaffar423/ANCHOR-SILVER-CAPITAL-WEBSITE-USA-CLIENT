@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { GOOGLE_ADS_ID } from "@/components/site/GoogleAdsTag";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-D92G9EWD3Q";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
@@ -43,7 +44,9 @@ export function Analytics() {
         `window.dataLayer=window.dataLayer||[];` +
         `function gtag(){dataLayer.push(arguments);}` +
         `gtag('js',new Date());` +
-        `gtag('config','${GA_MEASUREMENT_ID}');`;
+        `gtag('config','${GA_MEASUREMENT_ID}');` +
+        // One gtag.js serves both: Google Ads (AW-…) shares this loader with GA4.
+        `gtag('config','${GOOGLE_ADS_ID}');`;
       document.head.appendChild(config);
 
       const loader = document.createElement("script");

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import "./landing.css";
 import { UetTag } from "@/components/site/UetTag";
+import { GoogleAdsTag } from "@/components/site/GoogleAdsTag";
 
 /**
  * Bare root layout for the standalone gold-silver-ira landing page.
@@ -15,6 +16,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <UetTag />
+        <GoogleAdsTag />
         <link rel="icon" href="/images/favicon-anchor.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
         <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
