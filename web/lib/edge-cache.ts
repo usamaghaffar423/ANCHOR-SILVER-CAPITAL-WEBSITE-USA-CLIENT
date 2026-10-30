@@ -17,6 +17,8 @@
  */
 
 type Entry = { exp: number; value: unknown };
+/** Stored shape for stale-while-revalidate keys: the value plus when it was loaded. */
+type Stamped<T> = { __at: number; value: T };
 
 const mem = new Map<string, Entry>();
 const inflight = new Map<string, Promise<unknown>>();
@@ -32,11 +34,26 @@ function edgeCache(): Cache | null {
   }
 }
 
+/** Keep a background refresh alive after the response is sent (Workers), or just let it run (Node). */
+function background(p: Promise<unknown>) {
+  const ctx = (globalThis as { [k: symbol]: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } } | undefined })[
+    Symbol.for("__cloudflare-context__")
+  ]?.ctx;
+  if (ctx?.waitUntil) ctx.waitUntil(p);
+}
+
+/**
+ * `staleSeconds > 0` turns on stale-while-revalidate: a value older than `ttlSeconds`
+ * (but younger than ttl + stale) is returned immediately while a refresh runs in the
+ * background, so no visitor waits on the provider except the very first one ever.
+ */
 export async function cachedJson<T>(
   key: string,
   ttlSeconds: number,
   load: () => Promise<T | null>,
+  staleSeconds = 0,
 ): Promise<T | null> {
+  if (staleSeconds > 0) return cachedJsonSwr(key, ttlSeconds, staleSeconds, load);
   const now = Date.now();
   const hit = mem.get(key);
   if (hit && hit.exp > now) return hit.value as T;
@@ -88,4 +105,58 @@ export async function cachedJson<T>(
   } finally {
     inflight.delete(key);
   }
+}
+
+async function cachedJsonSwr<T>(
+  key: string,
+  ttlSeconds: number,
+  staleSeconds: number,
+  load: () => Promise<T | null>,
+): Promise<T | null> {
+  const now = Date.now();
+  const mkey = `swr:${key}`;
+  const refresh = (): Promise<T | null> => {
+    const pending = inflight.get(mkey);
+    if (pending) return pending as Promise<T | null>;
+    const run = (async (): Promise<T | null> => {
+      const value = await load();
+      if (value == null) return null;
+      mem.set(mkey, { exp: Date.now() + (ttlSeconds + staleSeconds) * 1000, value: { __at: Date.now(), value } satisfies Stamped<T> });
+      const edge = edgeCache();
+      if (edge) {
+        try {
+          await edge.put(
+            new Request(`${CACHE_ORIGIN}/${encodeURIComponent(mkey)}`),
+            new Response(JSON.stringify({ __at: Date.now(), value } satisfies Stamped<T>), {
+              headers: { "content-type": "application/json", "cache-control": `public, max-age=${ttlSeconds + staleSeconds}` },
+            }),
+          );
+        } catch {
+          /* cache write failed — L1 still holds it */
+        }
+      }
+      return value;
+    })();
+    inflight.set(mkey, run);
+    void run.finally(() => inflight.delete(mkey)).catch(() => undefined);
+    return run;
+  };
+
+  let stamped = mem.get(mkey)?.value as Stamped<T> | undefined;
+  if (!stamped) {
+    const edge = edgeCache();
+    if (edge) {
+      try {
+        const res = await edge.match(new Request(`${CACHE_ORIGIN}/${encodeURIComponent(mkey)}`));
+        if (res) stamped = (await res.json()) as Stamped<T>;
+      } catch {
+        /* cache read failed — treat as a miss */
+      }
+    }
+  }
+  if (stamped && typeof stamped.__at === "number") {
+    if (now - stamped.__at > ttlSeconds * 1000) background(refresh());
+    return stamped.value;
+  }
+  return refresh();
 }

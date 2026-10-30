@@ -46,14 +46,14 @@ function lastGoodSpotOrNull(): SpotPrices | null {
   return lastGoodSpot ? { ...lastGoodSpot, live: false } : null;
 }
 
-/** Current silver + gold spot (USD/oz), or null when no reading exists yet. */
-export async function getSpotPrices(): Promise<SpotPrices | null> {
+/** One upstream read of the spot pair; null on any failure (callers fall back, nothing is invented). */
+async function loadSpot(): Promise<SpotPrices | null> {
   try {
     const [xag, xau] = await Promise.all([
       fetch(`${GOLD_API}/XAG/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
       fetch(`${GOLD_API}/XAU/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
     ]);
-    if (!xag.ok || !xau.ok) return lastGoodSpotOrNull();
+    if (!xag.ok || !xau.ok) return null;
     const silverJson = (await xag.json()) as {
       price?: unknown;
       updatedAt?: unknown;
@@ -61,15 +61,25 @@ export async function getSpotPrices(): Promise<SpotPrices | null> {
     const goldJson = (await xau.json()) as { price?: unknown };
     const silver = Number(silverJson?.price);
     const gold = Number(goldJson?.price);
-    if (!(silver > 0) || !(gold > 0)) return lastGoodSpotOrNull();
+    if (!(silver > 0) || !(gold > 0)) return null;
     const updatedAt =
       typeof silverJson?.updatedAt === "string" ? silverJson.updatedAt : null;
     const spot: SpotPrices = { silver, gold, live: true, updatedAt };
     lastGoodSpot = spot;
     return spot;
   } catch {
-    return lastGoodSpotOrNull();
+    return null;
   }
+}
+
+/**
+ * Current silver + gold spot (USD/oz), or null when no reading exists yet.
+ * Cached for `SPOT_REVALIDATE_SECONDS` through lib/edge-cache.ts: Next's fetch cache does not persist
+ * on Cloudflare Workers, so without this every page view waited on two gold-api.com calls.
+ */
+export async function getSpotPrices(): Promise<SpotPrices | null> {
+  const spot = await cachedJson("spot", SPOT_REVALIDATE_SECONDS, loadSpot, 3600);
+  return spot ?? lastGoodSpotOrNull();
 }
 
 /* ----------------------------- pricing rule ------------------------------ */

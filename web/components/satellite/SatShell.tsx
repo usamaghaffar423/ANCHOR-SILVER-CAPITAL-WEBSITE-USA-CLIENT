@@ -18,7 +18,7 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
       </a>
       <header className="sat-header">
         <div className="sat-wrap">
-          <Link className="sat-mark" href="/" aria-label={site.wordmark}>
+          <Link className="sat-mark" href="/" prefetch={false} aria-label={site.wordmark}>
             <SatLogoMark site={site} />
             <span className="sat-mark-text">
               <b>{first}</b> <span>{rest.join(" ")}</span>
@@ -45,9 +45,9 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
             </p>
             <nav aria-label="Footer">
               <a href={otherHref}>{otherLabel}</a>
-              <Link href="/advertise">Advertise</Link>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/terms">Terms</Link>
+              <Link href="/advertise" prefetch={false}>Advertise</Link>
+              <Link href="/privacy" prefetch={false}>Privacy</Link>
+              <Link href="/terms" prefetch={false}>Terms</Link>
             </nav>
             <p style={{ marginTop: 10 }}>
               © {new Date().getFullYear()} {site.wordmark}

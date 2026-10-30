@@ -22,7 +22,7 @@ export function SatNav({ items }: { items: Item[] }) {
             {it.label}
           </a>
         ) : (
-          <Link key={it.href} href={it.href} className={cls} aria-current={current ? "page" : undefined}>
+          <Link key={it.href} href={it.href} prefetch={false} className={cls} aria-current={current ? "page" : undefined}>
             {it.label}
           </Link>
         );
