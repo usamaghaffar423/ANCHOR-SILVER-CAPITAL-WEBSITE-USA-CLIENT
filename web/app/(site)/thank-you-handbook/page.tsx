@@ -4,6 +4,7 @@ import { preload } from "react-dom";
 import { Check, Download, Phone } from "lucide-react";
 import { CalendlyEvents } from "@/components/site/CalendlyEvents";
 import { JsonLd } from "@/components/site/JsonLd";
+import { PrivacyChoicesIcon } from "@/components/site/PrivacyChoicesIcon";
 import { COMPLIANCE, PHONE } from "@/lib/home-content";
 import { BOOKING_URL } from "@/lib/lead";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -230,7 +231,10 @@ export default function ThankYouHandbookPage() {
           <p className="ty-foot-links">
             © {SITE.legal} · {SITE.city}, {SITE.state} ·{" "}
             <a href="/privacy">Privacy Policy</a> ·{" "}
-            <a href="/terms">Terms of Use</a> ·{" "}
+            <a href="/privacy-choices" className="ty-choices">
+              Your Privacy Choices <PrivacyChoicesIcon />
+            </a>{" "}
+            · <a href="/terms">Terms of Use</a> ·{" "}
             <a href="/riskdisclosure">Disclosure</a>
           </p>
         </div>

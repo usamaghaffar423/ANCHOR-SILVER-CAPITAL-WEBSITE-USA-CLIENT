@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PrivacyChoicesIcon } from "@/components/site/PrivacyChoicesIcon";
 import { LeadCapture } from "./LeadCapture";
 
 export const metadata: Metadata = {
@@ -481,7 +482,11 @@ export default function GoldSilverIraPage() {
             future results.
           </p>
           <p>
-            <a href="/terms">Terms of Use</a> · <a href="/privacy">Privacy Policy</a> · © Anchor
+            <a href="/terms">Terms of Use</a> · <a href="/privacy">Privacy Policy</a> ·{" "}
+            <a href="/privacy-choices" className="privacy-choices">
+              Your Privacy Choices <PrivacyChoicesIcon />
+            </a>{" "}
+            · © Anchor
             Silver Capital LLC
           </p>
         </div>

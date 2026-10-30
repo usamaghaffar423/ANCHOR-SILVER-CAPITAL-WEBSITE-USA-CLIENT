@@ -379,3 +379,9 @@
     height: 700px;
   }
 }
+.ty-choices {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: middle;
+}

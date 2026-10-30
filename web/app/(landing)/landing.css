@@ -171,3 +171,4 @@ footer a{color:var(--muted)}
   .mbar a.primary{background:var(--gold-fill);color:#1C2820}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+.privacy-choices{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
