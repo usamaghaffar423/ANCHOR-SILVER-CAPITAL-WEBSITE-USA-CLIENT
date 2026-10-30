@@ -1,0 +1,369 @@
+/* /thank-you-handbook — own header/footer; tokens, fonts and resets come from ../home.css (.hp). */
+.ty {
+  background: var(--cream);
+}
+.ty-wrap {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* header */
+.ty-top {
+  background: var(--g1);
+  color: #fff;
+}
+.ty-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 72px;
+}
+.ty-logo img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+.ty-top-call {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  line-height: 1.2;
+}
+.ty-top-call small {
+  display: block;
+  font-size: 11.5px;
+  color: var(--mdark);
+}
+.ty-top-call b {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ty-top-ic {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--gline);
+  border-radius: 50%;
+  color: var(--gold);
+  flex: none;
+}
+
+/* hero */
+.ty-hero {
+  background: var(--g1);
+  color: #fff;
+  padding: 36px 0 56px;
+}
+.ty-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+.ty-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  border: 1px solid var(--gline);
+  border-radius: 99px;
+  background: var(--g2);
+  color: var(--gold);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ty-pill span {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--g1);
+}
+.ty-hero h1 {
+  margin-top: 18px;
+  font-family: var(--hp-display), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(34px, 9vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.ty-sub {
+  margin-top: 14px;
+  font-size: 17px;
+  color: #eef2ef;
+}
+.ty-fine {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--mdark);
+}
+.ty-hero-cover img {
+  display: block;
+  width: min(200px, 52vw);
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.5);
+}
+
+/* buttons */
+.ty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font: 700 15.5px/1 var(--hp-body), system-ui, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ty-hero .ty-btn {
+  margin-top: 22px;
+}
+.ty-btn-gold {
+  background: var(--gold);
+  color: var(--g1);
+  box-shadow: 0 3px 0 var(--gold-d);
+}
+.ty-btn-gold:hover {
+  background: #d3b97c;
+}
+.ty-btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid var(--gold-d);
+}
+.ty-btn-ghost:hover {
+  border-color: var(--gold);
+}
+
+/* what happens next */
+.ty-next {
+  padding: 52px 0 56px;
+}
+.ty-h2 {
+  text-align: center;
+  font-family: var(--hp-display), Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(26px, 6vw, 32px);
+  color: var(--g1);
+}
+.ty-steps {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+.ty-steps li {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+}
+.ty-num {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--g1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+.ty-steps h3 {
+  margin-top: 12px;
+  font-family: var(--hp-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--g1);
+}
+.ty-steps p {
+  margin-top: 6px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* talk sooner */
+.ty-talk {
+  background: #fff;
+  padding: 40px 0 56px;
+}
+.ty-talk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.ty-talk-card {
+  background: var(--g1);
+  color: #fff;
+  border-radius: 14px;
+  padding: 26px 24px;
+}
+.ty-talk-card h2 {
+  font-family: var(--hp-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 27px;
+  line-height: 1.15;
+}
+.ty-talk-card p {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #dfe7e2;
+}
+.ty-talk-btns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+.ty-talk-btns .ty-btn {
+  padding: 0 14px;
+}
+.ty-handy {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+.ty-handy h2 {
+  font: 700 15.5px/1.3 var(--hp-body), system-ui, sans-serif;
+  color: var(--g1);
+}
+.ty-handy ul {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 11px;
+}
+.ty-handy li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+.ty-handy li svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--gold-d);
+}
+.ty-book {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--cream2);
+}
+.ty-book iframe {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: 0;
+}
+.ty-book-fallback {
+  padding: 36px 24px;
+  text-align: center;
+}
+.ty-book-fallback h2 {
+  font-family: var(--hp-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--g1);
+}
+.ty-book-fallback p {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.ty-book-fallback a {
+  color: var(--g1);
+  font-weight: 700;
+}
+
+/* footer */
+.ty-foot {
+  background: var(--foot);
+  color: var(--mdark);
+  padding: 34px 0 40px;
+}
+.ty-foot-logo {
+  display: block;
+  height: 30px;
+  width: auto;
+}
+.ty-foot-logo {
+  margin-bottom: 0;
+}
+.ty-legal {
+  margin-top: 18px;
+  max-width: 820px;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.ty-foot-links {
+  margin-top: 14px;
+  font-size: 12.5px;
+}
+.ty-foot-links a {
+  color: #fff;
+}
+
+/* desktop */
+@media (min-width: 860px) {
+  .ty-top-bar {
+    min-height: 84px;
+  }
+  .ty-logo img {
+    height: 46px;
+  }
+  .ty-hero {
+    padding: 52px 0 76px;
+  }
+  .ty-hero-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    justify-items: start;
+    text-align: left;
+    gap: 56px;
+    padding-inline: 40px;
+  }
+  .ty-hero-cover {
+    justify-self: center;
+  }
+  .ty-hero-cover img {
+    width: 280px;
+  }
+  .ty-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .ty-talk-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 20px;
+  }
+  .ty-talk-btns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ty-book iframe {
+    height: 760px;
+  }
+}

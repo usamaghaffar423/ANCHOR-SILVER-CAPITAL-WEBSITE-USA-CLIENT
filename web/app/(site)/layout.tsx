@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { Analytics } from "@/components/site/Analytics";
+import { ChromeGate } from "@/components/site/ChromeGate";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
@@ -120,11 +121,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to content
         </a>
-        <Header />
+        <ChromeGate>
+          <Header />
+        </ChromeGate>
         <main id="main" className="overflow-x-clip">
           {children}
         </main>
-        <Footer />
+        <ChromeGate>
+          <Footer />
+        </ChromeGate>
         <CookieBanner />
         <ScrollToTop />
         <Analytics />
