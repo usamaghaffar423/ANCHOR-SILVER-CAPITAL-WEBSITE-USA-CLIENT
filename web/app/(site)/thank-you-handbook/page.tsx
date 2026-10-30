@@ -28,8 +28,8 @@ const STEPS = [
     body: "The email comes from Anchor Silver Capital. Not there? Check spam or promotions.",
   },
   {
-    title: "Expect our call",
-    body: `A specialist will call from ${PHONE.display}. Save the number so you know it is us.`,
+    title: "We’ll be calling you",
+    body: "Keep your phone nearby. Someone from our team will call to answer your questions.",
   },
   {
     title: "Ask anything",
