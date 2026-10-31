@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { usd, type SatCandle } from "@/components/satellite/sat-format";
 import { useMetals } from "@/components/site/market";
@@ -52,8 +52,38 @@ export function SatTool({
 }) {
   const live = useMetals();
   const liveSpot = symbol === "XAU" ? live.gold : live.silver;
-  const spot = liveSpot ?? initialSpot;
-  const updatedAt = liveSpot != null ? live.updatedAt : initialUpdatedAt;
+  // A price fetched by the Refresh button; it wins until the one-minute poll brings something newer.
+  const [fresh, setFresh] = useState<{ price: number; updatedAt: string | null } | null>(null);
+  const polled = liveSpot ?? initialSpot;
+  const polledAt = liveSpot != null ? live.updatedAt : initialUpdatedAt;
+  const useFresh = fresh != null && !(polledAt && fresh.updatedAt && Date.parse(polledAt) > Date.parse(fresh.updatedAt));
+  const spot = useFresh ? fresh.price : polled;
+  const updatedAt = useFresh ? fresh.updatedAt : polledAt;
+
+  const [refreshState, setRefreshState] = useState<"idle" | "loading" | "updated" | "same" | "error">("idle");
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
+  const refresh = useCallback(async () => {
+    if (refreshState === "loading") return;
+    setRefreshState("loading");
+    let next: "updated" | "same" | "error" = "error";
+    try {
+      const r = await fetch("/api/spot", { cache: "no-store" });
+      if (r.ok) {
+        const j = (await r.json()) as { silver?: number; gold?: number; updatedAt?: string | null };
+        const price = Number(symbol === "XAU" ? j.gold : j.silver);
+        if (price > 0) {
+          next = price === spot && (j.updatedAt ?? null) === updatedAt ? "same" : "updated";
+          setFresh({ price, updatedAt: j.updatedAt ?? null });
+        }
+      }
+    } catch {
+      /* network error: shown below */
+    }
+    setRefreshState(next);
+    clearTimeout(resetTimer.current);
+    resetTimer.current = setTimeout(() => setRefreshState("idle"), 4000);
+  }, [refreshState, symbol, spot, updatedAt]);
 
   const change = useMemo(() => {
     if (spot == null || !ohlc) return null;
@@ -73,7 +103,40 @@ export function SatTool({
   return (
     <div className="sat-tool">
       <section className="sat-card" aria-label={`${metal} spot price`}>
-        <h2>{metal} spot · USD per troy ounce</h2>
+        <div className="sat-card-head">
+          <h2>{metal} spot · USD per troy ounce</h2>
+          <div className="sat-refresh-wrap">
+            <button
+              type="button"
+              className="sat-refresh"
+              onClick={() => void refresh()}
+              disabled={refreshState === "loading"}
+              aria-label={`Refresh live ${metal.toLowerCase()} price`}
+            >
+              <svg
+                className={refreshState === "loading" ? "spin" : ""}
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                width="15"
+                height="15"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+                <path d="M21 3v6h-6" />
+              </svg>
+              {refreshState === "loading" ? "Refreshing…" : "Refresh"}
+            </button>
+            <span className="sat-refresh-msg" role="status" aria-live="polite">
+              {refreshState === "updated" && "Price updated"}
+              {refreshState === "same" && "Already the latest price"}
+              {refreshState === "error" && "Could not refresh. Try again."}
+            </span>
+          </div>
+        </div>
         <div className="sat-price-row">
           <div>
             <div className="sat-price">{spot != null ? usd(spot) : DASH}</div>

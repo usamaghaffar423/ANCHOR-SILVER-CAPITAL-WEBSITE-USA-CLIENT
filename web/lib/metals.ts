@@ -51,12 +51,14 @@ function lastGoodSpotOrNull(): SpotPrices | null {
 }
 
 /** One upstream read of the spot pair; null on any failure (callers fall back, nothing is invented). */
-async function loadSpot(): Promise<SpotPrices | null> {
+async function loadSpot(fresh = false): Promise<SpotPrices | null> {
   try {
-    const [xag, xau] = await Promise.all([
-      fetch(`${GOLD_API}/XAG/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS }, signal: AbortSignal.timeout(PROVIDER_ABORT_MS) }),
-      fetch(`${GOLD_API}/XAU/USD`, { next: { revalidate: SPOT_REVALIDATE_SECONDS }, signal: AbortSignal.timeout(PROVIDER_ABORT_MS) }),
-    ]);
+    // `fresh` (the Refresh button) bypasses Next's fetch cache so the provider is asked again.
+    const opts = (): RequestInit => ({
+      ...(fresh ? { cache: "no-store" as const } : { next: { revalidate: SPOT_REVALIDATE_SECONDS } }),
+      signal: AbortSignal.timeout(PROVIDER_ABORT_MS),
+    });
+    const [xag, xau] = await Promise.all([fetch(`${GOLD_API}/XAG/USD`, opts()), fetch(`${GOLD_API}/XAU/USD`, opts())]);
     if (!xag.ok || !xau.ok) return null;
     const silverJson = (await xag.json()) as {
       price?: unknown;
@@ -81,6 +83,19 @@ async function loadSpot(): Promise<SpotPrices | null> {
  * Cached for `SPOT_REVALIDATE_SECONDS` through lib/edge-cache.ts: Next's fetch cache does not persist
  * on Cloudflare Workers, so without this every page view waited on two gold-api.com calls.
  */
+/** Floor between provider reads for the Refresh button, so it cannot be used to hammer the provider. */
+const REFRESH_MIN_SECONDS = 10;
+
+/**
+ * Spot straight from the provider, for the visitor-triggered Refresh button. At most one provider
+ * read every REFRESH_MIN_SECONDS (shared through lib/edge-cache.ts); inside that window everyone gets
+ * that read. Null only when the provider fails and nothing has ever been read.
+ */
+export async function getSpotPricesNow(): Promise<SpotPrices | null> {
+  const spot = await cachedJson("spot-now", REFRESH_MIN_SECONDS, () => loadSpot(true));
+  return spot ?? lastGoodSpotOrNull();
+}
+
 export async function getSpotPrices(): Promise<SpotPrices | null> {
   const spot = await cachedJson("spot", SPOT_REVALIDATE_SECONDS, loadSpot, 3600, PROVIDER_MAX_WAIT_MS);
   return spot ?? lastGoodSpotOrNull();
