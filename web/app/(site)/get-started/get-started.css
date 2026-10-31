@@ -1,0 +1,15 @@
+/* /get-started: the homepage quiz hero, sized to its content (the homepage hero fills the whole screen). */
+.hp .hp-hero.gs-hero {
+  min-height: 0;
+  padding: 36px 0 56px;
+  align-items: flex-start;
+}
+@media (min-width: 860px) {
+  .hp .hp-hero.gs-hero {
+    padding: 56px 0 72px;
+    align-items: center;
+  }
+  .gs .hp-hero-form {
+    align-self: center;
+  }
+}

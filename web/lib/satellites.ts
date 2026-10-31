@@ -64,7 +64,7 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
  * Destination of every ad image on the price sites. Deliberately a plain URL: no
  * UTM or other query parameters.
  */
-export const AD_URL = "https://anchorsilvercapital.com/gold-silver-ira";
+export const AD_URL = "https://anchorsilvercapital.com/";
 
 /**
  * 404 unless the request arrived on the site's own host (or its www alias).
