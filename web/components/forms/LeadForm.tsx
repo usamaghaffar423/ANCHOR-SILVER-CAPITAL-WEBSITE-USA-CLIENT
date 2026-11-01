@@ -10,7 +10,7 @@ import {
   goToThankYou,
   readUtmFields,
   toE164,
-  trackUet,
+  trackLeadConversion,
 } from "@/lib/lead";
 
 const ACCOUNT_OPTIONS = [
@@ -118,7 +118,7 @@ export function LeadForm({
           console.error(`[lead-form] webhook non-200: ${r.status}`, detail);
           throw new Error(`webhook ${r.status}`);
         }
-        trackUet("lead", { event_category: "lead_form", event_label: "site_form" });
+        trackLeadConversion(email.value, e164, "site_form");
         // No inline banner: straight to the thank-you page (download button lives there).
         setRedirecting(true);
         goToThankYou();

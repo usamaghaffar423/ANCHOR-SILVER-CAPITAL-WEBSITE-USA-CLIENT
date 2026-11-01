@@ -20,7 +20,7 @@ export default function GoldSilverIraPage() {
           <div className="bar">
             <div className="brand">
               <img
-                src="/images/logo-122.png"
+                src="/images/logo-122.webp"
                 alt="Anchor Silver Capital"
                 width={552}
                 height={165}

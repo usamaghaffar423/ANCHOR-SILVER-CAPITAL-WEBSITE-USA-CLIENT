@@ -7,12 +7,12 @@ import { isHandbookTokenValid } from "@/lib/handbook-token";
 export const runtime = "nodejs";
 
 /** Kept in private_docs/ (outside /public) so no static URL can ever serve it. */
-const PDF_FILE = "Silver-IRA-Handbook-2026-Edition.pdf";
+const PDF_FILE = "Precious-Metals-IRA-Handbook.pdf";
 
 const DOWNLOAD_HEADERS: Record<string, string> = {
   "Content-Type": "application/pdf",
   "Content-Disposition":
-    'inline; filename="Anchor-Silver-IRA-Handbook-2026-Edition.pdf"',
+    'inline; filename="Anchor-Precious-Metals-IRA-Handbook.pdf"',
   "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
   Pragma: "no-cache",
   Expires: "0",

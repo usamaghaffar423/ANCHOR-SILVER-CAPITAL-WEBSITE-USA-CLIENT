@@ -25,7 +25,7 @@ import {
   STICKY,
   type AccountType,
 } from "@/lib/home-content";
-import { LEAD_WEBHOOK_URL, fetchVisitorIp, goToThankYou, setUetEnhancedConversion, toE164, trackUet } from "@/lib/lead";
+import { LEAD_WEBHOOK_URL, fetchVisitorIp, goToThankYou, toE164, trackLeadConversion } from "@/lib/lead";
 import { readAttribution, trackHome } from "@/lib/home-track";
 
 /** Notice version for this page's consent text (the site-wide forms are still v2.0). */
@@ -206,8 +206,7 @@ export function HeroForm() {
         body: JSON.stringify(payload),
       });
       if (!r.ok) throw new Error(`webhook ${r.status}`);
-      setUetEnhancedConversion(email, e164);
-      trackUet("lead", { event_category: "lead_form", event_label: FORM_NAME });
+      trackLeadConversion(email, e164, FORM_NAME);
       trackHome("form_submit", { account_type: payload.account_type });
       setRedirecting(true);
       goToThankYou(700);

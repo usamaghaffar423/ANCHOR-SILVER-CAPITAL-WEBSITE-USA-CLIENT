@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { preload } from "react-dom";
 import { Check, Download, Phone } from "lucide-react";
-import { CalendlyEvents } from "@/components/site/CalendlyEvents";
+import { CalendlyEmbed } from "@/components/site/CalendlyEmbed";
 import { JsonLd } from "@/components/site/JsonLd";
 import { PrivacyChoicesIcon } from "@/components/site/PrivacyChoicesIcon";
 import { COMPLIANCE, PHONE } from "@/lib/home-content";
@@ -21,11 +21,6 @@ export const metadata: Metadata = {
   }),
   robots: { index: false, follow: false },
 };
-
-/** Calendly inline embed, themed to the page (the booking link itself lives in lib/lead.ts). */
-const CALENDAR_SRC = BOOKING_URL
-  ? `${BOOKING_URL}?hide_gdpr_banner=1&background_color=fbfaf6&text_color=092619&primary_color=9a7b34`
-  : "";
 
 const PDF = "/precious-metals-ira-handbook.pdf?v=20261027";
 
@@ -200,11 +195,9 @@ export default function ThankYouHandbookPage() {
             </div>
             {BOOKING_URL && (
               <>
-                <CalendlyEvents />
-                <iframe
-                  src={CALENDAR_SRC}
+                <CalendlyEmbed
+                  url={BOOKING_URL}
                   title="Book a call with an Anchor Silver specialist"
-                  loading="lazy"
                 />
                 <p className="ty-book-note">
                   Our specialists are based in Marina del Rey, California

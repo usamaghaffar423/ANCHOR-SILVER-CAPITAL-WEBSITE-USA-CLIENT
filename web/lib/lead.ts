@@ -35,7 +35,7 @@ export const BOOKING_URL = "https://calendly.com/anchorsilvercapital-info/30min"
 
 /** Microsoft UET event push — queues on `window.uetq` until the UET tag loads. */
 export function trackUet(
-  name: "lead" | "phone_click" | "handbook_download" | "booking_scheduled",
+  name: "submit_lead_form" | "phone_click" | "handbook_download" | "booking_scheduled",
   params: { event_category?: string; event_label?: string } = {},
 ) {
   try {
@@ -46,18 +46,29 @@ export function trackUet(
   }
 }
 
+/** The one conversion action name in Microsoft Ads for a real lead. */
+export const LEAD_CONVERSION_EVENT = "submit_lead_form";
+
+let leadFired = false;
+
 /**
- * Microsoft Ads enhanced conversions: hand UET the submitted email and phone
- * (E.164) so the conversion can be matched. UET hashes them before sending.
- * Call this immediately BEFORE the conversion event, only on a successful
- * submit — never on page load. A missing value is passed as "" (never guessed).
+ * The lead conversion, for every lead form. Call it ONLY after the lead webhook has accepted the
+ * submission (never on page load, refresh or the thank-you page). In order:
+ *   1. enhanced conversions: `uetq 'set' pid` with the submitted email (trimmed, lowercase) and phone
+ *      (E.164). UET hashes both before sending. Skipped entirely when the visitor has opted out
+ *      (Decline, Your Privacy Choices or Global Privacy Control), so no personal data goes to UET.
+ *   2. `uetq 'event' 'submit_lead_form'` with event_category "lead" and the form name as the label.
+ * Fires at most once per page load, so a double submit cannot count twice.
  */
-export function setUetEnhancedConversion(email: string, phone: string) {
-  // Opted out of sale/sharing (toggle, banner Decline or Global Privacy Control): send no personal data to UET.
-  if (isOptedOut()) return;
+export function trackLeadConversion(email: string, e164Phone: string, formName: string) {
+  if (leadFired) return;
+  leadFired = true;
   try {
     window.uetq = window.uetq || [];
-    window.uetq.push("set", { pid: { em: email || "", ph: phone || "" } });
+    if (!isOptedOut()) {
+      window.uetq.push("set", { pid: { em: (email || "").trim().toLowerCase(), ph: e164Phone || "" } });
+    }
+    window.uetq.push("event", LEAD_CONVERSION_EVENT, { event_category: "lead", event_label: formName });
   } catch {
     /* noop */
   }

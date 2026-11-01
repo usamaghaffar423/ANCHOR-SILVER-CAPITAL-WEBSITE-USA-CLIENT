@@ -8,10 +8,13 @@
  * missing brochure.
  */
 
+/** The current handbook, the same file the site serves publicly. Used when no Blob URL is configured. */
+const HANDBOOK_URL = "https://anchorsilvercapital.com/precious-metals-ira-handbook.pdf";
+
 const BROCHURE_MAP = {
-  silver_ira: process.env.BLOB_URL_IRA_HANDBOOK,
+  silver_ira: process.env.BLOB_URL_IRA_HANDBOOK || HANDBOOK_URL,
   physical_silver: process.env.BLOB_URL_PROSPECTUS,
-  just_learning: process.env.BLOB_URL_PROSPECTUS,
+  just_learning: process.env.BLOB_URL_PROSPECTUS || HANDBOOK_URL,
 } as const;
 
 const FALLBACK_URL = "https://anchorsilvercapital.com/";

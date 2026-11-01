@@ -6,7 +6,7 @@ import {
   LEAD_WEBHOOK_URL,
   fetchVisitorIp,
   goToThankYou,
-  setUetEnhancedConversion,
+  trackLeadConversion,
   trackUet,
 } from "@/lib/lead";
 
@@ -97,9 +97,8 @@ export function LeadCapture() {
     data.approx_value = bal.value || "Not Specified";
 
     function done() {
-      // The submitted email and E.164 phone, set right before the lead event.
-      setUetEnhancedConversion((data.email ?? "").trim(), data.phone);
-      trackUet("lead", { event_category: "lead_form", event_label: "landing_page" });
+      // Enhanced conversion data (skipped on opt-out) then the submit_lead_form event, once.
+      trackLeadConversion(data.email ?? "", data.phone, "landing_page");
       // No inline panel: go to the thank-you page. Longer delay than the site forms because
       // this is a full navigation between app roots and the UET request must get out first.
       setRedirecting(true);
