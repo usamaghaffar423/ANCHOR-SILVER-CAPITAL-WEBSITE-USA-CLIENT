@@ -5,10 +5,13 @@ import { faqPageSchema } from "@/lib/faq-schema";
 import { LeadCapture } from "./LeadCapture";
 import { LANDING_FAQ } from "./faq";
 
+const TITLE = "Anchor Silver Capital Precious Metals IRA";
+const DESCRIPTION = "Free Precious Metals IRA Handbook from Anchor Silver Capital. Gold and silver IRA, explained plainly.";
+
 export const metadata: Metadata = {
-  title: "Anchor Silver Capital Precious Metals IRA",
-  description:
-    "Free Precious Metals IRA Handbook from Anchor Silver Capital. Gold and silver IRA, explained plainly.",
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: { title: TITLE, description: DESCRIPTION },
 };
 
 export default function GoldSilverIraPage() {

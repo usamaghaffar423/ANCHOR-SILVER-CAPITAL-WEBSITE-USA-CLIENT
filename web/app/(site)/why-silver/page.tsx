@@ -9,9 +9,9 @@ import { Disclaimer, H2, Prose, Section } from "@/components/site/ui";
 import { breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Why Invest in Silver Now",
+  title: "Why Silver: History & Demand",
   description:
-    "Why silver: 5,000 years as real money, six years of supply deficit, industrial demand, currency debasement, and the gold to silver ratio explained.",
+    "Why people own silver: 5,000 years as money, a multi-year supply deficit, industrial demand and the gold-to-silver ratio, explained in plain English.",
   path: "/why-silver",
   type: "article",
 });
