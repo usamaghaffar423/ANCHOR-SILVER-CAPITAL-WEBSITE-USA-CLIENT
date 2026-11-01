@@ -80,7 +80,14 @@ export const HOW = {
 /** The specialist card and two reviews in the handoff are placeholders: keep hidden until real content exists. */
 export const SHOW_PEOPLE = false;
 
-export const FAQ = {
+/**
+ * Homepage FAQ. `enabled: false` keeps a question out of the page AND its FAQPage schema until Ron
+ * approves it. `draft: true` means the text is still awaiting approval but is already the visible copy.
+ */
+export const FAQ: {
+  heading: string;
+  items: { q: string; a: string; draft: boolean; enabled?: boolean }[];
+} = {
   heading: "Questions people ask first",
   items: [
     {
@@ -108,8 +115,24 @@ export const FAQ = {
       a: "No. The handbook is free and a call with a specialist carries no obligation. You decide if and when to move forward, and every cost is in writing before you approve anything.",
       draft: true,
     },
+    // DRAFT, flagged off until Ron approves (AEO worksheet). Set enabled: true to publish.
+    {
+      q: "How do I sell silver from my IRA?",
+      a: "Tell us what you want to sell and we give you a written price before anything happens. Once you approve, the depository releases the metal, the sale is completed through Anchor Silver or an authorized buyer, and the cash goes back into your IRA, not to you, so it stays in the account. Any cost to sell is listed on our fees page.",
+      draft: true,
+      enabled: false,
+    },
+    {
+      q: "What happens to my metal if Anchor Silver closes?",
+      a: "Your metal isn’t held by Anchor Silver. It belongs to your IRA, which is held by an independent custodian, American Estate & Trust, and stored at International Depository Services of Delaware in your account’s name. If Anchor Silver closed, your account and metal would stay with them, and you could keep working with the custodian or another dealer.",
+      draft: true,
+      enabled: false,
+    },
   ],
 };
+
+/** The questions that are published (page + FAQPage schema both read this one list). */
+export const FAQ_LIVE = FAQ.items.filter((i) => i.enabled !== false);
 
 export const FINAL_CTA = {
   line1: "Have questions?",

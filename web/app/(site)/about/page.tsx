@@ -4,7 +4,8 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { Gallery } from "@/components/site/Gallery";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
-import { breadcrumbSchema, pageMeta } from "@/lib/site";
+import { ABOUT_EXTRA } from "@/content/aeo";
+import { breadcrumbSchema, pageMeta, SITE } from "@/lib/site";
 
 const galleryImages = [
   {
@@ -116,6 +117,87 @@ export default function About() {
         </p>
         <Gallery className="mt-10" images={galleryImages} />
       </Section>
+
+      {ABOUT_EXTRA.enabled && (
+        <Section tone="light" id="company-details">
+          <H2>Company details</H2>
+          <div className="mt-6 grid gap-10 md:grid-cols-2">
+            <dl className="grid gap-4 text-sm">
+              <div>
+                <dt className="font-semibold text-foreground">Legal name</dt>
+                <dd className="text-muted-foreground">{SITE.legal}</dd>
+              </div>
+              {ABOUT_EXTRA.address && (
+                <div>
+                  <dt className="font-semibold text-foreground">Address</dt>
+                  <dd className="text-muted-foreground">{ABOUT_EXTRA.address}</dd>
+                </div>
+              )}
+              <div>
+                <dt className="font-semibold text-foreground">Phone</dt>
+                <dd>
+                  <a className="text-primary underline underline-offset-4" href={SITE.phoneHref}>
+                    {SITE.phone}
+                  </a>
+                </dd>
+              </div>
+              {ABOUT_EXTRA.email && (
+                <div>
+                  <dt className="font-semibold text-foreground">Email</dt>
+                  <dd>
+                    <a className="text-primary underline underline-offset-4" href={`mailto:${ABOUT_EXTRA.email}`}>
+                      {ABOUT_EXTRA.email}
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {ABOUT_EXTRA.caRegistration && (
+                <div>
+                  <dt className="font-semibold text-foreground">California registration</dt>
+                  <dd className="text-muted-foreground">{ABOUT_EXTRA.caRegistration}</dd>
+                </div>
+              )}
+            </dl>
+            {ABOUT_EXTRA.founder && (
+              <div>
+                <H2 className="text-xl">{ABOUT_EXTRA.founder.name}</H2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{ABOUT_EXTRA.founder.bio}</p>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-12">
+            <H2>Our partners</H2>
+            <ul className="mt-4 grid gap-2 text-sm">
+              {ABOUT_EXTRA.partners.map((p) => (
+                <li key={p.name} className="text-muted-foreground">
+                  {p.url ? (
+                    <a href={p.url} target="_blank" rel="noopener" className="font-medium text-primary underline underline-offset-4">
+                      {p.name}
+                    </a>
+                  ) : (
+                    <span className="font-medium text-foreground">{p.name}</span>
+                  )}{" "}
+                  · {p.role}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-12">
+            <H2>{ABOUT_EXTRA.howItWorks.heading}</H2>
+            <ol className="mt-4 grid gap-2 text-sm md:grid-cols-5">
+              {ABOUT_EXTRA.howItWorks.steps.map((s, i) => (
+                <li key={s} className="rounded-sm border border-border p-3">
+                  <span className="font-mono text-xs text-primary">{i + 1}</span>
+                  <p className="mt-1 font-medium text-foreground">{s}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          {ABOUT_EXTRA.lastUpdated && <p className="mt-8 text-sm text-muted-foreground">Last updated: {ABOUT_EXTRA.lastUpdated}</p>}
+        </Section>
+      )}
 
       <Section tone="muted">
         <H2>Compliance</H2>

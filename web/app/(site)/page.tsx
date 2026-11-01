@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
 import { CallLink, FaqList, FinalCtaButtons, HeroForm, HeroHeading, HeroPhoto, HomeProvider, StickyBar } from "@/components/home/HomeClient";
 import { preload } from "react-dom";
-import { COMPLIANCE, FAQ, FINAL_CTA, HERO, HOW, LOOK_INSIDE, PHONE, TRUST } from "@/lib/home-content";
+import { JsonLd } from "@/components/site/JsonLd";
+import { faqPageSchema } from "@/lib/faq-schema";
+import { COMPLIANCE, FAQ, FAQ_LIVE, FINAL_CTA, HERO, HOW, LOOK_INSIDE, PHONE, TRUST } from "@/lib/home-content";
 import { Landmark, FileText, ShieldCheck, Vault } from "lucide-react";
 import { pageMeta } from "@/lib/site";
 import "./home.css";
@@ -40,6 +42,7 @@ export default function HomePage() {
   preload("/fonts/home/inter-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
     <div className="hp">
+      <JsonLd data={faqPageSchema(FAQ_LIVE)} />
       <HomeProvider>
         {/* ----------------------------- hero ----------------------------- */}
         <section className="hp-hero" aria-labelledby="hp-title">

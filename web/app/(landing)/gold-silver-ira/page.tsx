@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { PrivacyChoicesIcon } from "@/components/site/PrivacyChoicesIcon";
+import { JsonLd } from "@/components/site/JsonLd";
+import { faqPageSchema } from "@/lib/faq-schema";
 import { LeadCapture } from "./LeadCapture";
+import { LANDING_FAQ } from "./faq";
 
 export const metadata: Metadata = {
   title: "Anchor Silver Capital Precious Metals IRA",
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
 export default function GoldSilverIraPage() {
   return (
     <>
+      <JsonLd data={faqPageSchema(LANDING_FAQ)} />
       <header className="hero">
         <div className="wrap">
           <div className="bar">
@@ -385,59 +389,12 @@ export default function GoldSilverIraPage() {
               <h2>Answers before you call.</h2>
             </div>
             <div className="faq">
-              <details>
-                <summary>Can I hold gold and silver in the same IRA?</summary>
-                <p>
-                  Yes. Both are eligible, and many people hold both. They behave differently in
-                  price, volatility, and premium, so the mix is your decision with your own
-                  advisors.
-                </p>
-              </details>
-              <details>
-                <summary>Do I have to move my whole account?</summary>
-                <p>
-                  No. A partial transfer leaves your existing account open and moves only the
-                  portion you choose, in any proportion. We are not licensed to tell you what share
-                  belongs in metal, and most people treat it as one part of a broader portfolio.
-                </p>
-              </details>
-              <details>
-                <summary>Can I keep the metal at home?</summary>
-                <p>
-                  Not inside an IRA. The tax code requires the trustee to hold it, so it is stored
-                  at an approved depository. Metal you want in your own hands is bought outside an
-                  IRA, without the IRA&apos;s tax treatment.
-                </p>
-              </details>
-              <details>
-                <summary>What are the minimums?</summary>
-                <p>
-                  IRA rollovers typically start at $25,000. Cash purchases for delivery to you
-                  start at $10,000.
-                </p>
-              </details>
-              <details>
-                <summary>How long does a transfer take?</summary>
-                <p>
-                  Typically two to three weeks, depending on your current provider. The custodian
-                  coordinates it and you receive updates.
-                </p>
-              </details>
-              <details>
-                <summary>Is the consultation really free?</summary>
-                <p>
-                  Yes. It is free and carries no obligation. We will tell you honestly whether a
-                  precious metals IRA fits your situation, including when it does not.
-                </p>
-              </details>
-              <details>
-                <summary>Is this tax advice?</summary>
-                <p>
-                  No. We are a precious metals dealer, not a tax advisor or investment advisor.
-                  Confirm the treatment of your situation with a qualified tax professional before
-                  you move retirement money.
-                </p>
-              </details>
+              {LANDING_FAQ.map((f) => (
+                <details key={f.q} name="faq">
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

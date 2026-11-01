@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
 import { LeadForm } from "@/components/forms/LeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
+import { faqPageSchema } from "@/lib/faq-schema";
 import { FeatureRow } from "@/components/site/FeatureRow";
 import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
@@ -69,6 +70,7 @@ export default function SilverIra() {
   return (
     <>
       <JsonLd data={breadcrumbSchema("/silver-ira", "Silver IRA")} />
+      <JsonLd data={faqPageSchema(faqs)} />
       <PageHero
         eyebrow="Silver IRA"
         title="Your Retirement Account. Anchored in Real Metal."

@@ -78,53 +78,66 @@ export function breadcrumbSchema(path: string, label: string) {
   };
 }
 
-const ORGANIZATION_ID = `${SITE.origin}/#organization`;
+const ORGANIZATION_ID = `${SITE.origin}/#org`;
 
 /**
- * YMYL entity graph injected into <head> on every route: who we are and exactly
- * what the product costs, in machine-readable form for search engines and for
- * answer engines that cite the site directly.
- *
- * The fee strings below are the published schedule — AET $50 setup + $200/year,
- * IDS of Delaware $12/month ($144/year), dealer premium capped at 15% over spot.
- * Change them here and on the Silver IRA / FAQ pages together.
- *
- * Nodes carry no `@context` so both can sit inside a single `@graph`.
+ * Details Ron has not supplied yet. Leave a field undefined and it is OMITTED from the schema; fill it in
+ * and it switches on everywhere. Nothing here is guessed.
  */
-const financialServiceNode = {
-  "@type": "FinancialService",
+export const ORG_OPTIONAL: {
+  email?: string;
+  streetAddress?: string;
+  postalCode?: string;
+  founder?: string;
+  sameAs?: string[];
+} = {};
+
+/** Worksheet description of the business (also the homepage meta description). */
+const ORG_DESCRIPTION =
+  "Anchor Silver Capital LLC is a precious metals dealer in Marina del Rey, California. It helps people hold physical gold and silver in an IRA through a direct transfer, with fees in writing and no obligation.";
+
+/**
+ * YMYL entity graph injected into <head> on every route: who we are (Organization + FinancialService,
+ * one node, @id /#org), the site (WebSite), and what the product costs (FinancialProduct), in machine-readable
+ * form for search engines and for answer engines that cite the site directly.
+ *
+ * Only known-true fields are emitted; see ORG_OPTIONAL for what is held back until Ron confirms it.
+ *
+ * The fee strings in the product node are the published schedule: AET $50 setup + $200/year,
+ * IDS of Delaware $12/month ($144/year), dealer premium capped at 15% over spot. Change them here and
+ * on the Silver IRA / FAQ pages together.
+ *
+ * Nodes carry no `@context` so all of them can sit inside a single `@graph`.
+ */
+const organizationNode = {
+  "@type": ["Organization", "FinancialService"],
   "@id": ORGANIZATION_ID,
-  name: SITE.name,
-  legalName: SITE.legal,
-  alternateName: SITE.legal,
+  name: SITE.legal,
   url: SITE.origin,
-  telephone: "+1-866-818-7243",
-  email: SITE.email,
   logo: `${SITE.origin}/images/logo-122.png`,
-  image: `${SITE.origin}/images/logo-122.png`,
-  priceRange: "Up to 15% over spot",
-  sameAs: [
-    "https://www.facebook.com/anchorsilvercapital",
-    "https://www.linkedin.com/company/anchorsilvercapital",
-    "https://x.com/anchorsilvercap",
-  ],
+  telephone: "+1-866-818-7243",
+  description: ORG_DESCRIPTION,
+  areaServed: { "@type": "Country", name: "US" },
   address: {
     "@type": "PostalAddress",
-    streetAddress: SITE.street,
     addressLocality: SITE.city,
     addressRegion: SITE.state,
-    postalCode: SITE.zip,
     addressCountry: "US",
+    ...(ORG_OPTIONAL.streetAddress ? { streetAddress: ORG_OPTIONAL.streetAddress } : {}),
+    ...(ORG_OPTIONAL.postalCode ? { postalCode: ORG_OPTIONAL.postalCode } : {}),
   },
-  geo: { "@type": "GeoCoordinates", latitude: 33.9803, longitude: -118.4517 },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "08:00",
-      closes: "18:00",
-    },
-  ],
+  ...(ORG_OPTIONAL.email ? { email: ORG_OPTIONAL.email } : {}),
+  ...(ORG_OPTIONAL.founder ? { founder: { "@type": "Person", name: ORG_OPTIONAL.founder } } : {}),
+  ...(ORG_OPTIONAL.sameAs?.length ? { sameAs: ORG_OPTIONAL.sameAs } : {}),
+};
+
+const webSiteNode = {
+  "@type": "WebSite",
+  "@id": `${SITE.origin}/#website`,
+  url: SITE.origin,
+  name: SITE.name,
+  inLanguage: "en-US",
+  publisher: { "@id": ORGANIZATION_ID },
 };
 
 const financialProductNode = {
@@ -140,7 +153,7 @@ const financialProductNode = {
 
 export const rootSchemaGraph = {
   "@context": "https://schema.org",
-  "@graph": [financialServiceNode, financialProductNode],
+  "@graph": [organizationNode, webSiteNode, financialProductNode],
 };
 
 /**

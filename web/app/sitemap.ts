@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { feesReady, FEES, liveQuestionPages } from "@/content/aeo";
 import { lastmodFor } from "@/lib/crawl";
 import { PAGES, SITE } from "@/lib/site";
 
@@ -43,7 +44,7 @@ const NOT_LISTED = new Set<string>(["/guide-success"]);
 const FALLBACK = { changeFrequency: "monthly" as const, priority: 0.7 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return PAGES.filter((path) => !NOT_LISTED.has(path)).map((path) => {
+  const pages: MetadataRoute.Sitemap = PAGES.filter((path) => !NOT_LISTED.has(path)).map((path) => {
     const lastModified = lastmodFor("anchor", path);
     return {
       url: `${SITE.origin}${path}`,
@@ -52,4 +53,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...(DIRECTIVE[path] ?? FALLBACK),
     };
   });
+
+  // Flagged-off AEO pages join the sitemap only once they are live (content/aeo.ts), dated by their own "last updated".
+  const live: MetadataRoute.Sitemap = [
+    ...(feesReady() ? [{ url: `${SITE.origin}/fees`, lastModified: parseUpdated(FEES.lastUpdated), changeFrequency: "monthly" as const, priority: 0.7 }] : []),
+    ...liveQuestionPages().map((p) => ({
+      url: `${SITE.origin}/${p.slug}`,
+      lastModified: parseUpdated(p.lastUpdated),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+  return [...pages, ...live];
+}
+
+/** "November 2026" / "November 12, 2026" -> ISO date for <lastmod>; undefined when it cannot be read. */
+function parseUpdated(text: string | null): string | undefined {
+  if (!text) return undefined;
+  const d = new Date(text);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
 }

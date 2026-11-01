@@ -8,7 +8,7 @@ export function Accordion({ items }: { items: QA[] }) {
   return (
     <div className="divide-y divide-border border-y border-border">
       {items.map((item) => (
-        <details key={item.q} className="group py-4">
+        <details key={item.q} name="faq" className="group py-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-foreground marker:hidden">
             <span>{item.q}</span>
             <span

@@ -17,7 +17,7 @@ import {
 } from "react";
 import {
   ACCOUNT_TYPES,
-  FAQ,
+  FAQ_LIVE,
   FINAL_CTA,
   FORM,
   HERO,
@@ -105,8 +105,8 @@ export function HeroHeading() {
   return (
     <div className="hp-h1wrap">
       <h1 className="hp-h1">
-        <span className="hp-h1-l1">{HERO.line1}</span>
-        <span className="hp-h1-l2">{HERO.line2}</span>
+        <span className="hp-h1-l1">{HERO.line1}</span>{" "}
+        <span className="hp-h1-l2">{HERO.line2}</span>{" "}
         <span className={`hp-h1-l3 hp-h1-${variant}`}>
           {variant !== "silver" && <b className="hp-gold">Gold</b>}
           {variant === "default" && " and "}
@@ -323,41 +323,45 @@ export function FinalCtaButtons() {
 
 /* --------------------------------- FAQ ------------------------------------ */
 
+/**
+ * Native <details name="faq">: every answer is in the server HTML (crawlable, readable with JavaScript
+ * off), only one is open at a time (the shared name), and the first starts open. `faq_open` is tracked
+ * from the 'toggle' event, ignoring the toggle the browser fires for the item that is open on load.
+ */
 export function FaqList() {
-  const [open, setOpen] = useState(0);
-  const base = useId();
+  const ready = useRef(false);
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      ready.current = true;
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, []);
   return (
     <div className="hp-faq">
-      {FAQ.items.map((it, i) => {
-        const isOpen = open === i;
-        return (
-          <div key={it.q} className={`hp-faq-item ${isOpen ? "open" : ""}`}>
-            <h3>
-              <button
-                type="button"
-                id={`${base}-b${i}`}
-                aria-expanded={isOpen}
-                aria-controls={`${base}-p${i}`}
-                onClick={() => {
-                  if (!isOpen) trackHome("faq_open", { question: it.q });
-                  setOpen(isOpen ? -1 : i);
-                }}
-              >
-                <span>{it.q}</span>
-                <span className="hp-pm" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
-                    <path d="M5 12h14" />
-                    <path className="hp-pm-v" d="M12 5v14" />
-                  </svg>
-                </span>
-              </button>
-            </h3>
-            <div id={`${base}-p${i}`} role="region" aria-labelledby={`${base}-b${i}`} hidden={!isOpen}>
-              <p>{it.a}</p>
-            </div>
+      {FAQ_LIVE.map((it, i) => (
+        <details
+          key={it.q}
+          name="faq"
+          className="hp-faq-item"
+          open={i === 0}
+          onToggle={(e) => {
+            if (ready.current && e.currentTarget.open) trackHome("faq_open", { question: it.q });
+          }}
+        >
+          <summary>
+            <h3>{it.q}</h3>
+            <span className="hp-pm" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+                <path d="M5 12h14" />
+                <path className="hp-pm-v" d="M12 5v14" />
+              </svg>
+            </span>
+          </summary>
+          <div className="hp-faq-a">
+            <p>{it.a}</p>
           </div>
-        );
-      })}
+        </details>
+      ))}
     </div>
   );
 }
