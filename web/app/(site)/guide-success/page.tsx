@@ -11,12 +11,16 @@ import { pageMeta } from "@/lib/site";
  * Ships its own metadata so it doesn't inherit the root layout's home-page
  * canonical — otherwise this route would declare itself a duplicate of `/`.
  */
-export const metadata: Metadata = pageMeta({
-  title: "Your Silver Investor Guide Is Ready",
-  description:
-    "Preview the 2026 Silver Investor Guide — Silver IRA rollovers, physical silver ownership, and how fees are disclosed before you commit.",
-  path: "/guide-success",
-});
+export const metadata: Metadata = {
+  ...pageMeta({
+    title: "Your Silver Investor Guide Is Ready",
+    description:
+      "Preview the 2026 Silver Investor Guide — Silver IRA rollovers, physical silver ownership, and how fees are disclosed before you commit.",
+    path: "/guide-success",
+  }),
+  // A confirmation page reached after a form submit: kept out of the index and the sitemap.
+  robots: { index: false, follow: false },
+};
 export default function GuideSuccessPage() {
   return (
     <section className="hero-surface relative -mt-[60px] px-5 pb-16 pt-[120px] text-silver md:-mt-[112px] md:pb-24 md:pt-[160px]">
@@ -30,8 +34,8 @@ export default function GuideSuccessPage() {
           Your Guide Is Ready
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-silver sm:text-lg">
-          Preview it below. We&apos;ve also emailed a copy to the address you provided
-          — check your inbox (and spam folder) just in case.
+          Preview it below. We&apos;ve also emailed a copy to the address you
+          provided — check your inbox (and spam folder) just in case.
         </p>
 
         {/* PDF embed — #toolbar=0 hides the browser chrome */}

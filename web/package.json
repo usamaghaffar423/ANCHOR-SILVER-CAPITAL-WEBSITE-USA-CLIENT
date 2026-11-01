@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/embed-handbook.mjs && next build --webpack",
+    "build": "node scripts/embed-handbook.mjs && node scripts/gen-lastmod.mjs && next build --webpack",
     "handbook:embed": "node scripts/embed-handbook.mjs",
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { lastmodFor } from "@/lib/crawl";
 import { PAGES, SITE } from "@/lib/site";
 
 /**
@@ -32,14 +33,23 @@ const DIRECTIVE: Record<string, { changeFrequency: MetadataRoute.Sitemap[number]
   "/sms-consent": { changeFrequency: "yearly", priority: 0.3 },
 };
 
+/**
+ * Public routes that must never be listed: confirmation / thank-you pages (they are also noindex),
+ * and anything flagged off until its content is approved (fees, the AEO question pages). Add a
+ * route here, or leave it out of PAGES, until it is live.
+ */
+const NOT_LISTED = new Set<string>(["/guide-success"]);
+
 const FALLBACK = { changeFrequency: "monthly" as const, priority: 0.7 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  return PAGES.map((path) => ({
-    url: `${SITE.origin}${path}`,
-    lastModified,
-    ...(DIRECTIVE[path] ?? FALLBACK),
-  }));
+  return PAGES.filter((path) => !NOT_LISTED.has(path)).map((path) => {
+    const lastModified = lastmodFor("anchor", path);
+    return {
+      url: `${SITE.origin}${path}`,
+      // Real source date (scripts/gen-lastmod.mjs), never "now": omitted if no date is known.
+      ...(lastModified ? { lastModified } : {}),
+      ...(DIRECTIVE[path] ?? FALLBACK),
+    };
+  });
 }
