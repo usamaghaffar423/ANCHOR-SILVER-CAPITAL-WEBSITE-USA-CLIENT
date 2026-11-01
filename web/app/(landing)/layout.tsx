@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import "./landing.css";
 import { UetTag } from "@/components/site/UetTag";
 import { GoogleAdsTag } from "@/components/site/GoogleAdsTag";
+import { ClarityLazy } from "@/components/site/ClarityLazy";
 import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 
 /**
@@ -28,6 +29,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
         <PrivacyConsent />
+        <ClarityLazy />
       </body>
     </html>
   );

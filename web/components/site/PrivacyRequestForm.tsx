@@ -66,7 +66,7 @@ export function PrivacyRequestForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-4">
+    <form onSubmit={onSubmit} noValidate data-clarity-mask="true" className="grid gap-4">
       <div className="grid gap-1.5">
         <label htmlFor={id("type")} className={labelCls}>
           Request type

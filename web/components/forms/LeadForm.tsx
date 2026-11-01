@@ -131,7 +131,7 @@ export function LeadForm({
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className={`grid gap-4 ${className}`}>
+    <form onSubmit={onSubmit} noValidate data-clarity-mask="true" className={`grid gap-4 ${className}`}>
       <div className="grid gap-1.5">
         <label htmlFor={id("fname")} className={labelCls}>
           Name

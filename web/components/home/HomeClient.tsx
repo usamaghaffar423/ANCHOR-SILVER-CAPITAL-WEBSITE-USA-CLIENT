@@ -1,7 +1,6 @@
 "use client";
 
 import { CcpaNotice } from "@/components/site/CcpaNotice";
-import { HomeImage } from "@/components/home/HomeImage";
 import Link from "next/link";
 import {
   createContext,
@@ -17,7 +16,6 @@ import {
 } from "react";
 import {
   ACCOUNT_TYPES,
-  FAQ_LIVE,
   FINAL_CTA,
   FORM,
   HERO,
@@ -235,7 +233,7 @@ export function HeroForm() {
           </div>
         </div>
       ) : (
-        <form className="hp-step2" onSubmit={onSubmit} noValidate>
+        <form className="hp-step2" onSubmit={onSubmit} noValidate data-clarity-mask="true">
           <p className="hp-stepper">
             <span className="hp-dash on" />
             <span className="hp-dash on" />
@@ -299,16 +297,6 @@ export function HeroForm() {
   );
 }
 
-/** Photo above the form card. Hidden on phones once the visitor is on step 2. */
-export function HeroPhoto() {
-  const { step } = useHome();
-  return (
-    <div className={`hp-photo ${step === 2 ? "hp-photo-hide" : ""}`} aria-hidden="true">
-      <HomeImage name="metals3_cut" widths={[420, 840]} w={1200} h={668} sizes="(max-width: 859px) 56vw, 382px" alt="Gold and silver coins and bars" priority />
-    </div>
-  );
-}
-
 /* ------------------------------- final CTA -------------------------------- */
 
 export function FinalCtaButtons() {
@@ -316,51 +304,6 @@ export function FinalCtaButtons() {
     <div>
       <p className="hp-fc-label">{FINAL_CTA.label}</p>
       <AccountButtons where="final" className="hp-acct-final" />
-    </div>
-  );
-}
-
-/* --------------------------------- FAQ ------------------------------------ */
-
-/**
- * Native <details name="faq">: every answer is in the server HTML (crawlable, readable with JavaScript
- * off), only one is open at a time (the shared name), and the first starts open. `faq_open` is tracked
- * from the 'toggle' event, ignoring the toggle the browser fires for the item that is open on load.
- */
-export function FaqList() {
-  const ready = useRef(false);
-  useEffect(() => {
-    const id = window.setTimeout(() => {
-      ready.current = true;
-    }, 0);
-    return () => window.clearTimeout(id);
-  }, []);
-  return (
-    <div className="hp-faq">
-      {FAQ_LIVE.map((it, i) => (
-        <details
-          key={it.q}
-          name="faq"
-          className="hp-faq-item"
-          open={i === 0}
-          onToggle={(e) => {
-            if (ready.current && e.currentTarget.open) trackHome("faq_open", { question: it.q });
-          }}
-        >
-          <summary>
-            <h3>{it.q}</h3>
-            <span className="hp-pm" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
-                <path d="M5 12h14" />
-                <path className="hp-pm-v" d="M12 5v14" />
-              </svg>
-            </span>
-          </summary>
-          <div className="hp-faq-a">
-            <p>{it.a}</p>
-          </div>
-        </details>
-      ))}
     </div>
   );
 }
@@ -396,14 +339,5 @@ export function StickyBar() {
         </svg>
       </a>
     </div>
-  );
-}
-
-/** Wraps the hero call link so the click is counted. */
-export function CallLink({ location, className, children }: { location: string; className?: string; children: ReactNode }) {
-  return (
-    <a href={PHONE.href} className={className} onClick={() => trackHome("click_to_call", { location })}>
-      {children}
-    </a>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
-import { HeroForm, HeroHeading, HeroPhoto, HomeProvider } from "@/components/home/HomeClient";
+import { HeroForm, HeroHeading, HomeProvider } from "@/components/home/HomeClient";
+import { HeroPhoto } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { H2, Section } from "@/components/site/ui";
 import { HERO } from "@/lib/home-content";

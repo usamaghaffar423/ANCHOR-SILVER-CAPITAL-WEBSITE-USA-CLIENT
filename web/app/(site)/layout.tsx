@@ -5,8 +5,8 @@ import { Analytics } from "@/components/site/Analytics";
 import { ChromeGate } from "@/components/site/ChromeGate";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CookieBanner } from "@/components/site/CookieBanner";
-import { ScrollToTop } from "@/components/site/ScrollToTop";
+import { ClarityLazy } from "@/components/site/ClarityLazy";
+import { DeferredChrome } from "@/components/site/DeferredChrome";
 import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 import { UetEvents } from "@/components/site/UetEvents";
 import { UetTag } from "@/components/site/UetTag";
@@ -73,6 +73,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <UetTag />
+        {/* No cookie choice stored yet: flag it before first paint so the homepage sticky bar is already hidden when the (deferred) banner arrives. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{if(!localStorage.getItem('asc-cookie-consent'))document.documentElement.setAttribute('data-cookie-banner','')}catch(e){}",
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Same CSS URL, but pulled off the render-blocking path: `media="print"`
@@ -131,8 +137,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ChromeGate>
           <Footer />
         </ChromeGate>
-        <CookieBanner />
-        <ScrollToTop />
+        <DeferredChrome />
+        <ClarityLazy />
         <Analytics />
         <UetEvents />
         <PrivacyConsent />

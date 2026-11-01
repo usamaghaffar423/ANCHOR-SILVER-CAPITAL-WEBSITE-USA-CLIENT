@@ -137,7 +137,7 @@ export function LeadCapture() {
       <div id="formView">
         <h2>Send me the free handbook</h2>
         <p className="sub">A specialist will also call you shortly to answer your questions.</p>
-        <form id="leadForm" ref={formRef} noValidate onSubmit={onSubmit}>
+        <form id="leadForm" ref={formRef} noValidate onSubmit={onSubmit} data-clarity-mask="true">
           <div className="field">
             <label htmlFor="fname">Name</label>
             <input id="fname" name="first_name" type="text" autoComplete="name" required />

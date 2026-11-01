@@ -169,7 +169,8 @@
   width: 100%;
   height: auto;
 }
-.hp-photo-hide {
+.hp-photo-hide,
+.hp-hero-form:has(.hp-card[data-step="2"]) .hp-photo {
   display: none;
 }
 

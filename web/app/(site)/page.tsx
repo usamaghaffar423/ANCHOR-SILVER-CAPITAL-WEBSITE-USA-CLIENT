@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
-import { CallLink, FaqList, FinalCtaButtons, HeroForm, HeroHeading, HeroPhoto, HomeProvider, StickyBar } from "@/components/home/HomeClient";
+import { FinalCtaButtons, HeroForm, HeroHeading, HomeProvider, StickyBar } from "@/components/home/HomeClient";
+import { CallLink, FaqList, HeroPhoto } from "@/components/home/HomeStatic";
+import { HomeTracking } from "@/components/home/HomeTracking";
 import { preload } from "react-dom";
 import { JsonLd } from "@/components/site/JsonLd";
 import { faqPageSchema } from "@/lib/faq-schema";
@@ -43,6 +45,7 @@ export default function HomePage() {
   return (
     <div className="hp">
       <JsonLd data={faqPageSchema(FAQ_LIVE)} />
+      <HomeTracking />
       <HomeProvider>
         {/* ----------------------------- hero ----------------------------- */}
         <section className="hp-hero" aria-labelledby="hp-title">
