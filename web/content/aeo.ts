@@ -21,25 +21,23 @@ export const FEES = {
   enabled: false,
   /** "Last updated" shown on the page, e.g. "November 2026". `null` until set. */
   lastUpdated: null as string | null,
-  /** The rows of the table. The row labels follow the cost types the site already discusses; Ron's worksheet is the source for the final list and amounts. */
+  /** The seven rows of the table (Ron's worksheet). Every amount stays empty until Ron fills it. */
   rows: [
-    { fee: "Account setup", chargedBy: "American Estate & Trust (custodian)", amount: null },
-    { fee: "Annual custodian fee", chargedBy: "American Estate & Trust (custodian)", amount: null },
-    { fee: "Storage and insurance", chargedBy: "IDS of Delaware (depository)", amount: null },
-    { fee: "Dealer premium when you buy", chargedBy: "Anchor Silver Capital", amount: null },
-    { fee: "Cost to sell back", chargedBy: "Anchor Silver Capital", amount: null },
-    { fee: "Shipping and insurance for delivered metal", chargedBy: "Anchor Silver Capital", amount: null },
-    { fee: "Transfer or wire fees", chargedBy: "Your current provider / custodian", amount: null },
+    { fee: "IRA account setup", chargedBy: "Custodian (American Estate & Trust)", amount: null },
+    { fee: "Annual custodian fee", chargedBy: "Custodian (American Estate & Trust)", amount: null },
+    { fee: "Annual storage fee", chargedBy: "Depository (IDS of Delaware)", amount: null },
+    { fee: "Premium over spot on purchases", chargedBy: "Anchor Silver Capital", amount: null },
+    { fee: "Commission or markup", chargedBy: "Anchor Silver Capital", amount: null },
+    { fee: "Shipping, wire or transfer fees", chargedBy: "Various", amount: null },
+    { fee: "Cost to sell (spread or fee)", chargedBy: "Buyer and Anchor Silver Capital", amount: null },
   ] as FeeRow[],
-  /** Worked round trip (buy, then sell back). Every line needs its value before the page can go live. */
+  /** Worked example: a sample purchase, its total cost, and the total cost to sell it back. Every line needs its value before the page can go live. */
   example: {
     heading: "A worked example: buying and selling back",
     lines: [
-      { label: "You buy", value: null as string | null },
-      { label: "Premium over spot", value: null as string | null },
-      { label: "Yearly custodian and storage fees", value: null as string | null },
-      { label: "You sell back at the quoted buy-back price", value: null as string | null },
-      { label: "Total cost of the round trip", value: null as string | null },
+      { label: "Sample purchase", value: null as string | null },
+      { label: "Total cost of the purchase", value: null as string | null },
+      { label: "Total cost to sell back", value: null as string | null },
     ],
   },
 };

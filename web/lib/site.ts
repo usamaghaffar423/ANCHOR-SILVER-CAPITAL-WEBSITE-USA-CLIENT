@@ -92,9 +92,8 @@ export const ORG_OPTIONAL: {
   sameAs?: string[];
 } = {};
 
-/** Worksheet description of the business (also the homepage meta description). */
-const ORG_DESCRIPTION =
-  "Anchor Silver Capital LLC is a precious metals dealer in Marina del Rey, California. It helps people hold physical gold and silver in an IRA through a direct transfer, with fees in writing and no obligation.";
+/** Description of the business, from Ron's AEO worksheet. */
+const ORG_DESCRIPTION = "California-registered precious metals dealer specializing in physical silver and gold IRAs.";
 
 /**
  * YMYL entity graph injected into <head> on every route: who we are (Organization + FinancialService,
