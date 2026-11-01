@@ -7,7 +7,7 @@ import { pageMeta } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "SMS Consent Documentation",
   description:
-    "Public verification record for the Anchor Silver Capital SMS Program: website-form and verbal phone opt-in mechanisms, the live contact-form preview, and the representative's verbal consent script.",
+    "Public verification record for the Anchor Silver Capital SMS program: website and verbal opt-in methods, the form preview and the verbal consent script.",
   path: "/sms-consent",
 });
 

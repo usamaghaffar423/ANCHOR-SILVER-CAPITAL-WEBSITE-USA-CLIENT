@@ -9,7 +9,7 @@ import { Card, H2, Prose, Section } from "@/components/site/ui";
 import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "Self-Directed Silver IRA Rollover & Fees",
+  title: "Silver IRA Rollover & Fees",
   description:
     "Learn how to roll over your 401(k) or IRA into physical silver. Clear fees: $200/yr flat AET custodian fee and $12/mo storage at IDS Delaware.",
   path: "/silver-ira",

@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = pageMeta({
   title: "Live Gold Price Per Ounce Today",
   description:
-    "Live gold price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves gold and how it fits in an IRA.",
+    "Live gold price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves gold.",
   path: "/gold-price-per-ounce",
   type: "article",
 });
@@ -25,7 +25,7 @@ const content: PriceContent = {
     "Is gold holding its ground, or is it running out of room? Nobody can know in advance. What we can do is watch what the price is doing, understand what drives it, and decide how much, if any, belongs in a retirement plan.",
   articleHeadline: "Gold Price Per Ounce Today: Live Chart, History and What Moves It",
   description:
-    "Live gold price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves gold and how it fits in an IRA.",
+    "Live gold price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves gold.",
   sections: [
     {
       id: "history",

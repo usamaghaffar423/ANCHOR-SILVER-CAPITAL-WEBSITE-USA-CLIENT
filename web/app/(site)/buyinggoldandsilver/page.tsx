@@ -8,7 +8,7 @@ import { SITE, pageMeta } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "Buying Gold & Silver",
   description:
-    "Buy physical gold and silver — common bullion and premium products. Transparent pricing, confirmed verbally with a Commodity Specialist before any order is finalized.",
+    "Buy physical gold and silver: common bullion and premium products. Transparent pricing, confirmed by phone with a Commodity Specialist before any order.",
   path: "/buyinggoldandsilver",
 });
 

@@ -13,7 +13,7 @@ import {
 export const metadata: Metadata = pageMeta({
   title: "Privacy Policy",
   description:
-    "Anchor Silver Capital LLC's privacy policy explains how we collect, use, and protect your personal information, including SMS consent data and call recordings.",
+    "How Anchor Silver Capital LLC collects, uses and protects your personal information, including SMS consent data and call recordings.",
   path: "/privacy",
 });
 

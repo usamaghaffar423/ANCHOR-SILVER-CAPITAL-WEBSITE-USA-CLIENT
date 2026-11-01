@@ -304,7 +304,7 @@ export function HeroPhoto() {
   const { step } = useHome();
   return (
     <div className={`hp-photo ${step === 2 ? "hp-photo-hide" : ""}`} aria-hidden="true">
-      <HomeImage name="metals3_cut" widths={[420, 840]} w={1200} h={668} sizes="(max-width: 859px) 56vw, 382px" alt="" priority />
+      <HomeImage name="metals3_cut" widths={[420, 840]} w={1200} h={668} sizes="(max-width: 859px) 56vw, 382px" alt="Gold and silver coins and bars" priority />
     </div>
   );
 }

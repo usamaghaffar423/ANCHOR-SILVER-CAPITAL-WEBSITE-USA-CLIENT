@@ -9,9 +9,9 @@ import "../home.css";
 import "./get-started.css";
 
 export const metadata: Metadata = pageMeta({
-  title: "Get Started — Free Gold & Silver IRA Handbook",
+  title: "Get Started: Free IRA Handbook",
   description:
-    "Answer one question and get the free Gold and Silver IRA handbook, then talk it through with a specialist. No pressure, no hard sell. Marina del Rey, CA. (866) 818-7243.",
+    "Answer one question to get the free Gold and Silver IRA handbook, then talk it through with a specialist. No pressure. Marina del Rey, CA. (866) 818-7243.",
   path: "/get-started",
 });
 

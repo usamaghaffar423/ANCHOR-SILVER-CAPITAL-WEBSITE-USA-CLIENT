@@ -12,7 +12,7 @@ import "./home.css";
 export const metadata: Metadata = pageMeta({
   title: "Free Gold & Silver IRA Handbook",
   description:
-    "Get the free Gold and Silver IRA handbook. See how a direct transfer works, what it costs, and talk to a real specialist with no pressure. Marina del Rey, CA. (866) 818-7243.",
+    "Get the free Gold and Silver IRA handbook. Learn how a direct transfer works and what it costs, then talk to a real specialist. No pressure, no obligation.",
   path: "/",
 });
 
@@ -162,7 +162,7 @@ export default function HomePage() {
         {/* -------------------------------- final CTA -------------------------------- */}
         <section className="hp-sec hp-dark hp-final" aria-labelledby="hp-final-h">
           <div className="hp-wrap hp-final-grid">
-            <HomeImage className="hp-final-cover" name="handbook-cover" widths={[320, 640]} w={1200} h={1552} alt="" sizes="(max-width: 859px) 180px, 240px" />
+            <HomeImage className="hp-final-cover" name="handbook-cover" widths={[320, 640]} w={1200} h={1552} alt="Cover of The Precious Metals IRA Handbook" sizes="(max-width: 859px) 180px, 240px" />
             <div>
               <h2 id="hp-final-h" className="hp-h2 hp-h2-dark hp-final-h">
                 {FINAL_CTA.line1}

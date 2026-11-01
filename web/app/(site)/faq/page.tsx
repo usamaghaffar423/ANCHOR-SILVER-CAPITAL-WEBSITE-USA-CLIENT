@@ -112,7 +112,7 @@ const groups: { title: string; items: QA[] }[] = [
 export const metadata: Metadata = pageMeta({
   title: "Silver IRA & Physical Silver FAQ",
   description:
-    "Answers on Silver IRA rollovers, 401k eligibility, IRA-approved products, premiums over spot, insured shipping, depository storage, fees, and our buyback policy.",
+    "Answers on Silver IRA rollovers, 401k eligibility, approved products, premiums over spot, insured shipping, depository storage, fees and buybacks.",
   path: "/faq",
 });
 

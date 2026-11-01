@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = pageMeta({
   title: "Live Silver Price Per Ounce Today",
   description:
-    "Live silver price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves silver and how it fits in an IRA.",
+    "Live silver price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves silver.",
   path: "/silver-price-per-ounce",
   type: "article",
 });
@@ -25,7 +25,7 @@ const content: PriceContent = {
     "Is silver poised to break out, or is it consolidating? Nobody can know in advance. What we can do is watch what the price is doing, understand what drives it, and decide how much, if any, belongs in a retirement plan.",
   articleHeadline: "Silver Price Per Ounce Today: Live Chart, History and What Moves It",
   description:
-    "Live silver price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves silver and how it fits in an IRA.",
+    "Live silver price per ounce with an interactive chart, daily open, high, low and close, and plain-English context on what moves silver.",
   sections: [
     {
       id: "history",
