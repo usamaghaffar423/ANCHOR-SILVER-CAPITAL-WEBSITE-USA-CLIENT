@@ -1,3 +1,7 @@
+/* Fonts: the same two variable files Google Fonts served (Newsreader opsz+wght 500-600, Public Sans 400-600, latin), now hosted
+   on our own domain so first paint no longer waits on a render-blocking stylesheet from another site. */
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:500 600;font-display:swap;src:url(/fonts/landing/newsreader-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Public Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(/fonts/landing/public-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* Layout: dark-green hero band with the handbook form beside the pitch, then plain cream sections that read like the handbook itself. */
 :root{
   --bg:#F7F5F0; --surface:#FFFFFF; --ink:#1C2820; --muted:#566058; --line:#DDD8CB;
