@@ -12,7 +12,7 @@ export const MINIMUMS = {
 } as const;
 
 /** "$24,000" */
-export const usd0 = (n: number) => `${n.toLocaleString("en-US")}`;
+export const usd0 = (n: number) => "$" + n.toLocaleString("en-US");
 
 export const SITE = {
   name: "Anchor Silver Capital",
