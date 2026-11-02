@@ -5,7 +5,7 @@ import { HeroPhoto } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { H2, Section } from "@/components/site/ui";
 import { HERO } from "@/lib/home-content";
-import { SITE, breadcrumbSchema, pageMeta } from "@/lib/site";
+import { MINIMUMS, SITE, breadcrumbSchema, pageMeta, usd0 } from "@/lib/site";
 import "../home.css";
 import "./get-started.css";
 
@@ -126,7 +126,7 @@ export default function GetStarted() {
             ))}
           </ol>
           <p className="mt-6 max-w-xl leading-relaxed text-muted-foreground">
-            Our minimum for IRA rollovers is $25,000. Our minimum for physical delivery is $5,000. If you don&apos;t qualify,
+            Our minimum for IRA rollovers is {usd0(MINIMUMS.iraRollover)}. Our minimum for physical delivery is {usd0(MINIMUMS.physicalDelivered)}. If you don&apos;t qualify,
             we&apos;ll tell you immediately and point you in the right direction.
           </p>
           <p className="mt-8 text-sm">

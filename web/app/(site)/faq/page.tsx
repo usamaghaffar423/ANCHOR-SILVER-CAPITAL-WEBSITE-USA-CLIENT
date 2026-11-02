@@ -4,7 +4,7 @@ import { Accordion, type QA } from "@/components/site/Accordion";
 import { JsonLd } from "@/components/site/JsonLd";
 import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { H2, Section } from "@/components/site/ui";
-import { breadcrumbSchema, pageMeta } from "@/lib/site";
+import { MINIMUMS, breadcrumbSchema, pageMeta, usd0 } from "@/lib/site";
 
 const groups: { title: string; items: QA[] }[] = [
   {
@@ -24,7 +24,7 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "Do I qualify for a Silver IRA?",
-        a: "A former employer 401k, traditional or Roth IRA, or annuity of $25,000 or more qualifies at any age. A current employer 401k generally requires age 59½ or older for an in-service distribution.",
+        a: `A former employer 401k, traditional or Roth IRA, or annuity of ${usd0(MINIMUMS.iraRollover)} or more qualifies at any age. A current employer 401k generally requires age 59½ or older for an in-service distribution.`,
       },
       {
         q: "How long does the rollover process take?",
@@ -41,7 +41,7 @@ const groups: { title: string; items: QA[] }[] = [
     items: [
       {
         q: "What is the minimum purchase?",
-        a: "$5,000 for physical silver delivered to your door. $10,000 for a cash purchase held in storage, and $25,000 for an IRA rollover.",
+        a: `${usd0(MINIMUMS.physicalDelivered)} for physical silver delivered to your door, and ${usd0(MINIMUMS.iraRollover)} for an IRA rollover.`,
       },
       {
         q: "What products do you sell?",
@@ -49,11 +49,7 @@ const groups: { title: string; items: QA[] }[] = [
       },
       {
         q: "How is silver shipped?",
-        a: "Fully insured via Brinks, Loomis, or USPS Registered Mail, in discreet packaging. Signature confirmation is required on orders over $5,000.",
-      },
-      {
-        q: "Can I store my silver at a depository instead of at home?",
-        a: "Yes. We can arrange allocated storage at IDS of Delaware — your specific bars or coins held in your name, fully insured, with online access.",
+        a: "Fully insured via Brinks, Loomis, or USPS Registered Mail, in discreet packaging. Signature confirmation is required on every order.",
       },
       {
         q: "What is a premium over spot?",

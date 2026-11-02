@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import "./landing.css";
 import { UetTag } from "@/components/site/UetTag";
-import { GoogleAdsTag } from "@/components/site/GoogleAdsTag";
+import { GoogleTag } from "@/components/site/GoogleTag";
 import { ClarityLazy } from "@/components/site/ClarityLazy";
 import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 
@@ -18,7 +18,6 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <UetTag />
-        <GoogleAdsTag />
         <link rel="icon" href="/images/favicon-anchor.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
         <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
@@ -29,6 +28,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
         <PrivacyConsent />
+        <GoogleTag />
         <ClarityLazy />
       </body>
     </html>

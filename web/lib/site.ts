@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
 
+/**
+ * Minimum purchase amounts, in dollars: the ONE place to change them. Every page, FAQ answer, meta
+ * description and FAQPage schema reads these.
+ *  - iraRollover: 24,000 per Ron; he may confirm 25,000 instead (a one-line change here).
+ *  - physicalDelivered: physical silver delivered to your door. There is no held-in-storage purchase option.
+ */
+export const MINIMUMS = {
+  iraRollover: 24_000,
+  physicalDelivered: 10_000,
+} as const;
+
+/** "$24,000" */
+export const usd0 = (n: number) => `${n.toLocaleString("en-US")}`;
+
 export const SITE = {
   name: "Anchor Silver Capital",
   legal: "Anchor Silver Capital LLC",

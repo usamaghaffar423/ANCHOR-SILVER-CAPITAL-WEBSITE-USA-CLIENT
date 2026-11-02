@@ -2,7 +2,7 @@
  * Shared crawler rules and sitemap helpers for all three sites (anchorsilvercapital.com and the
  * two price sites). Server-safe, no React.
  */
-import lastmodData from "@/lib/generated/lastmod.json";
+import { PAGE_DATES } from "@/content/page-dates";
 
 /**
  * AI search / answer agents allowed explicitly (Ron's worksheet). GPTBot and ClaudeBot (training
@@ -34,9 +34,9 @@ export function robotsTxt(origin: string): string {
 }
 
 type Group = "anchor" | "gold" | "silver";
-const LASTMOD = lastmodData as Record<Group, Record<string, string>>;
+const LASTMOD: Record<Group, Record<string, string>> = PAGE_DATES;
 
-/** Date (YYYY-MM-DD) the page's source last changed, from lib/generated/lastmod.json (built by scripts/gen-lastmod.mjs). */
+/** Date (YYYY-MM-DD) the page's PRIMARY CONTENT last changed: the explicit map in content/page-dates.ts. */
 export function lastmodFor(group: Group, path: string): string | undefined {
   return LASTMOD[group]?.[path];
 }

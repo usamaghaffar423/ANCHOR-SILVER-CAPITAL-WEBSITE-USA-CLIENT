@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MINIMUMS, usd0 } from "@/lib/site";
 import Link from "next/link";
 import { AnchorGlyph } from "@/components/brand/AnchorMark";
 import { HeroHeadline } from "@/components/site/HeroHeadline";
@@ -252,7 +253,7 @@ export default function HomeV1() {
                   <span className="text-primary">—</span> Penalty-free, tax-free
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> $25,000 minimum
+                  <span className="text-primary">—</span> {usd0(MINIMUMS.iraRollover)} minimum
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary">—</span> Any age for IRA, annuity, or former
@@ -281,10 +282,7 @@ export default function HomeV1() {
                   <span className="text-primary">—</span> Insured shipping to your door
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-primary">—</span> Or allocated storage at IDS of Delaware
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-primary">—</span> $5,000 minimum
+                  <span className="text-primary">—</span> {usd0(MINIMUMS.physicalDelivered)} minimum
                 </li>
               </ul>
               <Link

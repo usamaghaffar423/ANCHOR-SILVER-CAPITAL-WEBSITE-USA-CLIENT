@@ -54,7 +54,7 @@ export function applyConsent(): void {
     (function (..._a: unknown[]) {
       // eslint-disable-next-line prefer-rest-params
       w.dataLayer!.push(arguments);
-    })("consent", "update", { ad_storage: state, ad_user_data: state, ad_personalization: state });
+    })("consent", "update", { ad_storage: state, ad_user_data: state, ad_personalization: state, analytics_storage: state });
   } catch {
     /* consent must never break the page */
   }

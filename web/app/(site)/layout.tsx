@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import { Analytics } from "@/components/site/Analytics";
+import { GoogleTag } from "@/components/site/GoogleTag";
 import { ChromeGate } from "@/components/site/ChromeGate";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -139,7 +139,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </ChromeGate>
         <DeferredChrome />
         <ClarityLazy />
-        <Analytics />
+        <GoogleTag />
         <UetEvents />
         <PrivacyConsent />
       </body>

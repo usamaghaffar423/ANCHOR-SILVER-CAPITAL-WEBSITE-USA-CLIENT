@@ -1,3 +1,5 @@
+import { MINIMUMS, usd0 } from "@/lib/site";
+
 /** Landing-page FAQ. This one list renders the visible <details> and the FAQPage JSON-LD. */
 export const LANDING_FAQ: { q: string; a: string }[] = [
   {
@@ -14,7 +16,7 @@ export const LANDING_FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What are the minimums?",
-    a: "IRA rollovers typically start at $25,000. Cash purchases for delivery to you start at $10,000.",
+    a: `IRA rollovers typically start at ${usd0(MINIMUMS.iraRollover)}. Physical silver delivered to your door starts at ${usd0(MINIMUMS.physicalDelivered)}.`,
   },
   {
     q: "How long does a transfer take?",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MINIMUMS, usd0 } from "@/lib/site";
 import { PageHero } from "@/components/site/PageHero";
 import { InlineLeadForm } from "@/components/forms/InlineLeadForm";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -19,7 +20,7 @@ const silverRounds = "/assets/silver-rounds.jpg";
 export const metadata: Metadata = pageMeta({
   title: "Buy Physical Silver: Bars & Coins",
   description:
-    "Buy physical silver rounds, bars and coins, fully insured to your door or stored at IDS of Delaware. $5,000 minimum. All-in pricing before you commit.",
+    `Buy physical silver rounds, bars and coins, fully insured to your door. ${usd0(MINIMUMS.physicalDelivered)} minimum. All-in pricing before you commit.`,
   path: "/physical-silver",
   type: "article",
 });
@@ -158,19 +159,11 @@ export default function PhysicalSilver() {
         <Prose className="mt-5">
           <p>
             All physical silver orders ship fully insured via Brinks, Loomis, or USPS Registered
-            Mail. Signature confirmation required on all orders over $5,000.
+            Mail. Signature confirmation required on every order.
           </p>
         </Prose>
 
-        <H2 className="mt-14">Storage Option</H2>
-        <Prose className="mt-5">
-          <p>
-            Prefer not to store silver at home? We can arrange allocated storage at Delaware
-            Depository — your specific bars or coins held in your name, fully insured, accessible
-            online.
-          </p>
-          <p className="font-mono text-sm text-primary">Minimum order: $5,000</p>
-        </Prose>
+        <p className="mt-10 font-mono text-sm text-primary">Minimum order: {usd0(MINIMUMS.physicalDelivered)}</p>
       </Section>
 
       <Section>

@@ -48,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const lastModified = lastmodFor("anchor", path);
     return {
       url: `${SITE.origin}${path}`,
-      // Real source date (scripts/gen-lastmod.mjs), never "now": omitted if no date is known.
+      // Explicit content date (content/page-dates.ts), never "now": omitted if no date is known.
       ...(lastModified ? { lastModified } : {}),
       ...(DIRECTIVE[path] ?? FALLBACK),
     };

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MINIMUMS, usd0 } from "@/lib/site";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion } from "@/components/site/Accordion";
 import { LeadForm } from "@/components/forms/LeadForm";
@@ -17,11 +18,11 @@ export const metadata: Metadata = pageMeta({
 });
 
 const qualify = [
-  { t: "Former Employer 401k", d: "$25,000+ — Any age — No restrictions" },
-  { t: "Traditional or Roth IRA", d: "$25,000+ — Any age — Simple transfer" },
-  { t: "Annuity", d: "$25,000+ — Any age — Rollover from existing annuity" },
-  { t: "Current Employer 401k", d: "$25,000+ — Age 59½ or older — In-service distribution" },
-  { t: "Cash Purchase", d: "$10,000+ — Any age — No IRA required" },
+  { t: "Former Employer 401k", d: `${usd0(MINIMUMS.iraRollover)}+ — Any age — No restrictions` },
+  { t: "Traditional or Roth IRA", d: `${usd0(MINIMUMS.iraRollover)}+ — Any age — Simple transfer` },
+  { t: "Annuity", d: `${usd0(MINIMUMS.iraRollover)}+ — Any age — Rollover from existing annuity` },
+  { t: "Current Employer 401k", d: `${usd0(MINIMUMS.iraRollover)}+ — Age 59½ or older — In-service distribution` },
+  { t: "Physical Silver Delivered", d: `${usd0(MINIMUMS.physicalDelivered)}+ — Any age — No IRA required` },
 ];
 
 const process = [
@@ -46,7 +47,7 @@ const faqs = [
   },
   {
     q: "What is the minimum to open a Silver IRA?",
-    a: "$25,000 for an IRA rollover or transfer. Cash purchases outside an IRA start at $10,000, and physical delivery orders start at $5,000.",
+    a: `${usd0(MINIMUMS.iraRollover)} for an IRA rollover or transfer. Physical silver delivered to your door starts at ${usd0(MINIMUMS.physicalDelivered)}.`,
   },
   {
     q: "Can I store IRA silver at home?",
