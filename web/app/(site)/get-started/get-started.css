@@ -1,7 +1,7 @@
 /* /get-started: the homepage quiz hero, sized to its content (the homepage hero fills the whole screen). */
 .hp .hp-hero.gs-hero {
   min-height: 0;
-  padding: 36px 0 56px;
+  padding: 16px 0 40px; /* tight on phones so the whole form is above the fold */
   align-items: flex-start;
 }
 @media (min-width: 860px) {
