@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
 import { HeroFormOneStep, HeroHeading, HomeProvider } from "@/components/home/HomeClient";
-import { HeroPhoto } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { H2, Section } from "@/components/site/ui";
 import { HERO } from "@/lib/home-content";
@@ -88,7 +87,6 @@ export default function GetStarted() {
               </div>
 
               <div className="hp-hero-form">
-                <HeroPhoto />
                 <HeroFormOneStep />
                 <div className="hp-mob-below">
                   <ul className="hp-checks">

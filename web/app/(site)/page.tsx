@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
 import { FinalCtaButton, HeroFormOneStep, HeroHeading, HomeProvider, StickyBar } from "@/components/home/HomeClient";
-import { CallLink, FaqList, HeroPhoto } from "@/components/home/HomeStatic";
+import { CallLink, FaqList } from "@/components/home/HomeStatic";
 import { HomeTracking } from "@/components/home/HomeTracking";
 import { preload } from "react-dom";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -80,7 +80,6 @@ export default function HomePage() {
             </div>
 
             <div className="hp-hero-form">
-              <HeroPhoto />
               <HeroFormOneStep />
               <div className="hp-mob-below">
                 <ul className="hp-checks">
