@@ -5,7 +5,7 @@ import { GoogleTag } from "@/components/site/GoogleTag";
 import { ChromeGate } from "@/components/site/ChromeGate";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { ClarityLazy } from "@/components/site/ClarityLazy";
+import { ClarityTag } from "@/components/site/ClarityTag";
 import { DeferredChrome } from "@/components/site/DeferredChrome";
 import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 import { UetEvents } from "@/components/site/UetEvents";
@@ -138,7 +138,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Footer />
         </ChromeGate>
         <DeferredChrome />
-        <ClarityLazy />
+        <ClarityTag />
         <GoogleTag />
         <UetEvents />
         <PrivacyConsent />

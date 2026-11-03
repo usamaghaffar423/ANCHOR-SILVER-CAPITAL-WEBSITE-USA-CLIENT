@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import "./landing.css";
 import { UetTag } from "@/components/site/UetTag";
 import { GoogleTag } from "@/components/site/GoogleTag";
-import { ClarityLazy } from "@/components/site/ClarityLazy";
+import { ClarityTag } from "@/components/site/ClarityTag";
 import { PrivacyConsent } from "@/components/site/PrivacyConsent";
 
 /**
@@ -29,7 +29,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
         {children}
         <PrivacyConsent />
         <GoogleTag />
-        <ClarityLazy />
+        <ClarityTag />
       </body>
     </html>
   );

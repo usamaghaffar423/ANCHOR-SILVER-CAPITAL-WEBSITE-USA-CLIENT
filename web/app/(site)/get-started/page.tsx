@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
-import { HeroForm, HeroHeading, HomeProvider } from "@/components/home/HomeClient";
+import { HeroFormOneStep, HeroHeading, HomeProvider } from "@/components/home/HomeClient";
 import { HeroPhoto } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { H2, Section } from "@/components/site/ui";
@@ -45,8 +45,8 @@ function Stars({ size = 22 }: { size?: number }) {
 }
 
 /**
- * Get Started: the same two-step quiz and handbook form as the homepage hero (one question,
- * then name / email / phone), reused as-is so it submits the same way (GHL webhook, UET,
+ * Get Started: the same one-step, four-field handbook form as the homepage hero (First name, Last name,
+ * Email, Mobile phone), reused as-is so it submits the same way (GHL webhook, UET,
  * redirect to /thank-you-handbook). The "what to expect" content stays below it.
  */
 export default function GetStarted() {
@@ -89,7 +89,7 @@ export default function GetStarted() {
 
               <div className="hp-hero-form">
                 <HeroPhoto />
-                <HeroForm />
+                <HeroFormOneStep />
                 <div className="hp-mob-below">
                   <ul className="hp-checks">
                     {HERO.checks.map((c) => (
