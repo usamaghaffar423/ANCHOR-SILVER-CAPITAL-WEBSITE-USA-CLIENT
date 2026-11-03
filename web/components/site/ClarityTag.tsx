@@ -10,8 +10,9 @@ import { OPT_OUT_INLINE_CHECK } from "@/lib/consent-inline";
  *   this tag off, for example while the UET-Clarity link in Microsoft Ads is still on, so Clarity is never loaded twice.
  * - Never loaded for a visitor who has opted out (Decline, Your Privacy Choices, Global Privacy Control);
  *   if they opt out later, lib/consent-state.ts calls clarity('consent', false).
- * - Never loaded twice: if Clarity is already on the page (for example from the UET-Clarity link in Microsoft
- *   Ads) this does nothing.
+ * - Skips itself if Clarity is already on the page when it runs. That is timing-dependent: while the UET-Clarity
+ *   link in Microsoft Ads is still on, both tags can load (one clarity.js library, two tag requests). Turn the link
+ *   OFF in Microsoft Ads/Clarity, or set the ID empty, so Clarity is recorded once.
  * - Every form carries data-clarity-mask="true", so name, email and phone are never recorded.
  */
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? "z5nqaetgt8";
