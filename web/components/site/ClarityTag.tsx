@@ -6,16 +6,18 @@ import { OPT_OUT_INLINE_CHECK } from "@/lib/consent-inline";
  * Loaded via next/script after the page is interactive, then at the browser's next idle moment (at most ~3 s),
  * so short visits are still recorded and the tag never competes with first paint.
  *
- * - ID: NEXT_PUBLIC_CLARITY_ID (defaults to Ron's project, z5nqaetgt8).
+ * - ID: NEXT_PUBLIC_CLARITY_ID (defaults to Ron's project, z5nqaetgt8 when unset). Set it to an EMPTY string to switch
+ *   this tag off, for example while the UET-Clarity link in Microsoft Ads is still on, so Clarity is never loaded twice.
  * - Never loaded for a visitor who has opted out (Decline, Your Privacy Choices, Global Privacy Control);
  *   if they opt out later, lib/consent-state.ts calls clarity('consent', false).
  * - Never loaded twice: if Clarity is already on the page (for example from the UET-Clarity link in Microsoft
  *   Ads) this does nothing.
  * - Every form carries data-clarity-mask="true", so name, email and phone are never recorded.
  */
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "z5nqaetgt8";
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID ?? "z5nqaetgt8";
 
 export function ClarityTag() {
+  if (!CLARITY_ID) return null;
   return (
     <Script
       id="clarity-loader"
