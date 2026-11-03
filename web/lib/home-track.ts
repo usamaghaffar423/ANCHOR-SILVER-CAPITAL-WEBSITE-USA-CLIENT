@@ -5,6 +5,7 @@
  */
 export type HomeEvent =
   | "form_step1"
+  | "form_start"
   | "form_submit"
   | "click_to_call"
   | "cta_click"

@@ -1043,3 +1043,30 @@ html[data-cookie-banner] .hp-sticky {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ---- homepage one-step form ---- */
+.hp-row2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+.hp-one .hp-lbl:first-child,
+.hp-row2 .hp-lbl {
+  margin-top: 0;
+}
+.hp-hint {
+  display: block;
+  margin: 6px 0 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--gold-t);
+  font-size: 14px;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.hp-final-btn {
+  max-width: 360px;
+  margin-inline: auto;
+}

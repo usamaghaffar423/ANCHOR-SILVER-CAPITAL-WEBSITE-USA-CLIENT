@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
-import { FinalCtaButtons, HeroForm, HeroHeading, HomeProvider, StickyBar } from "@/components/home/HomeClient";
+import { FinalCtaButton, HeroFormOneStep, HeroHeading, HomeProvider, StickyBar } from "@/components/home/HomeClient";
 import { CallLink, FaqList, HeroPhoto } from "@/components/home/HomeStatic";
 import { HomeTracking } from "@/components/home/HomeTracking";
 import { preload } from "react-dom";
@@ -81,7 +81,7 @@ export default function HomePage() {
 
             <div className="hp-hero-form">
               <HeroPhoto />
-              <HeroForm />
+              <HeroFormOneStep />
               <div className="hp-mob-below">
                 <ul className="hp-checks">
                   {HERO.checks.map((c) => (
@@ -172,7 +172,7 @@ export default function HomePage() {
                 <br />
                 <span className="hp-nowrap">{FINAL_CTA.line2}</span>
               </h2>
-              <FinalCtaButtons />
+              <FinalCtaButton />
               <p className="hp-final-call">
                 Prefer to talk? <CallLink location="final" className="hp-tel">{PHONE.display}</CallLink>
               </p>
