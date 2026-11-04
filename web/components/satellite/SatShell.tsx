@@ -36,7 +36,16 @@ export function SatShell({ site, children }: { site: SatSite; children: ReactNod
       <main id="main" className="sat-wrap">
         {children}
       </main>
-      <footer className="sat-footer">
+      <footer className="sat-footer sat-footer-flag">
+        <div className="sat-foot-bg" aria-hidden="true">
+          <picture>
+            <source media="(min-width: 860px)" type="image/avif" srcSet={`/${site.internalPath}/footer-flag-d-1100.avif 1100w, /${site.internalPath}/footer-flag-d-1920.avif 1920w`} sizes="100vw" />
+            <source media="(min-width: 860px)" type="image/webp" srcSet={`/${site.internalPath}/footer-flag-d-1100.webp 1100w, /${site.internalPath}/footer-flag-d-1920.webp 1920w`} sizes="100vw" />
+            <source type="image/avif" srcSet={`/${site.internalPath}/footer-flag-m-440.avif 440w, /${site.internalPath}/footer-flag-m-880.avif 880w`} sizes="100vw" />
+            <source type="image/webp" srcSet={`/${site.internalPath}/footer-flag-m-440.webp 440w, /${site.internalPath}/footer-flag-m-880.webp 880w`} sizes="100vw" />
+            <img src={`/${site.internalPath}/footer-flag-m-880.webp`} width={440} height={569} alt="" loading="lazy" decoding="async" />
+          </picture>
+        </div>
         <div className="sat-wrap sat-footer-grid">
           <div>
             <p>
