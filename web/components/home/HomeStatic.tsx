@@ -8,9 +8,10 @@ import type { ReactNode } from "react";
 
 /**
  * The hero flag as the background of a lower dark band (How it works, the final call to action): the same
- * files as the hero, a uniform dark green wash, lazy-loaded (no preload, no fetch priority: it is below the fold).
+ * files as the hero, a dark green wash, lazy-loaded (no preload, no fetch priority: it is below the fold).
+ * `eager` is for a band that is itself above the fold (the thank-you hero): not lazy, still no preload.
  */
-export function FlagBand() {
+export function FlagBand({ eager = false }: { eager?: boolean }) {
   return (
     <div className="hp-bg" aria-hidden="true">
       <picture>
@@ -18,7 +19,7 @@ export function FlagBand() {
         <source media="(min-width: 860px)" type="image/webp" srcSet="/images/home/flag-d-1100.webp 1100w, /images/home/flag-d-1920.webp 1920w" sizes="100vw" />
         <source type="image/avif" srcSet="/images/home/flag-m-440.avif 440w, /images/home/flag-m-880.avif 880w" sizes="100vw" />
         <source type="image/webp" srcSet="/images/home/flag-m-440.webp 440w, /images/home/flag-m-880.webp 880w" sizes="100vw" />
-        <img src="/images/home/flag-m-880.webp" width={440} height={569} alt="" loading="lazy" decoding="async" />
+        <img src="/images/home/flag-m-880.webp" width={440} height={569} alt="" loading={eager ? "eager" : "lazy"} decoding="async" />
       </picture>
     </div>
   );

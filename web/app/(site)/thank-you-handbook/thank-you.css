@@ -57,6 +57,9 @@
 
 /* hero */
 .ty-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: var(--g1);
   color: #fff;
   padding: 36px 0 56px;
@@ -209,10 +212,17 @@
   gap: 16px;
 }
 .ty-talk-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: var(--g1);
   color: #fff;
   border-radius: 14px;
   padding: 26px 24px;
+}
+/* the flag behind the card: one even ~80% green wash so the text and the ghost button stay AA readable */
+.ty-talk-card .hp-bg::after {
+  background: rgba(8, 34, 22, 0.8);
 }
 .ty-talk-card h2 {
   font-family: var(--hp-display), Georgia, serif;
