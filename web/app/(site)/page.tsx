@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { HomeImage } from "@/components/home/HomeImage";
 import { FinalCtaButton, HeroFormOneStep, HeroHeading, HomeProvider, StickyBar } from "@/components/home/HomeClient";
-import { CallLink, FaqList } from "@/components/home/HomeStatic";
+import { CallLink, FaqList, FlagBand } from "@/components/home/HomeStatic";
 import { HomeTracking } from "@/components/home/HomeTracking";
 import { preload } from "react-dom";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -140,7 +140,8 @@ export default function HomePage() {
         </section>
 
         {/* ------------------------------ how it works ------------------------------ */}
-        <section className="hp-sec hp-dark">
+        <section className="hp-sec hp-dark hp-flag-band">
+          <FlagBand />
           <div className="hp-wrap">
             <h2 className="hp-h2 hp-h2-dark">{HOW.heading}</h2>
             <ol className="hp-how">
@@ -166,7 +167,8 @@ export default function HomePage() {
         </section>
 
         {/* -------------------------------- final CTA -------------------------------- */}
-        <section className="hp-sec hp-dark hp-final" aria-labelledby="hp-final-h">
+        <section className="hp-sec hp-dark hp-final hp-flag-band" aria-labelledby="hp-final-h">
+          <FlagBand />
           <div className="hp-wrap hp-final-grid">
             <HomeImage className="hp-final-cover" name="handbook-cover" widths={[320, 640]} w={1200} h={1552} alt="Cover of The Precious Metals IRA Handbook" sizes="(max-width: 859px) 180px, 240px" />
             <div>

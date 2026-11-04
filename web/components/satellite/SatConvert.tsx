@@ -1,50 +1,42 @@
-import { AD_URL, type SatSite } from "@/lib/satellites";
+import { SatAdLink } from "@/components/satellite/SatAdLink";
+import { SAT_PHONE, bannerUrl, type SatSite } from "@/lib/satellites";
+
+const ALT =
+  "Thinking about adding Gold and Silver to your IRA? Get our free Precious Metals IRA Handbook at anchorsilvercapital.com or call (866) 818-7243. Metals can lose value and are not FDIC insured. Not tax or investment advice.";
 
 /**
- * Display ad unit: the advertiser's own image creative under a small "Ad" label.
- * The whole image is one link to the advertiser's IRA kit page (plain URL, no tags).
- *
- * Files are in public/sat-gold|sat-silver (that prefix is excluded from the host
- * rewrite). The square creatives (ad-square-*.webp) are kept for a narrow slot;
- * phones get the square (mid slot) and landscape (bottom slot); larger screens get landscape (mid) and the wide banner (bottom), full-bleed.
+ * Display ad unit: Anchor's banner under a small "Ad" label. The whole image is one link to the
+ * homepage, tagged with this site's UTM. Files are in public/sat-gold|sat-silver (that prefix is
+ * excluded from the host rewrite): the wide 3:1 banner for tablets and desktops (>= 768px), the 3:2
+ * banner for phones, which also get a tappable phone link (the number in the image is not tappable).
+ * `bottom` is above the footer; `mid` is in the page body. Both are below the fold, so lazy-loaded.
  */
-/** `bottom` is the wide banner above the footer; `mid` is the larger 3:2 creative in the page body. */
 export function SatAdUnit({ site, variant = "mid" }: { site: SatSite; variant?: "mid" | "bottom" }) {
-  const wide = `/${site.internalPath}/ad-v2-landscape`;
-  const banner = `/${site.internalPath}/ad-v3-banner`;
-  const square = `/${site.internalPath}/ad-v2-square`;
-  // mid: square on phones, 3:2 landscape on larger screens.
-  // bottom: 3:2 landscape on phones (the 13:2.5 banner is unreadable that small), wide banner on larger screens.
-  const phone = variant === "bottom" ? wide : square;
-  const phoneDims = variant === "bottom" ? { w: 1600, h: 1066 } : { w: 1600, h: 1600 };
-  const phoneSizes = variant === "bottom" ? "calc(100vw - 32px)" : "min(560px, calc(100vw - 32px))";
+  const base = `/${site.internalPath}/banner`;
   return (
     <aside className={`sat-ad sat-ad-${variant}`} aria-label="Advertisement">
       <span className="sat-ad-label">Ad</span>
-      <a className="sat-ad-link" href={AD_URL} rel="sponsored noopener">
+      <SatAdLink href={bannerUrl(site)} site={site.key}>
         <picture>
           <source
             media="(max-width: 767.98px)"
-            srcSet={`${phone}-${variant === "bottom" ? 800 : 600}.webp ${variant === "bottom" ? 800 : 600}w, ${phone}-${variant === "bottom" ? 1600 : 1200}.webp ${variant === "bottom" ? 1600 : 1200}w`}
-            sizes={phoneSizes}
-            width={phoneDims.w}
-            height={phoneDims.h}
+            type="image/avif"
+            srcSet={`${base}-mobile-768.avif 768w, ${base}-mobile-1200.avif 1200w`}
+            sizes="calc(100vw - 32px)"
           />
-          <img
-            src={variant === "bottom" ? `${banner}-1300.webp` : `${wide}-1600.webp`}
-            srcSet={
-              variant === "bottom"
-                ? `${banner}-650.webp 650w, ${banner}-1300.webp 1300w`
-                : `${wide}-800.webp 800w, ${wide}-1600.webp 1600w`
-            }
-            sizes={variant === "bottom" ? "min(100vw, 1600px)" : "min(100vw, 1600px, 135vh)"}
-            width={variant === "bottom" ? 1300 : 1600}
-            height={variant === "bottom" ? 250 : 1066}
-            alt="Advertisement: Anchor Silver Capital free Precious Metals IRA Handbook. Get your free copy at anchorsilvercapital.com."
-            loading="lazy"
-            decoding="async"
+          <source
+            media="(max-width: 767.98px)"
+            type="image/webp"
+            srcSet={`${base}-mobile-768.webp 768w, ${base}-mobile-1200.webp 1200w`}
+            sizes="calc(100vw - 32px)"
           />
+          <source type="image/avif" srcSet={`${base}-wide-800.avif 800w, ${base}-wide-1600.avif 1600w`} sizes="min(100vw, 1600px)" />
+          <source type="image/webp" srcSet={`${base}-wide-800.webp 800w, ${base}-wide-1600.webp 1600w`} sizes="min(100vw, 1600px)" />
+          <img src={`${base}-wide-1600.webp`} width={1600} height={534} alt={ALT} loading="lazy" decoding="async" />
         </picture>
+      </SatAdLink>
+      <a className="sat-ad-call" href={`tel:${SAT_PHONE.tel}`}>
+        Call {SAT_PHONE.display}
       </a>
     </aside>
   );

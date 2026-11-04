@@ -1222,3 +1222,16 @@ html[data-cookie-banner] .hp-sticky {
     padding: 20px;
   }
 }
+
+/* the same flag behind the two lower dark bands: one uniform ~80% green wash keeps every line of text above AA contrast */
+.hp-dark.hp-flag-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.hp-flag-band .hp-bg::after {
+  background: rgba(8, 34, 22, 0.8);
+}
+.hp-flag-band .hp-bg img {
+  object-position: center;
+}
