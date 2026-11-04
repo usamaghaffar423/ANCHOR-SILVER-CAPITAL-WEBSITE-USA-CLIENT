@@ -3,6 +3,7 @@ import Link from "next/link";
 import { preload } from "react-dom";
 import { Check, Download, Phone } from "lucide-react";
 import { CalendlyEmbed } from "@/components/site/CalendlyEmbed";
+import { FlagBand } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { PrivacyChoicesIcon } from "@/components/site/PrivacyChoicesIcon";
 import { COMPLIANCE, PHONE } from "@/lib/home-content";
@@ -93,6 +94,7 @@ export default function ThankYouHandbookPage() {
 
       {/* ------------------------------- hero ------------------------------- */}
       <section className="ty-hero" aria-labelledby="ty-title">
+        <FlagBand eager />
         <div className="ty-wrap ty-hero-grid">
           <div className="ty-hero-text">
             <p className="ty-pill">
@@ -152,6 +154,7 @@ export default function ThankYouHandbookPage() {
         <div className="ty-wrap">
           <div className="ty-talk-grid">
             <div className="ty-talk-card">
+              <FlagBand />
               <h2>Want to talk sooner?</h2>
               <p>Call now or pick a time that works for you.</p>
               <div className="ty-talk-btns">
