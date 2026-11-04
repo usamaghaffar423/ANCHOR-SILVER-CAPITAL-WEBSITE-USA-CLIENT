@@ -1,5 +1,8 @@
 /* /get-started: the homepage quiz hero, sized to its content (the homepage hero fills the whole screen). */
 .hp .hp-hero.gs-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 0;
   padding: 16px 0 40px; /* tight on phones so the whole form is above the fold */
   align-items: flex-start;
