@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
 import { HeroFormOneStep, HeroHeading, HomeProvider } from "@/components/home/HomeClient";
+import { FlagBand } from "@/components/home/HomeStatic";
 import { JsonLd } from "@/components/site/JsonLd";
 import { H2, Section } from "@/components/site/ui";
 import { HERO } from "@/lib/home-content";
@@ -56,6 +57,7 @@ export default function GetStarted() {
       <div className="hp gs">
         <HomeProvider>
           <section className="hp-hero gs-hero" aria-labelledby="gs-title">
+            <FlagBand eager />
             <div className="hp-wrap hp-hero-grid">
               <div className="hp-hero-text">
                 <p className="hp-pill">{HERO.pill}</p>
