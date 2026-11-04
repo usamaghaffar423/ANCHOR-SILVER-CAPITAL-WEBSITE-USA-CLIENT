@@ -60,9 +60,11 @@ export function Header() {
       <TopBar />
       <div
         className={`px-5 transition-colors duration-300 ${
-          // Homepage: the brand green (#092619, same as the hero) at the top and while scrolling.
+          // Homepage: transparent over the flag at the top, the brand green (#092619) once scrolled.
           overHero
-            ? `bg-[#092619] ${scrolled ? "shadow-[var(--shadow-card)]" : ""}`
+            ? scrolled
+              ? "bg-[#092619] shadow-[var(--shadow-card)]"
+              : "bg-transparent"
             : solid
               ? "bg-primary shadow-[var(--shadow-card)]"
               : "bg-ink md:bg-ink/0"
@@ -90,6 +92,16 @@ export function Header() {
               Get Started
             </Link>
           </nav>
+
+          {overHero && (
+            <Link
+              href="/get-started"
+              scroll={false}
+              className="ml-auto mr-1 rounded-full border-2 border-[#c5a96a] bg-[#092619] px-4 py-1.5 text-sm font-semibold text-background md:hidden"
+            >
+              Get Started
+            </Link>
+          )}
 
           <button
             className="-mr-2 grid h-11 w-11 place-items-center text-background md:hidden"

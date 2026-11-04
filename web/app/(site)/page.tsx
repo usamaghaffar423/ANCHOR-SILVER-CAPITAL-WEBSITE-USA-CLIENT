@@ -42,13 +42,25 @@ export default function HomePage() {
   // Above-the-fold fonts: fetched with the HTML instead of after the stylesheet is parsed.
   preload("/fonts/home/fraunces-600-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   preload("/fonts/home/inter-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  // Hero flag (the LCP image): one preload per art direction, the same AVIF the <picture> below will pick.
+  preload("/images/home/flag-d-1100.avif", { as: "image", type: "image/avif", imageSrcSet: "/images/home/flag-d-1100.avif 1100w, /images/home/flag-d-1920.avif 1920w", imageSizes: "100vw", fetchPriority: "high", media: "(min-width: 860px)" });
+  preload("/images/home/flag-m-440.avif", { as: "image", type: "image/avif", imageSrcSet: "/images/home/flag-m-440.avif 440w, /images/home/flag-m-880.avif 880w", imageSizes: "100vw", fetchPriority: "high", media: "(max-width: 859px)" });
   return (
     <div className="hp">
       <JsonLd data={faqPageSchema(FAQ_LIVE)} />
       <HomeTracking />
       <HomeProvider>
         {/* ----------------------------- hero ----------------------------- */}
-        <section className="hp-hero" aria-labelledby="hp-title">
+        <section className="hp-hero hp-hero-flag" aria-labelledby="hp-title">
+          <div className="hp-bg" aria-hidden="true">
+            <picture>
+              <source media="(min-width: 860px)" type="image/avif" srcSet="/images/home/flag-d-1100.avif 1100w, /images/home/flag-d-1920.avif 1920w" sizes="100vw" />
+              <source media="(min-width: 860px)" type="image/webp" srcSet="/images/home/flag-d-1100.webp 1100w, /images/home/flag-d-1920.webp 1920w" sizes="100vw" />
+              <source type="image/avif" srcSet="/images/home/flag-m-440.avif 440w, /images/home/flag-m-880.avif 880w" sizes="100vw" />
+              <source type="image/webp" srcSet="/images/home/flag-m-440.webp 440w, /images/home/flag-m-880.webp 880w" sizes="100vw" />
+              <img src="/images/home/flag-m-880.webp" width={440} height={569} alt="" decoding="async" fetchPriority="high" />
+            </picture>
+          </div>
           <div className="hp-wrap hp-hero-grid">
             <div className="hp-hero-text">
               <p className="hp-pill">{HERO.pill}</p>
@@ -82,14 +94,6 @@ export default function HomePage() {
             <div className="hp-hero-form">
               <HeroFormOneStep />
               <div className="hp-mob-below">
-                <ul className="hp-checks">
-                  {HERO.checks.map((c) => (
-                    <li key={c}>
-                      <Check />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
                 <div className="hp-proof">
                   <Stars size={22} />
                   <span className="hp-dealer">
