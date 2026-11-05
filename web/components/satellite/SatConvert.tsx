@@ -1,12 +1,12 @@
 import { SatAdLink } from "@/components/satellite/SatAdLink";
-import { SAT_PHONE, bannerUrl, type SatSite } from "@/lib/satellites";
+import { AD_URL, SAT_PHONE, type SatSite } from "@/lib/satellites";
 
 const ALT =
   "Thinking about adding Gold and Silver to your IRA? Get our free Precious Metals IRA Handbook at anchorsilvercapital.com or call (866) 818-7243. Metals can lose value and are not FDIC insured. Not tax or investment advice.";
 
 /**
  * Display ad unit: Anchor's banner under a small "Ad" label. The whole image is one link to the
- * homepage, tagged with this site's UTM. Files are in public/sat-gold|sat-silver (that prefix is
+ * plain homepage URL (no UTM). Files are in public/sat-gold|sat-silver (that prefix is
  * excluded from the host rewrite): the wide 3:1 banner for tablets and desktops (>= 768px), the 3:2
  * banner for phones, which also get a tappable phone link (the number in the image is not tappable).
  * `bottom` is above the footer; `mid` is in the page body. Both are below the fold, so lazy-loaded.
@@ -16,7 +16,7 @@ export function SatAdUnit({ site, variant = "mid" }: { site: SatSite; variant?: 
   return (
     <aside className={`sat-ad sat-ad-${variant}`} aria-label="Advertisement">
       <span className="sat-ad-label">Ad</span>
-      <SatAdLink href={bannerUrl(site)} site={site.key}>
+      <SatAdLink href={AD_URL} site={site.key}>
         <picture>
           <source
             media="(max-width: 767.98px)"
