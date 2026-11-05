@@ -61,14 +61,10 @@ export const SAT_SITES: Record<SatKey, SatSite> = {
 };
 
 /**
- * The Anchor homepage, the destination of every ad image on the price sites (bannerUrl adds the UTM tags).
+ * The Anchor homepage, the destination of every ad banner on the price sites. Deliberately a plain URL: no UTM or
+ * other query parameters.
  */
 export const AD_URL = "https://anchorsilvercapital.com/";
-
-/** Anchor homepage with this site's UTM tags, so a banner click is attributed to it. */
-export function bannerUrl(site: SatSite): string {
-  return `${AD_URL}?utm_source=${site.source.replace(/\.com$/, "")}&utm_medium=banner&utm_campaign=handbook`;
-}
 
 export const SAT_PHONE = { display: "(866) 818-7243", tel: "+18668187243" };
 
