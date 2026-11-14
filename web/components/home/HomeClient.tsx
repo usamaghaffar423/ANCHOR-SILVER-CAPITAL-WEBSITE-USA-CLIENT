@@ -300,11 +300,11 @@ export function HeroRight() {
         <div className="hp-cover-wrap">
           <img
             className="hp-cover"
-            src="/images/home/hero-handbook-700.webp"
-            srcSet="/images/home/hero-handbook-440.webp 440w, /images/home/hero-handbook-700.webp 700w"
-            sizes="(max-width: 859px) 260px, 500px"
+            src="/images/home/hero-book-700.webp"
+            srcSet="/images/home/hero-book-380.webp 380w, /images/home/hero-book-700.webp 700w"
+            sizes="(max-width: 859px) 200px, 340px"
             width={700}
-            height={700}
+            height={1004}
             alt="The Silver IRA Handbook from Anchor Silver Capital, free to download"
             decoding="async"
             fetchPriority="high"

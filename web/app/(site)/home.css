@@ -1262,27 +1262,39 @@ html[data-cookie-banner] .hp-sticky {
   place-items: center;
   pointer-events: none;
 }
+/* the book is a cut-out (transparent background) so it floats on the flag; the shadow follows its outline */
 .hp-cover {
   display: block;
-  height: min(290px, 38svh);
+  height: min(300px, 40svh);
   width: auto;
-  border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 40px rgba(216, 182, 94, 0.14));
 }
 .hp-cover-btn {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 420px;
   min-height: 60px;
-  font-size: 19px;
+  border: 2px solid #ecd48d;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ecd48d 0%, #d2b266 48%, #b8923f 100%);
+  color: #1b1a10;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+.hp-cover-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #f3deA0 0%, #dcbd72 48%, #c39c47 100%);
 }
 @media (min-width: 860px) {
   .hp-cta-panel {
     gap: 26px;
   }
   .hp-cover {
-    height: auto;
-    width: min(430px, 100%);
+    height: min(470px, 56svh);
+    width: auto;
   }
   .hp-cover-btn {
     min-height: 64px;
