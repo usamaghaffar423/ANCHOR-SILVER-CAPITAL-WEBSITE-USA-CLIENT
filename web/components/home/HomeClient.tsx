@@ -297,17 +297,19 @@ export function HeroRight() {
   return (
     <div className="hp-hero-right" id="hp-hero-right" data-open={open ? "true" : "false"} ref={wrap}>
       <div className="hp-cta-panel">
-        <img
-          className="hp-cover"
-          src="/images/home/handbook-cover-640.webp"
-          srcSet="/images/home/handbook-cover-320.webp 320w, /images/home/handbook-cover-640.webp 640w"
-          sizes="(max-width: 859px) 180px, 380px"
-          width={640}
-          height={828}
-          alt="The Precious Metals IRA Handbook, free from Anchor Silver Capital"
-          decoding="async"
-          fetchPriority="high"
-        />
+        <div className="hp-cover-wrap">
+          <img
+            className="hp-cover"
+            src="/images/home/hero-handbook-700.webp"
+            srcSet="/images/home/hero-handbook-440.webp 440w, /images/home/hero-handbook-700.webp 700w"
+            sizes="(max-width: 859px) 260px, 500px"
+            width={700}
+            height={724}
+            alt="The Silver IRA Handbook from Anchor Silver Capital, free to download"
+            decoding="async"
+            fetchPriority="high"
+          />
+        </div>
         <button
           type="button"
           className="hp-btn hp-cover-btn"

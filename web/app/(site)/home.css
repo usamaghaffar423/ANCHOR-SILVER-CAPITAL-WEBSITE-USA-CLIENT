@@ -1257,14 +1257,43 @@ html[data-cookie-banner] .hp-sticky {
   align-items: center;
   gap: 16px;
 }
+/* the photo is a book on a cream backdrop: a feathered edge melts it into the dark hero; a gold glow sits behind it and a soft shadow under it */
+.hp-cover-wrap {
+  position: relative;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.hp-cover-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -6% -10%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(216, 182, 94, 0.34), rgba(216, 182, 94, 0.12) 55%, transparent 78%);
+  filter: blur(6px);
+}
+.hp-cover-wrap::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -2%;
+  height: 8%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent);
+  filter: blur(8px);
+}
 .hp-cover {
   display: block;
-  height: min(250px, 34svh);
+  height: min(290px, 38svh);
   width: auto;
-  border-radius: 4px;
-  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(197, 169, 106, 0.4), 0 0 70px rgba(197, 169, 106, 0.2);
+  -webkit-mask-image: radial-gradient(ellipse 57% 57% at 50% 50%, #000 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse 57% 57% at 50% 50%, #000 70%, transparent 100%);
 }
 .hp-cover-btn {
+  position: relative;
+  z-index: 1;
   max-width: 420px;
   min-height: 60px;
   font-size: 19px;
@@ -1274,7 +1303,7 @@ html[data-cookie-banner] .hp-sticky {
     gap: 26px;
   }
   .hp-cover {
-    height: min(470px, 54svh);
+    height: min(520px, 58svh);
   }
   .hp-cover-btn {
     min-height: 64px;
