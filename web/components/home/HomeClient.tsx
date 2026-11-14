@@ -304,7 +304,7 @@ export function HeroRight() {
             srcSet="/images/home/hero-handbook-440.webp 440w, /images/home/hero-handbook-700.webp 700w"
             sizes="(max-width: 859px) 260px, 500px"
             width={700}
-            height={724}
+            height={700}
             alt="The Silver IRA Handbook from Anchor Silver Capital, free to download"
             decoding="async"
             fetchPriority="high"
