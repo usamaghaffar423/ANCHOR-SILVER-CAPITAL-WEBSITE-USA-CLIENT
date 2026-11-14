@@ -1235,3 +1235,49 @@ html[data-cookie-banner] .hp-sticky {
 .hp-flag-band .hp-bg img {
   object-position: center;
 }
+
+/* ---- hero, right side: the handbook cover and one button first; the form opens in the same spot ---- */
+.hp-hero-right {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hp-hero-right[data-open="false"] .hp-card {
+  display: none;
+}
+.hp-hero-right[data-open="true"] .hp-card {
+  display: block;
+}
+.hp-hero-right[data-open="true"] .hp-cta-panel {
+  display: none;
+}
+.hp-cta-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.hp-cover {
+  display: block;
+  height: min(250px, 34svh);
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(197, 169, 106, 0.4), 0 0 70px rgba(197, 169, 106, 0.2);
+}
+.hp-cover-btn {
+  max-width: 420px;
+  min-height: 60px;
+  font-size: 19px;
+}
+@media (min-width: 860px) {
+  .hp-cta-panel {
+    gap: 26px;
+  }
+  .hp-cover {
+    height: min(470px, 54svh);
+  }
+  .hp-cover-btn {
+    min-height: 64px;
+    font-size: 20px;
+  }
+}

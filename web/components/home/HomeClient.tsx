@@ -273,6 +273,66 @@ export function HeroFormOneStep() {
   );
 }
 
+/* --------------------------- hero, right side ---------------------------- */
+
+const REVEAL_EVENT = "hp:reveal-form";
+/** Opens the hero form from anywhere on the page (the final CTA, the sticky bar). */
+function revealHeroForm() {
+  window.dispatchEvent(new Event(REVEAL_EVENT));
+}
+const scrollBehavior = () => (window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth") as ScrollBehavior;
+
+/**
+ * First look: the handbook cover and one button. The button opens the form in the same spot. The form is always in the
+ * HTML (hidden until opened), so nothing about it changes: same fields, payload, consent text and tracking.
+ */
+export function HeroRight() {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const on = () => setOpen(true);
+    window.addEventListener(REVEAL_EVENT, on);
+    return () => window.removeEventListener(REVEAL_EVENT, on);
+  }, []);
+  return (
+    <div className="hp-hero-right" id="hp-hero-right" data-open={open ? "true" : "false"} ref={wrap}>
+      <div className="hp-cta-panel">
+        <img
+          className="hp-cover"
+          src="/images/home/handbook-cover-640.webp"
+          srcSet="/images/home/handbook-cover-320.webp 320w, /images/home/handbook-cover-640.webp 640w"
+          sizes="(max-width: 859px) 180px, 380px"
+          width={640}
+          height={828}
+          alt="The Precious Metals IRA Handbook, free from Anchor Silver Capital"
+          decoding="async"
+          fetchPriority="high"
+        />
+        <button
+          type="button"
+          className="hp-btn hp-cover-btn"
+          onClick={() => {
+            trackHome("cta_click", { location: "hero_cover" });
+            setOpen(true);
+            // phones: bring the opened form to the top of the screen
+            window.setTimeout(() => {
+              if (window.matchMedia("(max-width: 859px)").matches)
+                document.getElementById("get")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+            }, 60);
+          }}
+        >
+          Get the Free Handbook <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <HeroFormOneStep />
+      {/* No JavaScript: the button cannot open the form, so show the form instead. */}
+      <noscript>
+        <style>{".hp-hero-right .hp-cta-panel{display:none!important}.hp-hero-right .hp-card{display:block!important}"}</style>
+      </noscript>
+    </div>
+  );
+}
+
 /* ------------------------------- final CTA -------------------------------- */
 
 /** Final CTA: one button that takes the visitor back to the form and puts the cursor in First name. */
@@ -283,11 +343,11 @@ export function FinalCtaButton() {
       className="hp-btn hp-final-btn"
       onClick={() => {
         trackHome("cta_click", { location: "final" });
-        document.getElementById("get")?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-          block: "start",
-        });
-        window.setTimeout(() => document.getElementById("hp-first")?.focus({ preventScroll: true }), 450);
+        revealHeroForm();
+        window.setTimeout(() => {
+          document.getElementById("get")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+          window.setTimeout(() => document.getElementById("hp-first")?.focus({ preventScroll: true }), 450);
+        }, 60);
       }}
     >
       Get the Free Handbook <span aria-hidden="true">→</span>
@@ -301,7 +361,7 @@ export function FinalCtaButton() {
 export function StickyBar() {
   const [hide, setHide] = useState(true);
   useEffect(() => {
-    const el = document.getElementById("get");
+    const el = document.getElementById("hp-hero-right");
     if (!el || !("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(([e]) => setHide(e.isIntersecting), { threshold: 0.15 });
     io.observe(el);
@@ -315,7 +375,8 @@ export function StickyBar() {
         onClick={(e) => {
           e.preventDefault();
           trackHome("cta_click", { location: "sticky" });
-          document.getElementById("get")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          revealHeroForm();
+          window.setTimeout(() => document.getElementById("get")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" }), 60);
         }}
       >
         {STICKY.cta} <span aria-hidden="true">→</span>
