@@ -300,12 +300,12 @@ export function HeroRight() {
         <div className="hp-cover-wrap">
           <img
             className="hp-cover"
-            src="/images/home/hero-book-700.webp"
-            srcSet="/images/home/hero-book-380.webp 380w, /images/home/hero-book-700.webp 700w"
+            src="/images/home/handbook-cover.webp"
+            srcSet="/images/home/handbook-cover-320.webp 320w, /images/home/handbook-cover-640.webp 640w, /images/home/handbook-cover.webp 1200w"
             sizes="(max-width: 859px) 200px, 340px"
-            width={700}
-            height={1004}
-            alt="The Silver IRA Handbook from Anchor Silver Capital, free to download"
+            width={1200}
+            height={1552}
+            alt="The Precious Metals IRA Handbook from Anchor Silver Capital, free to download"
             decoding="async"
             fetchPriority="high"
           />
@@ -323,7 +323,7 @@ export function HeroRight() {
             }, 60);
           }}
         >
-          Get the Free Handbook <span aria-hidden="true">→</span>
+          GET THE FREE HANDBOOK <span aria-hidden="true">→</span>
         </button>
       </div>
       <HeroFormOneStep />
